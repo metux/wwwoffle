@@ -1,4 +1,4 @@
-          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9h
           =========================================================
 
 
@@ -136,25 +136,30 @@ Configuration
 Changes
 -------
 
-Since version 2.9f:
+Since version 2.9g:
 
 Bug Fixes:
-  Fix 2038 UNIX time_t problem with SSL certificates.
-  Allow a margin on current time when warning about future timestamps.
-  Check for libgnutls and libgcrypt separately at configure time.
+  Remove some gcc warnings.
+  Delete keys & certs differently (fix crash with some gnutls versions). [*]
+  Try decompressing buffered compressed data before asking for more.
+  Handle buffered https data better. [*]
 
-New Features:
- A new option allows passing URLs from browser to server unmodified.
+Improvements:
+  Improve the SSL/https error messages (gnutls error conditions). [*]
+  Use version 3 SSL certificates. [*]
+
+*NOTE* *These only apply if WWWOFFLE is compiled with SSL/https support*
 
 
 Availability
 ------------
 
-Version 2.9g uploaded
+Version 2.9h uploaded
 
-HTTP server: http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.9g.tgz
+HTTP server: http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.9h.tgz
 
-Web page: http://www.gedanken.demon.co.uk/wwwoffle/
+Primary web page: http://www.gedanken.demon.co.uk/wwwoffle/
+Alternate web page: http://www.gedanken.org.uk/software/wwwoffle/
 
 
 Author & Copyright

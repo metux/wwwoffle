@@ -1,12 +1,10 @@
 /***************************************
-  $Header: /home/amb/CVS/wwwoffle/src/wwwoffle.c,v 2.85 2009-03-13 19:30:39 amb Exp $
-
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
   A user level program to interact with the server.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996-2009 Andrew M. Bishop
+  This file Copyright 1996-2011 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -18,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include <unistd.h>
 #include <sys/stat.h>
@@ -330,12 +329,15 @@ int main(int argc, char** argv)
        else /* argv[i][1]=='R' */
           recursive_mode=3;
 
-       if(argv[i][2])
+       if(isdigit(argv[i][2]))
           depth=atoi(&argv[i][2]);
-       else if(i<(argc-1) && (atoi(argv[i+1]) || argv[i+1][0]=='0'))
+       else if(argv[i][2])
+          depth=-1;             /* error */
+       else if(i<(argc-1) && isdigit(argv[i+1][0]))
           depth=atoi(argv[i+1]);
        else
           depth=1;
+
        if(depth<0)
          {fprintf(stderr,"wwwoffle: The '-%c' argument may only be followed by non-negative integer.\n",argv[i][1]); exit(1);}
 

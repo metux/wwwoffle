@@ -1,12 +1,11 @@
 /***************************************
-  $Header: /home/amb/CVS/wwwoffle/src/iognutls.c,v 1.13 2006-07-21 17:46:52 amb Exp $
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9h.
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Functions for file input and output using gnutls.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 2005,06 Andrew M. Bishop
+  This file Copyright 2005-2011 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -220,7 +219,7 @@ ssize_t io_gnutls_read_with_timeout(io_gnutls *context,io_buffer *out,unsigned t
 {
  int n;
 
- if(timeout)
+ if(!gnutls_record_check_pending(context->session) && timeout)
    {
     fd_set readfd;
     struct timeval tv;
@@ -256,11 +255,14 @@ ssize_t io_gnutls_read_with_timeout(io_gnutls *context,io_buffer *out,unsigned t
  if(n==GNUTLS_E_REHANDSHAKE)
     gnutls_alert_send(context->session,GNUTLS_AL_WARNING,GNUTLS_A_NO_RENEGOTIATION);
 
- if(n==GNUTLS_E_UNEXPECTED_PACKET_LENGTH) /* Seems to happen for some servers but data is OK. */
+ if(n==GNUTLS_E_UNEXPECTED_PACKET_LENGTH) /* Seems to happen at the end of the data. */
     n=0;
 
  if(n>0)
     out->length+=n;
+
+ if(n<0)
+    set_gnutls_error(n,NULL);
 
  return(n);
 }

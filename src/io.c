@@ -1,12 +1,10 @@
 /***************************************
-  $Header: /home/amb/CVS/wwwoffle/src/io.c,v 2.60 2007-03-25 11:05:46 amb Exp $
-
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9h.
   Functions for file input and output.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1996-2011 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -477,45 +475,67 @@ ssize_t read_data(int fd,char *buffer,size_t n)
    {
     if(!context->r_chunk_context)
       {
-       do
+       /* Pre-emptively try uncompressing the data that already exists */
+       if(context->r_file_data->length>0)
          {
-#if USE_GNUTLS
-          if(context->gnutls_context)
-             err=io_gnutls_read_with_timeout(context->gnutls_context,context->r_file_data,context->r_timeout);
-          else
-#endif
-             err=io_read_with_timeout(fd,context->r_file_data,context->r_timeout);
-          if(err>0) context->r_raw_bytes+=err;
-          if(err<0) break;
           err=io_zlib_uncompress(context->r_file_data,context->r_zlib_context,&iobuffer);
-          if(err<0 || err==1) break;
+          nr=iobuffer.length;
          }
-       while(iobuffer.length==0);
-       nr=iobuffer.length;
+
+       /* Read more data and uncompress it only if there was no error and no data already */
+       if(err==0 && nr==0)
+         {
+          do
+            {
+#if USE_GNUTLS
+             if(context->gnutls_context)
+                err=io_gnutls_read_with_timeout(context->gnutls_context,context->r_file_data,context->r_timeout);
+             else
+#endif
+                err=io_read_with_timeout(fd,context->r_file_data,context->r_timeout);
+             if(err>0) context->r_raw_bytes+=err;
+             if(err<0) break;
+             err=io_zlib_uncompress(context->r_file_data,context->r_zlib_context,&iobuffer);
+             if(err<0 || err==1) break;
+            }
+          while(iobuffer.length==0);
+          nr=iobuffer.length;
+         }
       }
     else /* if(context->r_chunk_context) */
       {
-       do
+       /* Pre-emptively try uncompressing the data that already exists */
+       if(context->r_zlch_data->length>0)
          {
-#if USE_GNUTLS
-          if(context->gnutls_context)
-             err=io_gnutls_read_with_timeout(context->gnutls_context,context->r_file_data,context->r_timeout);
-          else
-#endif
-             err=io_read_with_timeout(fd,context->r_file_data,context->r_timeout);
-          if(err>0) context->r_raw_bytes+=err;
-          if(err<0) break;
-          err=io_chunk_decode(context->r_file_data,context->r_chunk_context,context->r_zlch_data);
-          if(err<0) break;
-
-          /* Try uncompressing only if chunking is finished or there is data or zlib is initialised. */
-          if(err==1 || context->r_zlch_data->length>0 || context->r_zlib_context->stream.state)
-             err=io_zlib_uncompress(context->r_zlch_data,context->r_zlib_context,&iobuffer);
-
-          if(err<0 || err==1) break;
+          err=io_zlib_uncompress(context->r_zlch_data,context->r_zlib_context,&iobuffer);
+          nr=iobuffer.length;
          }
-       while(iobuffer.length==0);
-       nr=iobuffer.length;
+
+       /* Read more data and uncompress it only if there was no error and no data already */
+       if(err==0 && nr==0)
+         {
+          do
+            {
+#if USE_GNUTLS
+             if(context->gnutls_context)
+                err=io_gnutls_read_with_timeout(context->gnutls_context,context->r_file_data,context->r_timeout);
+             else
+#endif
+                err=io_read_with_timeout(fd,context->r_file_data,context->r_timeout);
+             if(err>0) context->r_raw_bytes+=err;
+             if(err<0) break;
+             err=io_chunk_decode(context->r_file_data,context->r_chunk_context,context->r_zlch_data);
+             if(err<0) break;
+
+             /* Try uncompressing only if chunking is finished or there is data or zlib is initialised. */
+             if(err==1 || context->r_zlch_data->length>0 || context->r_zlib_context->stream.state)
+                err=io_zlib_uncompress(context->r_zlch_data,context->r_zlib_context,&iobuffer);
+
+             if(err<0 || err==1) break;
+            }
+          while(iobuffer.length==0);
+          nr=iobuffer.length;
+         }
       }
    }
 #endif /* USE_ZLIB */

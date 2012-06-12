@@ -9,14 +9,12 @@ F               [-a-z0-9$_.!*(),%;/?:@&=+~|]
 
 %{
 /***************************************
-  $Header: /home/amb/CVS/wwwoffle/src/xml.l,v 1.12 2003-09-06 12:55:06 amb Exp $
-
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.8.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9h.
   Parse the XML and look for external references.
   ******************/ /******************
   Written by Walter Pfannenmueller
 
-  This file Copyright 1997,98,99,2001,03 Walter Pfannenmueller & Andrew M. Bishop
+  This file Copyright 1997-2011 Walter Pfannenmueller & Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -62,6 +60,8 @@ void ParseXML(int fd,URL *Url)
  first=0;
 }
 
+
+#define YY_NO_INPUT 1 /* Remove annoying gcc warning message */
 
 #define YY_NO_UNPUT 1 /* Remove annoying gcc warning message */
 

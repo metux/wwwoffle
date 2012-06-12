@@ -15,14 +15,12 @@ NP              [^]]
 
 %{
 /***************************************
-  $Header: /home/amb/CVS/wwwoffle/src/vrml.l,v 1.11 2003-09-06 12:55:06 amb Exp $
-
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.8.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9h.
   Parse the VRML and look for the WWWInline, WWWanchor and other things.
   ******************/ /******************
   Written by Walter Pfannenmueller
 
-  This file Copyright 1997,98,99,2001,03 Walter Pfannenmueller & Andrew M. Bishop
+  This file Copyright 1997-2011 Walter Pfannenmueller & Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -68,6 +66,8 @@ void ParseVRML(int fd,URL *Url)
  first=0;
 }
 
+
+#define YY_NO_INPUT 1 /* Remove annoying gcc warning message */
 
 #define YY_SKIP_YYWRAP 1 /* Remove error with prototype of ..._yywrap */
 #ifndef vrml_yywrap

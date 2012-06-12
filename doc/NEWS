@@ -1,3 +1,19 @@
+Version 2.9h of WWWOFFLE released : Mon Oct 3 13:00:00 2011
+------------------------------------------------------------
+
+Bug Fixes:
+  Remove some gcc warnings.
+  Delete keys & certs differently (fix crash with some gnutls versions). [*]
+  Try decompressing buffered compressed data before asking for more.
+  Handle buffered https data better. [*]
+
+Improvements:
+  Improve the SSL/https error messages (gnutls error conditions). [*]
+  Use version 3 SSL certificates. [*]
+
+*NOTE* *These only apply if WWWOFFLE is compiled with SSL/https support*
+
+
 Version 2.9g of WWWOFFLE released : Sun Mar 27 11:00:00 2011
 ------------------------------------------------------------
 
@@ -5,6 +21,7 @@ Bug Fixes:
   Fix 2038 UNIX time_t problem with SSL certificates.
   Allow a margin on current time when warning about future timestamps.
   Check for libgnutls and libgcrypt separately at configure time.
+  Better handling of the command line recursive options. 
 
 New Features:
  A new option allows passing URLs from browser to server unmodified.

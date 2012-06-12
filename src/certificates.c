@@ -1,12 +1,11 @@
 /***************************************
-  $Header: /home/amb/CVS/wwwoffle/src/certificates.c,v 1.36 2010-10-21 18:12:19 amb Exp $
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9h.
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
   Certificate handling functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 2005-2010 Andrew M. Bishop
+  This file Copyright 2005-2011 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -559,6 +558,8 @@ void FreeCredentials(gnutls_certificate_credentials_t cred)
  if(!initialised)
     return;
 
+ gnutls_certificate_free_keys(cred);
+
  gnutls_certificate_free_credentials(cred);
 }
 
@@ -918,12 +919,6 @@ static gnutls_certificate_credentials_t GetCredentials(const char *hostname,int 
  free(keyfilename);
  free(crtfilename);
 
- if(crt)
-    gnutls_x509_crt_deinit(crt);
-
- if(privkey)
-    gnutls_x509_privkey_deinit(privkey);
-
  return(cred);
 }
 
@@ -1032,7 +1027,7 @@ static int CreateCertificate(const char *filename,const char *fake_hostname,cons
 
  /* Set the request version */
 
- err=gnutls_x509_crt_set_version(crt,1);
+ err=gnutls_x509_crt_set_version(crt,3);
  if(err<0)
    {PrintMessage(Warning,"Could not set the certificate version for '%s' [%s].",errmsg_hostname,gnutls_strerror(err));return(10);}
 

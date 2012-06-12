@@ -1,3 +1,50 @@
+2011-10-03 Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	Version 2.9h of WWWOFFLE released.
+
+2011-10-03 [r2167-2169]  Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	* doc/ANNOUNCE: Update for version 2.9h.
+
+	* LSM: Update for version 2.9h.
+
+	* doc/NEWS, FILES, src/version.h: Update for version 2.9h.
+
+2011-09-04 [r2166]  Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	* src/iognutls.c: Use the gnutls function to check for pending data
+	  first then use select() on the socket.
+
+2011-08-27 [r2165]  Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c: Create version 3 certificates instead of
+	  version 1.
+
+2011-08-26 [r2161-2164]  Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c, src/io.c, src/iognutls.c: Update the source
+	  code header for the last three changes.
+
+	* src/io.c: Try and uncompress the data that is already available
+	  before asking for more data.
+
+	* src/iognutls.c: Use the gnutls error message as the main error
+	  message if there is a gnutls error status (found during
+	  investigation of Debian bug #638595).
+
+	* src/certificates.c: Free the server private keys and certificates
+	  at a different time and in a different way (see Debian bug
+	  #638595).
+
+2011-06-18 [2158]  Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	* src/vrml.l, src/xml.l: Remove some gcc warning messages.
+
+2011-06-18 [r2157]  Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffle.c: Better handling of the command line recursive
+	  options. [Note: this was in released version 2.9g but not in SVN]
+
 2011-03-27 Andrew M. Bishop <amb@gedanken.demon.co.uk>
 
 	Version 2.9g of WWWOFFLE released.
