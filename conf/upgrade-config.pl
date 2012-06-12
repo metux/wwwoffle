@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
 #
-# A Perl script to update the configuration file to version 2.9 standard (from version 2.8).
+# A Perl script to update the configuration file to version 2.9a standard (from version 2.8).
 #
 # Written by Andrew M. Bishop
 #
@@ -42,10 +42,15 @@ $urlspec1="([^ \t:<!]+)://([^ \t/=]+)(/?[^ \t=>]*)";
                 ".pem *="  , ".pem     = application/x-x509-ca-cert"
                );
 
+%new_ModifyHTML=(
+                "disable-iframe *="  , "disable-iframe = no"
+               );
+
 %new_options=(
               "StartUp"        , \%new_StartUp,
               "SSLOptions"     , \%new_SSLOptions,
-              "MIMETypes"      , \%new_MIMETypes
+              "MIMETypes"      , \%new_MIMETypes,
+              "ModifyHTML"     , \%new_ModifyHTML
               );
 
 # The options that have changed (since version 2.8).

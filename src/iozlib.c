@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iozlib.c 1.21 2005/11/10 19:50:30 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/iozlib.c 1.23 2006/07/21 17:35:48 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Functions for file input and output with compression.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,04,05 Andrew M. Bishop
+  This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -306,7 +306,7 @@ int io_zlib_uncompress(io_buffer *in,io_zlib *context,io_buffer *out)
  if(!context->stream.state)
    {
     if(in->length==0)
-      {io_errno=-1;set_zerror("no data");return(-1);}
+      return(1);
 
     if(in->length<=12 && in->length!=context->lastlen)
       {
@@ -652,7 +652,7 @@ static int parse_gzip_tail(io_zlib *context,const char *buffer,int n)
 /*++++++++++++++++++++++++++++++++++++++
   Set the error status when there is a compression error.
 
-  char *msg The error message.
+  const char *msg The error message.
   ++++++++++++++++++++++++++++++++++++++*/
 
 static void set_zerror(const char *msg)

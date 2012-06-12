@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/purge.c 2.80 2006/01/08 10:27:22 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/purge.c 2.81 2006/07/21 17:37:34 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Purge old files from the cache.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -496,7 +496,7 @@ void PurgeCache(int fd)
   unsigned long *proto_dirs Returns the total number of directories.
   ++++++++++++++++++++++++++++++++++++++*/
 
-void PurgeProtocol(int fd,const char *proto,unsigned long *proto_file_blocks,unsigned long *proto_del_blocks,unsigned long *proto_compress_blocks,unsigned long *proto_dirs)
+static void PurgeProtocol(int fd,const char *proto,unsigned long *proto_file_blocks,unsigned long *proto_del_blocks,unsigned long *proto_compress_blocks,unsigned long *proto_dirs)
 {
  DIR *dir;
  struct dirent* ent;

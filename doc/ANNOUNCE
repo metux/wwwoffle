@@ -1,5 +1,5 @@
-          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9
-          ========================================================
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a
+          =========================================================
 
 
 The WWWOFFLE programs simplify World Wide Web browsing from computers that use
@@ -136,103 +136,36 @@ Configuration
 Changes
 -------
 
-Since version 2.8:
+Since version 2.9:
 
 Bug Fixes:
- When modifying HTML check cache status of link aliases.  Fix an error message
- when executing a change mode script.
- Fix URL encoding in index pages.  Remove warnings compiling with CYGWIN.  Make
- the ssl-allow-port config file option work for port 80.  If confirm-requests is
- enabled don't allow POST/PUT.  Warn if timestamp of monitored file cannot be
- changed.  Remove fake URL arguments from aliased URL for POST/PUT.  Print
- internal page headers in ExtraDebug mode.  'wwwoffle -fetch' works in autodial
- mode.  Avoid config editing pages being cached by browser.  Be more consistent
- with removing '#' from URLs in all cases.  Handle URLs with URL-encoded
- hostnames.  Handle purge with age=-1 and min-free or max-size set.  Break
- socket writes into small pieces for huge data blocks.  Purge from lasttime and
- prevtime if URL purged from main cache.
-
-Internal Code Changes:
- Lots of internal modifications to remove years of accumulated ugliness.
- Source code changes to increase speed and reduce memory size.
- Use 'const' for fixed data arrays and function parameters where possible.
- Be careful with integer variables on systems where sizeof(long)!=sizeof(int).
- Reduce code size if compiling without zlib option.
+ Fix crash with serving CA certificate.  On the info page show info for the alias
+ if there is one.  Forced refresh headers take precedence over other options
+ again.  Makefile config file installation error messages clarified.  Fix
+ formatting in wwwoffle.conf manual page.  Handle compressed, chunked body of
+ zero length.  Remove 'Keep-Alive' header.  Remove trailing spaces when parsing
+ headers (fixes header censoring).  More fixes for 64-bit compilation.  Fix some
+ allocated string lengths.  Keep '()' characters in attribute values when
+ modifying HTML.
 
 New Features:
- Add a new layer of buffering to avoid large number of small network writes.
- Add checkboxes to protocol indexes (e.g. /index/http) for deleting multiple.
- Add reset button (and more if javascript) to clear delete checkboxes.
- Add the ability to use the Hyper Estraier programs to search the cache.
- Improve the purge output, print more information about what is happening.
+ Added option 'disable-iframe' to ModifyHTML section to disable inline frames.
 
 Programs:
- Move the convert-cache and uncompress-cache functions into wwwoffle-tools.
-
-Documentation:
- Remove the file called CONVERT and all references to ancient WWWOFFLE versions.
- Add new documentation about Hyper Estraier and update other search documents.
- Tidy the README.1st file.
+ The wwwoffle-ls program lists only single URL unless a directory name is used.
 
 
-*NOTE* The configure script will enable IPv6 by default if possible.
-       If you explicitly want it disabled you must do this yourself.
-
-*NOTE* The URLs for deleting cached web pages has changed.
-       For example '/control/delete-url/?xxx' is now '/control/delete/url?xxx'.
-
-*NOTE* The HTML message files no longer have 'localhost' defined, but 'localurl'
-       is used instead (http://$localhost/ -> $localurl/).
-
-
-Since version 2.9-beta:
-
-Bug Fixes:
- Fix configure script AC_INIT and tests for sys/mount.h.  Block more Javascript
- when modifying HTML.  Don't change the URL hash for a POST request when
- fetching it.  Don't handle parameter separately from path in URL.  Don't split
- up large writes when no timeout is set.
-
-Internal Code Changes:
- More changes for integer variables on systems where sizeof(long)!=sizeof(int).
- Change the configure_io_*() functions for each type of IO not each direction.
-
-New Features:
- Added ability to make secure browser connection to WWWOFFLE using HTTPS.
- Added ability to cache SSL connection data (https) (config file options).
- Added a page to show information about the SSL certificates stored by WWWOFFLE.
-
-Documentation:
- Add new documentation about HTTPS SSL/TLS security, trust and WWWOFFLE.
-
-
-*NOTE* If you want to enable HTTPS/SSL functions in WWWOFFLE you must enable it
-       when running configure prior to compiling.  It is not enabled by default.
-
-*NOTE* If you have compiled WWWOFFLE with gnutls there will be a delay the first
-       time that wwwoffled is started and the first time each https server is
-       accessed due to the creation of secure encryption keys.
-
-
-Since version 2.9-beta-ssl:
-
-Bug Fixes:
- Fix script removal tag attribute confusion.  Fix cygwin handling of certificate
- filenames.  Fix audit-usage.pl so that it works with syslog output.  Make sure
- trusted certificates have valid dates.  Detect and fetch background images in
- table cells.  Lower the logging level of some unimportant warning messages.
-
-New Features:
- Added an option 'cookies-force-refresh' so requests with cookies are refreshed.
-
+*NOTE* The change to the wwwoffle-ls program means that the hyperestraier
+       indexing script estwolefind may no longer work.  Edit estwolefind and
+       in the lines that contain 'wwwoffle-ls' replace '://' with '/'.
 
 
 Availability
 ------------
 
-Version 2.9 uploaded
+Version 2.9a uploaded
 
-HTTP server: http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.9.tgz
+HTTP server: http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.9a.tgz
 
 Web page: http://www.gedanken.demon.co.uk/wwwoffle/
 

@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle.h 2.115 2006/02/11 20:00:25 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle.h 2.116 2006/07/21 17:38:50 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   A header file for all of the programs wwwoffle, wwwoffled.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -126,7 +126,6 @@ void FinishMessages(void);
 
 void LocalPage(int fd,URL *Url,Header *request_head,/*@null@*/ Body *request_body);
 
-char /*@null@*/ *FindLanguageFile(char* search);
 int OpenLanguageFile(char* search);
 void SetLanguage(char *accept);
 

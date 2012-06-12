@@ -21,8 +21,8 @@
 #include "errors.h"
 
 
-int wwwoffles_read_data(char *data,int len);
-int wwwoffles_write_data(char *data,int len);
+ssize_t wwwoffles_read_data(char *data,int len);
+ssize_t wwwoffles_write_data(char *data,int len);
 
 int main(int argc,char **argv)
 {
@@ -63,7 +63,7 @@ int main(int argc,char **argv)
 /*++++++++++++++++++++++++++++++++++++++
   Read data from the input.
 
-  int wwwoffles_read_data Returns the number of bytes read.
+  ssize_t wwwoffles_read_data Returns the number of bytes read.
 
   char *data The data buffer to fill in.
 
@@ -72,7 +72,7 @@ int main(int argc,char **argv)
   This function is used as a callback from gifmodify.c and htmlmodify.l
   ++++++++++++++++++++++++++++++++++++++*/
 
-int wwwoffles_read_data(char *data,int len)
+ssize_t wwwoffles_read_data(char *data,int len)
 {
  int n=read_data(0,data,len);
 
@@ -83,7 +83,7 @@ int wwwoffles_read_data(char *data,int len)
 /*++++++++++++++++++++++++++++++++++++++
   Write data to the output.
 
-  int wwwoffles_write_data Returns the number of bytes written.
+  ssize_t wwwoffles_write_data Returns the number of bytes written.
 
   char *data The data to write.
 
@@ -92,7 +92,7 @@ int wwwoffles_read_data(char *data,int len)
   This function is used as a callback from gifmodify.c and htmlmodify.l
   ++++++++++++++++++++++++++++++++++++++*/
 
-int wwwoffles_write_data(char *data,int len)
+ssize_t wwwoffles_write_data(char *data,int len)
 {
  write_data(1,data,len);
 

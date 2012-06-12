@@ -1,5 +1,5 @@
-          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9
-          ========================================================
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a
+          =========================================================
 
 
 The WWWOFFLE programs simplify World Wide Web browsing from computers that use
@@ -717,9 +717,11 @@ wwwoffle-mv     - To rename URLs under one path in the spool to another path.
                   http/bar' use 'wwwoffle-mv http/foo http/bar'.  Also works for
                   complex cases: 'wwwoffle-mv http://foo/bar http:///bar/foo'.
 
-wwwoffle-ls     - To list the files in the directory in the style of 'ls -l'.
-                  For example use 'wwwoffle-ls http/foo' to list the URLs cached
-                  in the directory http/foo.
+wwwoffle-ls     - To list a cached URL or the files in a cache directory in the
+                  style of 'ls -l'.  As examples use 'wwwoffle-ls http/foo' to
+                  list all of the URLs in the cache directory 'http/foo', use
+                  'wwwoffle-ls http://foo/' to list the single URL 'http://foo/'
+                  or use 'wwwoffle-ls outgoing' to list the outgoing requests.
 
 wwwoffle-read   - Read data directly from the cache for the URL named on the
                   command line and output it on stdout.

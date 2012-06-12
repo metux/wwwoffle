@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/control.c 2.69 2005/12/11 10:06:19 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/control.c 2.70 2006/07/14 18:36:57 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   The HTML interactive control pages.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -128,8 +128,6 @@ void ControlPage(int fd,URL *Url,Body *request_body)
             {
              if(!strncmp(*argsp,"hash=",(size_t)5) && (*argsp)[5])
                 hashash=1;
-             else
-                PrintMessage(Warning,"Unexpected argument '%s' seen decoding form data for URL '%s'.",*argsp,Url->name);
             }
 
           free(*args);

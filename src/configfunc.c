@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/configfunc.c 1.41 2006/01/09 18:51:11 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/configfunc.c 1.42 2006/07/21 17:37:34 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Configuration item checking functions.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -31,10 +31,10 @@
 
 
 /*+ The local HTTP (or HTTPS) port number. +*/
-int localport=-1;
+static int localport=-1;
 
 /*+ The local port protocol (HTTP or HTTPS). +*/
-char *localproto=NULL;
+static char *localproto=NULL;
 
 
 /*++++++++++++++++++++++++++++++++++++++

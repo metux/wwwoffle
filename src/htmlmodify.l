@@ -4,7 +4,7 @@ nonascii        [\200-\377]
 ascii           [ -~]
 alphanum        [a-z0-9]
 punct           [][!\"#$%&\'()*+,-./:;<=>?@\\^_`{|}~]
-safepunct       [][!\#$%&\*+,-./:;=?@\\^_`{|}~]
+safepunct       [][!#$%&()*+,-./:;=?@\\^_`{|}~]
 
 tag             {alphanum}+
 key             ({alphanum}|-)+
@@ -19,9 +19,9 @@ val             ({alphanum}|{nonascii}|{safepunct})+
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/htmlmodify.l 1.90 2006/02/09 18:51:14 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/htmlmodify.l 1.92 2006/08/04 18:22:46 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Parse the HTML and modify the source.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -1150,6 +1150,7 @@ static void modify_html(URL *Url)
  int disable_blink=ConfigBooleanURL(DisableHTMLBlink,Url);
  int disable_marquee=ConfigBooleanURL(DisableHTMLMarquee,Url);
  int disable_flash=ConfigBooleanURL(DisableHTMLFlash,Url);
+ int disable_iframes=ConfigBooleanURL(DisableHTMLIFrame,Url);
  int disable_meta_refresh=ConfigBooleanURL(DisableHTMLMetaRefresh,Url);
  int disable_meta_refresh_self=ConfigBooleanURL(DisableHTMLMetaRefreshSelf,Url);
  int disable_meta_set_cookie=ConfigBooleanURL(DisableHTMLMetaSetCookie,Url);
@@ -1299,7 +1300,7 @@ static void modify_html(URL *Url)
           disable_output|=DISABLE_OBJECT;
        else if(tag==tag_a && (disable_dontget_anchors || disable_script))
           disable_output|=DISABLE_A;
-       else if(tag==tag_iframe && (disable_dontget_iframes || disable_script))
+       else if(tag==tag_iframe && (disable_iframes || disable_dontget_iframes || disable_script))
           disable_output|=DISABLE_IFRAME;
        else if(tag==tag_img && (replace_html_dontget_images || replace_html_webbug_images || disable_script))
           disable_output|=DISABLE_IMG;
@@ -1407,7 +1408,13 @@ static void modify_html(URL *Url)
          }
        else if(tag==tag_iframe)
          {
-          if(disable_dontget_iframes || disable_script)
+          if(disable_iframes)
+            {
+             disable_output&=~DISABLE_IFRAME;
+             output_tag(&tagdata,"!-- WWWOFFLE (disable-iframes) - "," --");
+             disable_iframe=1;
+            }
+          else if(disable_dontget_iframes || disable_script)
             {
              disable_output&=~DISABLE_IFRAME;
              disable_iframe=handle_iframe_tag(&tagdata,disable_dontget_iframes,disable_script);

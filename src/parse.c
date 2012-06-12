@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/parse.c 2.132 2006/02/11 20:00:24 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/parse.c 2.134 2006/06/25 14:25:11 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Functions to parse the HTTP requests.
@@ -63,13 +63,14 @@ static const char* const non_censored_headers[]={"Host",
                                                  "Proxy-Connection",
                                                  "Authorization"};
 
-/*+ Headers that are difficult with HTTP/1.1. +*/
-static const char* const deleted_http11_headers[]={"If-Match",
-                                                   "If-Range",
-                                                   "Range",
-                                                   "Upgrade",
-                                                   "Accept-Encoding",
-                                                   "TE"};
+/*+ Headers that we cannot allow to be passed through WWWOFFLE. +*/
+static const char* const deleted_http_headers[]={"If-Match",
+                                                 "If-Range",
+                                                 "Range",
+                                                 "Upgrade",
+                                                 "Keep-Alive",
+                                                 "Accept-Encoding",
+                                                 "TE"};
 
 /*+ The headers from the request that are re-usable. +*/
 static /*@only@*/ Header *reusable_header;
@@ -317,7 +318,7 @@ int RequireForced(const Header *request_head,const URL *Url,int online)
       }
    }
 
- return(0);
+ return(retval);
 }
 
 
@@ -696,8 +697,8 @@ void ModifyRequest(const URL *Url,Header *request_head)
 
  /* Remove some headers */
 
- for(j=0;j<sizeof(deleted_http11_headers)/sizeof(char*);j++)
-    RemoveFromHeader(request_head,deleted_http11_headers[j]);
+ for(j=0;j<sizeof(deleted_http_headers)/sizeof(char*);j++)
+    RemoveFromHeader(request_head,deleted_http_headers[j]);
 
  RemoveFromHeader2(request_head,"Pragma","wwwoffle");
 

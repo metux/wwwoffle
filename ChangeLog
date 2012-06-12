@@ -1,3 +1,101 @@
+2006-08-13  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	Version 2.9a of WWWOFFLE released.
+
+2006-08-13  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/NEWS, src/version.h: Update to version 2.9a.
+
+2006-08-04  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/htmlmodify.l:
+	Keep attribute values that contain '()' but no quote characters.
+
+2006-07-29  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.CONF:
+	Mention that the run-* programs must be the full pathname and are run in the background.
+
+2006-07-21  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/iognutls.c, src/iopriv.h:
+	Make more functions return ssize_t types.
+
+	* src/local.c, src/wwwoffle.h:
+	Replace global function FindLanguageFile() with static function find_language_file().
+
+	* src/configfunc.c, src/io.c, src/purge.c:
+	Make sure that static functions are defined as static.
+
+	* src/certificates.c, src/io.c, src/iognutls.c, src/iozlib.c, src/spool.c:
+	Correct some comments.
+
+2006-07-20  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/proto.h, src/wwwoffles.c:
+	Fix code that mixed ssize_t and int variable types.
+
+2006-07-16  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	Remove the latest new header to keep IIS servers happy.
+
+	* src/configrdwr.c: Make sure that allocated strings are long enough.
+
+	* src/headbody.c:
+	Remove any spaces between the header keyword and the ':'.
+
+2006-07-14  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/control.c: Remove misleading warning message.
+
+2006-06-25  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/parse.c: Delete the 'Keep-Alive' header if it is present.
+
+2006-06-12  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	Add a new header to keep the 'bad-behaviour' PHP script happy.
+
+2006-06-02  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/io.c, src/iozlib.c:
+	Handle the special case of compressed chunk body of zero length.
+
+2006-04-24  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/scripts/README.CONF-man.pl:
+	Fix mis-formatting in wwwoffle.conf manual page created from README.CONF.
+
+2006-04-21  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README, src/wwwoffle-tools.c:
+	Change the behaviour of wwwoffle-ls so that 'wwwoffle-ls http://foo/' lists just
+	the one URL and 'wwwoffle-ls http/foo' lists the whole directory.
+
+	* conf/Makefile.in:
+	Make the error messages about using /etc/wwwoffle/wwwoffle.conf instead of
+	/etc/wwwoffle.conf less confusing (especially if CONFDIR = /etc).
+
+2006-04-17  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/parse.c: Fix bug where a forced refresh didn't force a reload.
+
+2006-04-07  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/info.c: If a URL is aliased show the information for the alias.
+
+2006-04-06  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.CONF, src/config.h, src/configdata.c,
+	src/htmlmodify.l, conf/upgrade-config.pl, doc/CHANGES.CONF:
+	Add an option to disable all iframes in HTML output.
+
+2006-04-03  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certinfo.c: Fix bug with serving CA certificate.
+
 2006-04-02  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
 
 	Version 2.9 of WWWOFFLE released.

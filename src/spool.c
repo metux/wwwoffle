@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/spool.c 2.94 2005/12/10 15:11:32 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/spool.c 2.95 2006/07/21 17:35:48 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Handle all of the spooling of files in the spool directory.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,04,05 Andrew M. Bishop
+  This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -183,7 +183,7 @@ void CloseNewOutgoingSpoolFile(int fd,URL *Url)
 
   int OpenExistingOutgoingSpoolFile Returns a file descriptor, or -1 on failure.
 
-  URL *Url Returns the URL of the file.
+  URL **Url Returns the URL of the file.
   ++++++++++++++++++++++++++++++++++++++*/
 
 int OpenExistingOutgoingSpoolFile(URL **Url)

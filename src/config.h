@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/config.h 2.114 2006/02/11 20:00:24 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/config.h 2.115 2006/04/06 18:13:38 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Configuration file management functions.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -299,6 +299,9 @@ extern /*@null@*/ ConfigItem DisableHTMLMarquee;
 
 /*+ The option to disable Shockwave Flash animations. +*/
 extern /*@null@*/ ConfigItem DisableHTMLFlash;
+
+/*+ The option to disable any <iframe> tags. +*/
+extern /*@null@*/ ConfigItem DisableHTMLIFrame;
 
 /*+ The option to disable any <meta http-equiv=Refresh content=""> tags. +*/
 extern /*@null@*/ ConfigItem DisableHTMLMetaRefresh;

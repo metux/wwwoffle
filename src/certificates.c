@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/certificates.c 1.25 2006/04/02 15:19:52 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/certificates.c 1.26 2006/07/21 17:35:48 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Certificate handling functions.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -1139,6 +1139,8 @@ gnutls_x509_crt_t *LoadCertificates(const char *filename)
 /*++++++++++++++++++++++++++++++++++++++
   Save a set of certificates to a file.
 
+  int SaveCertificates Return 0 if OK or another value if an error.
+
   gnutls_x509_crt_t *crt_list The certificates to save.
 
   int n_crts The number of certificates in the list.
@@ -1185,7 +1187,7 @@ static int SaveCertificates(gnutls_x509_crt_t *crt_list,int n_crts,const char *f
 /*++++++++++++++++++++++++++++++++++++++
   Load in a private key from a file.
 
-  gnutls_x509_crt_t LoadPrivateKey Returns the loaded private key.
+  gnutls_x509_privkey_t LoadPrivateKey Returns the loaded private key.
 
   const char *filename The name of the file to load the private key from.
   ++++++++++++++++++++++++++++++++++++++*/

@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/local.c 1.15 2005/08/14 09:48:50 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/local.c 1.16 2006/07/21 17:38:50 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Serve the local web-pages and handle the language selection.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1998,99,2000,01,02,03,04,05 Andrew M. Bishop
+  This file Copyright 1998,99,2000,01,02,03,04,05,06 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -52,6 +52,7 @@
 /* Local functions */
 
 static char /*@null@*/ /*@observer@*/ **get_languages(int *ndirs);
+static char /*@null@*/ *find_language_file(char* search);
 
 
 /* Local variables */
@@ -92,7 +93,7 @@ void LocalPage(int fd,URL *Url,Header *request_head,Body *request_body)
 
  path=URLDecodeGeneric(Url->path+1);
 
- if((file=FindLanguageFile(path)))
+ if((file=find_language_file(path)))
    {
     struct stat buf;
 
@@ -205,12 +206,12 @@ void SetLanguage(char *accept)
 /*++++++++++++++++++++++++++++++++++++++
   Find the language specific message file.
 
-  char *FindLanguageFile Returns the file name or NULL.
+  char *find_language_file Returns the file name or NULL.
 
   char* search The name of the file to search for (e.g. 'messages/foo.html' or 'local/bar.html').
   ++++++++++++++++++++++++++++++++++++++*/
 
-char *FindLanguageFile(char* search)
+static char *find_language_file(char* search)
 {
  char *file=NULL;
  int dirn=0;
@@ -274,7 +275,7 @@ int OpenLanguageFile(char* search)
 
  /* Find the file. */
 
- file=FindLanguageFile(search);
+ file=find_language_file(search);
 
  if(file)
    {

@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/certinfo.c 1.7 2006/02/28 19:26:03 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/certinfo.c 1.8 2006/04/03 17:57:12 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Generate information about the contents of the web pages that are cached in the system.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -282,13 +282,13 @@ static void CertificatesRootPage(int fd,int download)
 
  if(download)
    {
-    int fd;
+    int cert_fd;
     char buffer[IO_BUFFER_SIZE];
     int nbytes;
 
-    fd=open(certfile,O_RDONLY|O_BINARY);
+    cert_fd=open(certfile,O_RDONLY|O_BINARY);
 
-    if(fd<0)
+    if(cert_fd<0)
       {
        PrintMessage(Warning,"Could not open certificate file '%s' for writing [%!s].",certfile);
        HTMLMessage(fd,500,"WWWOFFLE Certificate Page Error",NULL,"ServerError",
@@ -301,10 +301,10 @@ static void CertificatesRootPage(int fd,int download)
                     "Content-Type",WhatMIMEType("*.pem"),
                     NULL);
 
-    while((nbytes=read(fd,buffer,IO_BUFFER_SIZE))>0)
+    while((nbytes=read(cert_fd,buffer,IO_BUFFER_SIZE))>0)
        write_data(fd,buffer,nbytes);
 
-    close(fd);
+    close(cert_fd);
    }
  else
     load_display_certificate(fd,certfile,"root","root");

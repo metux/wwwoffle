@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle-tools.c 1.60 2006/01/08 10:27:22 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle-tools.c 1.61 2006/04/21 18:46:41 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Tools for use in the cache for version 2.x.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -75,15 +75,16 @@
 #endif
 
 #define LS         1            /*+ For the 'ls' operation. +*/
-#define LS_SPECIAL 2            /*+ For the 'ls' operation on special directories. +*/
-#define MV         3            /*+ For the 'mv' operation. +*/
-#define RM         4            /*+ For the 'rm' operation. +*/
-#define READ       5            /*+ For the 'read' operation. +*/
-#define WRITE      6            /*+ For the 'write' operation. +*/
-#define HASH       7            /*+ For the 'hash' operation. +*/
-#define GZIP       8            /*+ For the 'gzip' operation. +*/
-#define GUNZIP     9            /*+ For the 'gunzip' operation. +*/
-#define FSCK      10            /*+ For the 'fsck' operation. +*/
+#define LS_DIR     2            /*+ For the 'ls' operation on directories. +*/
+#define LS_SPECIAL 3            /*+ For the 'ls' operation on special directories. +*/
+#define MV         4            /*+ For the 'mv' operation. +*/
+#define RM         5            /*+ For the 'rm' operation. +*/
+#define READ       6            /*+ For the 'read' operation. +*/
+#define WRITE      7            /*+ For the 'write' operation. +*/
+#define HASH       8            /*+ For the 'hash' operation. +*/
+#define GZIP       9            /*+ For the 'gzip' operation. +*/
+#define GUNZIP    10            /*+ For the 'gunzip' operation. +*/
+#define FSCK      11            /*+ For the 'fsck' operation. +*/
 
 /*+ A compile time option to not actually make any changes to files for debugging. +*/
 #define MAKE_CHANGES 1
@@ -91,7 +92,8 @@
 
 /* Local functions */
 
-static int wwwoffle_ls(URL *Url);
+static int wwwoffle_ls_url(URL *Url);
+static int wwwoffle_ls_dir(char *name);
 static int wwwoffle_ls_special(char *name);
 static int wwwoffle_mv(URL *Url1,URL *Url2);
 static int wwwoffle_rm(URL *Url);
@@ -195,6 +197,18 @@ int main(int argc,char **argv)
           !strcmp(argv[i],"lasttime") || (!strncmp(argv[i],"prevtime",(size_t)8) && isdigit(argv[i][8])) || 
           !strcmp(argv[i],"lastout")  || (!strncmp(argv[i],"prevout",(size_t)7)  && isdigit(argv[i][7])))
           mode=LS_SPECIAL;
+       else
+         {
+          int c=0;
+          char *p=argv[i];
+
+          while(*p)
+             if(*p++=='/')
+                c++;
+
+          if(c==1)
+             mode=LS_DIR;
+         }
 
  /* Find the configuration file */
 
@@ -228,9 +242,12 @@ int main(int argc,char **argv)
    {fprintf(stderr,"%s version %s\n",argv0,WWWOFFLE_VERSION);exit(0);}
 
  else if((mode==LS && (argc<2 || (argc>1 && !strcmp(argv[1],"--help")))) ||
+         (mode==LS_DIR && (argc!=2 || (argc>1 && !strcmp(argv[1],"--help")))) ||
          (mode==LS_SPECIAL && (argc!=2 || (argc>1 && !strcmp(argv[1],"--help")))))
    {fprintf(stderr,"Usage: wwwoffle-ls [-c <config-file>]\n"
-                   "                   ( <dir>/<subdir> | <protocol>://<host> | <URL> ) ...\n"
+                   "                   <URL> ...\n"
+                   "       wwwoffle-ls [-c <config-file>]\n"
+                   "                   <dir>/<subdir>\n"
                    "       wwwoffle-ls [-c <config-file>]\n"
                    "                   ( outgoing | lastout | prevout[0-9] |\n"
                    "                     monitor | lasttime | prevtime[0-9] )\n");exit(0);}
@@ -297,7 +314,7 @@ int main(int argc,char **argv)
 
  /* Get the arguments */
 
- if(mode!=LS_SPECIAL)
+ if(mode!=LS_DIR && mode!=LS_SPECIAL)
    {
     Url=(URL**)malloc(argc*sizeof(URL*));
 
@@ -329,7 +346,9 @@ int main(int argc,char **argv)
 
  if(mode==LS)
     for(i=1;i<argc;i++)
-       exitval+=wwwoffle_ls(Url[i]);
+       exitval+=wwwoffle_ls_url(Url[i]);
+ else if(mode==LS_DIR)
+    exitval=wwwoffle_ls_dir(argv[1]);
  else if(mode==LS_SPECIAL)
     exitval=wwwoffle_ls_special(argv[1]);
  else if(mode==MV)
@@ -429,14 +448,14 @@ int main(int argc,char **argv)
 
 
 /*++++++++++++++++++++++++++++++++++++++
-  List the URLs within a directory of the cache.
+  List the single specified URL from the cache.
 
-  int wwwoffle_ls Return 1 in case of error or 0 if OK.
+  int wwwoffle_ls_url Return 1 in case of error or 0 if OK.
 
   URL *Url The URL to list.
   ++++++++++++++++++++++++++++++++++++++*/
 
-static int wwwoffle_ls(URL *Url)
+static int wwwoffle_ls_url(URL *Url)
 {
  int retval=0;
 
@@ -446,34 +465,58 @@ static int wwwoffle_ls(URL *Url)
  if(chdir(URLToDirName(Url)))
    {PrintMessage(Warning,"Cannot change to directory '%s/%s' [%!s].",Url->proto,URLToDirName(Url));ChangeBackToSpoolDir();return(1);}
 
- if(strcmp(Url->path,"/"))
+ retval=ls(URLToFileName(Url,'D',0));
+
+ ChangeBackToSpoolDir();
+
+ return(retval);
+}
+
+
+/*++++++++++++++++++++++++++++++++++++++
+  List the URLs within a directory of the cache.
+
+  int wwwoffle_ls_dir Return 1 in case of error or 0 if OK.
+
+  char *name The directory name (protocol/hostname) to list.
+  ++++++++++++++++++++++++++++++++++++++*/
+
+static int wwwoffle_ls_dir(char *name)
+{
+ int retval=0;
+ struct dirent* ent;
+ DIR *dir;
+ char *slash;
+
+ slash=strchr(name,'/');
+ *slash++=0;
+
+ if(chdir(name))
+   {PrintMessage(Warning,"Cannot change to directory '%s' [%!s].",name);return(1);}
+
+ if(chdir(slash))
+   {PrintMessage(Warning,"Cannot change to directory '%s/%s' [%!s].",name,slash);ChangeBackToSpoolDir();return(1);}
+
+ dir=opendir(".");
+
+ if(!dir)
+   {PrintMessage(Warning,"Cannot open current directory '%s/%s' [%!s].",name,slash);ChangeBackToSpoolDir();return(1);}
+
+ ent=readdir(dir);
+ if(!ent)
+   {PrintMessage(Warning,"Cannot read current directory '%s/%s' [%!s].",name,slash);closedir(dir);ChangeBackToSpoolDir();return(1);}
+
+ do
    {
-    retval+=ls(URLToFileName(Url,'D',0));
+    if(ent->d_name[0]=='.' && (ent->d_name[1]==0 || (ent->d_name[1]=='.' && ent->d_name[2]==0)))
+       continue; /* skip . & .. */
+
+    if(*ent->d_name=='D' && ent->d_name[strlen(ent->d_name)-1]!='~')
+       retval+=ls(ent->d_name);
    }
- else
-   {
-    struct dirent* ent;
-    DIR *dir=opendir(".");
+ while((ent=readdir(dir)));
 
-    if(!dir)
-      {PrintMessage(Warning,"Cannot open current directory '%s/%s' [%!s].",Url->proto,URLToDirName(Url));ChangeBackToSpoolDir();return(1);}
-
-    ent=readdir(dir);
-    if(!ent)
-      {PrintMessage(Warning,"Cannot read current directory '%s/%s' [%!s].",Url->proto,URLToDirName(Url));closedir(dir);ChangeBackToSpoolDir();return(1);}
-
-    do
-      {
-       if(ent->d_name[0]=='.' && (ent->d_name[1]==0 || (ent->d_name[1]=='.' && ent->d_name[2]==0)))
-          continue; /* skip . & .. */
-
-       if(*ent->d_name=='D' && ent->d_name[strlen(ent->d_name)-1]!='~')
-          retval+=ls(ent->d_name);
-      }
-    while((ent=readdir(dir)));
-
-    closedir(dir);
-   }
+ closedir(dir);
 
  ChangeBackToSpoolDir();
 

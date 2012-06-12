@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iopriv.h 1.15 2006/01/20 19:01:29 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/iopriv.h 1.16 2006/07/21 17:46:52 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Functions for file input and output (private data structures).
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -187,8 +187,8 @@ int io_finish_zlib_uncompress(io_zlib *context,/*@null@*/ io_buffer *out);
 io_gnutls /*@null@*/ /*@special@*/ *io_init_gnutls(int fd,/*@null@*/ const char *host,int type) /*@allocates result@*/;
 int io_finish_gnutls(io_gnutls *context);
 
-int io_gnutls_read_with_timeout(io_gnutls *context,io_buffer *out,unsigned timeout);
-int io_gnutls_write_with_timeout(io_gnutls *context,io_buffer *in,unsigned timeout);
+ssize_t io_gnutls_read_with_timeout(io_gnutls *context,io_buffer *out,unsigned timeout);
+ssize_t io_gnutls_write_with_timeout(io_gnutls *context,io_buffer *in,unsigned timeout);
 
 #endif /* USE_GNUTLS */
 

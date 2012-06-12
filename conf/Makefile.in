@@ -1,12 +1,12 @@
-# $Header: /home/amb/wwwoffle/conf/RCS/Makefile.in 1.7 2003/12/09 19:38:23 amb Exp $
+# $Header: /home/amb/wwwoffle/conf/RCS/Makefile.in 1.8 2006/04/21 18:24:12 amb Exp $
 #
-# WWWOFFLE - World Wide Web Offline Explorer - Version 2.8b.
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
 #
 # Configuration file Makefile.
 #
 # Written by Andrew M. Bishop
 #
-# This file Copyright 1996,97,98,99,2000,01,02,03 Andrew M. Bishop
+# This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
 # It may be distributed under the GNU Public License, version 2, or
 # any higher version.  See section COPYING of the GNU Public license
 # for conditions under which this file may be redistributed.
@@ -48,9 +48,16 @@ install : compile
 	sed -e 's%SPOOLDIR%$(REAL_SPOOLDIR)%' -e 's%CONFDIR%$(REAL_CONFDIR)%' < wwwoffle.conf > wwwoffle.conf.install
 	[ -x $(CONFDIR) ] || $(INSTALL) -d -m 750 $(CONFDIR)
 	@[ ! -f $(DESTDIR)/etc/wwwoffle.conf ] || \
+	 [ $(DESTDIR)/etc/wwwoffle.conf = $(CONFDIR)/wwwoffle.conf ] || \
 	 (echo "WWWOFFLE: " ;\
 	  echo "WWWOFFLE: There is a config file $(DESTDIR)/etc/wwwoffle.conf." ;\
-	  echo "WWWOFFLE: This is no longer the recommended location, use $(CONFDIR)/wwwoffle.conf." ;\
+	  echo "WWWOFFLE: This is no longer the recommended location." ;\
+	  echo "WWWOFFLE: The preferred location is $(DESTDIR)/etc/wwwoffle/wwwoffle.conf instead." ;\
+	  echo "WWWOFFLE: " )
+	@[ ! $(DESTDIR)/etc/wwwoffle.conf = $(CONFDIR)/wwwoffle.conf ] || \
+	 (echo "WWWOFFLE: " ;\
+	  echo "WWWOFFLE: The configuration file location /etc/wwwoffle.conf is not recommended." ;\
+	  echo "WWWOFFLE: The preferred location is /etc/wwwoffle/wwwoffle.conf instead." ;\
 	  echo "WWWOFFLE: " )
 	@[ ! -f $(CONFDIR)/wwwoffle.conf ] || \
 	 (echo "WWWOFFLE: " ;\

@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffles.c 2.314 2006/02/20 19:27:48 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/wwwoffles.c 2.317 2006/07/20 16:44:40 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   A server to fetch the required pages.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -1807,7 +1807,7 @@ passwordagain:
       }
 #endif
 
-    /* Add the chunked encoding header */
+    /* Add the chunked encoding header and modify the connection header */
 
     if(ConfigBooleanURL(RequestChunkedData,Url))
       {
@@ -1815,6 +1815,13 @@ passwordagain:
 
        ChangeVersionInHeader(request_head,"HTTP/1.1");
        AddToHeader(request_head,"TE","chunked");
+
+       /* The following line is required by HTTP/1.1 specification.  The "bad-behaviour"
+          PHP script may stop WWWOFFLE access to web sites if it is not present.
+          If the line is included then IIS servers don't recognise the "Connection: close"
+          header and keep WWWOFFLE waiting until there is a connection timeout.
+       AddToHeader(request_head,"Connection","TE");
+       */
       }
    }
 
@@ -3026,7 +3033,7 @@ internalpage:
   This function is used as a callback from gifmodify.c and htmlmodify.l
   ++++++++++++++++++++++++++++++++++++++*/
 
-int wwwoffles_read_data(char *data,size_t len)
+ssize_t wwwoffles_read_data(char *data,size_t len)
 {
  if(modify_err==-1)
     return(0);

@@ -1,3 +1,28 @@
+Version 2.9a of WWWOFFLE released : Sun Aug 13 10:00:00 2006
+------------------------------------------------------------
+
+Bug Fixes:
+ Fix crash with serving CA certificate.  On the info page show info for the alias
+ if there is one.  Forced refresh headers take precedence over other options
+ again.  Makefile config file installation error messages clarified.  Fix
+ formatting in wwwoffle.conf manual page.  Handle compressed, chunked body of
+ zero length.  Remove 'Keep-Alive' header.  Remove trailing spaces when parsing
+ headers (fixes header censoring).  More fixes for 64-bit compilation.  Fix some
+ allocated string lengths.  Keep '()' characters in attribute values when
+ modifying HTML.
+
+New Features:
+ Added option 'disable-iframe' to ModifyHTML section to disable inline frames.
+
+Programs:
+ The wwwoffle-ls program lists only single URL unless a directory name is used.
+
+
+*NOTE* The change to the wwwoffle-ls program means that the hyperestraier
+       indexing script estwolefind may no longer work.  Edit estwolefind and
+       in the lines that contain 'wwwoffle-ls' replace '://' with '/'.
+
+
 Version 2.9 of WWWOFFLE released : Sun Apr 2 17:00:00 2006
 ----------------------------------------------------------
 

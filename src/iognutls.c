@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iognutls.c 1.11 2006/01/22 09:42:23 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/iognutls.c 1.13 2006/07/21 17:46:52 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Functions for file input and output using gnutls.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -207,7 +207,7 @@ int io_finish_gnutls(io_gnutls *context)
 /*++++++++++++++++++++++++++++++++++++++
   Read data from a gnutls session and buffer it with a timeout.
 
-  int io_gnutls_read_with_timeout Returns the number of bytes read.
+  ssize_t io_gnutls_read_with_timeout Returns the number of bytes read.
 
   io_gnutls *context The gnutls context information.
 
@@ -216,7 +216,7 @@ int io_finish_gnutls(io_gnutls *context)
   unsigned timeout The maximum time to wait for data to be read (or 0 for no timeout).
   ++++++++++++++++++++++++++++++++++++++*/
 
-int io_gnutls_read_with_timeout(io_gnutls *context,io_buffer *out,unsigned timeout)
+ssize_t io_gnutls_read_with_timeout(io_gnutls *context,io_buffer *out,unsigned timeout)
 {
  int n;
 
@@ -281,16 +281,16 @@ static void sigalarm(/*@unused@*/ int signum)
 /*++++++++++++++++++++++++++++++++++++++
   Write some data to a gnutls session from a buffer with a timeout.
 
-  int io_gnutls_write_with_timeout Returns the number of bytes written or negative on error.
+  ssize_t io_gnutls_write_with_timeout Returns the number of bytes written or negative on error.
 
-  int fd The file descriptor to write to.
+  io_gnutls *context The gnutls context information.
 
   io_buffer *in The IO buffer with the input data.
 
   unsigned timeout The maximum time to wait for data to be written (or 0 for no timeout).
   ++++++++++++++++++++++++++++++++++++++*/
 
-int io_gnutls_write_with_timeout(io_gnutls *context,io_buffer *in,unsigned timeout)
+ssize_t io_gnutls_write_with_timeout(io_gnutls *context,io_buffer *in,unsigned timeout)
 {
  int n;
  struct sigaction action;

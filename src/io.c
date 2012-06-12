@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/io.c 2.54 2006/01/20 19:01:29 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/io.c 2.57 2006/07/21 17:37:34 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Functions for file input and output.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -374,7 +374,7 @@ int configure_io_gnutls(int fd,const char *host,int type)
   int change_buffers_w A flag to indicate that the write buffers need changing.
   ++++++++++++++++++++++++++++++++++++++*/
 
-void change_buffers(io_context *context,int change_buffers_r,int change_buffers_w)
+static void change_buffers(io_context *context,int change_buffers_r,int change_buffers_w)
 {
  /* Change the read buffers */
 
@@ -581,7 +581,11 @@ ssize_t read_data(int fd,char *buffer,size_t n)
           if(err<0) break;
           err=io_chunk_decode(context->r_file_data,context->r_chunk_context,context->r_zlch_data);
           if(err<0) break;
-          err=io_zlib_uncompress(context->r_zlch_data,context->r_zlib_context,&iobuffer);
+
+          /* Try uncompressing only if chunking is finished or there is data or zlib is initialised. */
+          if(err==1 || context->r_zlch_data->length>0 || context->r_zlib_context->stream.state)
+             err=io_zlib_uncompress(context->r_zlch_data,context->r_zlib_context,&iobuffer);
+
           if(err<0 || err==1) break;
          }
        while(iobuffer.length==0);
@@ -937,7 +941,7 @@ ssize_t write_string(int fd,const char *str)
 /*++++++++++++++++++++++++++++++++++++++
   Write a formatted string to a file descriptor like fprintf does to a FILE*.
 
-  int write_formatted Returns the number of bytes written.
+  ssize_t write_formatted Returns the number of bytes written.
 
   int fd The file descriptor.
 

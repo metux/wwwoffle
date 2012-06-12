@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/configdata.c 2.159 2006/02/11 20:00:24 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/configdata.c 2.160 2006/04/06 18:13:38 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Configuration data functions.
@@ -422,6 +422,9 @@ ConfigItem DisableHTMLMarquee;
 /*+ The option to disable Shockwave Flash animations. +*/
 ConfigItem DisableHTMLFlash;
 
+/*+ The option to disable any <iframe> tags. +*/
+ConfigItem DisableHTMLIFrame;
+
 /*+ The option to disable any <meta http-equiv=Refresh content=""> tags. +*/
 ConfigItem DisableHTMLMetaRefresh;
 
@@ -474,6 +477,7 @@ static ConfigItemDef modifyhtml_itemdefs[]={
  {"disable-blink"            ,&DisableHTMLBlink           ,1,0,Fixed,Boolean,"no"},
  {"disable-marquee"          ,&DisableHTMLMarquee         ,1,0,Fixed,Boolean,"no"},
  {"disable-flash"            ,&DisableHTMLFlash           ,1,0,Fixed,Boolean,"no"},
+ {"disable-iframe"           ,&DisableHTMLIFrame          ,1,0,Fixed,Boolean,"no"},
  {"disable-meta-refresh"     ,&DisableHTMLMetaRefresh     ,1,0,Fixed,Boolean,"no"},
  {"disable-meta-refresh-self",&DisableHTMLMetaRefreshSelf ,1,0,Fixed,Boolean,"no"},
  {"disable-meta-set-cookie"  ,&DisableHTMLMetaSetCookie   ,1,0,Fixed,Boolean,"no"},

@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/headbody.c 1.25 2005/07/12 17:50:43 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/headbody.c 1.26 2006/07/16 08:38:07 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Header and Body handling functions.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -235,7 +235,7 @@ int AddToHeaderRaw(Header *head,char *line)
  /* trim line */
 
  while(r>line && isspace(*r))
-    r--;
+    *r--=0;
 
  /* last line */
 
@@ -249,7 +249,6 @@ int AddToHeaderRaw(Header *head,char *line)
     key=NULL;
     val=line;
     
-    *++r=0;
     while(*val && isspace(*val))
        val++;
     *--val=' ';
@@ -266,12 +265,15 @@ int AddToHeaderRaw(Header *head,char *line)
    
     if(!*val)
        return(-1);				/* malformed header */
-    
-    *++r=0;
+
+    r=val-1;
+    while(r>line && isspace(*r))
+       *r--=0;
+
     *val++=0;
     while(*val && isspace(*val))
        val++;
- }
+   }
 
  /* Add to the header */
 

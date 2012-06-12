@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/configrdwr.c 1.73 2006/01/07 16:10:38 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/configrdwr.c 1.74 2006/07/16 08:38:52 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Configuration file reading and writing functions.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -1353,7 +1353,7 @@ char *ParseKeyOrValue(const char *text,ConfigType type,KeyOrValue *pointer)
 
    case FileExt:
     if(!*text)
-      {errmsg=(char*)malloc((size_t)40);strcpy(errmsg,"Expecting a file extension, got nothing.");}
+      {errmsg=malloc(48);strcpy(errmsg,"Expecting a file extension, got nothing.");}
     else if(*text!='.')
       {errmsg=(char*)malloc(40+strlen(text));sprintf(errmsg,"Expecting a file extension, got '%s'.",text);}
     else
@@ -1365,7 +1365,7 @@ char *ParseKeyOrValue(const char *text,ConfigType type,KeyOrValue *pointer)
 
    case FileMode:
     if(!*text)
-      {errmsg=(char*)malloc((size_t)40);strcpy(errmsg,"Expecting a file permissions mode, got nothing.");}
+      {errmsg=malloc(48);strcpy(errmsg,"Expecting a file permissions mode, got nothing.");}
     else if(!isanumber(text) || *text!='0')
       {errmsg=(char*)malloc(56+strlen(text));sprintf(errmsg,"Expecting an octal file permissions mode, got '%s'.",text);}
     else

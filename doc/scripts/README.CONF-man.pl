@@ -1,9 +1,10 @@
 #!/usr/bin/perl
+# -*- cperl -*-
 
 #
-# Copyright Andrew M. Bishop 1996.97,98,2001.
+# Copyright Andrew M. Bishop 1996.97,98,2001,06.
 #
-# $Header: /home/amb/wwwoffle/doc/scripts/RCS/README.CONF-man.pl 1.2 2003/06/15 11:08:22 amb Exp $
+# $Header: /home/amb/wwwoffle/doc/scripts/RCS/README.CONF-man.pl 1.3 2006/04/24 18:04:20 amb Exp $
 #
 # Usage: README.CONF-man.pl wwwoffle.conf.man.template < README.CONF > wwwoffle.conf.man
 #
@@ -75,6 +76,7 @@ while(<STDIN>)
      {
       s/-/\\-/g;
       s/\./\\./g;
+      s/\'/\\'/g;
 
       print ".TP\n.B $_\n";
 
@@ -88,6 +90,7 @@ while(<STDIN>)
      {
       s/-/\\-/g;
       s/\./\\./g;
+      s/\'/\\'/g;
 
       print ".TP\n.B $_\n";
 
@@ -112,6 +115,7 @@ while(<STDIN>)
 
       s/-/\\-/g;
       s/\./\\./g;
+      s/\'/\\'/g;
 
       print ".TP\n.B $thing\n$descrip\n";
 
@@ -128,9 +132,11 @@ while(<STDIN>)
 
       s/-/\\-/g;
       s/\./\\./g;
+      s/\'/\\'/g;
 
-      s%(wwwoffle\\.conf|CHANGES\\.CONF|URL\\-SPECIFICATION|URL\\-SPEC|WILDCARD) *%\n.I $1\n%g;
+      s%(wwwoffle\\.conf|CHANGES\\.CONF|URL\\-SPECIFICATION|<?URL\\-SPEC>?|WILDCARD) *%\n.I $1\n%g;
       s%^\n%%;
+      s%\n\\\. +%.\n%g;
 
       print ".LP\n" if($blank);
       print "$_\n";
