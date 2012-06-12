@@ -30,7 +30,7 @@ $urlspec1="([^ \t:<!]+)://([^ \t/=]+)(/?[^ \t=>]*)";
 # The new options that have been added (since version 2.7).
 
 %new_Options=(
-              "reply-chunked-data *=" , "reply-chunked-data = yes"
+              "reply-chunked-data *=" , "reply-chunked-data = no"
              );
 
 %new_OnlineOptions=(

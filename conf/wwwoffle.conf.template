@@ -48,7 +48,7 @@ Options
  lock-files            = no
 
  reply-compressed-data = no
- reply-chunked-data    = yes
+ reply-chunked-data    = no
 
 #exec-cgi = /local/cgi-bin/*
 #exec-cgi = /local/*.cgi
