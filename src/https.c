@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/https.c 1.5 2007/06/25 18:25:45 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/https.c 1.6 2010/01/19 19:53:23 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Functions for getting URLs using HTTPS.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1997-2010 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -88,7 +88,7 @@ char *HTTPS_Open(URL *Url)
 
  if(server==-1)
    {
-    msg=GetPrintMessage(Warning,"Cannot open the HTTPS connection to %s port %d; [%!s].",server_host,server_port);
+    msg=GetPrintMessage(Warning,"Cannot open the https (SSL) connection to %s port %d; [%!s].",server_host,server_port);
     return(msg);
    }
  else
@@ -121,10 +121,10 @@ char *HTTPS_Open(URL *Url)
 
     head=HeaderString(connect_request);
 
-    PrintMessage(ExtraDebug,"Outgoing Request Head (to SSL proxy)\n%s",head);
+    PrintMessage(ExtraDebug,"Outgoing Request Head (to https (SSL) proxy)\n%s",head);
 
     if(write_string(server,head)==-1)
-       msg=GetPrintMessage(Warning,"Failed to write to remote SSL proxy; [%!s].");
+       msg=GetPrintMessage(Warning,"Failed to write to remote https (SSL) proxy; [%!s].");
 
     if(Url->port==-1)
        free(hostport);
@@ -139,12 +139,12 @@ char *HTTPS_Open(URL *Url)
     if(StderrLevel==ExtraDebug)
       {
        head=HeaderString(connect_reply);
-       PrintMessage(ExtraDebug,"Incoming Reply Head (from SSL proxy)\n%s",head);
+       PrintMessage(ExtraDebug,"Incoming Reply Head (from https (SSL) proxy)\n%s",head);
        free(head);    
       }
 
     if(connect_status!=200)
-       msg=GetPrintMessage(Warning,"Received error message from SSL proxy; code=%d.",connect_status);
+       msg=GetPrintMessage(Warning,"Received error message from https (SSL) proxy; code=%d.",connect_status);
 
     FreeHeader(connect_reply);
 
@@ -153,7 +153,7 @@ char *HTTPS_Open(URL *Url)
    }
 
  if(configure_io_gnutls(server,Url->hostport,0))
-    msg=GetPrintMessage(Warning,"Cannot secure the HTTPS connection to %s port %d; [%!s].",server_host,server_port);
+    msg=GetPrintMessage(Warning,"Cannot secure the https (SSL) connection to %s port %d; [%!s].",server_host,server_port);
 
  return(msg);
 }
@@ -192,10 +192,10 @@ char *HTTPS_Request(URL *Url,Header *request_head,Body *request_body)
     PrintMessage(ExtraDebug,"Outgoing Request Head (to server)\n%s",head);
 
  if(write_string(server,head)==-1)
-    msg=GetPrintMessage(Warning,"Failed to write head to remote HTTPS %s; [%!s].",proxyUrl?"proxy":"server");
+    msg=GetPrintMessage(Warning,"Failed to write head to remote https (SSL) %s; [%!s].",proxyUrl?"proxy":"server");
  if(request_body)
     if(write_data(server,request_body->content,request_body->length)==-1)
-       msg=GetPrintMessage(Warning,"Failed to write body to remote HTTPS %s; [%!s].",proxyUrl?"proxy":"server");
+       msg=GetPrintMessage(Warning,"Failed to write body to remote https (SSL) %s; [%!s].",proxyUrl?"proxy":"server");
 
  free(head);
 

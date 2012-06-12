@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
 #
-# A Perl script to update the configuration file to version 2.9d standard (from version 2.8).
+# A Perl script to update the configuration file to version 2.9f standard (from version 2.8).
 #
 # Written by Andrew M. Bishop
 #
-# This file Copyright 2000-2007 Andrew M. Bishop
+# This file Copyright 2000-2009 Andrew M. Bishop
 # It may be distributed under the GNU Public License, version 2, or
 # any higher version.  See section COPYING of the GNU Public license
 # for conditions under which this file may be redistributed.
@@ -22,7 +22,7 @@ $#ARGV==0 || die "Usage: $0 wwwoffle.conf\n";
 
 $conf=$ARGV[0];
 
-$version="2.9";
+$version="2.9f";
 
 $urlspec="[^ \t:<!]+://[^ \t/=]+/?[^ \t=>]*";
 $urlspec1="([^ \t:<!]+)://([^ \t/=]+)(/?[^ \t=>]*)";
@@ -34,6 +34,8 @@ $urlspec1="([^ \t:<!]+)://([^ \t/=]+)(/?[^ \t=>]*)";
              );
 
 %new_SSLOptions=(
+                 "quick-key-gen *="   , "quick-key-gen = no",
+                 "expiration-time *=" , "expiration-time = 1y",
                  "enable-caching *="  , "enable-caching = no",
                  "allow-tunnel *="    , "#allow-tunnel = *:443"
                 );

@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/certificates.c 1.32 2007/07/08 17:52:39 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/certificates.c 1.34 2009/03/13 19:28:37 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Certificate handling functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 2005,06 Andrew M. Bishop
+  This file Copyright 2005-09 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -43,6 +43,7 @@
 #if USE_GNUTLS
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
+#include <gcrypt.h>
 #endif
 
 #include "wwwoffle.h"
@@ -124,6 +125,11 @@ int LoadRootCredentials(void)
  if(!initialised)
     gnutls_global_init();
  initialised=1;
+
+ /* Use faster but less secure key generation. */
+
+ if(ConfigBoolean(SSLQuickKeyGen))
+    gcry_control(GCRYCTL_ENABLE_QUICK_RANDOM,0);
 
  /* Create the certificates directory if needed */
 
@@ -1024,7 +1030,7 @@ static int CreateCertificate(const char *filename,const char *fake_hostname,cons
  if(err<0)
    {PrintMessage(Warning,"Could not set the certificate activation time for '%s' [%s].",errmsg_hostname,gnutls_strerror(err));return(11);}
 
- err=gnutls_x509_crt_set_expiration_time(crt,time(NULL)+365*24*3600);
+ err=gnutls_x509_crt_set_expiration_time(crt,time(NULL)+ConfigInteger(SSLCertExpiry)*24*3600);
  if(err<0)
    {PrintMessage(Warning,"Could not set the certificate expiration time for '%s' [%s].",errmsg_hostname,gnutls_strerror(err));return(12);}
 

@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffles.c 2.322 2009/01/14 19:52:55 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/wwwoffles.c 2.325 2010/01/19 19:53:33 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   A server to fetch the required pages.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996-2009 Andrew M. Bishop
+  This file Copyright 1996-2010 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -172,7 +172,7 @@ int wwwoffles(int online,int fetching,int client)
 
        if(port==ConfigInteger(HTTPS_Port))
           if(configure_io_gnutls(client,host,1))
-             PrintMessage(Fatal,"Cannot start SSL/TLS connection");
+             PrintMessage(Fatal,"Cannot start SSL/TLS connection for https port.");
       }
    }
 
@@ -345,7 +345,7 @@ int wwwoffles(int online,int fetching,int client)
        PrintMessage(Warning,"A 'CONNECT' method request for '%s' cannot be handled in Spool mode.",Url->hostport);
 
        HTMLMessage(client,500,"WWWOFFLE Server Error",NULL,"ServerError",
-                   "error","SSL proxy connection while offline is not allowed.",
+                   "error","An https (SSL) connection while offline is not allowed.",
                    NULL);
        mode=InternalPage; goto internalpage;
       }
@@ -424,7 +424,7 @@ int wwwoffles(int online,int fetching,int client)
           err=configure_io_gnutls(client,Url->host,2);
 
        if(err)
-          PrintMessage(Fatal,"Could not initialise SSL connection to client.");
+          PrintMessage(Fatal,"Could not initialise https (SSL) connection to client.");
 
        SetLocalPort(ConfigInteger(HTTPS_Port));
 
@@ -436,16 +436,26 @@ int wwwoffles(int online,int fetching,int client)
 
        goto checkrequest;
       }
-#endif
     else
       {
-       PrintMessage(Warning,"A SSL proxy connection for %s was received but is not allowed.",Url->hostport);
+       PrintMessage(Warning,"An https (SSL) cached proxy connection for %s was received but is not allowed.",Url->hostport);
 
        HTMLMessage(client,500,"WWWOFFLE Server Error",NULL,"ServerError",
-                   "error","SSL proxy connection to specified host and port is not allowed.",
+                   "error","An https (SSL) cached proxy connection to specified host (and port) is not allowed.",
                    NULL);
        mode=InternalPage; goto internalpage;
       }
+#else
+    else
+      {
+       PrintMessage(Warning,"An https (SSL) non-tunneled proxy connection for %s was received but is not supported.",Url->hostport);
+
+       HTMLMessage(client,500,"WWWOFFLE Server Error",NULL,"ServerError",
+                   "error","An https (SSL) non-tunneled proxy connection is not supported.",
+                   NULL);
+       mode=InternalPage; goto internalpage;
+      }
+#endif
    }
  else if(strcmp(request_head->method,"GET") &&
          strcmp(request_head->method,"HEAD") &&
@@ -489,10 +499,10 @@ int wwwoffles(int online,int fetching,int client)
    {
     if(IsSSLAllowed(Url,0)) /* tunnel SSL connection */
       {
-       PrintMessage(Warning,"A SSL request for %s was received but tunnelling only is allowed.",Url->hostport);
+       PrintMessage(Warning,"An https (SSL) tunneled request for %s was received but is not allowed when fetching.",Url->hostport);
 
        if(client!=-1)
-          write_formatted(client,"Cannot fetch %s [HTTPS tunnelling not supported in this mode]\n",Url->name);
+          write_formatted(client,"Cannot fetch %s [https (SSL) tunnelling not allowed]\n",Url->name);
 
        /*@-mustfreefresh@*/
        return(1); /* We don't bother to free memory because return() is exit() in child. */
@@ -501,18 +511,30 @@ int wwwoffles(int online,int fetching,int client)
 #if USE_GNUTLS
     else if(ConfigBoolean(SSLEnableCaching) && IsSSLAllowed(Url,1)) /* cache SSL connection */
        ;
-#endif
     else
       {
-       PrintMessage(Warning,"A SSL request for %s was received but not allowed.",Url->hostport);
+       PrintMessage(Warning,"An https (SSL) request for %s was received but is not allowed.",Url->hostport);
 
        if(client!=-1)
-          write_formatted(client,"Cannot fetch %s [HTTPS not allowed for this host]\n",Url->name);
+          write_formatted(client,"Cannot fetch %s [https (SSL) not allowed for this host]\n",Url->name);
 
        /*@-mustfreefresh@*/
        return(1); /* We don't bother to free memory because return() is exit() in child. */
        /*@=mustfreefresh@*/
       }
+#else
+    else
+      {
+       PrintMessage(Warning,"An https (SSL) request for %s was received but is not supported when fetching.",Url->hostport);
+
+       if(client!=-1)
+          write_formatted(client,"Cannot fetch %s [https (SSL) not supported]\n",Url->name);
+
+       /*@-mustfreefresh@*/
+       return(1); /* We don't bother to free memory because return() is exit() in child. */
+       /*@=mustfreefresh@*/
+      }
+#endif
    }
 
 
@@ -1246,13 +1268,6 @@ passwordagain:
       }
    }
 
- /* If a HEAD request when online then don't cache */
-
- if((mode==Real || mode==RealRefresh) && head_only)
-   {
-    mode=RealNoCache;
-   }
-
  /* If not caching then only use the password version. */
 
  if(mode==RealNoCache && Urlpw)
@@ -1484,10 +1499,7 @@ passwordagain:
 
  else if(mode==Real)
    {
-    if(conditional_request_ims)
-       RemoveFromHeader(request_head,"If-Modified-Since");
-    if(conditional_request_inm)
-       RemoveFromHeader(request_head,"If-None-Match");
+    int not_modified=0;
 
     spool=-1;
 
@@ -1500,6 +1512,22 @@ passwordagain:
           init_io(spool);
       }
 
+    /* Check if the page has been modified in case of a conditional request */
+
+    if(spool!=-1 && (conditional_request_inm || conditional_request_ims))
+      {
+       if(!IsModified(spool,request_head))
+          not_modified=1;
+
+       lseek(spool,(off_t)0,SEEK_SET);
+       reinit_io(spool);
+      }
+
+    if(conditional_request_ims)
+       RemoveFromHeader(request_head,"If-Modified-Since");
+    if(conditional_request_inm)
+       RemoveFromHeader(request_head,"If-None-Match");
+
     /* if not cached or not openable then don't do anything else. */
 
     if(spool==-1)
@@ -1509,6 +1537,17 @@ passwordagain:
 
     else if(RequireChanges(spool,request_head,Url))
        ;
+
+    /* Return a not-modified header if it isn't modified. */
+
+    else if(not_modified)
+      {
+       DeleteLockWebpageSpoolFile(Url);
+
+       HTMLMessageHead(client,304,"WWWOFFLE Not Modified",
+                       NULL);
+       mode=InternalPage; goto internalpage;
+      }
 
     /* Otherwise just use the spooled version. */
 
@@ -1617,6 +1656,14 @@ passwordagain:
    {
     strcpy(request_head->method,"GET");
     request_head->size-=1;
+   }
+
+ /* If a HEAD request when online then don't cache */
+
+ if((mode==Real || mode==RealRefresh) && head_only)
+   {
+    DeleteLockWebpageSpoolFile(Url);
+    mode=RealNoCache;
    }
 
 

@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/configdata.c 2.162 2007/09/29 18:54:08 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/configdata.c 2.164 2009/03/13 19:28:37 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Configuration data functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997-2007 Andrew M. Bishop
+  This file Copyright 1997-2009 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -278,6 +278,12 @@ static ConfigSection offlineoptions_section={"OfflineOptions",
 
 /* SSLOptions section */
 
+/*+ The option to use weaker but faster key generation. +*/
+ConfigItem SSLQuickKeyGen;
+
+/*+ The expiration time of generated certificates. +*/
+ConfigItem SSLCertExpiry;
+
 /*+ The option to allow caching of SSL connections. +*/
 ConfigItem SSLEnableCaching;
 
@@ -295,7 +301,9 @@ ConfigItem SSLDisallowCache;
 
 /*+ The item definitions in the SSLOptions section. +*/
 static ConfigItemDef ssloptions_itemdefs[]={
- {"enable-caching" ,&SSLEnableCaching ,0,0,Fixed,Boolean        ,NULL},
+ {"quick-key-gen"  ,&SSLQuickKeyGen   ,0,0,Fixed,Boolean        ,"no"},
+ {"expiration-time",&SSLCertExpiry    ,0,0,Fixed,AgeDays        ,"1y"},
+ {"enable-caching" ,&SSLEnableCaching ,0,0,Fixed,Boolean        ,"no"},
  {"allow-tunnel"   ,&SSLAllowTunnel   ,0,1,Fixed,HostAndPortWild,NULL},
  {"disallow-tunnel",&SSLDisallowTunnel,0,1,Fixed,HostAndPortWild,NULL},
  {"allow-cache"    ,&SSLAllowCache    ,0,1,Fixed,HostAndPortWild,NULL},

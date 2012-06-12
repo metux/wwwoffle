@@ -86,14 +86,24 @@ else
       USE_ZLIB=1
    fi
 
-   AC_CHECK_LIB(z, zlibVersion,
-                WITH_ZLIB=yes,WITH_ZLIB=no,$ZLIB_LIB)
+   AC_CHECK_HEADERS(zlib.h,
+                    HAVE_ZLIB_H=yes)
 
-   if test "$WITH_ZLIB" = "no"; then
-      AC_MSG_WARN([Cannot find working libz library, configuring without compression support])
+   if test "$HAVE_ZLIB_H" = ""; then
+      AC_MSG_WARN([Cannot find zlib.h header file; configuring without compression support])
       ZLIB_LIB=
       ZLIB_INC=
       USE_ZLIB=0
+   else
+      AC_CHECK_LIB(z, zlibVersion,
+                   WITH_ZLIB=yes,WITH_ZLIB=no,$ZLIB_LIB)
+
+      if test "$WITH_ZLIB" = "no"; then
+         AC_MSG_WARN([Cannot find working libz library; configuring without compression support])
+         ZLIB_LIB=
+         ZLIB_INC=
+         USE_ZLIB=0
+      fi
    fi
 fi
 
@@ -115,30 +125,22 @@ if test "$WITH_GNUTLS" = "no"; then
    USE_GNUTLS=0
 else
    if test "$WITH_GNUTLS" = "yes"; then
-      AC_CHECK_PROG(LIBGNUTLS_CONFIG,libgnutls-config,libgnutls-config)
-
-      if test "$LIBGNUTLS_CONFIG" = ""; then
-         AC_MSG_WARN([Cannot find libgnutls-config program, configuring without SSL/https support])
-         WITH_LIBGNUTLS_CONFIG=0
-      else
-         WITH_LIBGNUTLS_CONFIG=1
-      fi
+      GNUTLS_INC=
+      GNUTLS_LIB=-lgnutls
    else
-      LIBGNUTLS_CONFIG="$WITH_GNUTLS/bin/libgnutls-config"
-
-      if test -x "$LIBGNUTLS_CONFIG" ; then
-         WITH_LIBGNUTLS_CONFIG=1
-      else
-         AC_MSG_WARN([Cannot find $WITH_GNUTLS/bin/libgnutls-config program, configuring without SSL/https support])
-         WITH_LIBGNUTLS_CONFIG=0
-      fi
+      GNUTLS_INC="$WITH_GNUTLS/include"
+      GNUTLS_LIB="$WITH_GNUTLS/lib"
    fi
 
-   if test "$WITH_LIBGNUTLS_CONFIG" = "1"; then
-      GNUTLS_LIB=`$LIBGNUTLS_CONFIG --libs`
-      GNUTLS_INC=`$LIBGNUTLS_CONFIG --cflags`
-      USE_GNUTLS=1
+   AC_CHECK_HEADERS(gnutls/gnutls.h,
+                    HAVE_GNUTLS_GNUTLS_H=yes)
 
+   if test "$HAVE_GNUTLS_GNUTLS_H" = ""; then
+      AC_MSG_WARN([Cannot find gnutls/gnutls.h header file; configuring without SSL/https support])
+      GNUTLS_LIB=
+      GNUTLS_INC=
+      USE_GNUTLS=0
+   else
       AC_CHECK_LIB(gnutls, gnutls_check_version,
                    WITH_GNUTLS=yes,WITH_GNUTLS=no,$GNUTLS_LIB)
 
@@ -147,11 +149,9 @@ else
          GNUTLS_LIB=
          GNUTLS_INC=
          USE_GNUTLS=0
+      else
+         USE_GNUTLS=1
       fi
-   else
-      GNUTLS_LIB=
-      GNUTLS_INC=
-      USE_GNUTLS=0
    fi
 fi
 

@@ -16,16 +16,16 @@ url             ({alphanum}|{nonascii}|{safepunct})+
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/css.l 1.12 2005/02/27 10:16:25 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/css.l 1.13 2009/03/13 19:29:50 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.8f.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Parse the CSS and look for the images and stylesheets.
   ******************/ /******************
   Written by Andrew M. Bishop
 
   Some parts of the lex scanner based on the CSS2 specification from W3C.
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05 Andrew M. Bishop
+  This file Copyright 1997-2009 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -139,6 +139,9 @@ static void parse_css(URL *Url)
 /*+ Needed in lex but does nothing. +*/
 #define css_yywrap() 1
 #endif
+
+/*+ Don't include the yyinput() or input() function in the lexer. +*/
+#define YY_NO_INPUT
 
 /*+ A macro to read data that can be used by the lexer. +*/
 #define YY_INPUT(buf,result,max_size) \

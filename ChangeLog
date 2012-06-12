@@ -1,3 +1,90 @@
+2010-01-31  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	Version 2.9f of WWWOFFLE released.
+
+2010-01-31  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/NEWS: Updated with news for this version.
+
+	* src/version.h: Updated version number.
+
+2010-01-22  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/document.c: Perform the MIME type check case insensitively.
+
+	* src/document.c:
+	Fix segmentation fault when getting list of references in parsed document.
+
+	* src/connect.c:
+	Clarify Last-Online and Last-Offline messages if never been online since
+	starting.
+
+2010-01-19  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c, src/ssl.c, src/https.c, doc/README.CONF:
+	Clarified documentation (SSL vs https) and improved error messages for https
+	failures.
+
+2009-11-29  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.CONF:
+	Clarify the meaning of the DontCompress:mime-type option.
+
+2009-08-23  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* conf/wwwoffle.conf.template: Updated version number.
+
+2009-07-19  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.CONF:
+	The webbugs are defined by what the HTML says, not what they actually are.
+
+2009-06-22  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	Return a 304 reply if online and the cached page won't be refreshed and meets
+	the conditions for this header.
+
+	* doc/README.CONF:
+	Clarification to request-conditional and validate-with-etag options.
+
+2009-06-07  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/parse.c:
+	Only remove "authorization" header if it is "basic" authentication.
+
+2009-05-28  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/INSTALL, configure.in:
+	Remove the use of the libgnutls-config program and search for the library in the
+	normal configure script method.
+
+2009-04-25  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/FAQ: Remove link to internet feedback form.
+
+2009-03-25  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	When making a HEAD request use the cached version if possible.
+
+2009-03-13  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/wwwoffle.man, src/connect.c, src/wwwoffle.c, src/wwwoffled.c:
+	Add a new option to the wwwoffle program to close and re-open the log file.
+
+	* src/css.l, src/html.l, src/htmlmodify.l:
+	Remove compilation warning with newer version of flex.
+
+	* conf/upgrade-config.pl, doc/CHANGES.CONF, doc/README.CONF, src/certificates.c,
+	src/config.h, src/configdata.c:
+	Add an option to expire certificates after a longer than default time.
+
+	* src/config.h, src/configdata.c, conf/upgrade-config.pl, doc/CHANGES.CONF, doc/README.CONF,
+	src/certificates.c:
+	Add an option to use a faster but weaker source of random numbers for key
+	generation (/dev/urandom instead of /dev/random).
+
 2009-01-25  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
 
 	Version 2.9e of WWWOFFLE released.

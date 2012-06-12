@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/connect.c 2.52 2007/04/20 16:04:29 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/connect.c 2.54 2010/01/22 19:00:53 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Handle WWWOFFLE connections received by the demon.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,05,07 Andrew M. Bishop
+  This file Copyright 1996-2010 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -85,6 +85,9 @@ extern int fetching;
 
 /*+ True if the -f option was passed on the command line. +*/
 extern int nofork;
+
+/*+ The name of the log file specified. +*/
+extern char *log_file;
 
 
 /*++++++++++++++++++++++++++++++++++++++
@@ -232,6 +235,18 @@ void CommandConnect(int client)
 
     PrintMessage(Important,"WWWOFFLE Finished Dumping Configuration File.");
    }
+ else if(!strncmp(&line[9],"CYCLELOG",(size_t)8))
+   {
+    if(log_file)
+      {
+       write_string(client,"WWWOFFLE Cycling Log File.\n");
+       PrintMessage(Important,"Closing and opening log file.");
+
+       OpenErrorLog(log_file);
+      }
+    else
+       write_string(client,"WWWOFFLE Has No Log File.\n"); /* Used in wwwoffle.c */
+   }
  else if(!strncmp(&line[9],"PURGE",(size_t)5))
    {
     pid_t pid;
@@ -318,12 +333,12 @@ void CommandConnect(int client)
     if(OnlineTime)
        write_formatted(client,"Last-Online  : %s\n",RFC822Date(OnlineTime,0));
     else
-       write_formatted(client,"Last-Online  : unknown\n");
+       write_formatted(client,"Last-Online  : not since started\n");
 
     if(OfflineTime)
        write_formatted(client,"Last-Offline : %s\n",RFC822Date(OfflineTime,0));
     else
-       write_formatted(client,"Last-Offline : unknown\n");
+       write_formatted(client,"Last-Offline : not since started\n");
 
     write_formatted(client,"Total-Servers: %d\n",n_servers);
     write_formatted(client,"Fetch-Servers: %d\n",n_fetch_servers);

@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/config.h 2.117 2007/09/29 18:54:08 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/config.h 2.119 2009/03/13 19:28:37 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Configuration file management functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997-2007 Andrew M. Bishop
+  This file Copyright 1997-2009 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -199,6 +199,12 @@ extern /*@null@*/ ConfigItem DontRequestOffline;
 
 
 /* SSLOptions section */
+
+/*+ The option to use weaker but faster key generation. +*/
+extern /*@null@*/ ConfigItem SSLQuickKeyGen;
+
+/*+ The expiration time of generated certificates. +*/
+extern /*@null@*/ ConfigItem SSLCertExpiry;
 
 /*+ The option to allow caching of SSL connections. +*/
 extern /*@null@*/ ConfigItem SSLEnableCaching;

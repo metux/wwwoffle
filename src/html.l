@@ -27,15 +27,15 @@ url             ({alphanum}|{nonascii}|{safepunct})+
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/html.l 2.94 2007/12/05 19:29:59 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/html.l 2.95 2009/03/13 19:29:50 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Parse the HTML and look for the images, links and other things.
   ******************/ /******************
   Written by Andrew M. Bishop
   Object and Parameter handling by Walter Pfannenmller
 
-  This file Copyright 1997-2007 Andrew M. Bishop
+  This file Copyright 1997-2009 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -873,6 +873,9 @@ static void parse_html(URL *Url)
     string=(char*)realloc((void*)string,stringlen=(stringused+newlen+1)); \
  strcpy(string+stringused,xx); \
  stringused+=newlen;
+
+/*+ Don't include the yyinput() or input() function in the lexer. +*/
+#define YY_NO_INPUT
 
 /*+ A macro to read data that can be used by the lexer. +*/
 #define YY_INPUT(buf,result,max_size) \

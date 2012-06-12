@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffled.c 2.82 2007/03/25 11:06:21 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/wwwoffled.c 2.83 2009/03/13 19:30:39 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   A demon program to maintain the database and spawn the servers.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,04,05 Andrew M. Bishop
+  This file Copyright 1996-2009 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -108,6 +108,12 @@ static int detached=1;
 /*+ True if the pid of the daemon should be printed at startup +*/
 static int print_pid=0;
 
+/*+ The name of the configuration file specified. +*/
+static char *config_file=NULL;
+
+/*+ The name of the log file specified. +*/
+char *log_file=NULL;
+
 /*+ True if the -f option was passed on the command line. +*/
 int nofork=0;
 
@@ -121,7 +127,6 @@ int main(int argc, char** argv)
  int i;
  int err;
  struct stat buf;
- char *config_file=NULL,*log_file=NULL;
  int uid,gid;
 
  /* Parse the command line options */

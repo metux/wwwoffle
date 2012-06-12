@@ -19,14 +19,14 @@ val             ({alphanum}|{nonascii}|{safepunct})+
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/htmlmodify.l 1.96 2007/07/21 13:23:54 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/htmlmodify.l 1.97 2009/03/13 19:29:50 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Parse the HTML and modify the source.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05,06,07 Andrew M. Bishop
+  This file Copyright 1997-2009 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -1743,6 +1743,9 @@ static void handle_high_bit(unsigned char ch)
     string=(char*)realloc((void*)string,stringlen=(stringused+newlen+1)); \
  strcpy(string+stringused,xx); \
  stringused+=newlen;
+
+/*+ Don't include the yyinput() or input() function in the lexer. +*/
+#define YY_NO_INPUT
 
 /*+ A macro to read data that can be used by the lexer. +*/
 #define YY_INPUT(buf,result,max_size) \

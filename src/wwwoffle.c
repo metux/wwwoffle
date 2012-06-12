@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle.c 2.84 2008/03/06 17:53:43 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle.c 2.85 2009/03/13 19:30:39 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   A user level program to interact with the server.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996-2008 Andrew M. Bishop
+  This file Copyright 1996-2009 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -54,6 +54,8 @@ typedef enum _Action
  Config,                        /*+ Tell the server to re-read the configuration file. +*/
 
  Dump,                          /*+ Tell the server to dump the configuration file. +*/
+
+ CycleLog,                      /*+ Tell the server to close and re-open the log file. +*/
 
  Purge,                         /*+ Tell the server to purge pages. +*/
 
@@ -208,6 +210,15 @@ int main(int argc, char** argv)
        if(action!=None)
          {fprintf(stderr,"wwwoffle: Only one command at a time.\n\n");usage(0);}
        action=Dump;
+       argv[i]=NULL;
+       continue;
+      }
+
+    if(!strcmp(argv[i],"-cyclelog"))
+      {
+       if(action!=None)
+         {fprintf(stderr,"wwwoffle: Only one command at a time.\n\n");usage(0);}
+       action=CycleLog;
        argv[i]=NULL;
        continue;
       }
@@ -424,8 +435,8 @@ int main(int argc, char** argv)
    }
  else if(action!=Get && action!=Output && action!=OutputWithHeader && n_url_file_list!=0)
    {
-    fprintf(stderr,"wwwoffle: The -online, -autodial, -offline, -fetch, -config, -dump, -purge,\n"
-                   "          -status and -kill options require no other command line arguments.\n\n");
+    fprintf(stderr,"wwwoffle: The -online, -autodial, -offline, -fetch, -config, -dump, -cyclelog,\n"
+                   "          -purge, -status and -kill options must have no other arguments.\n\n");
     usage(0);
    }
 
@@ -535,6 +546,8 @@ int main(int argc, char** argv)
        write_string(socket,"WWWOFFLE CONFIG\r\n");
     else if(action==Dump)
        write_string(socket,"WWWOFFLE DUMP\r\n");
+    else if(action==CycleLog)
+       write_string(socket,"WWWOFFLE CYCLELOG\r\n");
     else if(action==Purge)
        write_string(socket,"WWWOFFLE PURGE\r\n");
     else if(action==Status)
@@ -559,9 +572,11 @@ int main(int argc, char** argv)
        else if(action==Offline && !strncmp("WWWOFFLE Already Offline",line,(size_t)24))
           exitval=1;
        else if(action==Fetch && (!strncmp("WWWOFFLE Already Fetching",line,(size_t)25) ||
-                            !strncmp("WWWOFFLE Must be online or autodial to fetch",line,(size_t)44)))
+                                 !strncmp("WWWOFFLE Must be online or autodial to fetch",line,(size_t)44)))
           exitval=1;
        else if(action==Config && !strncmp("Configuration file syntax error",line,(size_t)31))
+          exitval=1;
+       else if(action==CycleLog && !strncmp("WWWOFFLE Has No Log File",line,(size_t)24))
           exitval=1;
       }
 
@@ -986,7 +1001,7 @@ static void usage(int verbose)
  fprintf(stderr,
          "Usage: wwwoffle -h | --help | --version\n"
          "       wwwoffle -online | -autodial | -offline | -fetch\n"
-         "       wwwoffle -config | -dump | -purge | -status | -kill\n"
+         "       wwwoffle -config | -dump | -cyclelog | -purge | -status | -kill\n"
          "       wwwoffle [-o|-O] <url>\n"
          "       wwwoffle [-post|-put] <url>\n"
          "       wwwoffle [-g[Sisfo]] [-F] [-(d|r|R)[<depth>]] <url> ...\n"
@@ -1017,6 +1032,8 @@ static void usage(int verbose)
             "wwwoffle -config     : Force the server to re-read the configuration file.\n"
             "\n"
             "wwwoffle -dump       : Force the server to dump the current configuration.\n"
+            "\n"
+            "wwwoffle -cyclelog   : Force the server to close and re-open the log file.\n"
             "\n"
             "wwwoffle -status     : Query the server about its current status.\n"
             "\n"

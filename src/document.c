@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/document.c 1.29 2008/10/09 18:22:03 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/document.c 1.31 2010/01/22 20:03:41 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Document parsing functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1998-2008 Andrew M. Bishop
+  This file Copyright 1998-2010 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -147,7 +147,7 @@ static DocType GetDocumentType(const char *mimetype)
  unsigned i;
 
  for(i = 0; i < sizeof(docTypeList)/sizeof(docTypeList[0]); i++)
-    if(!strcmp(mimetype,docTypeList[i].mimetype))
+    if(!strcasecmp(mimetype,docTypeList[i].mimetype))
        return(docTypeList[i].doctype);
 
  return(DocUnknown);
@@ -326,8 +326,11 @@ URL **GetReferences(RefType type)
 
     reference_Urls[type]=(URL**)malloc(reference_num[type]*sizeof(URL*));
 
-    for(i=0;reference_links[type][i];i++)
-       reference_Urls[type][i]=LinkURL(baseUrl,reference_links[type][i]);
+    for(i=0;i<reference_num[type] && reference_links[type][i];i++)
+       if(baseUrl)
+          reference_Urls[type][i]=LinkURL(baseUrl,reference_links[type][i]);
+       else
+          reference_Urls[type][i]=SplitURL(reference_links[type][i]);
 
     reference_Urls[type][i]=NULL;
 

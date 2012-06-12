@@ -289,6 +289,13 @@ DIV.wwwoffle-addinfo A  /* Links are always blue */
  white-space:     normal;
 }
 
+DIV.wwwoffle-addinfo A:hover, DIV.wwwoffle-addinfo A:focus, DIV.wwwoffle-addinfo A:visited, DIV.wwwoffle-addinfo A:link
+{
+ /* Undo any color manipulation CSS inherited from page (CSS 2.0 section 14) */
+ color:      blue;
+ background: white;
+}
+
 HR.wwwoffle-addinfo  /* Horizontal rule, not needed, see DIV */
 {
  display: none;

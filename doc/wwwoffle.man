@@ -1,17 +1,17 @@
-.\" $Header: /home/amb/wwwoffle/doc/RCS/wwwoffle.man 2.20 2006/02/12 14:20:03 amb Exp $
+.\" $Header: /home/amb/wwwoffle/doc/RCS/wwwoffle.man 2.21 2009/03/13 19:32:02 amb Exp $
 .\"
-.\"  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+.\"  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
 .\"
 .\"  Manual page for wwwoffle
 .\"
 .\"  Written by Andrew M. Bishop
 .\"
-.\"  This file Copyright 1997,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+.\"  This file Copyright 1997-2009 Andrew M. Bishop
 .\"  It may be distributed under the GNU Public License, version 2, or
 .\"  any higher version.  See section COPYING of the GNU Public license
 .\"  for conditions under which this file may be redistributed.
 .\"
-.TH wwwoffle 1 "February 12, 2006"
+.TH wwwoffle 1 "March 13, 2009"
 
 .SH NAME
 
@@ -45,6 +45,10 @@ wwwoffle \- A program to control the World Wide Web Offline Explorer.
 .P
 .B wwwoffle
 .B \-dump
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.P
+.B wwwoffle
+.B \-cyclelog
 .B [\-p <host>[:<port>] | \-c <config-file>]
 .P
 .B wwwoffle
@@ -138,6 +142,9 @@ Tell the wwwoffled proxy server to re-read the configuration file.
 Tell the wwwoffled proxy server to dump out the current program configuration.
 This is equivalent to the most recently read configuration file and the built-in
 default options.
+.TP
+.B \-cyclelog
+Tell the wwwoffled proxy server to close and then re-open the log file.
 .TP
 .B \-purge
 Tell the wwwoffled proxy server that the cache is to be purged.  The
@@ -287,4 +294,4 @@ wwwoffled(8), wwwoffle.conf(5), diald(8).
 
 .SH AUTHOR
 
-Andrew M. Bishop 1996,97,98,99,2000,01,02,03,04,05,06 (amb@gedanken.demon.co.uk)
+Andrew M. Bishop 1996-2009 (amb@gedanken.demon.co.uk)

@@ -26,8 +26,7 @@ Compilation
 
         --with-gnutls, --without-gnutls - Enable or disable SSL/https support
                                           (default is disabled).  Requires
-                                          version 1.2.2 of libgcrypt and version
-                                          1.2.8 of libgnutls.
+                                          libgcrypt and libgnutls.
 
         --with-default-language=<lang>  - Set the default language for the
                                           installation (default is en).

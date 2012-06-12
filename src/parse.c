@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/parse.c 2.135 2007/09/08 18:56:08 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/parse.c 2.136 2009/06/07 18:36:37 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Functions to parse the HTTP requests.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1996-2009 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -139,9 +139,9 @@ URL *ParseRequest(int fd,Header **request_head,Body **request_body)
     FreeURL(oldUrl);
    }
 
- /* Check for passwords */
+ /* Check for authentication using the 'Basic' scheme */
 
- if((val=GetHeader(*request_head,"Authorization")))
+ if((val=GetHeader(*request_head,"Authorization")) && !strncmp(val,"Basic",5))
    {
     char *p,*userpass,*user,*pass;
     size_t l;
@@ -645,7 +645,7 @@ void ModifyRequest(const URL *Url,Header *request_head)
 {
  int i;
  unsigned j;
- char *referer=NULL;
+ char *referer=NULL,*val;
 
  /* Modify the top line of the header. */
 
@@ -676,7 +676,8 @@ void ModifyRequest(const URL *Url,Header *request_head)
 
  /* Check the authorisation header. */
 
- RemoveFromHeader(request_head,"Authorization");
+ if((val=GetHeader(request_head,"Authorization")) && !strncmp(val,"Basic",5))
+    RemoveFromHeader(request_head,"Authorization");
 
  if(Url->user)
    {
