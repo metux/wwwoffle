@@ -88,6 +88,7 @@ static /*@null@*/ char **url_file_list=NULL;
 /*+ The number of URLs or files. +*/
 static int n_url_file_list=0;
 
+int config_file_specified=0; /* was the file specified on the command line */   /* PS XXX config_file */
 
 /*++++++++++++++++++++++++++++++++++++++
   The main program.
@@ -112,6 +113,9 @@ int main(int argc, char** argv)
 
  if(argc==1)
     usage(0);
+
+ if (access(config_file, R_OK)) /* PS XXX if the default file isn't readable, forget it */
+     config_file = NULL;
 
  for(i=1;i<argc;i++)
    {
@@ -358,7 +362,10 @@ int main(int argc, char** argv)
          {fprintf(stderr,"wwwoffle: The '-p' argument requires a hostname and optionally a port number.\n"); exit(1);}
 
        if(config_file)
+        {if(config_file_specified)      /* PS XXX config_file */
          {fprintf(stderr,"wwwoffle: The '-p' and '-c' options cannot be used together.\n"); exit(1);}
+         config_file=NULL;
+        }
 
        host=argv[i];
 
@@ -396,6 +403,7 @@ int main(int argc, char** argv)
          {fprintf(stderr,"wwwoffle: The '-p' and '-c' options cannot be used together.\n"); exit(1);}
 
        config_file=argv[i];
+       config_file_specified=1; /* PS XXX config_file */
 
        argv[i-1]=NULL;
        argv[i]=NULL;
@@ -444,7 +452,7 @@ int main(int argc, char** argv)
 
  /* Check the environment variable. */
 
- if(!config_file && !host && (env=getenv("WWWOFFLE_PROXY")))
+ if(!config_file_specified && !host && (env=getenv("WWWOFFLE_PROXY")))  /* PS XXX config_file */
    {
     if(*env=='/')
        config_file=env;
@@ -506,8 +514,12 @@ int main(int argc, char** argv)
 
  /* Check the host and port specified. */
 
- if(!host)
-    host=GetLocalHost();
+ if(!host) {
+    if(ConfigString(Bind_IPv4)) /* add IPv6 handling later... XXX */
+       host = ConfigString(Bind_IPv4);
+    else
+       host=GetLocalHost();
+ }
 
  if(!port)
    {
@@ -523,6 +535,7 @@ int main(int argc, char** argv)
    {
     int socket;
     char *line=NULL;
+    int something_read = 0;
 
     socket=OpenClientSocket(host,port);
 
@@ -561,6 +574,7 @@ int main(int argc, char** argv)
 
     while((line=read_line(socket,line)))
       {
+       something_read++;
        fputs(line,stdout);
        fflush(stdout);
 
@@ -580,6 +594,10 @@ int main(int argc, char** argv)
           exitval=1;
        else if(action==CycleLog && !strncmp("WWWOFFLE Has No Log File",line,(size_t)24))
           exitval=1;
+      }
+    if (!something_read)
+      {
+       fprintf(stderr, "Can't read from control port (is this host allowed?)\n");
       }
 
     finish_io(socket);
