@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/parse.c 2.134 2006/06/25 14:25:11 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/parse.c 2.135 2007/09/08 18:56:08 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Functions to parse the HTTP requests.
@@ -732,6 +732,19 @@ void ModifyRequest(const URL *Url,Header *request_head)
     PrintMessage(Debug,"CensorRequestHeader (RefererSelf) replaced '%s' by '%s'.",referer?referer:"(none)",Url->name);
     RemoveFromHeader(request_head,"Referer");
     AddToHeader(request_head,"Referer",Url->name);
+   }
+
+ if((referer=GetHeader(request_head,"Referer")))
+   {
+    URL *refurl=SplitURL(referer);
+
+    if(ConfigBooleanURL(RefererFrom,refurl))
+      {
+       PrintMessage(Debug,"CensorRequestHeader (RefererFrom) removed '%s'.",referer);
+       RemoveFromHeader(request_head,"Referer");
+      }
+
+    FreeURL(refurl);
    }
 
  /* Force the insertion of a User-Agent header */

@@ -1,3 +1,69 @@
+2008-01-23  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	Version 2.9d of WWWOFFLE released.
+
+2008-01-23  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/NEWS, src/version.h: Updated to version 2.9d.
+
+2007-12-05  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/html.l: Fetch image URLs stored in style attributes
+	(e.g. <p style="background-image: url(foo);">).
+
+	* src/controledit.c:
+	Ensure that open() has a mode and that stat() was successful before using its
+	results.
+
+2007-11-27  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certinfo.c:
+	Print out the full certificate information (based on Debian mailing list patch
+	from Simon Josefsson).
+
+2007-11-26  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/iozlib.c: Fix bug with decompressing zlib data.
+
+2007-11-15  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certinfo.c:
+	Remove the generation and display of the XML format certificate.
+
+2007-11-11  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.CONF:
+	Make the description of http-port and https-port options clearer.
+
+2007-10-05  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/spool.c:
+	In case of failure to create directory check it hasn't been made simultaneously
+	by another server.
+
+2007-09-29  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.CONF, doc/wwwoffle.conf.man.template, src/config.h, src/configdata.c,
+	src/document.h, src/html.l, src/info.c, src/refresh.c, src/wwwoffle.c, src/wwwoffle.h,
+	conf/upgrade-config.pl, conf/wwwoffle.conf.template:
+	Add a new option to the FetchOptions section called iframes.
+
+2007-09-08  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* conf/wwwoffle.conf.template, doc/README, doc/README.CONF, src/config.h, src/configdata.c,
+	src/parse.c:
+	Added a new option referer-from that will censor the outgoing Referer header
+	based on the referring URL (not the target URL).
+
+2007-07-21  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/htmlmodify.l:
+	Don't output an extra space before an XHTML closing tag.
+
+	* doc/README.CONF:
+	Add some clarifications on IPv6 addresses in config file and how matching is
+	performed.
+
 2007-07-15  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
 
 	Version 2.9c of WWWOFFLE released.

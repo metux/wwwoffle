@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
 #
-# A Perl script to update the configuration file to version 2.9a standard (from version 2.8).
+# A Perl script to update the configuration file to version 2.9d standard (from version 2.8).
 #
 # Written by Andrew M. Bishop
 #
-# This file Copyright 2000,01,02,03,04,05,06 Andrew M. Bishop
+# This file Copyright 2000-2007 Andrew M. Bishop
 # It may be distributed under the GNU Public License, version 2, or
 # any higher version.  See section COPYING of the GNU Public license
 # for conditions under which this file may be redistributed.
@@ -37,6 +37,10 @@ $urlspec1="([^ \t:<!]+)://([^ \t/=]+)(/?[^ \t=>]*)";
                  "enable-caching *="  , "enable-caching = no",
                  "allow-tunnel *="    , "#allow-tunnel = *:443"
                 );
+
+%new_FetchOptions=(
+                "iframes *="  , "iframes  = yes"
+               );
 
 %new_MIMETypes=(
                 ".pem *="  , ".pem     = application/x-x509-ca-cert"

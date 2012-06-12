@@ -19,9 +19,9 @@ val             ({alphanum}|{nonascii}|{safepunct})+
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/htmlmodify.l 1.95 2007/07/08 17:53:14 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/htmlmodify.l 1.96 2007/07/21 13:23:54 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Parse the HTML and modify the source.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -1359,7 +1359,7 @@ static void modify_html(URL *Url)
        if(suffix)
          {YY_OUTPUT(suffix);}
        if(yychar==LEX_TAG_END_XHTML && !suffix)
-         {YY_OUTPUT(" />");}
+         {YY_OUTPUT("/>");}
        else
          {YY_OUTPUT(">");}
 

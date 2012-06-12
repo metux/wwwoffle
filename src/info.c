@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/info.c 1.27 2007/04/23 09:28:32 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/info.c 1.28 2007/09/29 18:54:08 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Generate information about the contents of the web pages that are cached in the system.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 2002,03,04,05,06,07 Andrew M. Bishop
+  This file Copyright 2002-2007 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -244,6 +244,9 @@ static void InfoContents(int fd,int spool,URL *Url)
 
     if((list=GetReferences(RefFrame)))
        output_content(fd,"Frame",list);
+
+    if((list=GetReferences(RefIFrame)))
+       output_content(fd,"IFrame",list);
 
     if((list=GetReferences(RefScript)))
        output_content(fd,"Script",list);

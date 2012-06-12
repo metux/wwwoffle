@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/configdata.c 2.160 2006/04/06 18:13:38 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/configdata.c 2.162 2007/09/29 18:54:08 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Configuration data functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1997-2007 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -328,6 +328,9 @@ ConfigItem FetchSameHostImages;
 /*+ The option to also fetch frames. +*/
 ConfigItem FetchFrames;
 
+/*+ The option to also fetch iframes. +*/
+ConfigItem FetchIFrames;
+
 /*+ The option to also fetch scripts. +*/
 ConfigItem FetchScripts;
 
@@ -342,6 +345,7 @@ static ConfigItemDef fetchoptions_itemdefs[]={
  {"icon-images"          ,&FetchIconImages    ,1,0,Fixed,Boolean,"no" },
  {"only-same-host-images",&FetchSameHostImages,1,0,Fixed,Boolean,"no" },
  {"frames"               ,&FetchFrames        ,1,0,Fixed,Boolean,"no" },
+ {"iframes"              ,&FetchIFrames       ,1,0,Fixed,Boolean,"no" },
  {"scripts"              ,&FetchScripts       ,1,0,Fixed,Boolean,"no" },
  {"objects"              ,&FetchObjects       ,1,0,Fixed,Boolean,"no" }
 };
@@ -635,6 +639,9 @@ ConfigItem CensorHeader;
 ConfigItem RefererSelf,    /*+ to point to itself. +*/
            RefererSelfDir; /*+ to point to the parent directory. +*/
 
+/* A flag to remove the 'Referer' header depending on the referring URL */
+ConfigItem RefererFrom;
+
 /*+ A flag to cause a 'User-Agent' header always to be added. +*/
 ConfigItem ForceUserAgent;
 
@@ -642,6 +649,7 @@ ConfigItem ForceUserAgent;
 static ConfigItemDef censorheader_itemdefs[]={
  {"referer-self"    ,&RefererSelf   ,1,0,Fixed ,Boolean,"no"},
  {"referer-self-dir",&RefererSelfDir,1,0,Fixed ,Boolean,"no"},
+ {"referer-from"    ,&RefererFrom   ,1,0,Fixed ,Boolean,"no"},
  {"force-user-agent",&ForceUserAgent,1,0,Fixed ,Boolean,"no"},
  {""                ,&CensorHeader  ,1,1,String,String ,NULL}
 };

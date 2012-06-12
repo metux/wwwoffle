@@ -13,6 +13,7 @@ La section FetchOptions du fichier de configuration:
     stylesheets (='$stylesheets').
     images      (='$images').
     frames      (='$frames').
+    iframes     (='$iframes').
     scripts     (='$scripts').
     objects     (='$objects').
 
@@ -71,6 +72,10 @@ Capturer les images
 <br>
 <input name="frames" type="checkbox" value="Y" $frames?{checked}{}>
 Capturer les cadres
+
+<br>
+<input name="iframes" type="checkbox" value="Y" $iframes?{checked}{}>
+Capturer les cadres (iframes)
 
 <br>
 <input name="scripts" type="checkbox" value="Y" $scripts?{checked}{}>

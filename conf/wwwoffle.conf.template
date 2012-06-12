@@ -1,9 +1,9 @@
 #
-# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
 #
 # WWWOFFLE Configuration file CONFDIR/wwwoffle.conf
 #
-# Example configuration file Copyright 1997,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop.
+# Example configuration file Copyright 1997-2007 Andrew M. Bishop.
 # They may be distributed under the GNU Public License, version 2, or
 # any higher version.  See section COPYING of the GNU Public license
 # for conditions under which this file may be redistributed.
@@ -119,6 +119,8 @@ FetchOptions
  images      = yes
 
  frames      = yes
+
+ iframes     = yes
 
  scripts     = no
 
@@ -323,6 +325,7 @@ CensorHeader
 {
  referer-self     = no
  referer-self-dir = no
+ referer-from     = no
 
  force-user-agent = no
 

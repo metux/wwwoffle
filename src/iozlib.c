@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iozlib.c 1.24 2006/10/02 18:43:17 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/iozlib.c 1.25 2007/11/26 14:52:11 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9b.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Functions for file input and output with compression.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06,07 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -365,7 +365,7 @@ int io_zlib_uncompress(io_buffer *in,io_zlib *context,io_buffer *out)
 
  io_errno=inflate(&context->stream,Z_SYNC_FLUSH);
 
- if(io_errno!=Z_STREAM_END && io_errno!=Z_OK)
+ if(io_errno!=Z_STREAM_END && io_errno!=Z_OK && io_errno!=Z_BUF_ERROR)
    {
     set_zerror(context->stream.msg);
     return(-1);

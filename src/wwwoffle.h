@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle.h 2.116 2006/07/21 17:38:50 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle.h 2.117 2007/09/29 18:54:08 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   A header file for all of the programs wwwoffle, wwwoffled.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1996-2007 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -177,7 +177,7 @@ int RecurseFetch(URL *Url);
 int RecurseFetchRelocation(URL *Url,URL *locationUrl);
 char /*@only@*/ *CreateRefreshPath(URL *Url,char *limit,int depth,
                                    int force,
-                                   int stylesheets,int images,int frames,int scripts,int objects);
+                                   int stylesheets,int images,int frames,int iframes,int scripts,int objects);
 int RefreshForced(void);
 
 

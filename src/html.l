@@ -27,15 +27,15 @@ url             ({alphanum}|{nonascii}|{safepunct})+
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/html.l 2.92 2007/07/08 17:53:04 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/html.l 2.94 2007/12/05 19:29:59 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Parse the HTML and look for the images, links and other things.
   ******************/ /******************
   Written by Andrew M. Bishop
   Object and Parameter handling by Walter Pfannenmller
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05,06,07 Andrew M. Bishop
+  This file Copyright 1997-2007 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -166,13 +166,14 @@ typedef enum _HTMLAttributes
  att_profile   =15  /* "profile"    */ ,
  att_rel       =16  /* "rel"        */ ,
  att_src       =17  /* "src"        */ ,
- att_type      =18  /* "type"       */ ,
- att_usemap    =19  /* "usemap"     */ ,
- att_value     =20  /* "value"      */ ,
- att_valuetype =21  /* "valuetype"  */ ,
- att_width     =22  /* "width"      */ ,
+ att_style     =18  /* "style"      */ ,
+ att_type      =19  /* "type"       */ ,
+ att_usemap    =20  /* "usemap"     */ ,
+ att_value     =21  /* "value"      */ ,
+ att_valuetype =22  /* "valuetype"  */ ,
+ att_width     =23  /* "width"      */ ,
 
- att_natts     =23
+ att_natts     =24
 }
 HTMLAttributes;
 
@@ -198,11 +199,12 @@ static const char* const attributes[]=
  /* att_profile   =15 */  "profile"     ,
  /* att_rel       =16 */  "rel"         ,
  /* att_src       =17 */  "src"         ,
- /* att_type      =18 */  "type"        ,
- /* att_usemap    =19 */  "usemap"      ,
- /* att_value     =20 */  "value"       ,
- /* att_valuetype =21 */  "valuetype"   ,
- /* att_width     =22 */  "width"
+ /* att_style     =18 */  "style"       ,
+ /* att_type      =19 */  "type"        ,
+ /* att_usemap    =20 */  "usemap"      ,
+ /* att_value     =21 */  "value"       ,
+ /* att_valuetype =22 */  "valuetype"   ,
+ /* att_width     =23 */  "width"
 };
 
 /*+ A structure to hold a tag and its attributes. +*/
@@ -234,6 +236,7 @@ static void handle_param_tag(Tag *tag);
 static void handle_link_tag(Tag *tag,int fetch_icon_images);
 static void handle_meta_tag(Tag *tag);
 static void handle_img_tag(Tag *tag,int fetch_webbug_images);
+static void handle_style_attribute(char *value);
 
 
 /*+ The file descriptor that we are reading from. +*/
@@ -594,6 +597,79 @@ static void handle_img_tag(Tag *tag,int fetch_webbug_images)
 
 
 /*++++++++++++++++++++++++++++++++++++++
+  Take the contents of a style attribute and parse it.
+
+  char *value The value of the style tag.
+  ++++++++++++++++++++++++++++++++++++++*/
+
+static void handle_style_attribute(char *value)
+{
+ char *p=value;
+
+ while(p)
+   {
+    int property_is_image=0;
+
+    if(!strncasecmp("background-image",p,16))
+       property_is_image=1;
+    else if(!strncasecmp("background",p,10))
+       property_is_image=1;
+    else if(!strncasecmp("list-style-image",p,16))
+       property_is_image=1;
+
+    if(property_is_image)
+      {
+       char *e,*copy;
+
+       while(*p && *p!=':')     /* find ':' */
+          p++;
+       if(!*p)
+          break;
+
+       p++;
+       while(*p && *p==' ')     /* skip ' ' */
+          p++;
+
+       if(!*p || strncasecmp("url",p,3)) /* find 'url' */
+          break;
+
+       p+=3;
+       while(*p && *p!='(')     /* find '(' */
+          p++;
+       if(!*p)
+          break;
+
+       p++;
+       if(!*p)
+          break;
+
+       e=p;
+       while(*e && *e!=')')     /* find ')' */
+          e++;
+       if(!*e)
+          break;
+
+       if(*(p+1)=='\'' && *(e-1)=='\'')
+          p++,e--;
+       if(*(p+1)=='"' && *(e-1)=='"')
+          p++,e--;
+
+       copy=(char*)malloc(e-p+1);
+       strncpy(copy,p,e-p);
+       copy[e-p]=0;
+
+       AddReference(copy,RefImage);
+
+       free(copy);
+      }
+
+    if((p=strchr(p,';')))
+       p++;
+   }
+}
+
+
+/*++++++++++++++++++++++++++++++++++++++
   Parse the HTML and look for references to image/links/frames/objects etc.
 
   URL *Url The URL being parsed.
@@ -690,8 +766,10 @@ static void parse_html(URL *Url)
           ref=RefImage;
        else if(key==att_src && tag==tag_script)
           ref=RefScript;
-       else if(key==att_src && (tag==tag_frame || tag==tag_iframe))
+       else if(key==att_src && tag==tag_frame)
           ref=RefFrame;
+       else if(key==att_src && tag==tag_iframe)
+          ref=RefIFrame;
        else if(key==att_cite && (tag==tag_q || tag==tag_blockquote || tag==tag_ins || tag==tag_del))
           ref=RefLink;
        else if(key==att_background && (tag==tag_body || tag==tag_td))
@@ -710,6 +788,9 @@ static void parse_html(URL *Url)
 
        else if(key==att_href && tag==tag_base && html_yylval!=NULL)
           AddReference(html_yylval,RefBaseUrl);
+
+       else if(key==att_style && html_yylval!=NULL)
+          handle_style_attribute(html_yylval);
 
        /* More complicated ones that depend on other attributes are stored and done later. */
 

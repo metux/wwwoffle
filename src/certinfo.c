@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/certinfo.c 1.11 2007/04/23 09:28:19 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/certinfo.c 1.13 2007/11/27 17:32:09 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Generate information about the contents of the web pages that are cached in the system.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -543,7 +543,7 @@ static void load_display_certificate(int fd,char *certfile,char *type,char *name
 
 static void display_certificate(int fd,gnutls_x509_crt_t crt)
 {
- gnutls_datum_t xml={NULL,0};
+ gnutls_datum_t txt={NULL,0};
  char *dn,*issuer_dn;
  time_t activation,expiration;
  char *activation_str,*expiration_str;
@@ -643,9 +643,9 @@ static void display_certificate(int fd,gnutls_x509_crt_t crt)
  else
     key_ca="Error";
 
- /* XML formatted certificate. */
+ /* Formatted certificate */
 
- gnutls_x509_crt_to_xml(crt,&xml,GNUTLS_XML_NORMAL);
+ gnutls_x509_crt_print(crt,GNUTLS_X509_CRT_FULL,&txt);
 
  /* Output the information. */
 
@@ -657,7 +657,7 @@ static void display_certificate(int fd,gnutls_x509_crt_t crt)
                  "key_algo",key_algo,
                  "key_usage",key_usage,
                  "key_ca",key_ca,
-                 "xml",xml.data,
+                 "info",txt.data,
                  NULL);
 
  /* Tidy up and exit */
@@ -665,7 +665,7 @@ static void display_certificate(int fd,gnutls_x509_crt_t crt)
  free(dn);
  free(issuer_dn);
 
- free(xml.data);
+ free(txt.data);
 }
 
 

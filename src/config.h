@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/config.h 2.115 2006/04/06 18:13:38 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/config.h 2.117 2007/09/29 18:54:08 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Configuration file management functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1997-2007 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -236,6 +236,9 @@ extern /*@null@*/ ConfigItem FetchSameHostImages;
 /*+ The option to also fetch frames. +*/
 extern /*@null@*/ ConfigItem FetchFrames;
 
+/*+ The option to also fetch iframes. +*/
+extern /*@null@*/ ConfigItem FetchIFrames;
+
 /*+ The option to also fetch scripts. +*/
 extern /*@null@*/ ConfigItem FetchScripts;
 
@@ -402,6 +405,9 @@ extern /*@null@*/ ConfigItem CensorHeader;
 /*+ Flags to cause the 'Referer' header to be mangled +*/
 extern /*@null@*/ ConfigItem RefererSelf,    /*+ to point to itself. +*/
                              RefererSelfDir; /*+ to point to the parent directory. +*/
+
+/* A flag to remove the 'Referer' header depending on the referring URL */
+extern /*@null@*/ ConfigItem RefererFrom;
 
 /*+ A flag to cause a 'User-Agent' header always to be added. +*/
 extern /*@null@*/ ConfigItem ForceUserAgent;

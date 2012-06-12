@@ -1,17 +1,17 @@
-.\" $Header: /home/amb/wwwoffle/doc/RCS/wwwoffle.conf.man.template 2.82 2006/01/07 16:27:27 amb Exp $
+.\" $Header: /home/amb/wwwoffle/doc/RCS/wwwoffle.conf.man.template 2.83 2007/09/29 18:54:08 amb Exp $
 .\"
-.\"  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+.\"  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
 .\"
 .\"  Manual page for wwwoffle.conf
 .\"
 .\"  Written by Andrew M. Bishop
 .\"
-.\"  This file Copyright 1997,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+.\"  This file Copyright 1997-2007 Andrew M. Bishop
 .\"  It may be distributed under the GNU Public License, version 2, or
 .\"  any higher version.  See section COPYING of the GNU Public license
 .\"  for conditions under which this file may be redistributed.
 .\"
-.TH wwwoffle.conf 5 "January 7, 2006"
+.TH wwwoffle.conf 5 "September 29, 2007"
 
 .SH NAME
 
@@ -46,6 +46,7 @@ wwwoffle.conf \- The configuration file for the proxy server for the World Wide 
  {
   images = yes
   frames = yes
+  iframes = yes
  }
 
  LocalHost
@@ -94,4 +95,4 @@ wwwoffle(1), wwwoffled(8).
 
 .SH AUTHOR
 
-Andrew M. Bishop 1996,97,98,99,2000,01,02,03,04,05 (amb@gedanken.demon.co.uk)
+Andrew M. Bishop 1996-2007 (amb@gedanken.demon.co.uk)

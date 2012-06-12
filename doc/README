@@ -1,4 +1,4 @@
-          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d
           =========================================================
 
 
@@ -896,12 +896,15 @@ Ilya Dogolazky <ilyad@math.uni-bonn.de>
         The patch for the fix-mixed-cyrillic option.
 
 Dieter <netbsd@sopwith.solgatos.com>
-       A patch with some 64-bit/32-bit compatibility fixes (that prompted me to
-       go and find and fix a lot more).
+        A patch with some 64-bit/32-bit compatibility fixes (that prompted me to
+        go and find and fix a lot more).
 
 Andreas Mohr <andi@rhlx01.fht-esslingen.de>
         A patch to add "const" to lots of structures and function parameters
         (this prompted me to go and do a lot more).
+
+Nils Kassube <kassube@gmx.net>
+        The patch for the referer-from option.
 
 
 And Other Useful Contributions From

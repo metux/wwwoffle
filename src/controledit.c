@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/controledit.c 2.35 2005/03/13 13:55:34 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/controledit.c 2.36 2007/12/05 18:50:34 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Configuration file management via a web-page.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -403,16 +403,14 @@ static int write_config_file(ControlEditSection *sections)
 
  if(rename(conf_file,conf_file_backup))
     PrintMessage(Warning,"Cannot rename the config file '%s' to '%s'; [%!s].",conf_file,conf_file_backup);
+ else if(stat(conf_file_backup,&buf))
+    PrintMessage(Warning,"Cannot stat the config file '%s'; [%!s].",conf_file);
  else
-   {
     renamed=1;
-    if(stat(conf_file_backup,&buf))
-       PrintMessage(Warning,"Cannot stat the config file '%s'; [%!s].",conf_file);
-   }
 
  free(conf_file_backup);
 
- conf=open(conf_file,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY);
+ conf=open(conf_file,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY,0600);
 
  if(conf==-1)
    {PrintMessage(Warning,"Cannot open the config file '%s' for writing; [%!s].",conf_file); return(1);}
@@ -466,16 +464,14 @@ static int write_config_file(ControlEditSection *sections)
 
        if(rename(sections[i]->file,conf_file_backup))
           PrintMessage(Warning,"Cannot rename the config file '%s' to '%s'; [%!s].",sections[i]->file,conf_file_backup);
+       else if(stat(conf_file_backup,&buf))
+          PrintMessage(Warning,"Cannot stat the config file '%s'; [%!s].",sections[i]->file);
        else
-         {
           renamed=1;
-          if(stat(conf_file_backup,&buf))
-             PrintMessage(Warning,"Cannot stat the config file '%s'; [%!s].",sections[i]->file);
-         }
 
        free(conf_file_backup);
 
-       conf=open(sections[i]->file,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY);
+       conf=open(sections[i]->file,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY,0600);
 
        if(conf==-1)
          {PrintMessage(Warning,"Cannot open the config file '%s' for writing; [%!s].",sections[i]->file); return(1);}

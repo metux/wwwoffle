@@ -13,6 +13,7 @@ The FetchOptions section of the config file:
     stylesheets (='$stylesheets').
     images      (='$images').
     frames      (='$frames').
+    iframes     (='$iframes').
     scripts     (='$scripts').
     objects     (='$objects').
 
@@ -72,6 +73,10 @@ Scarica le immagini nelle pagine
 <br>
 <input name="frames" type="checkbox" value="Y" $frames?{checked}{}>
 Scarica i frames nelle pagine
+
+<br>
+<input name="iframes" type="checkbox" value="Y" $iframes?{checked}{}>
+Scarica i iframes nelle pagine
 
 <br>
 <input name="scripts" type="checkbox" value="Y" $scripts?{checked}{}>

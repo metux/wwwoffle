@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/spool.c 2.98 2006/11/14 17:10:19 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/spool.c 2.99 2007/10/05 16:45:40 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Handle all of the spooling of files in the spool directory.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1996-2007 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -1746,13 +1746,14 @@ static int ChangeToCacheDir(URL *Url,int create,int errors)
     if(stat(Url->proto,&buf))
       {
        PrintMessage(Inform,"Directory '%s' does not exist [%!s]; creating one.",Url->proto);
-       if(mkdir(Url->proto,(mode_t)ConfigInteger(DirPerm)))
+       if(mkdir(Url->proto,(mode_t)ConfigInteger(DirPerm)) && stat(Url->proto,&buf))
          {
           PrintMessage(Warning,"Cannot create directory '%s' [%!s].",Url->proto);
           return(1);
          }
       }
-    else if(!S_ISDIR(buf.st_mode))
+
+    if(!S_ISDIR(buf.st_mode))
       {
        PrintMessage(Warning,"The file '%s' is not a directory.",Url->proto);
        return(1);
@@ -1775,14 +1776,15 @@ static int ChangeToCacheDir(URL *Url,int create,int errors)
     if(stat(URLToDirName(Url),&buf))
       {
        PrintMessage(Inform,"Directory '%s/%s' does not exist [%!s]; creating one.",Url->proto,URLToDirName(Url));
-       if(mkdir(URLToDirName(Url),(mode_t)ConfigInteger(DirPerm)))
+       if(mkdir(URLToDirName(Url),(mode_t)ConfigInteger(DirPerm)) && stat(URLToDirName(Url),&buf))
          {
           PrintMessage(Warning,"Cannot create directory '%s/%s' [%!s].",Url->proto,URLToDirName(Url));
           ChangeBackToSpoolDir();
           return(3);
          }
       }
-    else if(!S_ISDIR(buf.st_mode))
+
+    if(!S_ISDIR(buf.st_mode))
       {
        PrintMessage(Warning,"The file '%s/%s' is not a directory.",Url->proto,URLToDirName(Url));
        ChangeBackToSpoolDir();
@@ -1818,20 +1820,21 @@ static int ChangeToSpecialDir(const char *dirname,int create,int errors)
 {
  struct stat buf;
 
- /* Create the spool host directory if requested and change to it. */
+ /* Create the special directory if requested and change to it. */
 
  if(create)
    {
     if(stat(dirname,&buf))
       {
        PrintMessage(Inform,"Directory '%s' does not exist [%!s]; creating one.",dirname);
-       if(mkdir(dirname,(mode_t)ConfigInteger(DirPerm)))
+       if(mkdir(dirname,(mode_t)ConfigInteger(DirPerm)) && stat(dirname,&buf))
          {
           PrintMessage(Warning,"Cannot create directory '%s' [%!s].",dirname);
           return(1);
          }
       }
-    else if(!S_ISDIR(buf.st_mode))
+
+    if(!S_ISDIR(buf.st_mode))
       {
        PrintMessage(Warning,"The file '%s' is not a directory.",dirname);
        return(1);

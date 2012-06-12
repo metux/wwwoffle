@@ -1,3 +1,21 @@
+Version 2.9d of WWWOFFLE released : Wed Jan 23 19:00:00 2008
+------------------------------------------------------------
+
+Bug Fixes:
+ Don't output extra space before XHTML closing tag when modifying HTML.  Don't
+ error in case of race condition creating directory.  Remove the generation and
+ display of the XML format certificate.  Fix bug with decompressing zlib data.
+ Ensure that creating files supplies a permission option.  Fetch image URLs
+ stored in style attributes.
+
+Documentation:
+ Improve documentation of http-port and https-port configuration file options.
+
+New Features:
+ Add a new option to the CensorHeader section called referer-from.
+ Add a new option to the FetchOptions section called iframes (default=no).
+
+
 Version 2.9c of WWWOFFLE released : Sun Jul 15 14:30:00 2007
 ------------------------------------------------------------
 

@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/refresh.c 2.89 2005/12/10 15:11:31 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/refresh.c 2.90 2007/09/29 18:54:08 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   The HTML interactive page to refresh a URL.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05 Andrew M. Bishop
+  This file Copyright 1997-2007 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -46,6 +46,7 @@ static int recurse_depth=-1,    /*+ the depth to go from this URL. +*/
 static int recurse_stylesheets=0, /*+ stylesheets. +*/
            recurse_images=0,      /*+ images. +*/
            recurse_frames=0,      /*+ frames. +*/
+           recurse_iframes=0,     /*+ iframes. +*/
            recurse_scripts=0,     /*+ scripts. +*/
            recurse_objects=0,     /*+ objects. +*/
            recurse_location=0;    /*+ Location headers. +*/
@@ -90,6 +91,7 @@ URL *RefreshPage(int fd,URL *Url,Body *request_body,int *recurse)
                 "stylesheets",ConfigBooleanURL(FetchStyleSheets,NULL)?"yes":NULL,
                 "images",ConfigBooleanURL(FetchImages,NULL)?"yes":NULL,
                 "frames",ConfigBooleanURL(FetchFrames,NULL)?"yes":NULL,
+                "iframes",ConfigBooleanURL(FetchIFrames,NULL)?"yes":NULL,
                 "scripts",ConfigBooleanURL(FetchScripts,NULL)?"yes":NULL,
                 "objects",ConfigBooleanURL(FetchObjects,NULL)?"yes":NULL,
                 NULL);
@@ -148,7 +150,7 @@ static char *RefreshFormParse(int fd,URL *Url,char *request_args,Body *request_b
  int i;
  char **args,*url=NULL,*limit="",*method=NULL;
  int depth=0,force=0;
- int stylesheets=0,images=0,frames=0,scripts=0,objects=0;
+ int stylesheets=0,images=0,frames=0,iframes=0,scripts=0,objects=0;
  URL *refUrl;
  char *new_url;
 
@@ -185,6 +187,8 @@ static char *RefreshFormParse(int fd,URL *Url,char *request_args,Body *request_b
        images=!!(args[i][7]=='Y');
     else if(!strncmp("frames=",args[i],(size_t)7))
        frames=!!(args[i][7]=='Y');
+    else if(!strncmp("iframes=",args[i],(size_t)8))
+       iframes=!!(args[i][8]=='Y');
     else if(!strncmp("scripts=",args[i],(size_t)8))
        scripts=!!(args[i][8]=='Y');
     else if(!strncmp("objects=",args[i],(size_t)8))
@@ -234,7 +238,7 @@ static char *RefreshFormParse(int fd,URL *Url,char *request_args,Body *request_b
  free(args[0]);
  free(args);
 
- new_url=CreateRefreshPath(refUrl,limit,depth,force,stylesheets,images,frames,scripts,objects);
+ new_url=CreateRefreshPath(refUrl,limit,depth,force,stylesheets,images,frames,iframes,scripts,objects);
 
  if(*limit)
     free(limit);
@@ -265,6 +269,7 @@ static void ParseRecurseOptions(URL *Url)
     recurse_stylesheets=0;
     recurse_images=0;
     recurse_frames=0;
+    recurse_iframes=0;
     recurse_scripts=0;
     recurse_objects=0;
 
@@ -286,6 +291,8 @@ static void ParseRecurseOptions(URL *Url)
           recurse_images=!!(args[i][7]=='Y')*2;
        else if(!strncmp("frames=",args[i],(size_t)7))
           recurse_frames=!!(args[i][7]=='Y')*2;
+       else if(!strncmp("iframes=",args[i],(size_t)8))
+          recurse_iframes=!!(args[i][8]=='Y')*2;
        else if(!strncmp("scripts=",args[i],(size_t)8))
           recurse_scripts=!!(args[i][8]=='Y')*2;
        else if(!strncmp("objects=",args[i],(size_t)8))
@@ -296,8 +303,8 @@ static void ParseRecurseOptions(URL *Url)
 
     PrintMessage(Debug,"Recursive Fetch options: depth=%d limit='%s' force=%d",
                         recurse_depth,recurse_limit,recurse_force);
-    PrintMessage(Debug,"Recursive Fetch options: stylesheets=%d images=%d frames=%d scripts=%d objects=%d location=%d",
-                        recurse_stylesheets,recurse_images,recurse_frames,recurse_scripts,recurse_objects,recurse_location);
+    PrintMessage(Debug,"Recursive Fetch options: stylesheets=%d images=%d frames=%d iframes=%d scripts=%d objects=%d location=%d",
+                        recurse_stylesheets,recurse_images,recurse_frames,recurse_iframes,recurse_scripts,recurse_objects,recurse_location);
 
     free(args[0]);
     free(args);
@@ -322,6 +329,7 @@ void DefaultRecurseOptions(URL *Url,Header *head)
  recurse_stylesheets=ConfigBooleanURL(FetchStyleSheets,Url)*2;
  recurse_images=ConfigBooleanURL(FetchImages,Url)*2;
  recurse_frames=ConfigBooleanURL(FetchFrames,Url)*2;
+ recurse_iframes=ConfigBooleanURL(FetchIFrames,Url)*2;
  recurse_scripts=ConfigBooleanURL(FetchScripts,Url)*2;
  recurse_objects=ConfigBooleanURL(FetchObjects,Url)*2;
 
@@ -335,6 +343,8 @@ void DefaultRecurseOptions(URL *Url,Header *head)
     recurse_images=atoi(value+16);
  if((value=GetHeader2(head,"Pragma","wwwoffle-frames=")))
     recurse_frames=atoi(value+16);
+ if((value=GetHeader2(head,"Pragma","wwwoffle-iframes=")))
+    recurse_iframes=atoi(value+17);
  if((value=GetHeader2(head,"Pragma","wwwoffle-scripts=")))
     recurse_scripts=atoi(value+17);
  if((value=GetHeader2(head,"Pragma","wwwoffle-objects=")))
@@ -343,8 +353,8 @@ void DefaultRecurseOptions(URL *Url,Header *head)
  if((value=GetHeader2(head,"Pragma","wwwoffle-location=")))
     recurse_location=atoi(value+18);
 
- PrintMessage(Debug,"Default Recursive Fetch options: stylesheets=%d images=%d frames=%d scripts=%d objects=%d location=%d",
-                     recurse_stylesheets,recurse_images,recurse_frames,recurse_scripts,recurse_objects,recurse_location);
+ PrintMessage(Debug,"Default Recursive Fetch options: stylesheets=%d images=%d frames=%d iframes=%d scripts=%d objects=%d location=%d",
+                     recurse_stylesheets,recurse_images,recurse_frames,recurse_iframes,recurse_scripts,recurse_objects,recurse_location);
 }
 
 
@@ -392,7 +402,7 @@ int RecurseFetch(URL *Url)
           if(!*recurse_limit || !strncmp(recurse_limit,metarefreshUrl->name,strlen(recurse_limit)))
              refresh=CreateRefreshPath(metarefreshUrl,recurse_limit,recurse_depth,
                                        recurse_force,
-                                       recurse_stylesheets,recurse_images,recurse_frames,recurse_scripts,recurse_objects);
+                                       recurse_stylesheets,recurse_images,recurse_frames,recurse_iframes,recurse_scripts,recurse_objects);
 
        PrintMessage(Debug,"Meta-Refresh=%s",refresh?refresh:metarefreshUrl->name);
        more+=request_url(metarefreshUrl,refresh,Url);
@@ -462,7 +472,7 @@ int RecurseFetch(URL *Url)
              if(!*recurse_limit || !strncmp(recurse_limit,frameUrl->name,strlen(recurse_limit)))
                 refresh=CreateRefreshPath(frameUrl,recurse_limit,recurse_depth,
                                           recurse_force,
-                                          recurse_stylesheets,recurse_images,recurse_frames,recurse_scripts,recurse_objects);
+                                          recurse_stylesheets,recurse_images,recurse_frames,recurse_iframes,recurse_scripts,recurse_objects);
 
           PrintMessage(Debug,"Frame=%s",refresh?refresh:frameUrl->name);
           more+=request_url(frameUrl,refresh,Url);
@@ -471,6 +481,34 @@ int RecurseFetch(URL *Url)
          }
 
        recurse_frames++;
+      }
+
+ /* Any iframes */
+
+ if(recurse_iframes && (list=GetReferences(RefIFrame)))
+    for(j=0;list[j];j++)
+      {
+       URL *iframeUrl=list[j];
+
+       recurse_iframes--;
+
+       if(!IsLocalHost(iframeUrl) && IsProtocolHandled(iframeUrl))
+         {
+          char *refresh=NULL;
+
+          if(recurse_depth>=0)
+             if(!*recurse_limit || !strncmp(recurse_limit,iframeUrl->name,strlen(recurse_limit)))
+                refresh=CreateRefreshPath(iframeUrl,recurse_limit,recurse_depth,
+                                          recurse_force,
+                                          recurse_stylesheets,recurse_images,recurse_frames,recurse_iframes,recurse_scripts,recurse_objects);
+
+          PrintMessage(Debug,"IFrame=%s",refresh?refresh:iframeUrl->name);
+          more+=request_url(iframeUrl,refresh,Url);
+          if(refresh)
+             free(refresh);
+         }
+
+       recurse_iframes++;
       }
 
  /* Any scripts. */
@@ -524,7 +562,7 @@ int RecurseFetch(URL *Url)
              if(!*recurse_limit || !strncmp(recurse_limit,objectUrl->name,strlen(recurse_limit)))
                 refresh=CreateRefreshPath(objectUrl,recurse_limit,recurse_depth,
                                           recurse_force,
-                                          recurse_stylesheets,recurse_images,recurse_frames,recurse_scripts,recurse_objects);
+                                          recurse_stylesheets,recurse_images,recurse_frames,recurse_iframes,recurse_scripts,recurse_objects);
 
           PrintMessage(Debug,"InlineObject=%s",refresh?refresh:objectUrl->name);
           more+=request_url(objectUrl,refresh,Url);
@@ -551,7 +589,7 @@ int RecurseFetch(URL *Url)
 
              refresh=CreateRefreshPath(linkUrl,recurse_limit,recurse_depth,
                                        recurse_force,
-                                       recurse_stylesheets,recurse_images,recurse_frames,recurse_scripts,recurse_objects);
+                                       recurse_stylesheets,recurse_images,recurse_frames,recurse_iframes,recurse_scripts,recurse_objects);
 
              PrintMessage(Debug,"Link=%s",refresh);
              more+=request_url(linkUrl,refresh,Url);
@@ -592,7 +630,7 @@ int RecurseFetchRelocation(URL *Url,URL *locationUrl)
        if(!*recurse_limit || !strncmp(recurse_limit,locationUrl->name,strlen(recurse_limit)))
           refresh=CreateRefreshPath(locationUrl,recurse_limit,recurse_depth,
                                     recurse_force,
-                                    recurse_stylesheets,recurse_images,recurse_frames,recurse_scripts,recurse_objects);
+                                    recurse_stylesheets,recurse_images,recurse_frames,recurse_iframes,recurse_scripts,recurse_objects);
 
     PrintMessage(Debug,"Location=%s",refresh?refresh:locationUrl->name);
     more+=request_url(locationUrl,refresh,Url);
@@ -662,6 +700,9 @@ static int request_url(URL *Url,char *refresh,URL *refUrl)
        sprintf(str,"wwwoffle-frames=%d",recurse_frames);
        AddToHeader(new_request_head,"Pragma",str);
 
+       sprintf(str,"wwwoffle-iframes=%d",recurse_iframes);
+       AddToHeader(new_request_head,"Pragma",str);
+
        sprintf(str,"wwwoffle-scripts=%d",recurse_scripts);
        AddToHeader(new_request_head,"Pragma",str);
 
@@ -710,6 +751,8 @@ static int request_url(URL *Url,char *refresh,URL *refUrl)
 
   int frames The option to fetch any frames in the page.
 
+  int iframes The option to fetch any inline frames (iframes) in the page.
+
   int scripts The option to fetch any scripts in the page.
 
   int objects The option to fetch any objects in the page.
@@ -717,7 +760,7 @@ static int request_url(URL *Url,char *refresh,URL *refUrl)
 
 char *CreateRefreshPath(URL *Url,char *limit,int depth,
                         int force,
-                        int stylesheets,int images,int frames,int scripts,int objects)
+                        int stylesheets,int images,int frames,int iframes,int scripts,int objects)
 {
  char *args;
  char *encurl,*enclimit=NULL;
@@ -749,6 +792,8 @@ char *CreateRefreshPath(URL *Url,char *limit,int depth,
     strcat(args,";images=Y");
  if(frames)
     strcat(args,";frames=Y");
+ if(iframes)
+    strcat(args,";iframes=Y");
  if(scripts)
     strcat(args,";scripts=Y");
  if(objects)
