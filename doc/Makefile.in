@@ -61,6 +61,10 @@ install-man :
 	[ -x $(mandir)/man8 ] || $(INSTALL) -d -m 755 $(mandir)/man8
 	$(INSTALL) -c -m 644 wwwoffled.man $(mandir)/man8/wwwoffled.8
 	$(INSTALL) -c -m 644 wwwoffle-checkcert.man $(mandir)/man8/wwwoffle-checkcert.8
+	# French (only translated manpage so far)
+	[ -x $(mandir)/fr/man5 ] || $(INSTALL) -d -m 755 $(mandir)/fr/man5
+	sed -e 's%SPOOLDIR%$(SPOOLDIR)%' -e 's%CONFDIR%$(CONFDIR)%' < fr/wwwoffle.conf.man > fr/wwwoffle.conf.man.install
+	$(INSTALL) -c -m 644 fr/wwwoffle.conf.man.install $(mandir)/fr/man5/wwwoffle.conf.5
 
 install-doc :
 	[ -x $(docdir) ] || $(INSTALL) -d -m 755 $(docdir)
