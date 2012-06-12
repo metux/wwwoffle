@@ -1,0 +1,85 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Versión 2.6
+          ========================================================
+
+
+¿QUÉ?
+-----
+
+El formato de la caché que WWWOFFLE usa para almacenar las páginas Web ha
+cambiado ligeramente en la versión 2.6.  Es el resultado de una lavado de
+cara de las funciones de analizado y codificación/decodificación de las
+URLs.
+
+
+
+
+¿POR QUÉ?
+---------
+
+El programa wwwoffled usa las URLs para calcular el nombre de fichero que se
+debe usar al almacenar los ficheros en la caché.  Es posible que existan
+diferentes representaciones de la misma URL.  Esto significa que se pueden
+calcular dos nombres de fichero diferentes para la misma página Web.
+
+Por ejemplo, las siguiente dos URLs se refieren al mismo objeto.
+
+http://www.localhost/~user
+http://www.localhost/%7Euser
+
+El carácter '~' puede ser representado por '%7E' en una URL y significa
+exactamente lo mismo.
+
+El programa wwwoffled intentaba en versiones anteriores convertir todas las
+URLs equivalentes al mismo resultado.  Había algunos casos en los que esto
+no era posible y podía pasar que el mismo objeto se almacenara dos veces
+bajo diferentes nombres. La nueva versión del programa tiene más cuidado en
+asegurarse de que todas las posibles versiones de la misma URL coincidan con
+el mismo fichero.
+
+Si no ejecuta el programa de conversión como se detalla más abajo, WWWOFFLE
+seguirá funcionando. El único problema es que no podrá acceder a algunos de 
+los ficheros almacenados.  Creo que sólo cambiarán cerca del 1% o menos de 
+los ficheros.
+
+
+
+¿CÓMO?
+-----
+
+             *** LEA ESTA SECCIÓN ANTES DE HACER NADA MÁS ***
+
+
+Cuando se compila WWWOFFLE también se compila otro programa llamado 
+'convert-cache'. Necesita ejecutar este programa para convertir la caché 
+desde el formato antiguo al formato moderno.
+
+
+Hay un número de alternativas que puede usar para la conversión. El
+siguiente párrafo sirve para todas.
+
+En cada una de las alternativas debe usar convert-cache que toma como
+argumento el nombre de directorio que contiene la caché (normalmente
+/var/cache/wwwoffle).  Cuando el programa se ejecuta escribe mensajes de
+información y avisos que pueden ser útiles.
+
+Opción 1 - Sea temerario
+
+Ejecute 'convert-cache /var/cache/wwwoffle', mire los mensajes que aparecen
+y rece para que funcione.
+
+Opción 2 - Sea valiente
+
+Con sh/bash ejecute 'convert-cache /var/cache/wwwoffle > convert.log 2>&1'
+o con csh/tcsh ejecute 'convert-cache /var/cache/wwwoffle >& convert.log'
+Lea los mensajes y compruebe las advertencias.
+
+Opción 3 - Sea seguro
+
+Haga una copia de seguridad de la caché primero, luego siga con la opción 2.
+Con GNU tar sugiero que use la opción --atime-preserve para que el tiempo de
+acceso de los ficheros de la caché no se modifique al hacer la copia.
+Los índices y la opción de purga en WWWOFFLE usan este parámetro, por lo que
+es importante.
+
+
+Si el programa convert-cache falla tiene un fallo - comuníquemelo.
