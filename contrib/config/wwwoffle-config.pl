@@ -43,7 +43,7 @@ $OUTFILE="/etc/wwwoffle/wwwoffle.conf";
 
 # Howto call `wwwoffle -config' - if you don't want it to be called 
 # prefix the line with a `#'
-$CALL="/usr/local/bin/wwwoffle -config";
+$CALL="/usr/bin/wwwoffle -config";
 
 
 open(INPUT, $INFILE) || die "Cannot open inputfile ($INFILE)";

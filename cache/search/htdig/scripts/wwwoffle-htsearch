@@ -1,26 +1,19 @@
 #!/bin/sh
 
-#### THE SPOOL DIR IS "SPOOLDIR" IN THE LINE BELOW ####
+#### THE SPOOL DIR IS "/var/cache/wwwoffle" IN THE LINE BELOW ####
 
-wwwoffle_spool=SPOOLDIR
+wwwoffle_spool=/var/cache/wwwoffle
 
 ####
 
 cd $wwwoffle_spool
-
-# Set the path to include the htsearch executable
-
-PATH=$PATH:/usr/local/bin
-PATH=$PATH:/usr/local/cgi-bin
-PATH=$PATH:/usr/local/libexec
-PATH=$PATH:/usr/lib/cgi-bin    # The Debian location
-PATH=$PATH:/opt/www/cgi-bin    # The Suse location
-PATH=$PATH:/srv/www/cgi-bin    # The Suse location
-export PATH
 
 # Do the searching
 
 CONFIG_DIR=$wwwoffle_spool/search/htdig/conf
 export CONFIG_DIR
 
-htsearch -c search/htdig/conf/htsearch.conf
+unset REQUEST_METHOD
+exec /usr/lib/cgi-bin/htsearch -c $CONFIG_DIR/htsearch.conf $QUERY_STRING
+echo "Cannot run htsearch"
+exit 1

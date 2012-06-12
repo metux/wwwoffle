@@ -23,8 +23,8 @@ nichts zu ändern. Ansonsten Schritt 1.
 
 	Name und Port des Servers (LOCALHOST)	[localhost:8080]
 	Pfad für die Installation (INSTDIR)	[/usr/local]
-	Pfad für die Cache-Daten (SPOOLDIR)	[/var/spool/wwwoffle]
-	Pfad für die Konfiguration (CONFDIR)	[/var/spool/wwwoffle]
+	Pfad für die Cache-Daten (SPOOLDIR)	[/var/cache/wwwoffle]
+	Pfad für die Konfiguration (CONFDIR)	[/etc/wwwoffle]
 	Optionen für den Compiler (CC, CFLAGS)
 	(Die Datei enthält einige Optionen für nicht-Linux-Systeme,
          diese gilt es ggf. zu aktivieren.)
@@ -159,8 +159,8 @@ passen möchten:
 
 DEF_HTTP_PORT 8080		  # die Portnummer des HTTP Proxies
 DEF_WWWOFFLE_PORT 8081		  # die Portnummer für die Steuerung
-DEF_SPOOL "/var/spool/wwwoffle"	  # das Spool-Verzeichnis
-DEF_CONF "/var/spool/wwwoffle"	  # Ort der Konfigurationsdateien
+DEF_SPOOL "/var/cache/wwwoffle"	  # das Spool-Verzeichnis
+DEF_CONF "/etc/wwwoffle"	  # Ort der Konfigurationsdateien
 
 Die nächsten vier Angaben  beschränken die Anzahl  Verbindungen, die
 WWWOFFLE höchstens auf einmal verarbeiten soll -- entsprechend viele

@@ -25,7 +25,7 @@ wwwoffle.conf \- Le fichier de configuration du serveur proxy WWWOFFLE.
  {
   http-port     = 8080
   wwwoffle-port = 8081
-  spool-dir     = /var/spool/wwwoffle
+  spool-dir     = /var/cache/wwwoffle
   use-syslog    = yes
   password      =
  }

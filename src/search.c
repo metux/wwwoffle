@@ -378,7 +378,7 @@ static void SearchIndexLastTime(int fd)
 
 static void HTSearch(int fd,char *args)
 {
- SearchScript(fd,args,"htdig","htsearch","search/htdig/scripts/wwwoffle-htsearch");
+ SearchScript(fd,args,"htdig","htsearch","/usr/lib/cgi-bin/wwwoffle-htsearch");
 }
 
 

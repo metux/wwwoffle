@@ -42,11 +42,10 @@ Configure WWWOFFLE to run with mnoGoSearch
 ------------------------------------------
 
 The configuration files for the mnoGoSearch programs as used with WWWOFFLE will
-have been installed in /var/spool/wwwoffle/search/mnogosearch/conf when WWWOFFLE
+have been installed in /etc/wwwoffle/search/mnogosearch/conf when WWWOFFLE
 was installed.  The scripts used to run the mnoGoSearch programs will have been
-installed in /var/spool/wwwoffle/search/mnoGoSearch/scripts when WWWOFFLE was
-installed.  In both these cases the directory /var/spool/wwwoffle can be changed
-at compile time with options to the configure script.
+installed in /usr/share/wwwoffle/search/mnoGoSearch/scripts when WWWOFFLE was
+installed.  (These are the Debian settings.)
 
 These files should be correct if the information at the time of running
 configure was set correctly.  Check them, they should have the spool directory
@@ -54,6 +53,7 @@ and the proxy hostname and port set correctly.
 
 Also they should be checked to ensure that the mnoGoSearch programs are on the
 path (you can edit the PATH variable here if they are not in /usr/local/bin).
+(This should be OK in Debian.)
 
 
 Configure database to work with mnoGoSearch
@@ -119,8 +119,8 @@ web-pages to make the search database.
 To work with WWWOFFLE I have produced my own scripts that should be used
 to call the mnoGoSearch indexer.
 
-   /var/spool/wwwoffle/search/mnogosearch/scripts/wwwoffle-mnogosearch-full
-   /var/spool/wwwoffle/search/mnogosearch/scripts/wwwoffle-mnogosearch-lasttime
+   /usr/share/wwwoffle/search/mnogosearch/scripts/wwwoffle-mnogosearch-full
+   /usr/share/wwwoffle/search/mnogosearch/scripts/wwwoffle-mnogosearch-lasttime
 
 The first of these scripts will do a full search and index all of the URLs in
 the cache.  The second one will do a search of the URLs in the lasttime
@@ -136,7 +136,7 @@ search for should be entered here.
 
 This form actually calls the script
 
-   /var/spool/wwwoffle/search/mnogosearch/scripts/wwwoffle-mnogosearch
+   /usr/share/wwwoffle/search/mnogosearch/scripts/wwwoffle-mnogosearch
 
 to do the searching so it is possible to edit this to modify it if required.
 

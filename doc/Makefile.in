@@ -23,7 +23,7 @@ SHELL=/bin/sh
 prefix=@prefix@
 datarootdir = @datarootdir@
 mandir=$(DESTDIR)@mandir@
-docdir=$(DESTDIR)${prefix}/doc/wwwoffle
+docdir=$(DESTDIR)${prefix}/share/doc/wwwoffle
 
 SPOOLDIR=@SPOOLDIR@
 CONFDIR=@CONFDIR@

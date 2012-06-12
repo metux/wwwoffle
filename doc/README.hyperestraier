@@ -37,12 +37,10 @@ Configure WWWOFFLE to run with Hyper Estraier
 ---------------------------------------------
 
 The configuration files for the Hyper Estraier programs as used with WWWOFFLE
-will have been installed in /var/spool/wwwoffle/search/hyperestraier/conf when
+will have been installed in /etc/wwwoffle/search/hyperestraier/conf when
 WWWOFFLE was installed.  The scripts used to run the Hyper Estraier programs
-will have been installed in /var/spool/wwwoffle/search/hyperestraier/scripts
-when WWWOFFLE was installed.  In both these cases the directory
-/var/spool/wwwoffle can be changed at compile time with options to the configure
-script.
+will have been installed in /usr/share/wwwoffle/search/hyperestraier/scripts
+when WWWOFFLE was installed.  (These are the Debian values.)
 
 These files should be correct if the information at the time of running
 configure was set correctly.  Check them, they should have the spool directory
@@ -62,7 +60,7 @@ web-pages to make the search database.
 To work with WWWOFFLE I have produced my own scripts that should be used
 to call the Hyper Estraier indexer progam (estcmd).
 
-   /var/spool/wwwoffle/search/hyperestraier/scripts/wwwoffle-estcmd-full
+   /usr/share/wwwoffle/search/hyperestraier/scripts/wwwoffle-estcmd-full
 
 This script will do a full search and index all of the HTTP URLs in the cache.
 
@@ -76,7 +74,7 @@ Page".  The word or words that you want to search for should be entered here.
 
 This form actually calls the script
 
-   /var/spool/wwwoffle/search/hyperestraier/scripts/wwwoffle-estseek
+   /usr/share/wwwoffle/search/hyperestraier/scripts/wwwoffle-estseek
 
 to do the searching so it is possible to edit this to modify it if required.
 

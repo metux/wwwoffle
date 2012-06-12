@@ -57,7 +57,7 @@ and all images is '/search/htdig/'.  If the configuration file has a different
 compiled in variable (often '/htdig/') then the images will not be found.  The
 changes that you need to make are the following:
 
-In htsearch.conf (in /var/spool/wwwoffle/search/htdig/conf) you need to add the
+In htsearch.conf (in /etc/wwwoffle/htdig) you need to add the
 following lines (I have already done it in the default config file):
 
 allow_in_form: image_url_prefix
@@ -88,21 +88,18 @@ Configure WWWOFFLE to run with ht://Dig
 ---------------------------------------
 
 The configuration files for the ht://Dig programs as used with WWWOFFLE will
-have been installed in /var/spool/wwwoffle/search/htdig/conf when WWWOFFLE was
+have been installed in /etc/wwwoffle/htdig when WWWOFFLE was
 installed.  The scripts used to run the htdig programs will have been installed
-in /var/spool/wwwoffle/search/htdig/scripts when WWWOFFLE was installed.  In
-both these cases the directory /var/spool/wwwoffle can be changed at compile
-time with options to the configure script.
+in /usr/share/wwwoffle/search/htdig when WWWOFFLE was installed.
 
 These files should be correct if the information at the time of running
 configure was set correctly.  Check them, they should have the spool directory
 and the proxy hostname and port set correctly.
 
 Also they should be checked to ensure that the ht://Dig programs are on the path
-(you can edit the PATH variable here if they are not in /usr/local/bin).  The
-merging process can use a lot of disk space when the sort program is run, you
-can change the location of the temporary directory used for this with the TMPDIR
-variable.
+(you can edit the PATH variable here if they are not in /usr/bin).  The merging
+process can use a lot of disk space when the sort program is run, you can change
+the location of the temporary directory used for this with the TMPDIR variable.
 
 
 The Fuzzy Database
@@ -112,7 +109,7 @@ The ht://Dig programs use a database of fuzzy word endings and synonyms.  This
 needs to be created just once, there is a script provided with WWWOFFLE that
 does this.
 
-        /var/spool/wwwoffle/search/htdig/scripts/wwwoffle-htfuzzy
+        /var/cache/wwwoffle/search/htdig/scripts/wwwoffle-htfuzzy
 
 If you have an existing ht://Dig installation then this step will probably have
 already been performed and is not required again.
@@ -132,9 +129,9 @@ The ht://Dig installation will include a script called 'rundig' that
 demonstrates how digging and merging is supposed to work.  To work with WWWOFFLE
 I have produced my own scripts that should be used instead.
 
-        /var/spool/wwwoffle/search/htdig/scripts/wwwoffle-htdig-full
-        /var/spool/wwwoffle/search/htdig/scripts/wwwoffle-htdig-incr
-        /var/spool/wwwoffle/search/htdig/scripts/wwwoffle-htdig-lasttime
+        /usr/share/wwwoffle/search/htdig/wwwoffle-htdig-full
+        /usr/share/wwwoffle/search/htdig/wwwoffle-htdig-incr
+        /usr/share/wwwoffle/search/htdig/wwwoffle-htdig-lasttime
 
 The first of these scripts will do a full search and index all of the URLs in
 the cache.  The second one will do an incremental search and will only index
@@ -147,7 +144,7 @@ The only differnce is that for the incremental search and lasttime search the
 WWWOFFLE cache is only accessed for the files that have changed.
 
 If you cannot get htdig version 3.1.6 or 3.2.0 to index any pages then try
-removing the line in the file /var/spool/wwwoffle/html/en/robots.txt that says
+removing the line in the file /var/cache/wwwoffle/html/en/robots.txt that says
 'Disallow: /index' since it triggers a bug in htdig that stops it searching
 properly.
 
@@ -161,7 +158,7 @@ search for should be entered here.
 
 This form actually calls the script
 
-        /var/spool/wwwoffle/search/htdig/scripts/wwwoffle-htsearch
+        /usr/lib/cgi-bin/wwwoffle-htsearch
 
 to do the searching so it is possible to edit this to modify it if required.
 

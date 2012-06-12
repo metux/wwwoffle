@@ -99,7 +99,7 @@ int main(int argc, char** argv)
  int recursive_mode=0,depth=0;
  int force=0;
  int stylesheets=0,images=0,frames=0,iframes=0,scripts=0,objects=0,nothing=0;
- char *config_file=NULL;
+ char *config_file="/etc/wwwoffle/wwwoffle.conf";       /* PS XXX */
  int exitval=0;
 
  Action action=None;
@@ -1080,7 +1080,7 @@ static void usage(int verbose)
             "WWWOFFLE_PROXY       : An environment variable that can be set to either the\n"
             "                       name of the config file (absolute path) or the hostname\n"
             "                       and port number (both proxy and control) for the proxy.\n"
-            "                       e.g. \"/var/spool/wwwoffle/wwwoffle.conf\",\n"
+            "                       e.g. \"/etc/wwwoffle/wwwoffle.conf\",\n"
             "                       \"localhost:8080:8081\" or \"localhost:8080\" are valid.\n"
             "\n",DEF_LOCALHOST,DEF_WWWOFFLE_PORT,DEF_HTTP_PORT);
 

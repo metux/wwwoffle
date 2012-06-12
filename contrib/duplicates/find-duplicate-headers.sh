@@ -5,7 +5,7 @@ if [ "$1" = "" ]; then
    exit
 fi
 
-cd /var/spool/wwwoffle
+cd /var/cache/wwwoffle
 
 echo *time*/$1 |\
 xargs -n 1 awk '/^\r$/ {finished=1} {if(!finished) print}' |\

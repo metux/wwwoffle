@@ -254,7 +254,7 @@ AC_ARG_WITH(spooldir,
 SPOOLDIR=$withval,)
 
 if test "x$SPOOLDIR" = "x"; then
-    SPOOLDIR=/var/spool/wwwoffle
+    SPOOLDIR=/var/cache/wwwoffle
 fi
 
 AC_DEFINE_UNQUOTED(DEF_SPOOLDIR,"$SPOOLDIR")

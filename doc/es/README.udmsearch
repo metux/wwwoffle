@@ -68,9 +68,9 @@ Cómo configurar WWWOFFLE para que funcione con UdmSearch
 --------------------------------------------------------
 
 Los ficheros de configuración de los programas UdmSearch que utiliza WWWOFFLE
-se habrán instalado en /var/spool/wwwoffle/html/search/udmsearch/conf
+se habrán instalado en /var/cache/wwwoffle/html/search/udmsearch/conf
 al instalar WWWOFFLE.  Los guiones que usa WWWOFFLE para ejecuta udmsearch
-se habrán instalado en /var/spool/wwwoffle/html/search/udmsearch/scripts al
+se habrán instalado en /var/cache/wwwoffle/html/search/udmsearch/scripts al
 instalar WWWOFFLE.
 
 Estos ficheros deberían ser correctos si la información del Makefile de 
@@ -141,8 +141,8 @@ páginas web para crear la base de datos de búsqueda.
 Para que funcione con WWWOFFLE he creado mis propios guiones que deberían
 usarse para llamar al indexador UdmSearch.
 
-   /var/spool/wwwoffle/html/search/udmsearch/scripts/wwwoffle-udmsearch-full
-   /var/spool/wwwoffle/html/search/udmsearch/scripts/wwwoffle-udmsearch-incr
+   /var/cache/wwwoffle/html/search/udmsearch/scripts/wwwoffle-udmsearch-full
+   /var/cache/wwwoffle/html/search/udmsearch/scripts/wwwoffle-udmsearch-incr
 
 El primero de estos guiones hará una búsqueda completa e indexará todas las 
 URLs en la caché.  El segundo hará una búsqueda incremental y sólo indexará
@@ -159,7 +159,7 @@ quiera buscar desde esta página.
 
 Este formulario llama al guión
 
-   /var/spool/wwwoffle/html/search/udmsearch/scripts/wwwoffle-udmsearch
+   /var/cache/wwwoffle/html/search/udmsearch/scripts/wwwoffle-udmsearch
 
 para hacer la búsqueda. Por lo que es posible modificar este guión si 
 lo necesita.

@@ -14,7 +14,7 @@
 
 # Set the spool directory
 
-wwwoffle_spool=/var/spool/wwwoffle
+wwwoffle_spool=/var/cache/wwwoffle
 
 cd $wwwoffle_spool
 

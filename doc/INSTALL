@@ -40,7 +40,8 @@ Compilation
         --with-spooldir=<directory>     - Set the compiled-in default value for
                                           the spool directory (can be overridden
                                           in the configuration file) (default
-                                          /var/spool/wwwoffle).
+                                          /var/spool/wwwoffle,
+					  /var/cache/wwwoffle is used in Debian)
 
         --with-confdir=<directory>      - Set the compiled-in default value for
                                           the configuration file directory, (can
@@ -199,7 +200,7 @@ changed here as well as the default values.
 
 The next one is the number of prevtime directories that are created to allow a
 history back beyond the latest time online.  If this number is changed then the
-files /var/spool/wwwoffle/html/*/messages/IndexLastTime-Tail.html and
+files /var/cache/wwwoffle/html/*/messages/IndexLastTime-Tail.html and
 IndexLastOut-Tail.html must be edited for the links to these to be visible.
 
 /*+ The number of pretime directories to create (lasttime history). +*/

@@ -76,9 +76,9 @@ Cómo Configurar WWWOFFLE para trabajar con ht://Dig
 ---------------------------------------------------
 
 Los ficheros de configuración de los programas ht://Dig que usa WWWOFFLE se 
-habrán instalado en el directorio /var/spool/wwwoffle/html/search/htdig/conf 
+habrán instalado en el directorio /var/cache/wwwoffle/html/search/htdig/conf 
 cuando instaló WWWOFFLE.  Los guiones usados para ejecutar los programas 
-htdig se habrán instalado en /var/spool/wwwoffle/html/search/htdig/scripts 
+htdig se habrán instalado en /var/cache/wwwoffle/html/search/htdig/scripts 
 cuando se instaló WWWOFFLE.
 
 Estos ficheros son correctos si la información en el 'Makefile' de 
@@ -99,7 +99,7 @@ Los programas ht://Dig usan una base de datos difusa con terminaciones de
 palabra y sinónimos. Esta se necesita crear una sola vez. Hay un fichero que
 viene con WWWOFFLE que hace esto mismo.
 
-        /var/spool/wwwoffle/html/search/htdig/scripts/wwwoffle-htfuzzy
+        /var/cache/wwwoffle/html/search/htdig/scripts/wwwoffle-htfuzzy
 
 Si ya ha instalado y ejecutado ht://Dig anteriormente seguramente ya haya hecho
 este paso y no se requiere hacerlo más.
@@ -120,9 +120,9 @@ como tiene que funcionar la recopilación y la unión.  Para que funcione con
 WWWOFFLE he realizado mis propios guiones que se deben usar en vez de los 
 otros.
 
-        /var/spool/wwwoffle/html/search/htdig/scripts/wwwoffle-htdig-full
-        /var/spool/wwwoffle/html/search/htdig/scripts/wwwoffle-htdig-incr
-        /var/spool/wwwoffle/html/search/htdig/scripts/wwwoffle-htdig-lasttime
+        /var/cache/wwwoffle/html/search/htdig/scripts/wwwoffle-htdig-full
+        /var/cache/wwwoffle/html/search/htdig/scripts/wwwoffle-htdig-incr
+        /var/cache/wwwoffle/html/search/htdig/scripts/wwwoffle-htdig-lasttime
 
 El primero de los guiones realizará una búsqueda e indexado completos
 de todas las URLs en el caché.  El segundo hará una búsqueda incremental 
@@ -146,7 +146,7 @@ introducidas aquí.
 
 Este formulario llama al guión
 
-        /var/spool/wwwoffle/html/search/htdig/scripts/wwwoffle-htsearch
+        /var/cache/wwwoffle/html/search/htdig/scripts/wwwoffle-htsearch
 
 para que haga una búsqueda por lo que lo puede editar y modificar si lo cree
 conveniente.

@@ -147,8 +147,8 @@ images, different colours ... on the web pages that WWWOFFLE generates.
 From version 2.2 this is no longer an issue since it is possible to customise
 all of the web-pages that WWWOFFLE itself generates.  This means that the
 background colour and the font size can all be changed to suit your preferences.
-To find out how to do this look in the /var/spool/wwwoffle/html/*/messages
-directory (replace /var/spool/wwwoffle with the cache directory that you
+To find out how to do this look in the /var/cache/wwwoffle/html/*/messages
+directory (replace /var/cache/wwwoffle with the cache directory that you
 configured if it is different) and read the README file.
 
 From version 2.8 there is now a WWWOFFLE style sheet that is included into all

@@ -24,7 +24,7 @@
 #   - maybe there are more HTTP response types that could 
 #     ignored etc
 
-# casket + xdata go into EDIR, by default /var/spool/wwwoffle/hyperestraier
+# casket + xdata go into EDIR, by default /var/cache/wwwoffle/hyperestraier
 # EDIR/casket-xdata dir is used to store timestamps of domain dirs and data
 # files 
 # mime-type is additionally stored for data files, atm this is not needed
@@ -42,7 +42,7 @@ WHITELIST="*"
 $force=nil
 
 $Casketname="casket-wwwoffle"
-SPD="/var/spool/wwwoffle"
+SPD="/var/cache/wwwoffle"
 EDIR=File.join(SPD,"hyperestraier")
 
 $Csfullname=File.join(EDIR,$Casketname)

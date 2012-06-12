@@ -214,7 +214,7 @@ Contribuido: Luis Miguel Ferreira <ferreira@iname.com>
 > sitio). (en algunas de las páginas Web, estos enlaces eran invisible porque
 > eran del mismo color que el fondo. Es por esto por lo que las he cambiado)
 
-Necesita cambiar el fichero /var/spool/wwwoffle/html/messages/AddCacheInfo.html
+Necesita cambiar el fichero /var/cache/wwwoffle/html/messages/AddCacheInfo.html
 con esta versión y activar la opción add-cache-info en la sección ModifyHTML
 del fichero de configuración.
 
@@ -275,6 +275,6 @@ Contribuido: Dag Hoidahl <dag.hoidahl@fix.no>
 > por ejemplo en la barra de herramientas. De otro modo puedes abrir el
 > fichero y añadir los enlaces a los marca páginas manualmente.
 
-Necesita cambiar el fichero /var/spool/wwwoffle/html/messages/AddCacheInfo.html
+Necesita cambiar el fichero /var/cache/wwwoffle/html/messages/AddCacheInfo.html
 con esta versión y activar la opción add-cache-info en la sección ModifyHTML
 del fichero de configuración.

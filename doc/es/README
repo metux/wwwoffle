@@ -694,7 +694,7 @@ mensajes del histórico del programa wwwoffled.
 
 Si wwwoffled es ejecutado como
 
-wwwoffled -c /var/spool/wwwoffle/wwwoffle.conf -d 4
+wwwoffled -c /var/cache/wwwoffle/wwwoffle.conf -d 4
 
 en la salida de error estándar se generará información mientras se ejecuta 
 el programa. El nivel de depuración necesita ser de 4 para que se

@@ -30,7 +30,7 @@ wwwoffle.conf \- The configuration file for the proxy server for the World Wide 
   https-port        = 8443
   wwwoffle-port     = 8081
 
-  spool-dir     = /var/spool/wwwoffle
+  spool-dir     = /var/cache/wwwoffle
 
   use-syslog    = yes
 

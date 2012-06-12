@@ -161,7 +161,7 @@ pueden ser cambiados aquí así como los valores por defecto.
 El siguiente es el número de directorios "prevtime" que se crearán para permitir
 un historial de las últimas veces que se estuvo conectado.  Si este número
 es cambiado necesita también editar los ficheros
-/var/spool/wwwoffle/html/messages/IndexLastTime-Tail.html y
+/var/cache/wwwoffle/html/messages/IndexLastTime-Tail.html y
 IndexLastOut-Tail.html para hacer visibles los enlaces.
 
 /*+ El número de directorios "prevtime" a crear (historial de últimas veces). +*/

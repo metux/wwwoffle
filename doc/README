@@ -406,7 +406,7 @@ WWWOFFLE URL http://localhost:8080/certificates/ but is only available if
 WWWOFFLE was compiled with encryption support.
 
 To add trusted certificates to WWWOFFLE place the certificate file (in PEM
-format) into the directory '/var/spool/wwwoffle/certificates/trusted' and
+format) into the directory '/var/lib/wwwoffle/certificates/trusted' and
 restart WWWOFFLE.
 
 

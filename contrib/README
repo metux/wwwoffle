@@ -248,7 +248,7 @@ Contributed: Luis Miguel Ferreira <ferreira@iname.com>
 > (on some web pages, these links were invisible, because they were of the same
 > colour as the background, that's why I changed it)
 
-You need to replace the file /var/spool/wwwoffle/html/messages/AddCacheInfo.html
+You need to replace the file /var/cache/wwwoffle/html/messages/AddCacheInfo.html
 with the file supplied here and enable the add-cache-info option in the
 ModifyHTML section of the configuration file.
 
@@ -310,7 +310,7 @@ Contributed: Dag Hoidahl <dag.hoidahl@fix.no>
 > Toolbar folder. Otherwise you could open the file and add the links as
 > bookmarks manually.
 
-You need to replace the file /var/spool/wwwoffle/html/messages/AddCacheInfo.html
+You need to replace the file /var/cache/wwwoffle/html/messages/AddCacheInfo.html
 with the file supplied here and enable the add-cache-info option in the
 ModifyHTML section of the configuration file.
 
@@ -425,7 +425,7 @@ Contributed: Marc Boucher <marcb@box100.com>
 > For this reason the user must be root or have write access to the spool
 > directories.
 
->  - If your spool dir is not "/var/spool/wwwoffle/" you can use '-c configfile'
+>  - If your spool dir is not "/var/cache/wwwoffle/" you can use '-c configfile'
 >    to read it from your configuration file.
 > See -h for more information.
 > 

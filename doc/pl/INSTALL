@@ -161,7 +161,7 @@ maksymalne mog± zostaæ zmienione tutaj jako warto¶ci domy¶lne.
 Nastêpna opcja jest liczb± katalogów poprzednich razów, które tworzon± historiê
 pobranych stron podczas ostatnich po³±czeñ. Je¶li ta liczba zostaje zmieniona,
 wymagana jest wtedy edycja pliku
-/var/spool/wwwoffle/html/messages/IndexLastTime-Tail.html, poprzez dodanie ³±czy
+/var/cache/wwwoffle/html/messages/IndexLastTime-Tail.html, poprzez dodanie ³±czy
 do tych katalogów.
 
 /*+ Liczba tworzonych katalogów poprzedniego razu (historia ostatnich

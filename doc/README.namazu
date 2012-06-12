@@ -55,11 +55,10 @@ Configure WWWOFFLE to run with Namazu & mknmz-wwwoffle
 ------------------------------------------------------
 
 The configuration files for the Namazu programs as used with WWWOFFLE will have
-been installed in /var/spool/wwwoffle/search/namazu/conf when WWWOFFLE was
+been installed in /etc/wwwoffle/search/namazu/conf when WWWOFFLE was
 installed.  The scripts used to run the Namazu programs will have been installed
-in /var/spool/wwwoffle/search/namazu/scripts when WWWOFFLE was installed.  In
-both these cases the directory /var/spool/wwwoffle can be changed at compile
-time with options to the configure script.
+in /usr/share/wwwoffle/search/namazu/scripts when WWWOFFLE was installed.
+(These are the Debian settings.)
 
 These files should be correct if the information at the time of running
 configure was set correctly.  Check them, they should have the spool directory
@@ -78,8 +77,8 @@ web-pages to make the search database.
 To work with WWWOFFLE I have produced my own scripts that should be used
 to call the Namazu indexer progam (mknmz).
 
-   /var/spool/wwwoffle/search/namazu/scripts/wwwoffle-mknmz-full
-   /var/spool/wwwoffle/search/namazu/scripts/wwwoffle-mknmz-lasttime
+   /usr/share/wwwoffle/search/namazu/scripts/wwwoffle-mknmz-full
+   /usr/share/wwwoffle/search/namazu/scripts/wwwoffle-mknmz-lasttime
 
 The first of these scripts will do a full search and index all of the URLs in
 the cache.  The second one will do a search on the files in the lasttime
@@ -95,7 +94,7 @@ for should be entered here.
 
 This form actually calls the script
 
-   /var/spool/wwwoffle/search/namazu/scripts/wwwoffle-namazu
+   /usr/share/wwwoffle/search/namazu/scripts/wwwoffle-namazu
 
 to do the searching so it is possible to edit this to modify it if required.
 

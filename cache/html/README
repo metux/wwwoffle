@@ -2,7 +2,7 @@
                 ==============================================
 
 All directory paths listed here are local to the WWWOFFLE cache directory which
-is usually /var/spool/wwwoffle, but should in any case be one directory back
+is usually /var/cache/wwwoffle, but should in any case be one directory back
 from the directory that contains this file.
 
 The language that is selected is the one that is requested by the browser in the
