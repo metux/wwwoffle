@@ -109,6 +109,13 @@ int LoadRootCredentials(void)
  int err;
  struct stat buf;
  time_t activation,expiration,now;
+ int pwdhandle; /* for fchdir() purposes */
+
+ pwdhandle = open(".", O_RDONLY);
+ if (pwdhandle < 0)
+     PrintMessage(Fatal, "Failed to open current directory");
+ if (chdir("/etc/wwwoffle") < 0)
+     PrintMessage(Fatal, "Failed to chdir(/etc/wwwoffle)");
 
  /* Check that the gnutls library hasn't already been initialised. */
 
@@ -246,6 +253,10 @@ int LoadRootCredentials(void)
  if(!dh_params && !rsa_params)
     PrintMessage(Fatal,"Could not create Diffie Hellman or RSA parameters for key exchange; check for earlier gnutls warning messages.");
 
+ if (fchdir(pwdhandle) < 0)
+     PrintMessage(Fatal, "fchdir failed");
+ close(pwdhandle);
+
  return(0);
 }    
 
@@ -261,6 +272,13 @@ int LoadTrustedCertificates(void)
  struct stat buf;
  DIR *dir;
  struct dirent* ent;
+ int pwdhandle; /* for fchdir() purposes */
+
+ pwdhandle = open(".", O_RDONLY);
+ if (pwdhandle < 0)
+     PrintMessage(Fatal, "Failed to open current directory");
+ if (chdir("/etc/wwwoffle") < 0)
+     PrintMessage(Fatal, "Failed to chdir(/etc/wwwoffle)");
 
  /* Check that the gnutls library has already been initialised. */
 
@@ -432,6 +450,10 @@ int LoadTrustedCertificates(void)
 
  /* FIXME : We don't handle trusted CRLs */
 
+ if (fchdir(pwdhandle) < 0)
+     PrintMessage(Fatal, "fchdir failed");
+ close(pwdhandle);
+
  return(0);
 }
 
@@ -572,6 +594,14 @@ int PutRealCertificate(gnutls_session_t session,const char *hostname)
  unsigned int n_crts,i;
  char *filename;
  int err;
+ int pwdhandle; /* for fchdir() purposes */
+
+ pwdhandle = open(".", O_RDONLY);
+ if (pwdhandle < 0)
+     PrintMessage(Fatal, "Failed to open current directory");
+ if (chdir("/etc/wwwoffle") < 0)
+     PrintMessage(Fatal, "Failed to chdir(/etc/wwwoffle)");
+
 
  /* Create the certificates/real directory if needed */
 
@@ -625,6 +655,10 @@ int PutRealCertificate(gnutls_session_t session,const char *hostname)
 
  free(filename);
 
+ if (fchdir(pwdhandle) < 0)
+     PrintMessage(Fatal, "fchdir failed");
+ close(pwdhandle);
+
  return(err);
 }
 
@@ -644,6 +678,14 @@ gnutls_x509_crt_t VerifyCertificates(const char *hostname)
  time_t activation,expiration,now;
  gnutls_x509_crt_t *certlist,cert,issuer,retval=NULL;
  char *filename;
+ int pwdhandle; /* for fchdir() purposes */
+
+ pwdhandle = open(".", O_RDONLY);
+ if (pwdhandle < 0)
+     PrintMessage(Fatal, "Failed to open current directory");
+ if (chdir("/etc/wwwoffle") < 0)
+     PrintMessage(Fatal, "Failed to chdir(/etc/wwwoffle)");
+
 
  /* Load in the certificates for this host */
 
@@ -655,8 +697,12 @@ gnutls_x509_crt_t VerifyCertificates(const char *hostname)
 
  free(filename);
 
- if(!certlist)
+ if(!certlist) {
+    if (fchdir(pwdhandle) < 0)
+        PrintMessage(Fatal, "fchdir failed");
+    close(pwdhandle);
     return(NULL);
+ }
 
  /* Check the first certificate in the chain */
 
@@ -722,6 +768,10 @@ gnutls_x509_crt_t VerifyCertificates(const char *hostname)
  for(i=0;certlist[i];i++)
     gnutls_x509_crt_deinit(certlist[i]);
 
+ if (fchdir(pwdhandle) < 0)
+     PrintMessage(Fatal, "fchdir failed");
+ close(pwdhandle);
+
  return(retval);
 }
 
@@ -749,6 +799,14 @@ static gnutls_certificate_credentials_t GetCredentials(const char *hostname,int 
 #if defined(__CYGWIN__)
  int i;
 #endif
+ int pwdhandle; /* for fchdir() purposes */
+
+ pwdhandle = open(".", O_RDONLY);
+ if (pwdhandle < 0)
+     PrintMessage(Fatal, "Failed to open current directory");
+ if (chdir("/etc/wwwoffle") < 0)
+     PrintMessage(Fatal, "Failed to chdir(/etc/wwwoffle)");
+
 
  /* Create the certificates/server or certificates/fake directory if needed */
 
@@ -901,6 +959,10 @@ static gnutls_certificate_credentials_t GetCredentials(const char *hostname,int 
 
  if(rsa_params)
     gnutls_certificate_set_rsa_export_params(cred,rsa_params);
+
+ if (fchdir(pwdhandle) < 0)
+     PrintMessage(Fatal, "fchdir failed");
+ close(pwdhandle);
 
  /* Finished so cleanup and return */
 
