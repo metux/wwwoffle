@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/monitor.c 1.60 2006/12/17 13:14:06 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/monitor.c 1.61 2008/11/23 10:02:24 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
   The functions for monitoring URLs.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1998,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1998,99,2000,01,02,03,04,05,06,08 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -108,7 +108,7 @@ static void MonitorFormShow(int fd,char *request_args)
  char MofY[13],DofM[32],DofW[8],HofD[25];
  char dofmstr[128],hofdstr[64],*p;
  char *url=NULL;
- int i;
+ int i,exists=0;
 
  if(request_args)
     url=URLDecodeFormArgs(request_args);
@@ -116,7 +116,7 @@ static void MonitorFormShow(int fd,char *request_args)
  if(url)
    {
     URL *monUrl=SplitURL(url);
-    ReadMonitorTimesSpoolFile(monUrl,MofY,DofM,DofW,HofD);
+    exists=ReadMonitorTimesSpoolFile(monUrl,MofY,DofM,DofW,HofD);
     FreeURL(monUrl);
    }
  else
@@ -157,6 +157,7 @@ static void MonitorFormShow(int fd,char *request_args)
 
  HTMLMessage(fd,200,"WWWOFFLE Monitor Page",NULL,"MonitorPage",
              "url",url,
+             "exists",exists==0?NULL:"Yes",
              "mofy1",MofY[0]=='1'?"Yes":NULL,
              "mofy2",MofY[1]=='1'?"Yes":NULL,
              "mofy3",MofY[2]=='1'?"Yes":NULL,

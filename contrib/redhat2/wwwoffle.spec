@@ -24,7 +24,7 @@ Buildroot: /var/tmp/%{name}-root
 Prereq: /sbin/chkconfig, /usr/sbin/useradd
 
 %description
-A proxy HTTP/FTP server for computers with dial-up internet access.
+A proxy HTTP/FTP server for computers with intermittent internet access.
 - Caching of pages viewed while connected for review later.
 - Browsing of cached pages while not connected, with the ability
   to follow links and mark other pages for download.

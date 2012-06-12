@@ -8,6 +8,7 @@ Available WWWOFFLE Variables (all with a '$' prefix).
 localurl  = The root URL of the server running wwwoffled (='$localurl').
 version   = The version of the WWWOFFLE server (='$version').
 url       = The URL to be monitored by default (if any) (='$url').
+exists    = The URL is already monitored (='$exists').
 
 -->
 
@@ -27,9 +28,14 @@ url       = The URL to be monitored by default (if any) (='$url').
 
 <!-- Standard WWWOFFLE Message Page Header End -->
 
+$exists?{$current="The URL <tt>$url</tt> is currently monitored."}{$current="The URL <tt>$url</tt> is not currently monitored."}
+
 <H1 align="center">WWWOFFLE Página Interactiva de Monitorización</H1>
 
 Puede usar este formulario para monitorizar cualquier URL.
+
+$url?{<p>
+$current}{}
 
 <p>
 
@@ -81,18 +87,18 @@ Cuando las siguientes cuatro condiciones sean verdad:
 <input type="submit" value="Monitorizar Ahora">
 </form>
 
-$url?{
 <p>
 <hr width="50%">
 <p>
 You can use this form to stop monitoring any URL.
+$url?{<p>
+$current}{}
 <p>
 <form action="/control/delete/mon" method="get">
 Stop Monitoring <input type="text" name="url" value="$url" size="60">
 <p>
 <input type="submit" value="Stop Monitoring">
 </form>
-}{}
 
 <div class="wwwoffle-nav" align="center">
 [<a href="/index/monitor/?sort=alpha">Ver la lista de páginas monitorizadas</a>]

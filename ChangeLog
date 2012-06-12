@@ -1,3 +1,64 @@
+2009-01-25  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	Version 2.9e of WWWOFFLE released.
+
+2009-01-25  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/NEWS, doc/FAQ, doc/README, src/version.h: Update to version 2.9e.
+
+2009-01-14  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	Create the backup of the URL that is going to be deleted, not the original URL.
+
+2008-11-23  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/monitor.c:
+	Display a message on the monitor form if the page is already monitored.
+
+2008-10-09  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/misc.h, src/miscencdec.c, src/miscurl.c, src/document.c:
+	Fix problems with numeric character representations in URLs inside HTML
+	documents (e.g. '&#038;' -> '&'), also handle non-7-bit characters and fix
+	'&amp;' -> '&' conversions properly.
+
+2008-08-26  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/wwwoffle.conf.man.template:
+	Added a few more items to the example configuration file.
+
+2008-08-25  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/FAQ: Removed wwwoffle-win32 mailing list.
+
+2008-05-15  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/iozlib.c: Stop when a deflate decompression error is seen.
+
+2008-05-03  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.CONF:
+	Make sure that generated wwwoffle.conf doesn't have lines with more than 80
+	characters.
+
+2008-03-06  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	If running 'wwwoffle URL' and it is in the DontCache list then don't store the
+	request.
+
+	* src/wwwoffle.c: Fix the last change.
+
+2008-02-26  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffle.c:
+	Give an error if too many command line arguments are given.
+
+2008-02-14  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.CONF: Added clarification to DontCache option.
+
 2008-01-23  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
 
 	Version 2.9d of WWWOFFLE released.

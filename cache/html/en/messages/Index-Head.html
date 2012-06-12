@@ -36,9 +36,6 @@ $type?=https   {<TITLE>WWWOFFLE Index - $type://$subtype</TITLE>}{}
 $type?=ftp     {<TITLE>WWWOFFLE Index - $type://$subtype</TITLE>}{}
 $type?=finger  {<TITLE>WWWOFFLE Index - $type://$subtype</TITLE>}{}
 <LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
-</HEAD>
-
-<BODY class="wwwoffle-message">
 
 $typesubtype=$type$subtype
 $type?=prevtime{$type=$type$subtype $subtype=}{}
@@ -48,6 +45,28 @@ $typesubtype?=https{$type=$type/}{}
 $typesubtype?=ftp{$type=$type/}{}
 $typesubtype?=finger{$type=$type/}{}
 $subtype?{$subtype=/$subtype}{}
+
+$type?=lasttime{                                                                                            <LINK rel="next" href="/index/prevtime1?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevtime1{<LINK rel="prev" href="/index/lasttime?sort=$sort$delete$refresh$monitor$all$config$info" ><LINK rel="next" href="/index/prevtime2?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevtime2{<LINK rel="prev" href="/index/prevtime1?sort=$sort$delete$refresh$monitor$all$config$info"><LINK rel="next" href="/index/prevtime3?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevtime3{<LINK rel="prev" href="/index/prevtime2?sort=$sort$delete$refresh$monitor$all$config$info"><LINK rel="next" href="/index/prevtime4?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevtime4{<LINK rel="prev" href="/index/prevtime3?sort=$sort$delete$refresh$monitor$all$config$info"><LINK rel="next" href="/index/prevtime5?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevtime5{<LINK rel="prev" href="/index/prevtime4?sort=$sort$delete$refresh$monitor$all$config$info"><LINK rel="next" href="/index/prevtime6?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevtime6{<LINK rel="prev" href="/index/prevtime5?sort=$sort$delete$refresh$monitor$all$config$info"><LINK rel="next" href="/index/prevtime7?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevtime7{<LINK rel="prev" href="/index/prevtime6?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+
+$type?=lastout{                                                                                            <LINK rel="next" href="/index/prevout1?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevout1{<LINK rel="prev" href="/index/lastout?sort=$sort$delete$refresh$monitor$all$config$info" ><LINK rel="next" href="/index/prevout2?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevout2{<LINK rel="prev" href="/index/prevout1?sort=$sort$delete$refresh$monitor$all$config$info"><LINK rel="next" href="/index/prevout3?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevout3{<LINK rel="prev" href="/index/prevout2?sort=$sort$delete$refresh$monitor$all$config$info"><LINK rel="next" href="/index/prevout4?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevout4{<LINK rel="prev" href="/index/prevout3?sort=$sort$delete$refresh$monitor$all$config$info"><LINK rel="next" href="/index/prevout5?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevout5{<LINK rel="prev" href="/index/prevout4?sort=$sort$delete$refresh$monitor$all$config$info"><LINK rel="next" href="/index/prevout6?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevout6{<LINK rel="prev" href="/index/prevout5?sort=$sort$delete$refresh$monitor$all$config$info"><LINK rel="next" href="/index/prevout7?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+$type?=prevout7{<LINK rel="prev" href="/index/prevout6?sort=$sort$delete$refresh$monitor$all$config$info">}{}
+
+</HEAD>
+
+<BODY class="wwwoffle-message">
 
 <!-- Standard WWWOFFLE Message Page Header Start -->
 
@@ -63,14 +82,14 @@ $subtype?{$subtype=/$subtype}{}
 <div class="wwwoffle-index-buttons-top" align="center">
 $type?{<a href="/index/?sort=none">[Main&nbsp;Index]</a>}{<strong>[Main&nbsp;Index]</strong>}
 <br>
-$type?=outgoing{<strong>[Outgoing]</strong>}          {<a href="/index/outgoing/?sort=$sort$delete$refresh$monitor$all$config$info" title="View the list of requests that have already been made">[Outgoing]</a>}
-$type?=monitor {<strong>[Monitored]</strong>}         {<a href="/index/monitor/?sort=$sort$delete$refresh$monitor$all$config$info" title="View the list of pages that are regularly monitored">[Monitored]</a>}
-$type?=lasttime{<strong>[Last&nbsp;Time]</strong>}    {<a href="/index/lasttime/?sort=$sort$delete$refresh$monitor$all$config$info" title="View the pages that were fetched last time online">[Last&nbsp;Time]</a>}
-$type?=lastout {<strong>[Last&nbsp;Outgoing]</strong>}{<a href="/index/lastout/?sort=$sort$delete$refresh$monitor$all$config$info" title="View the requests that were fetched the last time online">[Last&nbsp;Outgoing]</a>}
-$type?=http/   {<strong>[http]</strong>}              {<a href="/index/http/?sort=$sort$delete$refresh$monitor$all$config$info" title="List all of the HTTP servers that have pages cached">[http]</a>}
-$type?=https/  {<strong>[https]</strong>}             {<a href="/index/https/?sort=$sort$delete$refresh$monitor$all$config$info" title="List all of the HTTP servers that have pages cached">[https]</a>}
-$type?=ftp/    {<strong>[ftp]</strong>}               {<a href="/index/ftp/?sort=$sort$delete$refresh$monitor$all$config$info" title="List all of the FTP servers that have pages cached">[ftp]</a>}
-$type?=finger/ {<strong>[finger]</strong>}            {<a href="/index/finger/?sort=$sort$delete$refresh$monitor$all$config$info" title="List all of the Finger servers that have pages cached">[finger]</a>}
+$type?=outgoing{<strong>[Outgoing]</strong>}          {<a href="/index/outgoing?sort=$sort$delete$refresh$monitor$all$config$info" title="View the list of requests that have already been made">[Outgoing]</a>}
+$type?=monitor {<strong>[Monitored]</strong>}         {<a href="/index/monitor?sort=$sort$delete$refresh$monitor$all$config$info" title="View the list of pages that are regularly monitored">[Monitored]</a>}
+$type?=lasttime{<strong>[Last&nbsp;Time]</strong>}    {<a href="/index/lasttime?sort=$sort$delete$refresh$monitor$all$config$info" title="View the pages that were fetched last time online">[Last&nbsp;Time]</a>}
+$type?=lastout {<strong>[Last&nbsp;Outgoing]</strong>}{<a href="/index/lastout?sort=$sort$delete$refresh$monitor$all$config$info" title="View the requests that were fetched the last time online">[Last&nbsp;Outgoing]</a>}
+$type?=http/   {<strong>[http]</strong>}              {<a href="/index/http?sort=$sort$delete$refresh$monitor$all$config$info" title="List all of the HTTP servers that have pages cached">[http]</a>}
+$type?=https/  {<strong>[https]</strong>}             {<a href="/index/https?sort=$sort$delete$refresh$monitor$all$config$info" title="List all of the HTTP servers that have pages cached">[https]</a>}
+$type?=ftp/    {<strong>[ftp]</strong>}               {<a href="/index/ftp?sort=$sort$delete$refresh$monitor$all$config$info" title="List all of the FTP servers that have pages cached">[ftp]</a>}
+$type?=finger/ {<strong>[finger]</strong>}            {<a href="/index/finger?sort=$sort$delete$refresh$monitor$all$config$info" title="List all of the Finger servers that have pages cached">[finger]</a>}
 <br>
 $sort?=none  {<strong>[Unsorted]</strong>}              {<a href="/index/$type$subtype?sort=none$delete$refresh$monitor$all$config$info" title="Sort this page by internal order">[Unsorted]</a>}
 $sort?=mtime {<strong>[Modification&nbsp;Time]</strong>}{<a href="/index/$type$subtype?sort=mtime$delete$refresh$monitor$all$config$info" title="Sort this page by the date the pages were last modified">[Modification&nbsp;Time]</a>}

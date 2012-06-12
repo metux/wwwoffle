@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/document.c 1.28 2007/03/25 11:06:03 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/document.c 1.29 2008/10/09 18:22:03 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
   Document parsing functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1998,99,2000,01,02,03,04,05 Andrew M. Bishop
+  This file Copyright 1998-2008 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -202,14 +202,6 @@ static char *GetMIMEType(int fd)
 
 void AddReference(char* name,RefType type)
 {
- /* Special case for baseUrl. */
-
- if(type==RefBaseUrl && name)
-   {
-    baseUrl=SplitURL(name);
-    return;
-   }
-
  /* Check for badly formatted URLs */
 
  if(name)
@@ -241,9 +233,18 @@ void AddReference(char* name,RefType type)
           onlychars=0;
    }
 
- /* Add it to the list. */
+ /* Special case for baseUrl. */
 
- if(name || reference_links[type])
+ if(type==RefBaseUrl && name)
+   {
+    char *url=FixHTMLLinkURL(name);
+    baseUrl=SplitURL(url);
+    free(url);
+   }
+
+ /* Else add it to the list. */
+
+ else if(name || reference_links[type])
    {
     if(reference_num[type]==0)
        reference_links[type]=(char**)malloc(16*sizeof(char*));
@@ -251,11 +252,7 @@ void AddReference(char* name,RefType type)
        reference_links[type]=(char**)realloc(reference_links[type],(reference_num[type]+16)*sizeof(char*));
 
     if(name)
-      {
-       reference_links[type][reference_num[type]]=(char*)malloc(strlen(name)+1);
-       strcpy(reference_links[type][reference_num[type]],name);
-       URLReplaceAmp(reference_links[type][reference_num[type]]);
-      }
+       reference_links[type][reference_num[type]]=FixHTMLLinkURL(name);
     else
        reference_links[type][reference_num[type]]=NULL;
 

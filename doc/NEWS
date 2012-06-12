@@ -1,3 +1,16 @@
+Version 2.9e of WWWOFFLE released : Sun Jan 25 16:00:00 2009
+------------------------------------------------------------
+
+Bug Fixes:
+ Handle deflate compression errors.  Don't allow wwwoffle program to make
+ requests that won't be got.  Handle various encodings of URLs in HTML documents
+ better.  Display a note on the monitor form if the page is already monitored.
+ Stopped an error message when refreshing while online.
+
+Documentation:
+ Several small fixes to documentation.
+
+
 Version 2.9d of WWWOFFLE released : Wed Jan 23 19:00:00 2008
 ------------------------------------------------------------
 

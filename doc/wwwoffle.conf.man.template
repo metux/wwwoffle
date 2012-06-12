@@ -1,17 +1,17 @@
-.\" $Header: /home/amb/wwwoffle/doc/RCS/wwwoffle.conf.man.template 2.83 2007/09/29 18:54:08 amb Exp $
+.\" $Header: /home/amb/wwwoffle/doc/RCS/wwwoffle.conf.man.template 2.84 2008/08/26 18:00:31 amb Exp $
 .\"
-.\"  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
+.\"  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
 .\"
 .\"  Manual page for wwwoffle.conf
 .\"
 .\"  Written by Andrew M. Bishop
 .\"
-.\"  This file Copyright 1997-2007 Andrew M. Bishop
+.\"  This file Copyright 1997-2008 Andrew M. Bishop
 .\"  It may be distributed under the GNU Public License, version 2, or
 .\"  any higher version.  See section COPYING of the GNU Public license
 .\"  for conditions under which this file may be redistributed.
 .\"
-.TH wwwoffle.conf 5 "September 29, 2007"
+.TH wwwoffle.conf 5 "August 26, 2008"
 
 .SH NAME
 
@@ -23,22 +23,31 @@ wwwoffle.conf \- The configuration file for the proxy server for the World Wide 
 
  StartUp
  {
-  http-port     = 8080
-  wwwoffle-port = 8081
+  bind-ipv4         = 0.0.0.0
+  bind-ipv6         = ::
+
+  http-port         = 8080
+  https-port        = 8443
+  wwwoffle-port     = 8081
+
   spool-dir     = /var/spool/wwwoffle
+
   use-syslog    = yes
+
   password      =
  }
 
  Options
  {
   add-info-refresh  = no
+
   request-changed   = 3600
  }
 
  SSLOptions
  {
   enable-caching = no
+
   allow-tunnel   = *:443
  }
 
@@ -52,8 +61,14 @@ wwwoffle.conf \- The configuration file for the proxy server for the World Wide 
  LocalHost
  {
   wwwoffle.foo.com
+
   localhost
   127.0.0.1
+
+  ::ffff:127.0.0.1
+
+  ip6-localhost
+  ::1
  }
 
  DontGet

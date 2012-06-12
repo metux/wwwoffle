@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/miscurl.c 2.108 2006/02/10 18:35:10 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/miscurl.c 2.109 2008/10/09 18:22:04 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
   Miscellaneous HTTP / HTML Url Handling functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1997-2008 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -239,10 +239,7 @@ URL *CreateURL(const char *proto,const char *hostport,const char *path,const cha
  /* args = Url->args */
 
  if(args && *args)
-   {
     Url->args=URLRecodeFormArgs(args);
-    URLReplaceAmp(Url->args);
-   }
  else
     Url->args=NULL;
 

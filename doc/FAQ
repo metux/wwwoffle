@@ -1025,7 +1025,7 @@ Section 6 - More information about WWWOFFLE
 Q 6.1   Who wrote WWWOFFLE, When and Why?
 
 The WWWOFFLE program was written by Andrew M. Bishop <amb@gedanken.demon.co.uk>
-in 1996,97,98,99,2000,01,02,03,04,05,06.
+between 1996 and 2009.
 
 There is a WWWOFFLE home-page on the World Wide Web, available via the author's
 home-page at http://www.gedanken.demon.co.uk/ .  This is kept updated with news
@@ -1063,9 +1063,10 @@ option to compile with the gnutls library and allow caching of SSL connections.
 The Win32 version of the program was made possible by version beta-20 of the
 Cygwin development kit at the end of October 1998 when version 2.3e of WWWOFFLE
 was released.  Versions 2.4b and 2.5a of WWWOFFLE were also released for Win32
-although none of them work totally on most platforms due to incompatibilities.
+although none of them worked totally on most platforms due to incompatibilities.
 With version 1.1.7 of the cygwin DLL version 2.6a of WWWOFFLE is much more
-successful.
+successful.  The most recent versions should work with Cygwin, but no
+information about their current status is available.
 
 The WWWOFFLE program can be freely distributed according to the terms of the GNU
 General Public License (see the file `COPYING').
@@ -1074,27 +1075,20 @@ General Public License (see the file `COPYING').
 
 Q 6.2   What WWWOFFLE mailing lists are available?
 
-There are three mailing lists available for WWWOFFLE.  They can be subscribed to
+There are two mailing lists available for WWWOFFLE.  They can be subscribed to
 in two different ways - on the WWWOFFLE users web-page and via e-mail.
 
 wwwoffle-announce       For announcements of new versions of WWWOFFLE.
 
-wwwoffle-users          For discussion of WWWOFFLE features, excluding operating
-                        system specific features.
-
-wwwoffle-win32          For discussion of WWWOFFLE on the Win32 system.
+wwwoffle-users          For discussion of WWWOFFLE features.
 
 The first one is only for announcements from the author of WWWOFFLE, there is no
-discussion allowed on them.  The latter two are open for posting from members of
+discussion allowed on them.  The second one is open for posting from members of
 the list and others who are not subscribed.
 
-All the mailing lists are run from a computer with dial-up access only.  This
-will mean that there will be a delay for messages sent to them.
-
 To subscribe by e-mail send a message to
-<wwwoffle-announce-request@gedanken.demon.co.uk>,
-<wwwoffle-users-request@gedanken.demon.co.uk>, or
-<wwwoffle-win32-request@gedanken.demon.co.uk> with the subject 'subscribe'.
+<wwwoffle-announce-request@gedanken.demon.co.uk> or
+<wwwoffle-users-request@gedanken.demon.co.uk> with the subject 'subscribe'.
 
 --------------------
 

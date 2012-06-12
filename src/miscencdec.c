@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/miscencdec.c 1.15 2006/01/15 10:13:18 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/miscencdec.c 1.16 2008/10/09 18:22:04 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
   Miscellaneous HTTP / HTML Encoding & Decoding functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1997-2008 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -768,14 +768,18 @@ char *Base64Encode(const char *str,size_t l)
 
 
 /*++++++++++++++++++++++++++++++++++++++
-  Replace all occurences of '&amp;' with '&' by modifying the string in place.
+  Replace all occurences of '&amp;' with '&', replace non-ASCII with unicode and convert character references.
 
-  char *string The string to be modified.
+  char *FixHTMLLinkURL Return a malloced string containing the fixed version.
+
+  const char *str The string to be fixed.
   ++++++++++++++++++++++++++++++++++++++*/
 
-void URLReplaceAmp(char *string)
+char *FixHTMLLinkURL(const char *str)
 {
- char *q=string,*p=string;
+ char *fixed=(char*)malloc(3*strlen(str)+1);
+ const char *p=str;
+ char *q=fixed;
 
  while(*p)
    {
@@ -785,16 +789,89 @@ void URLReplaceAmp(char *string)
        (*(p+3)=='p' || *(p+3)=='P') &&
        *(p+4)==';')
       {
-       *q++=*p++;
+       *q++=*p++; /* copy the '&' */
        p+=4;
       }
-    else
+    else if(*p=='&' &&
+            *(p+1)=='#')
       {
-       *q++=*p++;
+       char *s;
+       unsigned long unicode;
+
+       if(*(p+2)=='x')
+          unicode=strtol(p+3,&s,16);
+       else
+          unicode=strtol(p+2,&s,10);
+
+       if(*s==';')
+         {
+          if(unicode<0x00000020) /* 1 byte */
+            {
+             /*   0000 0000-0000 007F   0xxxxxxx */
+             *q++='%'; *q++=hexstring[0x0F&(unicode>>4)]; *q++=hexstring[0x0F&unicode];
+            }
+          if(unicode<0x00000080) /* 1 byte */
+            {
+             /*   0000 0000-0000 007F   0xxxxxxx */
+             *q++=(char)unicode;
+            }
+          else if(unicode<0x00000800) /* 2 bytes */
+            {
+             /*   0000 0080-0000 07FF   110xxxxx 10xxxxxx */
+             *q++='%'; *q++=hexstring[0x0C+(0x01&(unicode>>10))]; *q++=hexstring[0x0F&(unicode>>6)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>> 4))]; *q++=hexstring[0x0F& unicode    ];
+            }
+          else if(unicode<0x00010000) /* 3 bytes */
+            {
+             /*   0000 0800-0000 FFFF   1110xxxx 10xxxxxx 10xxxxxx */
+             *q++='%'; *q++=hexstring[0x0E                     ]; *q++=hexstring[0x0F&(unicode>>12)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>>10))]; *q++=hexstring[0x0F&(unicode>> 6)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>> 4))]; *q++=hexstring[0x0F& unicode     ];
+            }
+          else if(unicode<0x00200000) /* 4 bytes */
+            {
+             /*   0001 0000-001F FFFF   11110xxx 10xxxxxx 10xxxxxx 10xxxxxx */
+             *q++='%'; *q++=hexstring[0x0F                     ]; *q++=hexstring[0x07&(unicode>>18)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>>16))]; *q++=hexstring[0x0F&(unicode>>12)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>>10))]; *q++=hexstring[0x0F&(unicode>> 6)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>> 4))]; *q++=hexstring[0x0F& unicode     ];
+            }
+          else if(unicode<0x04000000) /* 5 bytes */
+            {
+             /*   0020 0000-03FF FFFF   111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx */
+             *q++='%'; *q++=hexstring[0x0F                     ]; *q++=hexstring[0x08+(0x03&(unicode>>24))];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>>22))]; *q++=hexstring[0x0F&(unicode>>18)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>>16))]; *q++=hexstring[0x0F&(unicode>>12)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>>10))]; *q++=hexstring[0x0F&(unicode>> 6)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>> 4))]; *q++=hexstring[0x0F& unicode     ];
+            }
+          else if(unicode<0x80000000) /* 6 bytes */
+            {
+             /*   0400 0000-7FFF FFFF   1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx */
+             *q++='%'; *q++=hexstring[0x0F                     ]; *q++=hexstring[0x0C+(0x01&(unicode>>30))];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>>28))]; *q++=hexstring[0x0F&(unicode>>24)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>>22))]; *q++=hexstring[0x0F&(unicode>>18)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>>16))]; *q++=hexstring[0x0F&(unicode>>12)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>>10))]; *q++=hexstring[0x0F&(unicode>> 6)];
+             *q++='%'; *q++=hexstring[0x08+(0x03&(unicode>> 4))]; *q++=hexstring[0x0F& unicode     ];
+            }
+
+          p=s+1;
+         }
+       else
+          *q++=*p++;
       }
+    else if(*p>128)
+      {
+       *q++='%'; *q++=hexstring[0x0F&(*p>>4)]; *q++=hexstring[0x0F&*p];
+      }
+    else
+       *q++=*p++;
    }
 
  *q=0;
+
+ return(fixed);
 }
 
 
@@ -803,20 +880,20 @@ void URLReplaceAmp(char *string)
 
   char* HTMLString Returns a safe HTML string.
 
-  const char* c A non-safe HTML string.
+  const char* str A non-safe HTML string.
 
   int nbsp Use a non-breaking space in place of normal ones.
   ++++++++++++++++++++++++++++++++++++++*/
 
-char* HTMLString(const char* c,int nbsp)
+char* HTMLString(const char* str,int nbsp)
 {
  int i=0,j=0,len=256-5;              /* 5 is the longest possible inserted amount */
  char* ret=(char*)malloc((size_t)257);
 
  do
    {
-    for(;j<len && c[i];i++)
-       switch(c[i])
+    for(;j<len && str[i];i++)
+       switch(str[i])
          {
          case '<':
           ret[j++]='&';
@@ -850,16 +927,16 @@ char* HTMLString(const char* c,int nbsp)
             }
          /*@ fallthrough @*/
          default:
-          ret[j++]=c[i];
+          ret[j++]=str[i];
          }
 
-    if(c[i])                 /* Not finished */
+    if(str[i])                  /* Not finished */
       {
        ret=(char*)realloc((void*)ret,len+256+5);
        len+=256;
       }
    }
- while(c[i]);
+ while(str[i]);
 
  ret[j]=0;
 

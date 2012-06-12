@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffles.c 2.320 2007/04/12 18:43:54 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/wwwoffles.c 2.322 2009/01/14 19:52:55 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
   A server to fetch the required pages.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06,07 Andrew M. Bishop
+  This file Copyright 1996-2009 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -759,7 +759,7 @@ int wwwoffles(int online,int fetching,int client)
          {
           char *err;
 
-          CreateBackupWebpageSpoolFile(Url);
+          CreateBackupWebpageSpoolFile(newUrl);
           err=DeleteWebpageSpoolFile(newUrl,0);
 
           if(is_client_wwwoffle)
@@ -1218,7 +1218,7 @@ passwordagain:
    {
     /* Don't cache if possibly online */
 
-    if(mode==Real || mode==SpoolOrReal)
+    if(mode==Real || mode==SpoolOrReal || mode==RealRefresh)
        mode=RealNoCache;
 
     /* Give an error if in fetch mode. */
@@ -1236,7 +1236,7 @@ passwordagain:
 
     /* Give an error if in a spooling mode */
 
-    else if(mode==Spool || mode==SpoolGet)
+    else if(mode==Spool || mode==SpoolGet || mode==SpoolRefresh)
       {
        PrintMessage(Inform,"It is not possible to request a URL that is not cached when offline.");
        HTMLMessage(client,404,"WWWOFFLE Cant Spool Not Cached",NULL,"HostNotCached",
@@ -1244,11 +1244,6 @@ passwordagain:
                    NULL);
        mode=InternalPage; goto internalpage;
       }
-
-    /* Do nothing for the refresh modes, they will come through again. */
-
-    else /* if(mode==RealRefresh || mode==SpoolRefresh) */
-       ;
    }
 
  /* If a HEAD request when online then don't cache */

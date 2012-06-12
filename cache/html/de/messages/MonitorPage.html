@@ -8,6 +8,7 @@ Available WWWOFFLE Variables (all with a '$' prefix).
 localurl  = The root URL of the server running wwwoffled (='$localurl').
 version   = The version of the WWWOFFLE server (='$version').
 url       = The URL to be monitored by default (if any) (='$url').
+exists    = The URL is already monitored (='$exists').
 
 -->
 
@@ -27,10 +28,15 @@ url       = The URL to be monitored by default (if any) (='$url').
 
 <!-- Standard WWWOFFLE Message Page Header End -->
 
+$exists?{$current="The URL <tt>$url</tt> is currently monitored."}{$current="The URL <tt>$url</tt> is not currently monitored."}
+
 <H1 align="center">Abonnements</H1>
 
 Sie k&ouml;nnen dieses Formular benutzen, um Webseiten zu abonnieren (regelm&auml;&szlig;ig
 automagisch herunterladen zu lassen)
+
+$url?{<p>
+$current}{}
 
 <p>
 
@@ -83,18 +89,18 @@ zu jedem Zeitpunkt, zu dem folgendes gilt (logisch mit UND verkn&uuml;pft):
 <input type="submit" value="Abonnieren">
 </form>
 
-$url?{
 <p>
 <hr width="50%">
 <p>
 Sie k&ouml;nnen dieses Formular verwenden um das Abonnement einer URL zu beenden.
+$url?{<p>
+$current}{}
 <p>
 <form action="/control/delete/mon" method="get">
 Abo beenden<input type="text" name="url" value="$url" size="60">
 <p>
 <input type="submit" value="Stop Monitoring">
 </form>
-}{}
 
 <div class="wwwoffle-nav" align="center">
 [<a href="/index/monitor/?sort=alpha">Liste der Abonnements</a>]

@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle.c 2.82 2007/09/29 18:54:08 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle.c 2.84 2008/03/06 17:53:43 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
   A user level program to interact with the server.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996-2007 Andrew M. Bishop
+  This file Copyright 1996-2008 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -412,16 +412,20 @@ int main(int argc, char** argv)
     fprintf(stderr,"wwwoffle: The -post and -put options require exactly one URL.\n\n");
     usage(0);
    }
-
- if((action==Output || action==OutputWithHeader) && n_url_file_list!=1)
+ else if((action==Output || action==OutputWithHeader) && n_url_file_list!=1)
    {
     fprintf(stderr,"wwwoffle: The -o and -O options require exactly one URL.\n\n");
     usage(0);
    }
-
- if(action==Get && n_url_file_list==0)
+ else if(action==Get && n_url_file_list==0)
    {
     fprintf(stderr,"wwwoffle: No URLs were specified to request.\n\n");
+    usage(0);
+   }
+ else if(action!=Get && action!=Output && action!=OutputWithHeader && n_url_file_list!=0)
+   {
+    fprintf(stderr,"wwwoffle: The -online, -autodial, -offline, -fetch, -config, -dump, -purge,\n"
+                   "          -status and -kill options require no other command line arguments.\n\n");
     usage(0);
    }
 

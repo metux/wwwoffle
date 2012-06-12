@@ -1,8 +1,9 @@
 Begin3
 Title:          WWWOFFLE - World Wide Web Offline Explorer
-Version:        2.9d [Jan-23-08]
-Entered-date:   23JAN08
-Description:    A proxy HTTP/FTP server for computers with dial-up internet access.
+Version:        2.9e [Jan-25-09]
+Entered-date:   25JAN09
+Description:    A proxy HTTP/FTP server for computers with intermittent internet
+                access.
                 - Caching of pages viewed while connected for review later.
                 - Browsing of cached pages while not connected, with the ability
                   to follow links and mark other pages for download.
@@ -17,8 +18,8 @@ Keywords:       WWW HTTP FTP proxy offline server
 Author:         amb@gedanken.demon.co.uk
 Maintained-by:  amb@gedanken.demon.co.uk
 Primary-site:   www.gedanken.demon.co.uk /download-wwwoffle
-                1072k wwwoffle-2.9d.tgz
-Alternate-site: 
+                1067k wwwoffle-2.9e.tgz
+Alternate-site: gedanken.demon.co.uk /download-wwwoffle
 Original-site:  
 Platforms:      UNIX
 Copying-policy: GPL

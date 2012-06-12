@@ -2,13 +2,13 @@
           ========================================================
 
 El programa WWWOFFLE simplifica la navegación por la telaraña mundial en 
-ordenadores que usan una conexión intermitente (dial-up) a Internet.
+ordenadores que usan una conexión intermitente a Internet.
 
 Descripción
 -----------
 
 El servidor WWWOFFLE es un simple servidor proxy con características
-especiales para ser usado con conexiones intermitentes (dial-up) a Internet.
+especiales para ser usado con conexiones intermitentes  a Internet.
 Esto significa que es posible navegar por páginas y leerlas sin tener que
 permanecer conectado.
 

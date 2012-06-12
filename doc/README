@@ -1,16 +1,16 @@
-          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e
           =========================================================
 
 
 The WWWOFFLE programs simplify World Wide Web browsing from computers that use
-intermittent (dial-up) connections to the internet.
+intermittent connections to the internet.
 
 Description
 -----------
 
 The WWWOFFLE server is a proxy web server with special features for use with
-dial-up internet links.  This means that it is possible to browse web pages and
-read them without having to remain connected.
+intermittent internet links.  This means that it is possible to browse web pages
+and read them without having to remain connected.
 
 Basic Features
     - Caching of HTTP, FTP and finger protocols.

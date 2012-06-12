@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/misc.h 2.61 2006/01/08 10:27:22 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/misc.h 2.62 2008/10/09 18:22:04 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
   Miscellaneous HTTP / HTML functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1997-2008 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -149,9 +149,9 @@ char /*@observer@*/ *DurationToString(const time_t duration);
 char /*@only@*/ *Base64Decode(const char *str,/*@out@*/ size_t *l);
 char /*@only@*/ *Base64Encode(const char *str,size_t l);
 
-void URLReplaceAmp(char *string);
+char /*@only@*/ *FixHTMLLinkURL(const char *str);
 
-char /*@only@*/* HTMLString(const char* c,int nbsp);
+char /*@only@*/* HTMLString(const char* str,int nbsp);
 
 
 /* In headbody.c */
