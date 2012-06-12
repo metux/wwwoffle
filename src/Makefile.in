@@ -63,7 +63,8 @@ LINK=$(LD) $(LDFLAGS)
 
 compile :: wwwoffled \
 	   wwwoffle \
-	   wwwoffle-tools
+	   wwwoffle-tools \
+	   wwwoffle-checkcert
 
 compile ::
 	@cd testprogs && $(MAKE) compile
@@ -87,6 +88,7 @@ install-unix :
 	ln -sf wwwoffle-tools $(bindir)/wwwoffle-gunzip
 	[ -x $(sbindir) ] || $(INSTALL) -d -m 755 $(sbindir)
 	$(INSTALL) -c -m 755 wwwoffled $(sbindir)
+	$(INSTALL) -c -m 755 wwwoffle-checkcert $(sbindir)
 
 install-win32 :
 	[ -x $(bindir) ] || $(INSTALL) -d -m 755 $(bindir)
@@ -114,7 +116,7 @@ install-win32 :
 ######## CLEAN UP ########
 
 clean ::
-	-rm -f wwwoffle wwwoffled wwwoffle-tools
+	-rm -f wwwoffle wwwoffled wwwoffle-tools wwwoffle-checkcert
 	-rm -f css.c html.c htmlmodify.c messages.c xml.c vrml.c
 	-rm -f core *.o *~
 
@@ -175,6 +177,14 @@ WWWOFFLE_TOOLS_OBJ=wwwoffle-tools.o \
 wwwoffle-tools : $(WWWOFFLE_TOOLS_OBJ)
 	$(LINK) $(WWWOFFLE_TOOLS_OBJ) -o $@ $(LIBRARY)
 
+####
+
+WWWOFFLE_CHECKCERT_OBJ=wwwoffle-checkcert.o \
+	           errors.o
+
+wwwoffle-checkcert : $(WWWOFFLE_CHECKCERT_OBJ)
+	$(LINK) $(WWWOFFLE_CHECKCERT_OBJ) -o $@ $(LIBRARY)
+
 ######## OBJECT FILES ########
 
 .SUFFIXES:
@@ -191,6 +201,7 @@ wwwoffled.o        : wwwoffled.c        autoconfig.h wwwoffle.h io.h misc.h erro
 wwwoffles.o        : wwwoffles.c        autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h proto.h document.h                                                     
 
 wwwoffle-tools.o   : wwwoffle-tools.c   autoconfig.h wwwoffle.h io.h misc.h errors.h config.h                              version.h                                           
+wwwoffle-checkcert.o : wwwoffle-checkcert.c autoconfig.h wwwoffle.h misc.h errors.h config.h version.h
 
 proto.o            : proto.c            autoconfig.h                 misc.h errors.h config.h           proto.h                                                                
 http.o             : http.c             autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h proto.h                                                                

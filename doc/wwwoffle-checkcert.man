@@ -1,0 +1,27 @@
+.TH WWWOFFLE 8
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+
+.SH NAME
+wwwoffle\-checkcert \- check wwwoffle root certificate
+
+.SH SYNOPSIS
+/usr/sbin/wwwoffle-checkcert
+
+.SH DESCRIPTION
+This utility checks whether the self-generated root certificate is expired,
+or is about to expire. If the expiry will happen less than one week from
+now, report this. If the certificate has already expired, also report this
+and exit with return value 2.
+
+.SH FILES
+.br
+.nf
+\fI/etc/wwwoffle/certificates/root/root-key.pem\fR  key file
+\fI/etc/wwwoffle/certificates/root/root-cert.pem\fR  certificate file
+.fi
+
+.SH AUTHOR
+Written by Paul Slootman \fB<paul@debian.org>\fP
+
+

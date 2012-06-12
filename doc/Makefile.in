@@ -60,6 +60,7 @@ install-man :
 	$(INSTALL) -c -m 644 wwwoffle.conf.man.install $(mandir)/man5/wwwoffle.conf.5
 	[ -x $(mandir)/man8 ] || $(INSTALL) -d -m 755 $(mandir)/man8
 	$(INSTALL) -c -m 644 wwwoffled.man $(mandir)/man8/wwwoffled.8
+	$(INSTALL) -c -m 644 wwwoffle-checkcert.man $(mandir)/man8/wwwoffle-checkcert.8
 
 install-doc :
 	[ -x $(docdir) ] || $(INSTALL) -d -m 755 $(docdir)
