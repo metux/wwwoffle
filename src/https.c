@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/https.c 1.4 2006/01/20 19:01:29 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/https.c 1.5 2007/06/25 18:25:45 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Functions for getting URLs using HTTPS.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -87,7 +87,10 @@ char *HTTPS_Open(URL *Url)
  server=OpenClientSocket(server_host,server_port);
 
  if(server==-1)
+   {
     msg=GetPrintMessage(Warning,"Cannot open the HTTPS connection to %s port %d; [%!s].",server_host,server_port);
+    return(msg);
+   }
  else
    {
     init_io(server);

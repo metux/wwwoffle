@@ -1,13 +1,13 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/cgi.c 1.26 2005/10/11 18:34:15 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/cgi.c 1.27 2007/04/18 18:59:20 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   CGI Execution functions.
   ******************/ /******************
   Written by Paul A. Rombouts
   Modified by Andrew M. Bishop
 
-  This file Copyright 2002,03,04,05 Paul A. Rombouts & Andrew M. Bishop
+  This file Copyright 2002,03,04,05,07 Paul A. Rombouts & Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -271,7 +271,7 @@ static int putenv_request(int fd,char *file, Header *request_head, Body *request
  if(request_body)
    {
     char length[MAX_INT_STR+1];
-    sprintf(length,"%d",request_body->length);
+    sprintf(length,"%lu",(unsigned long)request_body->length);
     putenv_var_val("CONTENT_LENGTH",length);
    }
 

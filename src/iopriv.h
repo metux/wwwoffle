@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iopriv.h 1.17 2006/10/02 18:43:17 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/iopriv.h 1.18 2007/04/23 09:27:11 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9b.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Functions for file input and output (private data structures).
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -172,8 +172,8 @@ io_zlib /*@null@*/ /*@special@*/ *io_init_zlib_uncompress(int type) /*@allocates
 int io_zlib_compress  (io_buffer *in,io_zlib *context,io_buffer *out);
 int io_zlib_uncompress(io_buffer *in,io_zlib *context,io_buffer *out);
 
-int io_finish_zlib_compress  (io_zlib *context,io_buffer *out);
-int io_finish_zlib_uncompress(io_zlib *context,/*@null@*/ io_buffer *out);
+int io_finish_zlib_compress  (/*@special@*/ io_zlib *context,io_buffer *out) /*@releases context@*/;
+int io_finish_zlib_uncompress(/*@special@*/ io_zlib *context,/*@null@*/ io_buffer *out) /*@releases context@*/;
 
 #endif /* USE_ZLIB */
 
@@ -183,7 +183,7 @@ int io_finish_zlib_uncompress(io_zlib *context,/*@null@*/ io_buffer *out);
 /* In iognutls.c */
 
 io_gnutls /*@null@*/ /*@special@*/ *io_init_gnutls(int fd,/*@null@*/ const char *host,int type) /*@allocates result@*/;
-int io_finish_gnutls(io_gnutls *context);
+int io_finish_gnutls(/*@special@*/ io_gnutls *context) /*@releases context@*/;
 
 ssize_t io_gnutls_read_with_timeout(io_gnutls *context,io_buffer *out,unsigned timeout);
 ssize_t io_gnutls_write_with_timeout(io_gnutls *context,io_buffer *in,unsigned timeout);
@@ -199,8 +199,8 @@ io_chunk /*@special@*/ *io_init_chunk_decode(void) /*@allocates result@*/;
 int io_chunk_encode(/*@null@*/ io_buffer *in,io_chunk *context,io_buffer *out);
 int io_chunk_decode(io_buffer *in,io_chunk *context,io_buffer *out);
 
-int io_finish_chunk_encode(io_chunk *context,io_buffer *out);
-int io_finish_chunk_decode(io_chunk *context,/*@null@*/ io_buffer *out);
+int io_finish_chunk_encode(/*@special@*/ io_chunk *context,io_buffer *out) /*@releases context@*/;
+int io_finish_chunk_decode(/*@special@*/ io_chunk *context,/*@null@*/ io_buffer *out) /*@releases context@*/;
 
 
 /* In iopriv.c */

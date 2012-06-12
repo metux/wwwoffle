@@ -14,19 +14,19 @@ val             ({alphanum}|{nonascii}|{safepunct})+
 %x COMMENT COMMENT_BAD
 %x TAG_START TAG TAG_ATTR_KEY TAG_ATTR_VAL
 %x DQUOTED SQUOTED
-%x SCRIPT_START SCRIPT SCRIPT_COMMENT_C SCRIPT_COMMENT_CPP SCRIPT_DQUOTED SCRIPT_SQUOTED
+%x SCRIPT_START SCRIPT
 %x STYLE_START STYLE
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/htmlmodify.l 1.94 2006/10/09 17:53:41 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/htmlmodify.l 1.95 2007/07/08 17:53:14 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Parse the HTML and modify the source.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+  This file Copyright 1997,98,99,2000,01,02,03,04,05,06,07 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -1834,43 +1834,9 @@ static void handle_high_bit(unsigned char ch)
 <SCRIPT_START>(.|\n)        { disable_output^=DISABLE_PARSE; YY_OUTPUT("\n<!-- WWWOFFLE (disable-script) - ... -->\n"); disable_output^=DISABLE_PARSE;
                               unput(htmlmodify_yytext[0]); BEGIN(SCRIPT); }
 
-<SCRIPT>\\\"                { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT>\\\'                { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT>\"                  { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT_DQUOTED); }
-<SCRIPT>\'                  { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT_SQUOTED); }
-<SCRIPT>\\                  { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT>"/*"                { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT_COMMENT_C); }
-<SCRIPT>"//"                { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT_COMMENT_CPP); }
-<SCRIPT>"*"                 { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT>"/"                 { YY_OUTPUT(htmlmodify_yytext); }
 <SCRIPT>"<"/"/script"       { BEGIN(TAG_START); }
 <SCRIPT>"<"                 { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT>[^\'\"\\</]+        { YY_OUTPUT(htmlmodify_yytext); }
-
- /* Comments in scripts, C or C++ style */
-
-<SCRIPT_COMMENT_C>"*"+"/"   { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT); }
-<SCRIPT_COMMENT_C>"*"+      { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT_COMMENT_C>[^*]+     { YY_OUTPUT(htmlmodify_yytext); }
-
-<SCRIPT_COMMENT_CPP>[\r\n]  { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT); }
-<SCRIPT_COMMENT_CPP>"<"/"/script" { BEGIN(TAG_START); }
-<SCRIPT_COMMENT_CPP>"<"     { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT_COMMENT_CPP>[^\r\n<]+ { YY_OUTPUT(htmlmodify_yytext); }
-
- /* Quoted strings in scripts - assume they follow usual rules */
-
-<SCRIPT_DQUOTED>\\\\        { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT_DQUOTED>\\\"        { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT_DQUOTED>\\          { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT_DQUOTED>\"          { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT); }
-<SCRIPT_DQUOTED>[^\\\"]+    { YY_OUTPUT(htmlmodify_yytext); }
-
-<SCRIPT_SQUOTED>\\\\        { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT_SQUOTED>\\\'        { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT_SQUOTED>\\          { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT_SQUOTED>\'          { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT); }
-<SCRIPT_SQUOTED>[^\\\']+    { YY_OUTPUT(htmlmodify_yytext); }
+<SCRIPT>[^<]+               { YY_OUTPUT(htmlmodify_yytext); }
 
  /* Styles */
 

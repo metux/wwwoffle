@@ -1,4 +1,4 @@
-          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9b
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c
           =========================================================
 
 
@@ -136,34 +136,23 @@ Configuration
 Changes
 -------
 
-Since version 2.9a:
+Since version 2.9b:
 
 Bug Fixes:
- Fix some string allocations.  Don't delete the lasttime cached spool file if
- page was fetched in this session.  Fix HTML parsing of '\' inside or outside
- quoted strings.  Make sure that files are truncated when opened.  Display
- non-empty value in monitor page hour-of-day setting for default value.  Some
- documentation updates.
-
-New Features:
- Expired SSL certificates are deleted and replaced.
-
-
-*NOTE* *This only applies if WWWOFFLE is compiled with SSL/https support*
-       WWWOFFLE creates SSL certificates with a 1 year expiry period.  When they
-       expire web browsers will start to give errors.  If the WWWOFFLE root
-       Certificate Authority certificate expires then all sites will give SSL
-       errors.  Deleting the existing WWWOFFLE CA certificate from the browser
-       and installing the new one will fix this problem (the WWWOFFLE CA
-       certificate can be loaded from https://localhost:8443/certificates/root).
+ Don't truncate the log file when opening it.  Fix some memory leaks and other
+ lint problems.  Fix problem with info page for compressed cached files.  More
+ fixes for 64-bit compilation.  Fix potential crash with case-insensitive
+ wildcard matching.  Try to only get IPv4 socket info if no IPv6 addresses on
+ system.  Better handling of https error if connection fails.  Add more
+ information to fatal errors related to SSL certificates.
 
 
 Availability
 ------------
 
-Version 2.9b uploaded
+Version 2.9c uploaded
 
-HTTP server: http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.9b.tgz
+HTTP server: http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.9c.tgz
 
 Web page: http://www.gedanken.demon.co.uk/wwwoffle/
 

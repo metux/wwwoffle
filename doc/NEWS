@@ -1,3 +1,15 @@
+Version 2.9c of WWWOFFLE released : Sun Jul 15 14:30:00 2007
+------------------------------------------------------------
+
+Bug Fixes:
+ Don't truncate the log file when opening it.  Fix some memory leaks and other
+ lint problems.  Fix problem with info page for compressed cached files.  More
+ fixes for 64-bit compilation.  Fix potential crash with case-insensitive
+ wildcard matching.  Try to only get IPv4 socket info if no IPv6 addresses on
+ system.  Better handling of https error if connection fails.  Add more
+ information to fatal errors related to SSL certificates.
+
+
 Version 2.9b of WWWOFFLE released : Fri Feb 16 09:30:00 2007
 ------------------------------------------------------------
 

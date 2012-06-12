@@ -17,7 +17,7 @@ url             ({alphanum}|{nonascii}|{safepunct})+
 %x COMMENT COMMENT_BAD
 %x TAG_START TAG TAG_ATTR_KEY TAG_ATTR_VAL
 %x DQUOTED SQUOTED
-%x SCRIPT_START SCRIPT SCRIPT_COMMENT_C SCRIPT_COMMENT_CPP SCRIPT_DQUOTED SCRIPT_SQUOTED
+%x SCRIPT_START SCRIPT
 %x STYLE_START
 %x CSS
 %x CSS_COMMENT
@@ -27,15 +27,15 @@ url             ({alphanum}|{nonascii}|{safepunct})+
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/html.l 2.91 2006/10/09 17:53:41 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/html.l 2.92 2007/07/08 17:53:04 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Parse the HTML and look for the images, links and other things.
   ******************/ /******************
   Written by Andrew M. Bishop
   Object and Parameter handling by Walter Pfannenmller
 
-  This file Copyright 1997,98,99,2000,01,02,03,04,05 Andrew M. Bishop
+  This file Copyright 1997,98,99,2000,01,02,03,04,05,06,07 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -881,43 +881,9 @@ static void parse_html(URL *Url)
 
 <SCRIPT_START>(.|\n)        { unput(html_yytext[0]); BEGIN(SCRIPT); }
 
-<SCRIPT>\\\"                { }
-<SCRIPT>\\\'                { }
-<SCRIPT>\"                  { BEGIN(SCRIPT_DQUOTED); }
-<SCRIPT>\'                  { BEGIN(SCRIPT_SQUOTED); }
-<SCRIPT>\\                  { }
-<SCRIPT>"/*"                { BEGIN(SCRIPT_COMMENT_C); }
-<SCRIPT>"//"                { BEGIN(SCRIPT_COMMENT_CPP); }
-<SCRIPT>"*"                 { }
-<SCRIPT>"/"                 { }
 <SCRIPT>"<"/"/script"       { BEGIN(TAG_START); }
 <SCRIPT>"<"                 { }
-<SCRIPT>[^\'\"\\</]+        { }
-
- /* Comments in scripts, C or C++ style */
-
-<SCRIPT_COMMENT_C>"*"+"/"   { BEGIN(SCRIPT); }
-<SCRIPT_COMMENT_C>"*"+      { }
-<SCRIPT_COMMENT_C>[^*]+     { }
-
-<SCRIPT_COMMENT_CPP>[\r\n]  { BEGIN(SCRIPT); }
-<SCRIPT_COMMENT_CPP>"<"/"/script" { BEGIN(TAG_START); }
-<SCRIPT_COMMENT_CPP>"<"     { }
-<SCRIPT_COMMENT_CPP>[^\r\n<]+ { }
-
- /* Quoted strings in scripts - assume they follow usual rules */
-
-<SCRIPT_DQUOTED>\\\\        { }
-<SCRIPT_DQUOTED>\\\"        { }
-<SCRIPT_DQUOTED>\\          { }
-<SCRIPT_DQUOTED>\"          { BEGIN(SCRIPT); }
-<SCRIPT_DQUOTED>[^\\\"]+    { }
-
-<SCRIPT_SQUOTED>\\\\        { }
-<SCRIPT_SQUOTED>\\\'        { }
-<SCRIPT_SQUOTED>\\          { }
-<SCRIPT_SQUOTED>\'          { BEGIN(SCRIPT); }
-<SCRIPT_SQUOTED>[^\\\']+    { }
+<SCRIPT>[^<]+               { }
 
  /* Styles */
 

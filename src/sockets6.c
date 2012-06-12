@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/sockets6.c 1.19 2005/10/15 18:00:58 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/sockets6.c 1.20 2007/06/10 08:37:39 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   IPv4+IPv6 Socket manipulation routines.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -478,8 +478,8 @@ static struct addrinfo *getaddrinfo_or_timeout(char *name,char *port,int ai_flag
  struct addrinfo hints,*result;
  struct sigaction action;
 
- hints.ai_flags=ai_flags;
- hints.ai_family=PF_UNSPEC;
+ hints.ai_flags=ai_flags|AI_ADDRCONFIG;
+ hints.ai_family=AF_UNSPEC;
  hints.ai_socktype=SOCK_STREAM;
  hints.ai_protocol=0;
  hints.ai_addrlen=0;

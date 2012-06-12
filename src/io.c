@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/io.c 2.59 2006/10/30 11:13:43 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/io.c 2.60 2007/03/25 11:05:46 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Functions for file input and output.
@@ -1137,6 +1137,9 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
     *w=context->w_raw_bytes;
 
  /* Free all data structures */
+
+ if(context->w_buffer_data)
+    destroy_io_buffer(context->w_buffer_data);
 
 #if USE_ZLIB
  if(context->r_zlch_data)

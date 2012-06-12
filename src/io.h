@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/io.h 1.14 2006/01/20 19:01:29 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/io.h 1.15 2007/04/23 09:27:10 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Functions for file input and output (public interfaces).
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -43,7 +43,7 @@ int configure_io_gnutls(int fd,const char *host,int type);
 
 ssize_t read_data(int fd,/*@out@*/ char *buffer,size_t n);
 
-char /*@null@*/ *read_line(int fd,/*@out@*/ /*@returned@*/ /*@null@*/ char *line);
+char /*@null@*/ /*@only@*/ *read_line(int fd,/*@out@*/ /*@returned@*/ /*@null@*/ char *line);
 
 ssize_t /*@alt void@*/ write_data(int fd,const char *data,size_t n);
 ssize_t /*@alt void@*/ write_buffer_data(int fd,const char *data,size_t n);

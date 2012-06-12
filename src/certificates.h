@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/certificates.h 1.7 2006/02/28 19:26:03 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/certificates.h 1.8 2007/04/23 09:27:42 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Certificate handling functions.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -28,18 +28,18 @@ int LoadRootCredentials(void);
 
 void FreeLoadedCredentials(void);
 
-gnutls_certificate_credentials_t GetFakeCredentials(const char *hostname);
-gnutls_certificate_credentials_t GetServerCredentials(const char *hostname);
-gnutls_certificate_credentials_t GetClientCredentials(void);
+gnutls_certificate_credentials_t /*@null@*/ /*@only@*/ GetFakeCredentials(const char *hostname);
+gnutls_certificate_credentials_t /*@null@*/ /*@only@*/ GetServerCredentials(const char *hostname);
+gnutls_certificate_credentials_t /*@null@*/ /*@only@*/ GetClientCredentials(void);
 
 void FreeCredentials(gnutls_certificate_credentials_t cred);
 
 int PutRealCertificate(gnutls_session_t session,const char *hostname);
 
-gnutls_x509_crt_t VerifyCertificates(const char *hostname);
+gnutls_x509_crt_t /*@null@*/ /*@observer@*/ VerifyCertificates(const char *hostname);
 
-gnutls_x509_crt_t LoadCertificate(const char *filename);
-gnutls_x509_crt_t *LoadCertificates(const char *filename);
+gnutls_x509_crt_t /*@only@*/ /*@null@*/ LoadCertificate(const char *filename);
+gnutls_x509_crt_t /*@observer@*/ *LoadCertificates(const char *filename);
 
 
 #endif /* USE_GNUTLS */

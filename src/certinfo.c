@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/certinfo.c 1.8 2006/04/03 17:57:12 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/certinfo.c 1.11 2007/04/23 09:28:19 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Generate information about the contents of the web pages that are cached in the system.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 2002,03,04,05,06 Andrew M. Bishop
+  This file Copyright 2002,03,04,05,06,07 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -88,7 +88,7 @@ static void display_certificate(int fd,gnutls_x509_crt_t crt);
   Header *request_head The header of the original request.
   ++++++++++++++++++++++++++++++++++++++*/
 
-void CertificatesPage(int fd,URL *Url,Header *request_head)
+void CertificatesPage(int fd,URL *Url,/*@unused@*/ Header *request_head)
 {
  if(!strcmp(Url->path,"/certificates") || !strcmp(Url->path,"/certificates/"))
     CertificatesIndexPage(fd);
@@ -252,7 +252,7 @@ static void CertificatesIndexPage(int fd)
  for(i=0;i<n_trusted_x509_crts;i++)
    {
     char dn[256];
-    unsigned int size;
+    size_t size;
 
     size=sizeof(dn);
     gnutls_x509_crt_get_dn(trusted_x509_crts[i],dn,&size);
@@ -397,6 +397,8 @@ static void CertificatesRealPage(int fd,URL *Url)
 
  crt_list=LoadCertificates(certfile);
 
+ free(certfile);
+
  if(!crt_list || !crt_list[0])
    {
     HTMLMessage(fd,500,"WWWOFFLE Certificate Page Error",NULL,"ServerError",
@@ -429,7 +431,7 @@ static void CertificatesRealPage(int fd,URL *Url)
 
  if(trusted)
    {
-    unsigned int size;
+    size_t size;
 
     size=sizeof(dn);
     gnutls_x509_crt_get_dn(trusted,dn,&size);
@@ -438,8 +440,6 @@ static void CertificatesRealPage(int fd,URL *Url)
  HTMLMessageBody(fd,"CertInfo-Tail",
                  "trustedby",dn,
                  NULL);
-
- free(certfile);
 }
 
 
@@ -459,7 +459,7 @@ static void CertificatesTrustedPage(int fd,URL *Url)
  for(i=0;i<n_trusted_x509_crts;i++)
    {
     char dn[256];
-    unsigned int size;
+    size_t size;
 
     size=sizeof(dn);
     gnutls_x509_crt_get_dn(trusted_x509_crts[i],dn,&size);
@@ -548,8 +548,9 @@ static void display_certificate(int fd,gnutls_x509_crt_t crt)
  time_t activation,expiration;
  char *activation_str,*expiration_str;
  char key_algo[80],key_usage[160],*key_ca;
- unsigned int algo,bits,usage,critical;
- unsigned int size;
+ unsigned int bits,usage,critical;
+ int algo;
+ size_t size;
  int err;
 
  /* Certificate name */

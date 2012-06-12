@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/connect.c 2.50 2005/08/19 18:00:49 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/connect.c 2.52 2007/04/20 16:04:29 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Handle WWWOFFLE connections received by the demon.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,05 Andrew M. Bishop
+  This file Copyright 1996,97,98,99,2000,01,02,03,05,07 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -103,30 +103,24 @@ void CommandConnect(int client)
  if(strncmp(line,"WWWOFFLE ",(size_t)9))
    {
     PrintMessage(Warning,"WWWOFFLE Not a command."); /* Used in audit-usage.pl */
+    free(line);
     return;
    }
 
  if(ConfigString(PassWord) || !strncmp(&line[9],"PASSWORD ",(size_t)9))
    {
-    char *password;
+    char *password=&line[18];
+    int i;
 
-    if(strlen(line)<18)
-       password="";
-    else
-      {
-       int i;
-
-       for(i=18;line[i];i++)
-          if(line[i]=='\r' || line[i]=='\n')
-             line[i]=0;
-
-       password=&line[18];
-      }
+    for(i=18;line[i];i++)
+       if(line[i]=='\r' || line[i]=='\n')
+          line[i]=0;
 
     if(!ConfigString(PassWord) || strcmp(password,ConfigString(PassWord)))
       {
        write_string(client,"WWWOFFLE Incorrect Password\n"); /* Used in wwwoffle.c */
        PrintMessage(Warning,"WWWOFFLE Incorrect Password."); /* Used in audit-usage.pl */
+       free(line);
        return;
       }
 
@@ -136,6 +130,7 @@ void CommandConnect(int client)
     if(strncmp(line,"WWWOFFLE ",(size_t)9))
       {
        PrintMessage(Warning,"WWWOFFLE Not a command."); /* Used in audit-usage.pl */
+       free(line);
        return;
       }
    }
@@ -252,7 +247,7 @@ void CommandConnect(int client)
        PrintMessage(Important,"WWWOFFLE Purge finished.");
       }
     else if((pid=fork())==-1)
-      {PrintMessage(Warning,"Cannot fork to do a purge [%!s].");return;}
+       PrintMessage(Warning,"Cannot fork to do a purge [%!s].");
     else if(pid)
       {
        purging=1;
@@ -290,7 +285,7 @@ void CommandConnect(int client)
        exit(0);
       }
    }
- else if(!strncmp(&line[9],"STATUS",(size_t)5))
+ else if(!strncmp(&line[9],"STATUS",(size_t)6))
    {
     int i;
 

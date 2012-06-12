@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffles.c 2.319 2007/02/16 09:06:16 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/wwwoffles.c 2.320 2007/04/12 18:43:54 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9b.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   A server to fetch the required pages.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -894,6 +894,7 @@ int wwwoffles(int online,int fetching,int client)
              sprintf(url,"%s://%s",Protocols[i].name,&Url->pathp[strlen(Protocols[i].name)+2]);
              FreeURL(Url);
              Url=SplitURL(url);
+             free(url);
              break;
             }
 
@@ -2533,18 +2534,6 @@ passwordagain:
        DeleteLockWebpageSpoolFile(Url);
       }
 
-    /* Finish with the client compression. */
-
-#if USE_ZLIB
-    if(client_compression)
-       configure_io_zlib(client,-1,0);
-#endif
-
-    /* Finish with the client chunked encoding */
-
-    if(client_chunked)
-       configure_io_chunked(client,-1,0);
-
     free(head);
    }
 
@@ -2842,24 +2831,6 @@ passwordagain:
       }
     else
        PrintMessage(Debug,"Spooled page has no header.");
-
-    /* Finish with uncompressing from the cache. */
-
-#if USE_ZLIB
-    configure_io_zlib(spool,0,-1);
-#endif
-
-    /* Finish with the client compression. */
-
-#if USE_ZLIB
-    if(client_compression)
-       configure_io_zlib(client,-1,0);
-#endif
-
-    /* Finish with the client chunked encoding */
-
-    if(client_chunked)
-       configure_io_chunked(client,-1,0);
    }
 
  /* If the page is to be requested. */

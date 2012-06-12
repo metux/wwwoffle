@@ -1,3 +1,95 @@
+2007-07-15  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	Version 2.9c of WWWOFFLE released.
+
+2007-07-15  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/version.h, doc/NEWS: Update for version 2.9c.
+
+2007-07-08  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/htmlmodify.l, src/html.l:
+	Find the end of the script by searching for "</script".
+
+	* src/certificates.c:
+	Add some more information to the fatal error messages.
+
+2007-07-03  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.CONF: Grammatical correction and clarification.
+
+2007-06-25  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/https.c: Don't try securing link if socket connection failed.
+
+2007-06-10  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/sockets6.c:
+	Use the AI_ADDRCONFIG flag when calling getaddrinfo().
+
+2007-05-27  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/configmisc.c:
+	Fix bug with case-insensitive wildcard matching in the configuration file
+	(Bug reported by Paul Rombouts).
+
+2007-04-23  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/info.c: Fix some warnings & errors splint detected.
+
+	* src/certificates.c, src/certinfo.c:
+	Add some splint annotations, fix some warnings & errors splint detected.
+
+	* src/certificates.h, src/iopriv.h, src/io.h:
+	Add some splint annotations.
+
+2007-04-20  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/connect.c: Fix memory leak (hint from P. Rombouts).
+
+	* src/connect.c: Remove some dead code and trivial bug fix.
+
+2007-04-18  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/cgi.c, src/certinfo.c:
+	More changes for compilation warnings on a system where size_t!=int (hint from
+	P. Rombouts).
+
+2007-04-12  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	Defer de-initialisation of chunked or compressed sockets until end to ensure
+	memory is freed.
+
+	* src/certinfo.c: Free memory.
+
+	* src/certificates.c:
+	De-initialise gnutls data structures to free memory.
+
+2007-04-01  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/finger.c: Make code same as http.c for opening socket connection.
+
+	* src/info.c:
+	Fix problems with cached page contents info if it is being stored compressed.
+
+2007-03-25  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/iopriv.c: Fix comment error.
+
+	* src/wwwoffled.c:
+	Print message when ready to start after initialisation.
+
+	* src/document.c: Free allocated memory.
+
+	* src/io.c: Free memory at file close.
+
+	* src/certificates.c: Free memory at exit.
+
+2007-03-20  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/errors.c: Don't truncate the log file when opening it.
+
 2007-02-16  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
 
 	Version 2.9b of WWWOFFLE released.

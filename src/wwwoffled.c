@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffled.c 2.81 2005/12/11 10:06:20 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/wwwoffled.c 2.82 2007/03/25 11:06:21 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   A demon program to maintain the database and spawn the servers.
@@ -490,6 +490,8 @@ int main(int argc, char** argv)
  max_fetch_servers=ConfigInteger(MaxFetchServers);
 
  /* Loop around waiting for connections. */
+
+ PrintMessage(Inform,"WWWOFFLE Ready to accept connections.");
 
  do
    {
