@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/parse.c 2.136 2009/06/07 18:36:37 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/parse.c,v 2.137 2010-09-19 10:24:20 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
   Functions to parse the HTTP requests.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996-2009 Andrew M. Bishop
+  This file Copyright 1996-2010 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -135,7 +135,7 @@ URL *ParseRequest(int fd,Header **request_head,Body **request_body)
  if((val=GetHeader(*request_head,"Host")) && strcasecmp((*request_head)->method,"CONNECT"))
    {
     URL *oldUrl=Url;
-    Url=CreateURL(oldUrl->proto,val,oldUrl->path,oldUrl->args,oldUrl->user,oldUrl->pass);
+    Url=CreateURL(oldUrl->proto,val,oldUrl->original_path,oldUrl->original_args,oldUrl->user,oldUrl->pass);
     FreeURL(oldUrl);
    }
 
@@ -243,7 +243,7 @@ URL *ParseRequest(int fd,Header **request_head,Body **request_body)
       }
 
     oldUrl=Url;
-    Url=CreateURL(oldUrl->proto,oldUrl->hostport,oldUrl->path,args,oldUrl->user,oldUrl->pass);
+    Url=CreateURL(oldUrl->proto,oldUrl->hostport,oldUrl->original_path,args,oldUrl->user,oldUrl->pass);
     FreeURL(oldUrl);
 
     free(args);
@@ -649,7 +649,10 @@ void ModifyRequest(const URL *Url,Header *request_head)
 
  /* Modify the top line of the header. */
 
- ChangeURLInHeader(request_head,Url->name);
+ if(ConfigBooleanURL(PassUrlUnchanged,Url))
+    ChangeURLInHeader(request_head,Url->original_name);
+ else
+    ChangeURLInHeader(request_head,Url->name);
 
  /* Remove the false arguments from POST/PUT URLs. */
 
@@ -836,7 +839,10 @@ void MakeRequestNonProxy(const URL *Url,Header *request_head)
 {
  /* Remove the full URL and replace it with just the path and args. */
 
- ChangeURLInHeader(request_head,Url->pathp);
+ if(ConfigBooleanURL(PassUrlUnchanged,Url))
+    ChangeURLInHeader(request_head,Url->original_pathp);
+ else
+    ChangeURLInHeader(request_head,Url->pathp);
 
  /* Remove the false arguments from POST/PUT URLs. */
 

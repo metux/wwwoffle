@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iozlib.c 1.26 2008/05/15 18:56:33 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/iozlib.c,v 1.26 2008-05-15 18:56:33 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
   Functions for file input and output with compression.

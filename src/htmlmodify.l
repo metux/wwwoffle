@@ -19,7 +19,7 @@ val             ({alphanum}|{nonascii}|{safepunct})+
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/htmlmodify.l 1.97 2009/03/13 19:29:50 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/htmlmodify.l,v 1.97 2009-03-13 19:29:50 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Parse the HTML and modify the source.

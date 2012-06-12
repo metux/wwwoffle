@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle.c 2.85 2009/03/13 19:30:39 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/wwwoffle.c,v 2.85 2009-03-13 19:30:39 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   A user level program to interact with the server.

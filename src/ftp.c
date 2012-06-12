@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/ftp.c 1.84 2006/01/08 10:27:21 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/ftp.c,v 1.84 2006-01-08 10:27:21 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Functions for getting URLs using FTP.

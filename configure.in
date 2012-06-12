@@ -79,17 +79,15 @@ else
       ZLIB_INC=
       USE_ZLIB=1
    else
-      zlib_dir=$WITH_ZLIB
-
-      ZLIB_LIB="-L${zlib_dir}/lib -lz"
-      ZLIB_INC="-I${zlib_dir}/include"
+      ZLIB_LIB="-L$WITH_ZLIB/lib -lz"
+      ZLIB_INC="-I$WITH_ZLIB/include"
       USE_ZLIB=1
    fi
 
    AC_CHECK_HEADERS(zlib.h,
-                    HAVE_ZLIB_H=yes)
+                    HAVE_ZLIB_H=yes,HAVE_ZLIB_H=no)
 
-   if test "$HAVE_ZLIB_H" = ""; then
+   if test "$HAVE_ZLIB_H" = "no"; then
       AC_MSG_WARN([Cannot find zlib.h header file; configuring without compression support])
       ZLIB_LIB=
       ZLIB_INC=
@@ -126,16 +124,16 @@ if test "$WITH_GNUTLS" = "no"; then
 else
    if test "$WITH_GNUTLS" = "yes"; then
       GNUTLS_INC=
-      GNUTLS_LIB=-lgnutls
+      GNUTLS_LIB="-lgnutls"
    else
-      GNUTLS_INC="$WITH_GNUTLS/include"
-      GNUTLS_LIB="$WITH_GNUTLS/lib"
+      GNUTLS_INC="-I$WITH_GNUTLS/include"
+      GNUTLS_LIB="-L$WITH_GNUTLS/lib -lgnutls"
    fi
 
    AC_CHECK_HEADERS(gnutls/gnutls.h,
-                    HAVE_GNUTLS_GNUTLS_H=yes)
+                    HAVE_GNUTLS_GNUTLS_H=yes,HAVE_GNUTLS_GNUTLS_H=no)
 
-   if test "$HAVE_GNUTLS_GNUTLS_H" = ""; then
+   if test "$HAVE_GNUTLS_GNUTLS_H" = "no"; then
       AC_MSG_WARN([Cannot find gnutls/gnutls.h header file; configuring without SSL/https support])
       GNUTLS_LIB=
       GNUTLS_INC=
@@ -159,6 +157,54 @@ AC_DEFINE_UNQUOTED(USE_GNUTLS,$USE_GNUTLS)
 
 AC_SUBST(GNUTLS_LIB)
 AC_SUBST(GNUTLS_INC)
+
+
+dnl Checks for using gcrypt.
+
+AC_ARG_WITH(gcrypt,
+[  --with-gcrypt=dir            Set the location of the gcrypt header and library],
+WITH_GCRYPT=$withval,WITH_GCRYPT=$WITH_GNUTLS)
+
+if test "$WITH_GCRYPT" = "no"; then
+   GCRYPT_INC=
+   GCRYPT_LIB=
+   USE_GCRYPT=0
+else
+   if test "$WITH_GCRYPT" = "yes"; then
+      GCRYPT_INC=
+      GCRYPT_LIB="-lgcrypt"
+   else
+      GCRYPT_INC="-I$WITH_GCRYPT/include"
+      GCRYPT_LIB="-L$WITH_GCRYPT/lib -lgcrypt"
+   fi
+
+   AC_CHECK_HEADERS(gcrypt.h,
+                    HAVE_GCRYPT_H=yes,HAVE_GCRYPT_H=no)
+
+   if test "$HAVE_GCRYPT_H" = "no"; then
+      AC_MSG_WARN([Cannot find gcrypt.h header file; configuring without some SSL/https features])
+      GCRYPT_LIB=
+      GCRYPT_INC=
+      USE_GCRYPT=0
+   else
+      AC_CHECK_LIB(gcrypt, gcry_check_version,
+                   WITH_GCRYPT=yes,WITH_GCRYPT=no,$GCRYPT_LIB)
+
+      if test "$WITH_GCRYPT" = "no"; then
+         AC_MSG_WARN([Cannot find working libgcrypt library, configuring without some SSL/https features])
+         GCRYPT_LIB=
+         GCRYPT_INC=
+         USE_GCRYPT=0
+      else
+         USE_GCRYPT=1
+      fi
+   fi
+fi
+
+AC_DEFINE_UNQUOTED(USE_GCRYPT,$USE_GCRYPT)
+
+AC_SUBST(GCRYPT_LIB)
+AC_SUBST(GCRYPT_INC)
 
 
 dnl Checks for using IPv6.

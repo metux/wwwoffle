@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/http.c 1.44 2006/01/08 10:27:21 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/http.c,v 1.44 2006-01-08 10:27:21 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Functions for getting URLs using HTTP.

@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/javaclass.c 1.11 2005/03/13 13:55:35 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/javaclass.c,v 1.11 2005-03-13 13:55:35 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Inspect a .class Object and look for other Objects.

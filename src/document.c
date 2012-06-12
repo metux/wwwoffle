@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/document.c 1.31 2010/01/22 20:03:41 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/document.c,v 1.31 2010-01-22 20:03:41 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Document parsing functions.

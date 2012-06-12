@@ -16,7 +16,7 @@ url             ({alphanum}|{nonascii}|{safepunct})+
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/css.l 1.13 2009/03/13 19:29:50 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/css.l,v 1.13 2009-03-13 19:29:50 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Parse the CSS and look for the images and stylesheets.

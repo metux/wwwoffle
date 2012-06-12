@@ -9,7 +9,7 @@ FUNC   \%[a-z_0-9]+\[[a-z_0-9]+\]
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/messages.l 1.62 2006/01/29 19:59:19 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/messages.l,v 1.62 2006-01-29 19:59:19 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Parse the HTML to create the messages.

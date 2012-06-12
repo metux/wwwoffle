@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/finger.c 1.30 2007/04/01 10:38:28 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/finger.c,v 1.30 2007-04-01 10:38:28 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Functions for getting URLs using Finger.

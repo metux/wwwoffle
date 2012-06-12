@@ -1,4 +1,4 @@
-.\" $Header: /home/amb/wwwoffle/doc/RCS/wwwoffle.man 2.21 2009/03/13 19:32:02 amb Exp $
+.\" $Header: /home/amb/CVS/wwwoffle/doc/wwwoffle.man,v 2.21 2009-03-13 19:32:02 amb Exp $
 .\"
 .\"  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
 .\"

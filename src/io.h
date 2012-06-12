@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/io.h 1.15 2007/04/23 09:27:10 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/io.h,v 1.15 2007-04-23 09:27:10 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Functions for file input and output (public interfaces).

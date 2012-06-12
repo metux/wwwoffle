@@ -9,7 +9,7 @@ F               [-a-z0-9$_.!*(),%;/?:@&=+~|]
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/xml.l 1.12 2003/09/06 12:55:06 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/xml.l,v 1.12 2003-09-06 12:55:06 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.8.
   Parse the XML and look for external references.

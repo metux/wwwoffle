@@ -4,7 +4,7 @@
 #
 # Copyright Andrew M. Bishop 1996.97,98,2001,06.
 #
-# $Header: /home/amb/wwwoffle/doc/scripts/RCS/README.CONF-man.pl 1.3 2006/04/24 18:04:20 amb Exp $
+# $Header: /home/amb/CVS/wwwoffle/doc/scripts/README.CONF-man.pl,v 1.3 2006-04-24 18:04:20 amb Exp $
 #
 # Usage: README.CONF-man.pl wwwoffle.conf.man.template < README.CONF > wwwoffle.conf.man
 #

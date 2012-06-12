@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffled.c 2.83 2009/03/13 19:30:39 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/wwwoffled.c,v 2.83 2009-03-13 19:30:39 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   A demon program to maintain the database and spawn the servers.

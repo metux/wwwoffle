@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/spool.c 2.99 2007/10/05 16:45:40 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/spool.c,v 2.99 2007-10-05 16:45:40 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Handle all of the spooling of files in the spool directory.

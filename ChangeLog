@@ -1,3 +1,61 @@
+2011-03-27 Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	Version 2.9g of WWWOFFLE released.
+
+2011-03-27 [r2154]  Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	* FILES, LSM: Updated for version 2.9g final release.
+
+2011-03-27 [r2147]  Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	* doc/CHANGES.CONF, doc/NEWS, FILES, doc/README,
+	  conf/upgrade-config.pl, doc/ANNOUNCE: Update for version 2.9g.
+
+2011-03-27 [r2145]  Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	* src/testprogs/Makefile.in: Fixed Makefile for libgcrypt.
+
+2010-12-28 [r2137]  Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	* config.sub, config.guess: Updated the autoconf/automake files.
+
+2010-12-28  Andrew M. Bishop <amb@gedanken.demon.co.uk>
+
+	Changed version control environment from RCS to CVS to SVN.
+
+2010-12-27  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/NEWS:
+	Temporary checkin to allow transition from RCS to CVS to SVN.
+
+	* src/wwwoffles.c, src/version.h: Update version number to 2.9g.
+
+2010-10-21  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/Makefile.in, src/autoconfig.h.in.in, src/certificates.c:
+	Check for libgnutls and libgcrypt separately at configure time.
+
+	* configure.in:
+	Check for libgnutls and libgcrypt separately at configure time.
+	Improve the code that checks for all libraries.
+
+2010-09-19  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.CONF, conf/wwwoffle.conf.template, conf/upgrade-config.pl, src/miscurl.c,
+	src/parse.c, src/wwwoffles.c, src/config.h, src/configdata.c, src/misc.h:
+	Add a new option 'pass-url-unchanged' to not modify the outgoing URL from the
+	browser to the server.
+
+2010-05-02  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/purge.c:
+	Allow a one hour margin on the current time when warning about future timestamps
+	and deleting temporary files (based on a patch from Michael Foerster).
+
+2010-03-28  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c: Fix 2038 UNIX time_t problem.
+
 2010-01-31  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
 
 	Version 2.9f of WWWOFFLE released.

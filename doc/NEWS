@@ -1,3 +1,15 @@
+Version 2.9g of WWWOFFLE released : Sun Mar 27 11:00:00 2011
+------------------------------------------------------------
+
+Bug Fixes:
+  Fix 2038 UNIX time_t problem with SSL certificates.
+  Allow a margin on current time when warning about future timestamps.
+  Check for libgnutls and libgcrypt separately at configure time.
+
+New Features:
+ A new option allows passing URLs from browser to server unmodified.
+
+
 Version 2.9f of WWWOFFLE released : Sun Jan 31 19:00:00 2010
 ------------------------------------------------------------
 

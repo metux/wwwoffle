@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/headbody.c 1.26 2006/07/16 08:38:07 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/headbody.c,v 1.26 2006-07-16 08:38:07 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Header and Body handling functions.

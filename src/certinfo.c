@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/certinfo.c 1.13 2007/11/27 17:32:09 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/certinfo.c,v 1.13 2007-11-27 17:32:09 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Generate information about the contents of the web pages that are cached in the system.

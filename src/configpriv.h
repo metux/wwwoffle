@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/configpriv.h 1.27 2006/01/07 16:10:38 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/configpriv.h,v 1.27 2006-01-07 16:10:38 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Configuration file management functions.

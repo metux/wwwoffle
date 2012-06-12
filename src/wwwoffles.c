@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffles.c 2.325 2010/01/19 19:53:33 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/wwwoffles.c,v 2.327 2010-12-27 16:26:02 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
   A server to fetch the required pages.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -107,7 +107,7 @@ int wwwoffles(int online,int fetching,int client)
  int outgoing=-1,spool=-1,server=-1,is_server=0;
  int fetch_again=0;
  char *proxy_auth,*proxy_user;
- URL *outgoingUrl,*aliasUrl;
+ URL *aliasUrl;
  Header *request_head=NULL,*reply_head=NULL;
  Body   *request_body=NULL,*reply_body=NULL;
  int reply_status=-1,head_only=0;
@@ -182,6 +182,8 @@ int wwwoffles(int online,int fetching,int client)
 
  if(mode==Fetch)
    {
+    URL *outgoingUrl=NULL;
+
     outgoing=OpenExistingOutgoingSpoolFile(&outgoingUrl);
 
     if(outgoing==-1 || !outgoingUrl)
@@ -205,11 +207,7 @@ int wwwoffles(int online,int fetching,int client)
  if(mode==Real || mode==Spool || mode==SpoolOrReal)
     Url=ParseRequest(client,&request_head,&request_body);
  else /* if(mode==Fetch) */
-   {
     Url=ParseRequest(outgoing,&request_head,&request_body);
-    FreeURL(Url);
-    Url=outgoingUrl;
-   }
 
 #if USE_GNUTLS
  checkrequest:

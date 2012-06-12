@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/monitor.c 1.61 2008/11/23 10:02:24 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/monitor.c,v 1.61 2008-11-23 10:02:24 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
   The functions for monitoring URLs.

@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/miscencdec.c 1.16 2008/10/09 18:22:04 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/miscencdec.c,v 1.16 2008-10-09 18:22:04 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
   Miscellaneous HTTP / HTML Encoding & Decoding functions.

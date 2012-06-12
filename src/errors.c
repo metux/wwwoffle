@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/errors.c 2.52 2007/03/20 18:34:40 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/errors.c,v 2.52 2007-03-20 18:34:40 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Generate error messages in a standard format optionally to syslog and stderr.

@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/certificates.h 1.8 2007/04/23 09:27:42 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/certificates.h,v 1.8 2007-04-23 09:27:42 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Certificate handling functions.

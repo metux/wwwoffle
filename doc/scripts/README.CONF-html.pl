@@ -3,7 +3,7 @@
 #
 # Copyright Andrew M. Bishop 1996.97,98,2001.
 #
-# $Header: /home/amb/wwwoffle/doc/scripts/RCS/README.CONF-html.pl 1.5 2003/06/15 11:08:22 amb Exp $
+# $Header: /home/amb/CVS/wwwoffle/doc/scripts/README.CONF-html.pl,v 1.5 2003-06-15 11:08:22 amb Exp $
 #
 # Usage: README.CONF-html.pl < README.CONF > README.CONF.html
 #

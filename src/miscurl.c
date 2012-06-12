@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/miscurl.c 2.109 2008/10/09 18:22:04 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/miscurl.c,v 2.110 2010-09-19 10:24:20 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
   Miscellaneous HTTP / HTML Url Handling functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997-2008 Andrew M. Bishop
+  This file Copyright 1997-2010 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -204,6 +204,41 @@ URL *CreateURL(const char *proto,const char *hostport,const char *path,const cha
  int n=0,i;
  char *colon,*temp;
 
+ /* Original URL */
+
+ Url->original_name=malloc(strlen(proto)+strlen(hostport)+strlen(path)+(args?strlen(args):0)+8);
+
+ Url->original_path=malloc(strlen(path)+1);
+ strcpy(Url->original_path,path);
+
+ if(args)
+   {
+    Url->original_args=malloc(strlen(args)+1);
+    strcpy(Url->original_args,args);
+   }
+ else
+    Url->original_args=NULL;
+
+ strcpy(Url->original_name,proto);
+ n=strlen(proto);
+
+ strcpy(Url->original_name+n,"://");
+ n+=3;
+
+ strcpy(Url->original_name+n,hostport);
+ n+=strlen(hostport);
+
+ Url->original_pathp=Url->original_name+n;
+
+ strcpy(Url->original_name+n,path);
+ n+=strlen(path);
+
+ if(args)
+   {
+    strcpy(Url->original_name+n,"?");
+    strcpy(Url->original_name+n+1,args);
+   }
+
  /* proto = Url->proto */
 
  Url->proto=(char*)malloc(strlen(proto)+1);
@@ -296,6 +331,7 @@ URL *CreateURL(const char *proto,const char *hostport,const char *path,const cha
 
  strcpy(Url->name,Url->proto);
  n=strlen(Url->proto);
+
  strcpy(Url->name+n,"://");
  n+=3;
 
@@ -377,6 +413,15 @@ URL *CreateURL(const char *proto,const char *hostport,const char *path,const cha
 
 void FreeURL(URL *Url)
 {
+ if(Url->original_name)
+    free(Url->original_name);
+
+ if(Url->original_path)
+    free(Url->original_path);
+
+ if(Url->original_args)
+    free(Url->original_args);
+
  if(Url->private_dir && Url->private_dir!=Url->hostport)
     free(Url->private_dir);
 

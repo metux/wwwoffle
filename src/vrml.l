@@ -15,7 +15,7 @@ NP              [^]]
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/vrml.l 1.11 2003/09/06 12:55:06 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/vrml.l,v 1.11 2003-09-06 12:55:06 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.8.
   Parse the VRML and look for the WWWInline, WWWanchor and other things.

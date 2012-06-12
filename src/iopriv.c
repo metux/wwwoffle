@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iopriv.c 1.9 2007/03/25 12:47:00 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/iopriv.c,v 1.9 2007-03-25 12:47:00 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   Private functions for file input and output.

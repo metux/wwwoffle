@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iochunk.c 1.18 2006/10/02 18:43:17 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/iochunk.c,v 1.18 2006-10-02 18:43:17 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9b.
   Functions for file input and output with compression.

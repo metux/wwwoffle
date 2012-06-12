@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/sockets.c 1.1 2001/09/05 18:47:31 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/sockets.c,v 1.1 2001-09-05 18:47:31 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.7.
   A dummy file that includes either the IPv4 or IPv4+IPv6 socket functions.

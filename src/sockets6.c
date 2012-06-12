@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/sockets6.c 1.20 2007/06/10 08:37:39 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/sockets6.c,v 1.20 2007-06-10 08:37:39 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9c.
   IPv4+IPv6 Socket manipulation routines.

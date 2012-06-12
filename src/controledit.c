@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/controledit.c 2.36 2007/12/05 18:50:34 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/controledit.c,v 2.36 2007-12-05 18:50:34 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   Configuration file management via a web-page.

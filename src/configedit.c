@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/configedit.c 1.41 2005/10/11 18:34:15 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/configedit.c,v 1.41 2005-10-11 18:34:15 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   The HTML interactive configuration editing pages.

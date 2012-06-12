@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/sockets.h 2.12 2004/01/17 16:22:18 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/sockets.h,v 2.12 2004-01-17 16:22:18 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.8b.
   Socket function header file.

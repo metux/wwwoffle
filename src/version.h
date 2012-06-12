@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/version.h 1.60 2010/01/31 18:42:02 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/version.h,v 1.61 2010-12-27 16:25:33 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
   The current version number.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -17,6 +17,6 @@
 #define VERSION_H    /*+ To stop multiple inclusions. +*/
 
 /*+ The version number as a string. +*/
-#define WWWOFFLE_VERSION "2.9f"
+#define WWWOFFLE_VERSION "2.9g"
 
 #endif /* VERSION_H */

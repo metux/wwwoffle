@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iognutls.c 1.13 2006/07/21 17:46:52 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/iognutls.c,v 1.13 2006-07-21 17:46:52 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Functions for file input and output using gnutls.

@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/configrdwr.c 1.74 2006/07/16 08:38:52 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/configrdwr.c,v 1.74 2006-07-16 08:38:52 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Configuration file reading and writing functions.

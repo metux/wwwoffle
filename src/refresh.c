@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/refresh.c 2.90 2007/09/29 18:54:08 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/refresh.c,v 2.90 2007-09-29 18:54:08 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   The HTML interactive page to refresh a URL.

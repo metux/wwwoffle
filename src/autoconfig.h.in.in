@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/autoconfig.h.in.in 1.10 2005/08/19 17:58:11 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/autoconfig.h.in.in,v 1.11 2010-10-21 18:12:19 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
   Header file template filled in by configure.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 2001,02,03,04,05 Andrew M. Bishop
+  This file Copyright 2001-2010 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -71,6 +71,9 @@
 
 /*+ Define this to use gnutls for SSL/https. +*/
 #define USE_GNUTLS 0
+
+/*+ Define this to use gcrypt for quick-key-gen option. +*/
+#define USE_GCRYPT 0
 
 /*+ Define this to use IPv6 sockets. +*/
 #define USE_IPV6 0

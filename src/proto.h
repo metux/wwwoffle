@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/proto.h 1.22 2006/07/20 16:44:40 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/proto.h,v 1.22 2006-07-20 16:44:40 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Information about the protocols that wwwoffle supports.

@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/certificates.c 1.34 2009/03/13 19:28:37 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/certificates.c,v 1.36 2010-10-21 18:12:19 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
   Certificate handling functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 2005-09 Andrew M. Bishop
+  This file Copyright 2005-2010 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -43,7 +43,9 @@
 #if USE_GNUTLS
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
+#if USE_GCRYPT
 #include <gcrypt.h>
+#endif
 #endif
 
 #include "wwwoffle.h"
@@ -126,10 +128,17 @@ int LoadRootCredentials(void)
     gnutls_global_init();
  initialised=1;
 
+
  /* Use faster but less secure key generation. */
 
  if(ConfigBoolean(SSLQuickKeyGen))
+   {
+#if USE_GCRYPT
     gcry_control(GCRYCTL_ENABLE_QUICK_RANDOM,0);
+#else
+    PrintMessage(Warning,"The 'quick-key-gen' options requires libgcrypt which is not compiled in.");
+#endif
+   }
 
  /* Create the certificates directory if needed */
 
@@ -937,9 +946,12 @@ static int CreateCertificate(const char *filename,const char *fake_hostname,cons
 {
  gnutls_x509_crt_t crt;
  unsigned char buffer[4*RSA_BITS]; /* works for 256 bit keys or longer. */
+ time_t expiration,now;
  size_t buffer_size=sizeof(buffer);
  int fd,err;
  const char *errmsg_hostname;
+
+ now=time(NULL);
 
  if(fake_hostname)
     errmsg_hostname=fake_hostname;
@@ -1012,7 +1024,7 @@ static int CreateCertificate(const char *filename,const char *fake_hostname,cons
 
  /* Set the key serial number (unique) */
 
- sprintf((char*)buffer,"%08lx%08lx",(unsigned long)time(NULL),(unsigned long)getpid());
+ sprintf((char*)buffer,"%08lx%08lx",(unsigned long)(now&0xFFFFFFFF),(unsigned long)getpid());
 
  err=gnutls_x509_crt_set_serial(crt,buffer,strlen((char*)buffer));
  if(err<0)
@@ -1026,11 +1038,16 @@ static int CreateCertificate(const char *filename,const char *fake_hostname,cons
 
  /* Set the activation and expiration times */
 
- err=gnutls_x509_crt_set_activation_time(crt,time(NULL));
+ err=gnutls_x509_crt_set_activation_time(crt,now);
  if(err<0)
    {PrintMessage(Warning,"Could not set the certificate activation time for '%s' [%s].",errmsg_hostname,gnutls_strerror(err));return(11);}
 
- err=gnutls_x509_crt_set_expiration_time(crt,time(NULL)+ConfigInteger(SSLCertExpiry)*24*3600);
+ if(sizeof(time_t)==4 && ConfigInteger(SSLCertExpiry)>((0x7FFFFFFF-now)/(24*3600)))
+    expiration=0x7FFFFFFF;
+ else
+    expiration=now+ConfigInteger(SSLCertExpiry)*24*3600;
+
+ err=gnutls_x509_crt_set_expiration_time(crt,expiration);
  if(err<0)
    {PrintMessage(Warning,"Could not set the certificate expiration time for '%s' [%s].",errmsg_hostname,gnutls_strerror(err));return(12);}
 

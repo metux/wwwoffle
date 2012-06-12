@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/local.c 1.16 2006/07/21 17:38:50 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/local.c,v 1.16 2006-07-21 17:38:50 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Serve the local web-pages and handle the language selection.

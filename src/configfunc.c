@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/configfunc.c 1.42 2006/07/21 17:37:34 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/configfunc.c,v 1.42 2006-07-21 17:37:34 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Configuration item checking functions.

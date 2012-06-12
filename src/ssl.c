@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/ssl.c 1.33 2010/01/19 19:53:29 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/ssl.c,v 1.33 2010-01-19 19:53:29 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   SSL (Secure Socket Layer) Tunneling functions.

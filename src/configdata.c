@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/configdata.c 2.164 2009/03/13 19:28:37 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/configdata.c,v 2.165 2010-09-19 10:24:19 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
   Configuration data functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997-2009 Andrew M. Bishop
+  This file Copyright 1997-2010 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -653,13 +653,17 @@ ConfigItem RefererFrom;
 /*+ A flag to cause a 'User-Agent' header always to be added. +*/
 ConfigItem ForceUserAgent;
 
+/*+ A flag to cause the requested URL to be passed through unmodified. +*/
+ConfigItem PassUrlUnchanged;
+
 /*+ The item definitions in the censor headers section. +*/
 static ConfigItemDef censorheader_itemdefs[]={
- {"referer-self"    ,&RefererSelf   ,1,0,Fixed ,Boolean,"no"},
- {"referer-self-dir",&RefererSelfDir,1,0,Fixed ,Boolean,"no"},
- {"referer-from"    ,&RefererFrom   ,1,0,Fixed ,Boolean,"no"},
- {"force-user-agent",&ForceUserAgent,1,0,Fixed ,Boolean,"no"},
- {""                ,&CensorHeader  ,1,1,String,String ,NULL}
+ {"referer-self"      ,&RefererSelf     ,1,0,Fixed ,Boolean,"no"},
+ {"referer-self-dir"  ,&RefererSelfDir  ,1,0,Fixed ,Boolean,"no"},
+ {"referer-from"      ,&RefererFrom     ,1,0,Fixed ,Boolean,"no"},
+ {"force-user-agent"  ,&ForceUserAgent  ,1,0,Fixed ,Boolean,"no"},
+ {"pass-url-unchanged",&PassUrlUnchanged,1,0,Fixed ,Boolean,"no"},
+ {""                  ,&CensorHeader    ,1,1,String,String ,NULL}
 };
 
 /*+ The CensorHeader section. +*/

@@ -1,4 +1,4 @@
-          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g
           =========================================================
 
 
@@ -136,37 +136,23 @@ Configuration
 Changes
 -------
 
-Since version 2.9e:
+Since version 2.9f:
 
 Bug Fixes:
- Some compilation warnings caused by flex have been removed.
- When making a HEAD request use the cached version if possible.
- Don't use the libgnutls-config program in the configure script.
- Only remove "authorization" header if it is "basic" authentication.
- Send a 304 header when online if cached page won't be refreshed.
- Clarify SSL/HTTPS error messages and documentation.
- Clarify last online/offline messages from 'wwwoffle -status'.
- Perform MIME type tests case insensitively.
+  Fix 2038 UNIX time_t problem with SSL certificates.
+  Allow a margin on current time when warning about future timestamps.
+  Check for libgnutls and libgcrypt separately at configure time.
 
 New Features:
- A new option to the wwwoffle program closes and re-opens the server log file.
-
-Documentation:
- Several small fixes to documentation.
-
-New SSL Features [*]:
- A faster but less cryptographically secure key generation option is provided.
- The expiration time of the SSL certificates can be increased from one year.
-
-*NOTE* *These only apply if WWWOFFLE is compiled with SSL/https support*
+ A new option allows passing URLs from browser to server unmodified.
 
 
 Availability
 ------------
 
-Version 2.9f uploaded
+Version 2.9g uploaded
 
-HTTP server: http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.9f.tgz
+HTTP server: http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.9g.tgz
 
 Web page: http://www.gedanken.demon.co.uk/wwwoffle/
 
@@ -174,7 +160,7 @@ Web page: http://www.gedanken.demon.co.uk/wwwoffle/
 Author & Copyright
 ------------------
 
-This program is copyright Andrew M. Bishop 1996-2010 (amb@gedanken.demon.co.uk)
+This program is copyright Andrew M. Bishop 1996-2011 (amb@gedanken.demon.co.uk)
 and distributed under GPL.
 
 email: amb@gedanken.demon.co.uk

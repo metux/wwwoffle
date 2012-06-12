@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/search.c 1.39 2005/09/04 15:56:20 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/search.c,v 1.39 2005-09-04 15:56:20 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Handle the interface to the ht://Dig, mnoGoSearch (UdmSearch), Namazu and Hyper Estraier search engines.

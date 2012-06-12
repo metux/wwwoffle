@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
 #
-# A Perl script to update the configuration file to version 2.9f standard (from version 2.8).
+# A Perl script to update the configuration file to version 2.9g standard (from version 2.8).
 #
 # Written by Andrew M. Bishop
 #
-# This file Copyright 2000-2009 Andrew M. Bishop
+# This file Copyright 2000-2011 Andrew M. Bishop
 # It may be distributed under the GNU Public License, version 2, or
 # any higher version.  See section COPYING of the GNU Public license
 # for conditions under which this file may be redistributed.
@@ -22,7 +22,7 @@ $#ARGV==0 || die "Usage: $0 wwwoffle.conf\n";
 
 $conf=$ARGV[0];
 
-$version="2.9f";
+$version="2.9g";
 
 $urlspec="[^ \t:<!]+://[^ \t/=]+/?[^ \t=>]*";
 $urlspec1="([^ \t:<!]+)://([^ \t/=]+)(/?[^ \t=>]*)";
@@ -31,39 +31,45 @@ $urlspec1="([^ \t:<!]+)://([^ \t/=]+)(/?[^ \t=>]*)";
 
 %new_StartUp=(
               "https-port *=" , "https-port = 8443"
-             );
+              );
 
 %new_SSLOptions=(
                  "quick-key-gen *="   , "quick-key-gen = no",
                  "expiration-time *=" , "expiration-time = 1y",
                  "enable-caching *="  , "enable-caching = no",
                  "allow-tunnel *="    , "#allow-tunnel = *:443"
-                );
+                 );
 
 %new_FetchOptions=(
-                "iframes *="  , "iframes  = yes"
-               );
+                   "iframes *="  , "iframes  = yes"
+                   );
 
 %new_MIMETypes=(
                 ".pem *="  , ".pem     = application/x-x509-ca-cert"
-               );
+                );
 
 %new_ModifyHTML=(
-                "disable-iframe *="  , "disable-iframe = no"
-               );
+                 "disable-iframe *="  , "disable-iframe = no"
+                 );
+
+%new_CensorHeader=(
+                   "pass-url-unchanged *="  , "pass-url-unchanged = no"
+                   );
 
 %new_options=(
               "StartUp"        , \%new_StartUp,
               "SSLOptions"     , \%new_SSLOptions,
+              "FetchOptions"   , \%new_FetchOptions,
               "MIMETypes"      , \%new_MIMETypes,
-              "ModifyHTML"     , \%new_ModifyHTML
+              "ModifyHTML"     , \%new_ModifyHTML,
+              "CensorHeader"   , \%new_CensorHeader
               );
 
 # The options that have changed (since version 2.8).
 
 %changed_SSLOptions=(
                      "ssl-allow-port *= *(.+)\$" , " allow-tunnel = *:\$1"
-                    );
+                     );
 
 %changed_options=(
                   "SSLOptions"   , \%changed_SSLOptions
@@ -73,7 +79,7 @@ $urlspec1="([^ \t:<!]+)://([^ \t/=]+)(/?[^ \t=>]*)";
 
 %moved_Options=(
                 "ssl-allow-port *=" , "SSLOptions"
-               );
+                );
 
 %moved_options=(
                 "Options"        , \%moved_Options

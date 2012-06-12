@@ -1,4 +1,4 @@
-          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g
           =========================================================
 
 
@@ -789,17 +789,14 @@ These are even more hacks than the wwwoffle-tools programs, use at your own risk
 Author and Copyright
 --------------------
 
-The two programs wwwoffle and wwwoffled were written by Andrew M. Bishop in
-1996,97,98,99,2000,01,02,03,04,05 and are copyright Andrew M. Bishop 1996,97,98,
-99,04,05,2000,01,02,03,04,05.
+The two programs wwwoffle and wwwoffled were written and are copyright by Andrew
+M. Bishop 1996-2011.
 
-The programs known as wwwoffle-tools were written by Andrew M. Bishop in 1997,
-98,99,2000,01,02,03,04,05 and are copyright Andrew M. Bishop 1997,98,99,2000,01,
-02,03,04,05.
+The programs known as wwwoffle-tools were written and a copyright by Andrew
+M. Bishop 1997-2011.
 
-The Perl scripts update-config.pl and audit-usage.pl were written by Andrew
-M. Bishop in 1998,99,2000,01,02,03,04,05 and are copyright Andrew M. Bishop
-1998,99,2000,01,02,03,04,05.
+The Perl scripts update-config.pl and audit-usage.pl were written and are
+copyright by Andrew M. Bishop 1998-2011.
 
 They can be freely distributed according to the terms of the GNU General Public
 License (see the file `COPYING').

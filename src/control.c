@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/control.c 2.70 2006/07/14 18:36:57 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/control.c,v 2.70 2006-07-14 18:36:57 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   The HTML interactive control pages.

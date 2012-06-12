@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/config.h 2.119 2009/03/13 19:28:37 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/config.h,v 2.120 2010-09-19 10:24:19 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
   Configuration file management functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997-2009 Andrew M. Bishop
+  This file Copyright 1997-2010 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -417,6 +417,9 @@ extern /*@null@*/ ConfigItem RefererFrom;
 
 /*+ A flag to cause a 'User-Agent' header always to be added. +*/
 extern /*@null@*/ ConfigItem ForceUserAgent;
+
+/*+ A flag to cause the requested URL to be passed through unmodified. +*/
+extern /*@null@*/ ConfigItem PassUrlUnchanged;
 
 
 /* FTPOptions section */

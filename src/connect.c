@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/connect.c 2.54 2010/01/22 19:00:53 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/connect.c,v 2.54 2010-01-22 19:00:53 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9f.
   Handle WWWOFFLE connections received by the demon.

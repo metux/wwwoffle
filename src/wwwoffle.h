@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/wwwoffle.h 2.117 2007/09/29 18:54:08 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/wwwoffle.h,v 2.117 2007-09-29 18:54:08 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9d.
   A header file for all of the programs wwwoffle, wwwoffled.

@@ -3,7 +3,7 @@
 #
 # Copyright Andrew M. Bishop 1996.97,98,2001,03.
 #
-# $Header: /home/amb/wwwoffle/doc/scripts/RCS/README.CONF-msg.pl 1.5 2003/06/15 11:08:23 amb Exp $
+# $Header: /home/amb/CVS/wwwoffle/doc/scripts/README.CONF-msg.pl,v 1.5 2003-06-15 11:08:23 amb Exp $
 #
 # Usage: README.CONF-msg.pl < README.CONF > messages/README.CONF.txt
 #

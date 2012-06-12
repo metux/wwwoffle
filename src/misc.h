@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/misc.h 2.62 2008/10/09 18:22:04 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/misc.h,v 2.63 2010-09-19 10:24:19 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9e.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9g.
   Miscellaneous HTTP / HTML functions.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1997-2008 Andrew M. Bishop
+  This file Copyright 1997-2010 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -37,12 +37,19 @@
 /*+ A URL data type. +*/
 typedef struct _URL
 {
+ char *original_name;           /*+ The original URL that was split to create this structure. +*/
+
+ char *original_pathp;          /*+ A pointer to the path in the original URL. +*/
+
+ char *original_path;           /*+ The original path. +*/
+ char *original_args;           /*+ The orignal arguments (also known as the query in RFCs). +*/
+
  char *name;                    /*+ The canonical URL for the object without the username/password. +*/
 
  char *file;                    /*+ The URL that is used for generating the filename with the username/password (may point to name). +*/
 
- char *hostp;                   /*+ A pointer to the host in the url. +*/
- char *pathp;                   /*+ A pointer to the path in the url. +*/
+ char *hostp;                   /*+ A pointer to the host in the URL. +*/
+ char *pathp;                   /*+ A pointer to the path in the URL. +*/
 
  char *proto;                   /*+ The protocol. +*/
  char *hostport;                /*+ The host name and port number. +*/

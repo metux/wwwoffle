@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/index.c 2.107 2005/11/09 19:48:24 amb Exp $
+  $Header: /home/amb/CVS/wwwoffle/src/index.c,v 2.107 2005-11-09 19:48:24 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Generate an index of the web pages that are cached in the system.
