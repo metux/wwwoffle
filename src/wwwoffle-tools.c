@@ -16,13 +16,13 @@
 #include "autoconfig.h"
 
 #define _GNU_SOURCE
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
 #include <sys/types.h>
-#include <unistd.h>
 
 #if TIME_WITH_SYS_TIME
 # include <sys/time.h>
@@ -97,8 +97,8 @@ static int wwwoffle_ls_dir(char *name);
 static int wwwoffle_ls_special(char *name);
 static int wwwoffle_mv(URL *Url1,URL *Url2);
 static int wwwoffle_rm(URL *Url);
-static int wwwoffle_read(URL *Url);
-static int wwwoffle_write(URL *Url);
+static int wwwoffle_read(int remove_header, URL *Url);
+static int wwwoffle_write(int write_header, URL *Url);
 static int wwwoffle_hash(URL *Url);
 static int wwwoffle_gzip(URL *Url,int compress);
 static int wwwoffle_fsck(void);
@@ -125,6 +125,7 @@ int main(int argc,char **argv)
  int mode=0,exitval=0;
  int i;
  char *argv0,*config_file=NULL;
+ int do_header=0;
 
  /* Check which program we are running */
 
@@ -257,10 +258,10 @@ int main(int argc,char **argv)
                    "                   (<dir2>/<subdir2> | <protocol2>://<host2>)\n");exit(0);}
  else if(mode==RM && (argc<2 || (argc>1 && !strcmp(argv[1],"--help"))))
    {fprintf(stderr,"Usage: wwwoffle-rm [-c <config-file>] <URL> ...\n");exit(0);}
- else if(mode==READ && (argc!=2 || (argc>1 && !strcmp(argv[1],"--help"))))
-   {fprintf(stderr,"Usage: wwwoffle-read [-c <config-file>] <URL>\n");exit(0);}
- else if(mode==WRITE && (argc!=2 || (argc>1 && !strcmp(argv[1],"--help"))))
-   {fprintf(stderr,"Usage: wwwoffle-write [-c <config-file>] <URL>\n");exit(0);}
+ else if(mode==READ  && (argc<2 || argc==2 && !strcmp(argv[1],"--removeheader") || argc>3 || (argc>1 && !strcmp(argv[1],"--help"))))
+   {fprintf(stderr,"Usage: wwwoffle-read [-c <config-file>] [--removeheader] <URL>\n");exit(0);}
+ else if(mode==WRITE && (argc<2 || argc==2 && !strcmp(argv[1],"--addheader")    || argc>3 || (argc>1 && !strcmp(argv[1],"--help"))))
+   {fprintf(stderr,"Usage: wwwoffle-write [-c <config-file>] [--addheader] <URL>\n");exit(0);}
  else if(mode==HASH && (argc!=2 || (argc>1 && !strcmp(argv[1],"--help"))))
    {fprintf(stderr,"Usage: wwwoffle-hash [-c <config-file>] <URL>\n");exit(0);}
  else if(mode==GZIP && (argc<2 || (argc>1 && !strcmp(argv[1],"--help"))))
@@ -316,12 +317,19 @@ int main(int argc,char **argv)
 
  if(mode!=LS_DIR && mode!=LS_SPECIAL)
    {
+    int url_idx = 1;
+
     Url=(URL**)malloc(argc*sizeof(URL*));
 
     for(i=1;i<argc;i++)
       {
        char *arg,*colon,*slash;
 
+       if (mode==WRITE && !strcmp(argv[i],"--addheader") || mode==READ && !strcmp(argv[i],"--removeheader"))
+         {
+          do_header=1;
+          continue;
+         }
        if(!strncmp(ConfigString(SpoolDir),argv[i],strlen(ConfigString(SpoolDir))) &&
           argv[i][strlen(ConfigString(SpoolDir))]=='/')
           arg=argv[i]+strlen(ConfigString(SpoolDir))+1;
@@ -334,12 +342,12 @@ int main(int argc,char **argv)
        if((colon && slash && colon<slash) ||
           !slash)
          {
-          Url[i]=SplitURL(arg);
+          Url[url_idx++]=SplitURL(arg);
          }
        else
          {
           *slash=0;
-          Url[i]=CreateURL(arg,slash+1,"/",NULL,NULL,NULL);
+          Url[url_idx++]=CreateURL(arg,slash+1,"/",NULL,NULL,NULL);
          }
       }
    }
@@ -357,7 +365,7 @@ int main(int argc,char **argv)
     for(i=1;i<argc;i++)
        exitval+=wwwoffle_rm(Url[i]);
  else if(mode==READ)
-    exitval=wwwoffle_read(Url[1]);
+    exitval=wwwoffle_read(do_header, Url[1]);
  else if(mode==WRITE)
    {
     if(config_file)
@@ -430,7 +438,7 @@ int main(int argc,char **argv)
           PrintMessage(Inform,"Running with uid=%d, gid=%d.",geteuid(),getegid());
       }
 
-    exitval=wwwoffle_write(Url[1]);
+    exitval=wwwoffle_write(do_header, Url[1]);
    }
  else if(mode==HASH)
     exitval=wwwoffle_hash(Url[1]);
@@ -737,8 +745,6 @@ static int wwwoffle_mv(URL *Url1,URL *Url2)
  closedir(dir);
 
  ChangeBackToSpoolDir();
-
- return(0);
 }
 
 
@@ -772,7 +778,7 @@ static int wwwoffle_rm(URL *Url)
   URL *Url The URL to read.
   ++++++++++++++++++++++++++++++++++++++*/
 
-static int wwwoffle_read(URL *Url)
+static int wwwoffle_read(int remove_header, URL *Url)
 {
  char *line=NULL,buffer[IO_BUFFER_SIZE];
  int n,spool=OpenWebpageSpoolFile(1,Url);
@@ -793,7 +799,8 @@ static int wwwoffle_read(URL *Url)
        compression=2;
     else
 #endif
-       write_string(1,line);
+       if (!remove_header)
+          write_string(1,line);
 
     if(*line=='\r' || *line=='\n')
        break;
@@ -823,7 +830,7 @@ static int wwwoffle_read(URL *Url)
   URL *Url The URL to write.
   ++++++++++++++++++++++++++++++++++++++*/
 
-static int wwwoffle_write(URL *Url)
+static int wwwoffle_write(int addheader, URL *Url)
 {
  char buffer[IO_BUFFER_SIZE];
  int n,spool=OpenWebpageSpoolFile(0,Url);
@@ -831,9 +838,15 @@ static int wwwoffle_write(URL *Url)
  if(spool==-1)
     return(1);
 
+ ftruncate(spool, 0);
  init_io(0);
  init_io(spool);
 
+ if (addheader)
+   {
+    char static *header = "HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n";
+    write_data(spool,header,strlen(header));
+   }
  while((n=read_data(0,buffer,IO_BUFFER_SIZE))>0)
     write_data(spool,buffer,n);
 
