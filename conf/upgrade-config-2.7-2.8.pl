@@ -272,7 +272,18 @@ else
 
 # Read in the new comments from the newly installed configuration file.
 
-if(open(INST,"<wwwoffle.conf.install") || open(INST,"<$conf.install"))
+# First determine what to use for the new configuration file...
+my $configsource;
+if (-s '/usr/share/wwwoffle/default/wwwoffle.conf.gz') {
+    $configsource = 'gzip -dc /usr/share/wwwoffle/default/wwwoffle.conf.gz |';
+}
+elsif (-s '/usr/share/wwwoffle/default/wwwoffle.conf') {
+    $configsource = '/usr/share/wwwoffle/default/wwwoffle.conf';
+}
+else {
+    $configsource = "$conf.install";
+}
+if(open(INST, $configsource))
   {
    $section=$comment='';
 
