@@ -124,7 +124,7 @@ if test "$WITH_GNUTLS" = "no"; then
 else
    if test "$WITH_GNUTLS" = "yes"; then
       GNUTLS_INC=
-      GNUTLS_LIB="-lgnutls"
+      GNUTLS_LIB="-lgnutls -lgcrypt"
    else
       GNUTLS_INC="-I$WITH_GNUTLS/include"
       GNUTLS_LIB="-L$WITH_GNUTLS/lib -lgnutls"
