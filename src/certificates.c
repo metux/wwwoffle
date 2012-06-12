@@ -41,9 +41,7 @@
 
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
-#if USE_GCRYPT
 #include <gcrypt.h>
-#endif
 
 #include "wwwoffle.h"
 #include "errors.h"
@@ -128,11 +126,7 @@ int LoadRootCredentials(void)
 
  if(ConfigBoolean(SSLQuickKeyGen))
    {
-#if USE_GCRYPT
     gcry_control(GCRYCTL_ENABLE_QUICK_RANDOM,0);
-#else
-    PrintMessage(Warning,"The 'quick-key-gen' options requires libgcrypt which is not compiled in.");
-#endif
    }
 
  /* Create the certificates directory if needed */

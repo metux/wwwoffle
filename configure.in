@@ -9,6 +9,7 @@ AC_CONFIG_HEADER(src/autoconfig.h)
 
 m4_include(m4/etr_socket_nsl.m4)
 m4_include(m4/gnutls.m4)
+m4_include(m4/gcrypt.m4)
 
 dnl Checks for programs.
 
@@ -113,54 +114,7 @@ AC_SUBST(ZLIB_LIB)
 AC_SUBST(ZLIB_INC)
 
 PKG_CHECK_GNUTLS
-
-dnl Checks for using gcrypt.
-
-AC_ARG_WITH(gcrypt,
-[  --with-gcrypt=dir            Set the location of the gcrypt header and library],
-WITH_GCRYPT=$withval,WITH_GCRYPT=$WITH_GNUTLS)
-
-if test "$WITH_GCRYPT" = "no"; then
-   GCRYPT_INC=
-   GCRYPT_LIB=
-   USE_GCRYPT=0
-else
-   if test "$WITH_GCRYPT" = "yes"; then
-      GCRYPT_INC=
-      GCRYPT_LIB="-lgcrypt"
-   else
-      GCRYPT_INC="-I$WITH_GCRYPT/include"
-      GCRYPT_LIB="-L$WITH_GCRYPT/lib -lgcrypt"
-   fi
-
-   AC_CHECK_HEADERS(gcrypt.h,
-                    HAVE_GCRYPT_H=yes,HAVE_GCRYPT_H=no)
-
-   if test "$HAVE_GCRYPT_H" = "no"; then
-      AC_MSG_WARN([Cannot find gcrypt.h header file; configuring without some SSL/https features])
-      GCRYPT_LIB=
-      GCRYPT_INC=
-      USE_GCRYPT=0
-   else
-      AC_CHECK_LIB(gcrypt, gcry_check_version,
-                   WITH_GCRYPT=yes,WITH_GCRYPT=no,$GCRYPT_LIB)
-
-      if test "$WITH_GCRYPT" = "no"; then
-         AC_MSG_WARN([Cannot find working libgcrypt library, configuring without some SSL/https features])
-         GCRYPT_LIB=
-         GCRYPT_INC=
-         USE_GCRYPT=0
-      else
-         USE_GCRYPT=1
-      fi
-   fi
-fi
-
-AC_DEFINE_UNQUOTED(USE_GCRYPT,$USE_GCRYPT,[use the gcrypt library])
-
-AC_SUBST(GCRYPT_LIB)
-AC_SUBST(GCRYPT_INC)
-
+PKG_CHECK_GCRYPT
 
 dnl Checks for using IPv6.
 
