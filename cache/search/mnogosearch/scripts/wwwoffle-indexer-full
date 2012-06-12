@@ -1,0 +1,27 @@
+#!/bin/sh
+
+#### THE SPOOL DIR IS "SPOOLDIR" IN THE LINE BELOW ####
+
+wwwoffle_spool=SPOOLDIR
+
+####
+
+cd $wwwoffle_spool
+
+# Set the path to include the indexer executable
+
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:/usr/local/sbin
+export PATH
+
+# Set up a log file.
+
+echo > search/mnogosearch/wwwoffle-mnogosearch.log
+
+# Do the indexing
+
+indexer -a -m search/mnogosearch/conf/indexer-full.conf \
+    >> search/mnogosearch/wwwoffle-mnogosearch.log 2>&1
+
+indexer -S search/mnogosearch/conf/indexer-full.conf \
+    >> search/mnogosearch/wwwoffle-mnogosearch.log 2>&1

@@ -1,0 +1,106 @@
+         WWWOFFLE - Eksplorator Offline World Wide Web - Wersja 2.5
+         ==========================================================
+
+
+Istnieje tutaj kilka plików pomocy, ten jest plikiem meta-pomocy, który wska¿e
+Ci prawid³owy sposób czytania.
+
+
+Je¶li chcesz wiedzieæ czym WWWOFFLE jest i co robi przeczytaj:
+
+README
+
+
+Je¶li nie u¿ywa³e¶ WWWOFFLE wcze¶niej przeczytaj:
+
+README
+INSTALL
+README.lang             [wersje nie angielskie]
+README.CONF
+README.htdig
+README.udmsearch
+README.win32            [u¿ytkownicy Win32]
+
+
+Je¶li u¿ywa³e¶ WWWOFFLE wcze¶niej przeczytaj:
+
+NEWS
+CHANGES.CONF
+README.CONF
+README.htdig
+README.udmsearch
+
+
+Je¶li u¿ywa³e¶ WWWOFFLE wcze¶niej i uaktualniasz je z wersji 2.5 przeczytaj:
+
+CONVERT
+
+
+Je¶li chcesz wiedzieæ jak zainstalowaæ program lub zmieniæ opcje kompilacji
+przeczytaj:
+
+INSTALL
+README.lang             [wersje nie angielskie]
+README.htdig
+README.udmsearch
+README.win32            [u¿ytkownicy Win32]
+
+
+Je¶li chcesz wiedzieæ jak u¿ywaæ programy po zainstalowaniu przeczytaj:
+
+wwwoffle(1)             [u¿ytkownicy UNIX]
+wwwoffled(8)            [u¿ytkownicy UNIX]
+README
+README.htdig
+README.udmsearch
+
+
+Je¶li chcesz wiedzieæ jak skonfigurowaæ program:
+
+wwwoffle.conf           [u¿ytkownicy UNIX]
+wwwoffle.conf(5)        [u¿ytkownicy UNIX]
+README.CONF
+CHANGES.CONF
+README.htdig
+README.udmsearch
+
+
+Je¶li chcesz dostosowaæ komunikaty b³êdów lub inne strony przeczytaj:
+
+html/messages/README
+
+
+Je¶li chcesz zrobiæ wiêcej z WWWOFFLE:
+
+contrib/README          [u¿ytkownicy UNIX]
+contrib-win32/README    [u¿ytkownicy Win32]
+
+
+Celem poszczególnych ¼róde³ informacji jest:
+
+NEWS             Lista zmian w funkcjonalno¶ci od poprzednich wersji.
+
+README           G³ówny plik README, zwykle README zawiera materia³ o programie.
+README.1st       Ten plik - meta-indeks.
+README.CONF      Pomoc na temat formatu pliku konfiguracyjnego.
+README.PWD       Informacje na temat, jak zabezpieczyæ has³em przechowywane
+                 strony.
+README.win32     Informacje na temat WWWOFFLE w wersji dla Win32.
+README.htdig     Opis instalacji programu ht://Dig przeszukuj±cego bufor.
+README.udmsearch Opis instalacji programu UdmSearch przeszukuj±cego bufor.
+README.lang      Opis wersji jêzykowych stron nie angielskich.
+
+INSTALL          Pomoc na temat instalacji i opcji kompilacji programu.
+CONVERT          Pomoc na temat konwersji bufora z poprzedniej wersji do
+                 aktualnej.
+CHANGES.CONF     Lista zmian pliku konfiguracyjnego od wersji 1.3 do obecnej.
+
+wwwoffle(1)      Podrêcznik UNIX dla programu interfejsu u¿ytkownika wwwoffle.
+wwwoffle.conf(5) Podrêcznik UNIX dla pliku konfiguracyjnego wwwoffle.conf.
+wwwoffled(8)     Podrêcznik UNIX dla programu demona serwera wwwoffled.
+
+html/messages/README    Informacje na temat sposobu dostosowania komunikatów
+                        b³êdu.
+
+contrib/README          Ró¿ne skrypty u¿ywane z WWWOFFLE.
+contrib-win32/README    Ró¿ne skrypty u¿ywane z WWWOFFLE.

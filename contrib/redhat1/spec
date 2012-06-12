@@ -1,0 +1,73 @@
+Summary: persistent WWW/FTP cache
+Name: wwwoffle
+Version: 2.7d
+Release: 1
+Copyright: GPL
+Group: System Environment/Libraries
+Source: %{name}-%{version}.tgz
+Patch: wwwoffle-conf.patch
+BuildRoot:   /var/tmp/%{name}-%{version}-root
+
+%description
+
+persistent WWW/FTP cache with added functionality like:
+- autodialing
+- requesting pages offline
+- filtering
+
+Install wwwoffle if you use a slow modem connection to connect 
+to the internet. Configure your browsers to use http://localhost:8080/
+as proxy or use NAT to redirect browser requests
+
+%prep
+case "${RPM_COMMAND:-all}" in
+all)
+%setup -q
+%patch -p1 -b .rz
+;;
+esac
+
+
+%build
+
+export CC=gcc303
+case "${RPM_COMMAND:-all}" in
+all|config)
+%configure
+;;
+esac
+
+case "${RPM_COMMAND:-all}" in
+all|config|build)
+make
+;;
+esac
+
+%install
+
+case "${RPM_COMMAND:-all}" in
+all|config|build|install)
+make DESTDIR=$RPM_BUILD_ROOT install
+mkdir -p $RPM_BUILD_ROOT/etc/rc.d/init.d
+cp contrib/redhat1/wwwoffled $RPM_BUILD_ROOT/etc/rc.d/init.d
+chmod +x $RPM_BUILD_ROOT/etc/rc.d/init.d/wwwoffled
+cp --parents -R contrib $RPM_BUILD_ROOT/usr/doc
+;;
+esac
+
+%clean
+
+rm -rf $RPM_BUILD_ROOT
+
+%post
+chkconfig --level 345 wwwoffled on
+/etc/rc.d/init.d/wwwoffled start
+
+%preun
+chkconfig --level 345 wwwoffled off
+/etc/rc.d/init.d/wwwoffled stop
+
+%files
+%config /etc/*
+/usr
+/var/spool/*

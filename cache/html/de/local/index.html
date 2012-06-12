@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>WWWOFFLE Eingebauter Web-Server</TITLE>
+<LINK href="/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+<H1 align="center">WWWOFFLE Eingebauter Web-Server</H1>
+
+Jede URL die &uuml;ber WWWOFFLE auf port 8080 angefragt wird und sich auf das 
+Verzeichnis /local/ bezieht l&auml;dt eine Datei, die zun&auml;chst im 'local'-Unterverzeichnis des 
+Spool-Verzeichnisses, oder wenn sie dort nicht existiert, in den 
+Verzeichnissen 'html/$LANG/local', 'html/default/local' und 'html/en/local'
+gesucht wird.
+<p>
+Das erm&ouml;glicht den Betrieb eines einfachen Webservers, ohne ein seperates Server-Programm
+installieren zu m&uuml;ssen. Es gibt keine CGIs oder Verzeichnisinhalte. Die
+MIME-Typen, die f&uuml;r diese Dateien verwendet werden, sind jene, die in der
+Konfigurations-Datei angegeben wurden.
+<p>
+<dl>
+  <dt><b>Wichtig</b>
+  <dd>Der Server f&uuml;r diese lokalen Webseiten folgt symbolischen Links,
+  erlaubt aber nur den Zugriff auf Dateien die f&uuml;r jeden (o+r) lesbar sind.
+  Siehe auch die <a href="/FAQ.html">FAQ</a> f&uuml;r Sicherheitshinweise.
+</dl>
+
+</BODY>
+</HTML>

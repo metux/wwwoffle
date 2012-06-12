@@ -1,0 +1,290 @@
+.\" $Header: /home/amb/wwwoffle/doc/RCS/wwwoffle.man 2.20 2006/02/12 14:20:03 amb Exp $
+.\"
+.\"  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+.\"
+.\"  Manual page for wwwoffle
+.\"
+.\"  Written by Andrew M. Bishop
+.\"
+.\"  This file Copyright 1997,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+.\"  It may be distributed under the GNU Public License, version 2, or
+.\"  any higher version.  See section COPYING of the GNU Public license
+.\"  for conditions under which this file may be redistributed.
+.\"
+.TH wwwoffle 1 "February 12, 2006"
+
+.SH NAME
+
+wwwoffle \- A program to control the World Wide Web Offline Explorer.
+
+.SH SYNOPSIS
+
+.B wwwoffle
+.B \-h | \-\-help
+.B \-\-version
+.P
+.B wwwoffle
+.B \-online
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.P
+.B wwwoffle
+.B \-autodial
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.P
+.B wwwoffle
+.B \-offline
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.P
+.B wwwoffle
+.B \-fetch
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.P
+.B wwwoffle
+.B \-config
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.P
+.B wwwoffle
+.B \-dump
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.P
+.B wwwoffle
+.B \-purge
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.P
+.B wwwoffle
+.B \-status
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.P
+.B wwwoffle
+.B \-kill
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.P
+.B wwwoffle
+.B [\-o|\-O]
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.I URL
+.P
+.B wwwoffle
+.B [\-d[<depth>] | \-r[<depth>] | \-R[<depth>]]
+.B [\-g[Sisfo]]
+.B [\-F]
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.I URL1 [URL2 [... URL]]
+.P
+.B wwwoffle
+.B [\-d[<depth>] | \-r[<depth>] | \-R[<depth>]]
+.B [\-g[Sisfo]]
+.B [\-F]
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.I file1 [file2 [... file]]
+.P
+.B wwwoffle
+.B -post
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.I URL
+.P
+.B wwwoffle
+.B -put
+.B [\-p <host>[:<port>] | \-c <config-file>]
+.I URL
+
+.SH DESCRIPTION
+
+.I wwwoffle
+controls the
+.I
+World Wide Web Offline Explorer proxy HTTP server.
+.LP
+The wwwoffle program is used to control the wwwoffled program, to tell it when
+the computer is online or offline, and which URLs to get and when to fetch them.
+.LP
+The control options are also available from the server on an interactive control
+web page at http://localhost:8080/control/.
+
+.SH OPTIONS
+
+The command line options available for the program are described below.
+.TP
+.B \-h | \-\-help
+A help message is printed giving a brief description of the usage of the
+program.
+.TP
+.B \-\-version
+The version number of the program is printed.
+.TP
+.B \-online
+Tell the wwwoffled proxy server that the computer is online to the internet and
+that requests are to be fetched immediately.
+.TP
+.B \-autodial
+Tell the wwwoffled proxy server that the computer can become online to the
+internet if required for requests that are not already cached, but that pages
+that are in the cache do not require any network access.  This is intended for
+use with dial-on-demand systems (using diald for example).
+.TP
+.B \-offline
+Tell the wwwoffled proxy server that the computer is not online to the internet
+and that requests are to be cached until they are fetched later.
+.TP
+.B \-fetch
+Tell the wwwoffled proxy server to fetch all of the requests that have been
+cached.  (The proxy server must be online for this to work.)  The program will
+wait until all of the requests have been met before exiting.
+.TP
+.B \-config
+Tell the wwwoffled proxy server to re-read the configuration file.
+.TP
+.B \-dump
+Tell the wwwoffled proxy server to dump out the current program configuration.
+This is equivalent to the most recently read configuration file and the built-in
+default options.
+.TP
+.B \-purge
+Tell the wwwoffled proxy server that the cache is to be purged.  The
+configuration file wwwoffle.conf(5) specifies the maximum age of the pages to
+keep.  If a maximum cache size is specified then the oldest pages are deleted
+until the size is not exceeded.
+.TP
+.B \-status
+Request from the wwwoffled proxy server the current status of the program.  The
+online or offline mode, the fetch and purge statuses, the number of current
+processes and their PIDs are displayed.
+.TP
+.B \-kill
+Tell the wwwoffled proxy server to exit cleanly at the next convenient point.
+.TP
+.B URL
+The URL of a web page that is to be fetched.  This is the same as using a
+browser and entering the URL if not already in the cache or pressing the refresh
+button in the index if it is in the cache.
+.TP
+.B file
+The name of an HTML file that is to be parsed and the links in it are to be
+fetched as if the URLs had been specified on the command line.
+.TP
+.B \-o
+Fetch the specified URL (from the cache or request it if not already cached when
+offline, or get it when online) and output it on standard output.  This is an
+easy way of getting an image out of the cache to be used in other programs.  The
+contents of the ModifyHTML section of the configuration file are ignored and the
+unmodified data is output.
+.TP
+.B \-O
+Fetch the specified URL (from the cache or request it if not already cached when
+offline, or get it when online) and output it on standard output including the
+HTTP header.  The contents of the ModifyHTML section of the configuration file
+are ignored and the unmodified data is output.
+.TP
+.B \-F
+Force the specified URLs to be refreshed.  Without this option, the page will
+not be fetched unless newer than the version on the server.
+.TP
+.B \-r[<depth>]
+Causes the pages linked to by the specified URLs also to be fetched if they are
+on the same host.  This recursion works for a number of links specified by the
+depth parameter, a depth of 0 means only the specified page, a depth of 2 means
+all linked pages and all links from them.
+.TP
+.B \-R[<depth>]
+The same as
+.B \-r
+above, but it also works for links that are not on the same host.
+.TP
+.B \-d[<depth>]
+The same as
+.B \-r
+above, but is limited to links in the same directory or a sub-directory.
+.TP
+.B \-gS
+Also fetches the stylesheets that are included in the specified URLs.
+.TP
+.B \-gi
+Also fetches the images that are included in the specified URLs.
+.TP
+.B \-gf
+Also fetches the frames that are included in the specified URLs.
+.TP
+.B \-gs
+Also fetches the scripts that are included in the specified URLs.
+.TP
+.B \-go
+Also fetches the objects that are included in the specified URLs.
+.TP
+.B \-post
+Create a request using the POST method, the data is read from stdin, and
+appended to the request.  The user must ensure that the format of the data is
+valid for a POST request.  Any of the characters '&', '=' or ';' that are not
+being used for their reserved purpose must be URL-encoded in the input, other
+characters will be URL-encoded.
+.TP
+.B \-put
+Create a request using the PUT method, the data is read from stdin and appended
+to the request.
+.TP
+.B \-c <config-file>
+Specifies the name of the configuration file that contains the server host name,
+port numbers and authorisation password.  This is required for the -online,
+-autodial, -offline, -fetch, -config, -dump, -purge, -status and -kill options
+if a password is set.  The user must have read access to the configuration file
+to be able to use the command if a password is set.  (See the StartUp and
+LocalHost section of wwwoffle.conf(5) for more information on setting the server
+host name, ports and password.)
+.TP
+.B \-p <host>[:<port>]
+Sets the hostname and port number that is to be used for the connection to the
+proxy server.  For the -online, -autodial, -offline, -fetch, -config, -dump,
+-purge, -status and -kill options this must be the WWWOFFLE control port, for
+the URL options it must be the WWWOFFLE HTTP proxy server port.  If no -p option
+is specified then the compile-time defaults are used.
+
+.P
+When the
+.I \-F
+,
+.I \-R[<depth>]
+,
+.I \-r[<depth>]
+,
+.I \-d[<depth>]
+or
+.I \-g[Sisfo]
+options are given then they will override the options that are set in the
+FetchOptions section of the configuration and not fetch any other contents of
+the specified URL.  For example if the fetch options normally include images and
+frames then using the
+.I \-gi
+option will only fetch images and not frames.  All page contents to be fetched
+must be specified as command line options.  Specifying
+.I \-g
+without any options will fetch only the specified URL without any of the
+options.
+
+.SH ENVIRONMENT VARIABLE
+
+The
+.B WWWOFFLE_PROXY
+environment variable can be used instead of the -c or -p options.  There are
+three ways that the variable can be used.
+.TP
+1.
+When the variable is set to absolute pathname of a file, then that file is used
+as the configuration file like the -c option (for example
+/etc/wwwoffle/wwwoffle.conf).
+.TP
+2.
+The WWWOFFLE_PROXY variable can also be set to the hostname and the port number
+that would be used with the -p option (for example localhost:8080).
+.TP
+3.
+The third possibility is to set the variable to the hostname and the two port
+numbers for the WWWOFFLE HTTP proxy port and the WWWOFFLE control port (for
+example localhost:8080:8081).  This way it will work with both types of commands
+(proxy access and control).
+
+.SH SEE ALSO
+
+wwwoffled(8), wwwoffle.conf(5), diald(8).
+
+.SH AUTHOR
+
+Andrew M. Bishop 1996,97,98,99,2000,01,02,03,04,05,06 (amb@gedanken.demon.co.uk)

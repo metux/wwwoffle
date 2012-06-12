@@ -1,0 +1,33 @@
+#!/bin/sh
+
+#### THE SPOOL DIR IS "SPOOLDIR" IN THE LINE BELOW ####
+
+wwwoffle_spool=SPOOLDIR
+
+####
+
+cd $wwwoffle_spool
+
+# Set the path to include the htdig executables
+
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:/opt/www/htdig/bin    # The Suse location
+export PATH
+
+# Set the temporary directory used for creating the fuzzy endings
+
+#TMPDIR=/tmp
+TMPDIR=search/htdig/tmp
+export TMPDIR
+
+# Set up a log file.
+
+echo > search/htdig/wwwoffle-htdig.log
+
+# Create the fuzzy databases
+
+htfuzzy -v -c search/htdig/conf/htfuzzy.conf endings  \
+    >> search/htdig/wwwoffle-htdig.log 2>&1
+
+htfuzzy -v -c search/htdig/conf/htfuzzy.conf synonyms \
+    >> search/htdig/wwwoffle-htdig.log 2>&1

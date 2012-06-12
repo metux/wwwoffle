@@ -1,0 +1,3 @@
+#!/bin/sh
+/usr/bin/wwwoffle -offline -c /etc/wwwoffle/wwwoffle.conf
+read

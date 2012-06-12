@@ -1,0 +1,67 @@
+$shownocontents=
+
+$last?=$type{$header="" $open="" $close=}{$header=$type $open=<ul> $close=</ul>}
+$last?{}{$close=}
+$last=$type
+
+$header?{$close}{}
+
+$header?=Refresh{
+<h2>Automatic Loading URL</h2>
+
+A specified URL that is to be loaded by the browser after this one has loaded.
+}{}
+
+$header?=StyleSheet{
+<h2>StyleSheets</h2>
+
+References to external stylesheets.
+}{}
+
+$header?=Image{
+<h2>Images</h2>
+
+Embedded images, these are shown full size but in the web page they may be scaled
+so that they appear larger or smaller.
+}{}
+
+$header?=Frame{
+<h2>Frames</h2>
+
+Frames contained within this page.
+}{}
+
+$header?=Script{
+<h2>Scripts</h2>
+
+Links to external scripts.
+}{}
+
+$header?=Object{
+<h2>Objects</h2>
+
+Links to external objects, for example Java.
+}{}
+
+$header?=Link{
+<h2>Links</h2>
+
+Links to other web pages or e-mail.
+}{}
+
+$header?{
+<p>
+$open
+}{}
+
+$encurl=%encode[refurl]
+$htmlurl=%html[refurl]
+<li> \
+[<a href="$localurl/info/url?$encurl">Info</a>] \
+[<a href="$localurl/configuration/url?$encurl">Config</a>] \
+[<a href="$localurl/index/url?$encurl">Index</a>] \
+[<tt>$status</tt>] \
+&nbsp; \
+$status?=X{$refurl}{<a href="$htmlurl">$refurl</a>}
+$status?=+{}{$type=}
+$type?=Image{<br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="$htmlurl"><img src="$htmlurl" alt="$htmlurl"></a>}{}

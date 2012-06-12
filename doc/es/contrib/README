@@ -1,0 +1,280 @@
+          WWWOFFLE - World Wide Web Offline Explorer - 0 2.5e
+          ===================================================
+
+Estos son ficheros/guiones variados que se pueden usar con WWWOFFLE.
+
+Contenido
+
+        Arranque Debian (I)
+        Arranque Debian (II)
+        Arranque Redhat
+        Arranque Slackware (u otros sistemas estilo BSD)
+        Arranque S.u.S.E
+        PPPD Arranque y Parada
+        Guión WWWOFFLE tras ejecución
+        Monitorizador de uso de WWWOFFLE
+        Configuración de ISP
+        Búsqueda del PID en el histórico
+        Guiones para KPPP
+        Marcar URLs para no ser purgadas
+        HTML alternativo para Cache-Info
+        Marca páginas en Javascript para Netscape
+        Marca páginas en Javascript para Netscape + 
+            HTML alternativo para Cache-Info
+
+Nota: Yo no he escrito o probado estos guiones, han sido suministrados
+      por los autores nombrados abajo.
+
+
+Debian (I)
+----------
+
+Fichero:    debian1/wwwoffle
+Contribuido: Joerg Wittenberger <Joerg.Wittenberger@inf.tu-dresden.de>
+
+> [El guión] normalmente es llamado de la misma forma que otros
+> pertenecientes al sistema, p.e., 'bind', 'nfs', 'apache'; `wwwoffle'
+> podría ser una buena elección.
+>
+> 7 guiones van en el directorio `init.d'. Normalmente en
+> '/etc/init.d' porque son parte de la configuración del
+> sistema o bajo '/sbin/init.d', o '/usr/sbin/init.d' porque para
+> ser exactos sólo se usan enlaces simbólicos en rc<runlevel>.d 
+> para la configuración.
+
+
+Arranque Debian (II)
+--------------------
+
+Fichero:    debian2/wwwoffle
+Contribuido: Remo Petritoli <petritoli@iol.it>
+
+Es una versión modificada del anterior con algunas características
+extra.
+
+
+Arranque Redhat
+---------------
+
+Fichero:    redhat/wwwoffle.init
+Contribuido: Gianpaolo Macario <macario@tin.it> [Mantenedor de paquetes Redhat]
+             Peter Stamfest <e9125730@student.tuwien.ac.at>
+
+> [renombre el fichero] /etc/rc.d/init.d/wwwoffle.init [y haga los enlaces]
+> ln -sf ../init.d/wwwoffle.init /etc/rc.d/rc3.d/S95wwwoffle.init
+> ln -sf ../init.d/wwwoffle.init /etc/rc.d/rc0.d/K17wwwoffle.init
+> ln -sf ../init.d/wwwoffle.init /etc/rc.d/rc1.d/K17wwwoffle.init
+> ln -sf ../init.d/wwwoffle.init /etc/rc.d/rc6.d/K17wwwoffle.init
+
+
+Slackware (u otros sistemas al estilo BSD)
+------------------------------------------
+
+Fichero:    bsd/rc.local
+Contribuido: Andrew M. Bishop <amb@gedanken.demon.co.uk> [Autor de WWWOFFLE]
+
+Si tiene un sistema Slackware (u otro al estilo BSD) puede ejecutar
+wwwoffled poniéndolo en el fichero rc.local.  El fichero bsd/rc.local 
+debe ser añadido al fichero /etc/rc.d/rc.local (o /etc/rc.local).
+
+No es importante si se mata el demonio wwwoffled al apagar el ordenador.
+
+
+Arranque S.u.S.E.
+-----------------
+
+Fichero:    suse/wwwoffle
+Contribuido: Andreas Kupries <a.kupries@westend.com>
+
+> Este es el fichero y los enlaces que uso para comenzar/parar
+> wwwoffled durante el arranque/apagado de mi máquina 
+> (la distribución es `S.u.S.e 4.4.1`).
+> 
+> rc2.d/K18wwwoffle -> ../wwwoffle
+> rc2.d/S18wwwoffle -> ../wwwoffle
+> rc3.d/K18wwwoffle -> ../wwwoffle
+> rc3.d/S18wwwoffle -> ../wwwoffle
+
+
+PPPD Arranque y Parada
+----------------------
+
+Ficheros:   ppp/ip-up y ppp/ip-down
+Contribuido: Andrew M. Bishop <amb@gedanken.demon.co.uk> [Autor de  WWWOFFLE]
+
+PPP usa unos guiones que se ejecutan cuando se establece la conexión 
+y cuando se desconecta. Pueden ser usados para que el demonio wwwoffled 
+se ponga en estado Conectado y Desconectado, y para recoger las páginas 
+que ha pedido automáticamente.
+
+El fichero ppp/ip-up debe ser añadido al fichero /etc/ppp/ip-up y el
+fichero ppp/ip-down debe se añadido al fichero /etc/ppp/ip-down.
+
+Guión WWWOFFLE tras ejecución
+-----------------------------
+
+Fichero:    auto/post-wwwoffle.sh
+Contribuido: Andrew M. Bishop <amb@gedanken.demon.co.uk> [autor de WWWOFFLE]
+
+Si ejecuta el guión tras desconectar WWWOFFLE examinará los ficheros que se
+descargaron mientras estaba conectado. Puede servir para mostrarlos.
+
+
+Monitorizador de uso de WWWOFFLE
+--------------------------------
+
+Fichero:    logfile/audit-usage.pl
+Contribuido: Andrew M. Bishop <amb@gedanken.demon.co.uk> [autor de WWWOFFLE]
+
+Este guión puede ser ejecutado en el histórico de WWWOFFLE creado tras
+ejecutar WWWOFFLE con la salida de depurado activada.  Informará de las URLs
+que fueron pedidas, en que modo de programa está wwwoffles, de que huésped
+vinieron las peticiones y que usuario de la sección AllowedConnectUsers lo
+está usando.
+
+Si ejecuta wwwoffled como se muestra obtendrá un histórico con la
+información requerida.
+
+wwwoffled -d 4 >  wwwoffled.log 2>&1    # Shells sh/bash
+wwwoffled -d 4 >& wwwoffled.log         # Shells csh/tcsh
+
+
+Configuración de ISP
+--------------------
+
+Fichero:    config/wwwoffle-config.pl
+Contribuido: Christian Zagrodnick <zagy@vodoo.boerde.de>
+
+# Con wwwoffle-config puedes tener diferentes configuraciones de wwwoffle
+# en un sólo fichero.
+#
+# Hay dos formas de configurar: `#//+' y `#//-'
+# Con #//+ el símbolo `#' de l SIGUIENTE línea será borrado.
+# Con #//- la SIGUIENTE línea será precedida por un `#'
+
+
+Búsqueda del PID en el histórico
+--------------------------------
+
+Fichero:    logfile/log-pid.pl
+Contribuido: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+Un guión Perl para analizar la salida del histórico de WWWOFFLE para buscar
+referencias al PID especificado al depurar.
+
+Uso: log-pid.pl <pid> < wwwoffle.log
+
+
+Guiones KPPP
+------------
+
+Fichero:    kppp/kppp-online, kppp/kppp-offline
+Contribuido: Antonio Larrosa <antlarr@arrakis.es>
+
+> En la casilla "Ejecutar" de la configuración de la cuenta, la aplicación
+> "Tras conectar" debería ser :
+> konsole -e <path>/kppp-online
+> y la casilla "Tras desconectar" la aplicación debería ser:
+> konsole -e <path>/kppp-offline
+> 
+> donde kppp-online y kppp-offline son los guiones adjuntos
+> 
+> "kppp-online" podría ejecutarse directamente, pero entonces se ejecutaría en
+> segundo plano y el usuario no podría ver la salida estándar (la recogida
+> de páginas).
+
+
+Marcar URLs para no ser purgadas
+--------------------------------
+
+Fichero:    purge/url2keep
+Contribuido: Jörg Mensmann <joerg.mensmann@gmx.net>
+
+> Esta es una nueva versión de "url2keep" (Antes conocido como
+> "permcache-netscape.pl"). Ahora no sólo funciona con los marca-páginas
+> de Netscape y se ha hecho más flexible.
+> 
+> Gracias a Jacques L'helgoualc'h <lhh@free.fr> por mejorar el guión para
+> que funcione como un filtro. Analiza el código HTML leído desde la
+> entrada estándar y saca todos los enlaces que encuentre en un formato que
+> puede ser leído por el fichero de configuración. Lea los comentarios en el
+> guión para más información.
+
+
+
+HTML alternativo para Cache-Info
+--------------------------------
+
+Fichero:    messages1/AddCacheInfo.html
+Contribuido: Luis Miguel Ferreira <ferreira@iname.com>
+
+> He cambiado la página AddCacheInfo.html. La he rucado un poco, para que ahora
+> los objetos tengan un color fijo y fondo (están dentro de una 6), y le he
+> añadido la opción de borrar el servidor (borrar todas las páginas de ese
+> sitio). (en algunas de las páginas Web, estos enlaces eran invisible porque
+> eran del mismo color que el fondo. Es por esto por lo que las he cambiado)
+
+Necesita cambiar el fichero /var/spool/wwwoffle/html/messages/AddCacheInfo.html
+con esta versión y activar la opción add-cache-info en la sección ModifyHTML
+del fichero de configuración.
+
+
+Marca páginas en Javascript para Netscape
+-----------------------------------------
+
+Fichero:    bookmarklets/bookmarks.html
+Contribuido: Joerg Mensmann <joerg.mensmann@gmx.de>
+
+> Siempre me ha parecido que usar las características extendidas de 
+> WWWOFFLE como el monitor o la recogida recursiva eran muy complicadas de
+> usar. Para usarlas normalmente tenía que abrir otra ventana, moverme a la
+> página de control apropiada y al final copiar la URL de la ventana
+> original al formulario WWWOFFLE.
+> 
+> La característica "add-cache-info" es una solución a este problema pero
+> muchas veces desordena el esquema de la páginas, especialmente si se usan
+> marcos.
+> 
+> Se puede conseguir lo mismo usando "bookmarklets" (pequeños javascripts
+> almacenados en los marca-páginas) sin estos problemas.
+> 
+> Para usarlo, ... en los marca-páginas de Netscape haga Fichero/Importar. 
+> Por supuesto, necesita activar javascript y ajustar "localhost:8080" 
+> al servidor donde se este ejecutando WWWOFFLE.
+
+Esto creará una nueva carpeta en la marca páginas con las características extra 
+de WWWOFFLE en él. Esto se aplica para la página que se está mostrando
+actualmente.
+
+Es posible copiar los marca páginas en la "Carpeta de Herramientas Personales" 
+y los marca páginas estarán disponibles directamente desde la barra de
+herramientas personal en vez de en el menú del marca páginas.
+
+
+Marca páginas en Javascript para Netscape + HTML alternativo para Cache-Info
+----------------------------------------------------------------------------
+
+Ficheros:   messages2/bookmarks.html & html2/AddCacheInfo.html
+Contribuido: Dag Hoidahl <dag.hoidahl@fix.no>
+
+
+> He realizado unos pequeños bookmarklets (trocitos de Javascript para ser 
+> puestos en el fichero marca página) que son útiles con WWWOFFLE. 
+> Proveen marca páginas para los comandos Borrar, Recargar, Monitor, Índice 
+> y Recogida. De esta forma estos comando están siempre disponibles sin
+> tener que modificar las páginas almacenadas.
+> 
+> También he hecho un reemplazo para el fichero AddCacheInfo.html que 
+> guarda información de la caché en una variable Javascript para que se
+> pueda mostrar en una "alertbox" usando un "bookmarklet".
+> 
+> El fichero de marca páginas adjunto es para Netscape Navigator pero el
+> Javascript es lo suficientemente básico cómo para funcionar en cualquier
+> navegador que soporte Javascript. Si usas Netscape, puede sencillamente
+> importar los marca páginas y ponerlos en cualquier lugar de fácil acceso,
+> por ejemplo en la barra de herramientas. De otro modo puedes abrir el
+> fichero y añadir los enlaces a los marca páginas manualmente.
+
+Necesita cambiar el fichero /var/spool/wwwoffle/html/messages/AddCacheInfo.html
+con esta versión y activar la opción add-cache-info en la sección ModifyHTML
+del fichero de configuración.

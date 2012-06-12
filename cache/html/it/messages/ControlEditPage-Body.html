@@ -1,0 +1,37 @@
+<!-- This is just the body of this file since it is repeated while the head is shared -->
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+section   = The name of this section of the config file (='$section').
+comment   = The comment for this section of the config file.
+content   = The content of this section of the config file.
+
+-->
+
+$section?{
+
+<h2><a name="$section">Sezione $section</a></h2>
+
+<pre>
+$comment
+</pre>
+
+<form action="/control/edit?$section" method=post>
+<textarea name="value" cols=60 rows=10>$content</textarea>
+<br>
+<input type="submit" value="Aggiorna"><input type="reset" value="Annulla">
+</form>
+
+}{
+
+<h2>Commento</h2>
+
+<pre>
+$comment
+</pre>
+
+}
+
+<!-- This is just the body of this file since it is repeated while the tail is shared -->

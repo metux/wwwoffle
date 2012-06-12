@@ -1,0 +1,100 @@
+                      MESSAGES DE WWWOFFLE - Version 2.7
+                      ==================================
+
+Les pages HTML générées par WWWOFFLE sont désormais contenues dans ce
+répertoire.
+
+Description des Pages
+---------------------
+
+Les pages de ce répertoire sont les messages générés par WWWOFFLE.
+
+Toutes les pages qu'il génère sont personnalisables, sauf :
+
+    Le corps des pages d'index.
+
+Les fichiers de ce répertoire correspondent tous à un message, sauf ceux qui
+sont nommés *-Head.html, *-Body.html ou *-Tail.html, Ceux-ci
+contiennent chacun une partie de la page et sont ensuite assemblés
+ensemble pour créer une page entière.
+
+
+Écrire des Pages
+----------------
+
+Si vous modifiez ces pages pour votre usage personnel, faites
+attention aux points suivants:
+
+    Le nom wwwoffle devrait apparaître clairement quelque part sur la page.
+    L'interface URL de wwwoffle risque de changer dans les prochaines versions.
+    Respectez la norme HTML (cf http://www.w3.org/).
+    Les fichiers doivent être au format UNIX, et non MS-DOS (LF et non CRLF)
+
+Si vous réalisez des pages que vous aimeriez voir incluses dans la prochaine
+version de wwwoffle, contactez-moi. Avant de commencer, prenez soin de me
+prévenir, car il se peut que d'autres personnes aient le même projet. Ne
+m'envoyez pas de pages sans me l'avoir demandé, sachant qu'elle peuvent être
+encombrantes. 
+
+Je suis intéressé par l'inclusion des jeux de pages suivants dans le futur:
+
+    Versions spéciales
+        Images
+        Javascript
+        Plus intuitive (liens vers des pages d'aide/FAQ en cas d'erreur ?)
+
+Je peux les rendre disponibles sur le site de wwwoffle et dans la prochaine
+version si elles sont approuvées.
+
+
+Règles pour le Parsing
+----------------------
+
+Le parser est un micro langage très simple (trop simple pour être un macro
+langage !).
+
+Les règles appliquées sont les suivantes:
+
+Classe-1
+
+$foo                    - Est remplacé par le contenu de la variable.
+
+Classe-2
+
+$foo=bar                - Affecte à la variable foo la valeur 'bar'.
+$foo="bar 1"            - Affecte à la variable foo la valeur 'bar 1'.
+$foo='bar 2'            - Affecte à la variable foo la valeur 'bar 2'.
+$foo=$bar               - Affecte à la variable foo la valeur de la variable
+                          bar.
+
+Classe-3
+
+$foo?{yes}{no}          - Est remplacé par 'yes' si $foo est définie ou par 'no'
+                          si elle ne l'est pas.
+$foo?=bar{yes}{no}      - Est remplacé par 'yes' si $foo == bar ou par 'no'
+                          sinon.
+
+
+Les noms de variables peuvent aussi bien être écrits en majuscules ou en
+minuscules, mais pas le reste.
+
+Une construction Classe-1 peut être utilisée dans une Classe-2
+
+Les constructions Classe-1 et Classe-2 peuvent être utilisées dans une
+Classe-3.
+
+Les constructions Classe-3 ne peuvent pas contenir d'autres Classe-3.
+
+Les caractères { et } doivent être remplacés par \{ et \} lorsqu'ils sont
+utilisés dans une Classe-2 ou dans une Classe-3.
+
+Les caractères ' et " doivent être remplacés de même dans une Classe-2.
+
+
+----------
+Andrew M. Bishop March 31st 2000
+
+----------
+Version Française : Anthony Baire <popov@mail.dotcom.fr>
+                    Roland Trique <roland.trique@easynet.fr> (relecture)
+                    Jacques L'helgoualc'h <lhh@free.fr> (m. à j.)

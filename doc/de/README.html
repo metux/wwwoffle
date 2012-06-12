@@ -1,0 +1,688 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html><head> <title>WWWOFFLE ReadME</title> </head>
+
+<body>
+
+
+<H1 align=center><a name="top">WWWOFFLE Proxy</a></H1>
+
+Der <i>WWWOFFLE</i> Server vereinfacht  und beschleunigt das  Herunterladen
+von World Wide Web Seiten auf Computern mit Wählverbindung ins Internet.
+
+<h2><a name="description">Beschreibung</a></h2>
+
+Das Programm <i>wwwoffled</i> ist ein einfacher Proxy-Server mit speziellen
+Funktionen  für  Wählverbindungen.  Unter  anderem  ist  es  möglich,  ohne
+stehende Verbindung ins Internet mit   einem beliebigen Browser (von  einem
+beliebigen  Rechner)   die  schon einmal heruntergeladenen    Seiten erneut
+aufzurufen.
+
+<p>
+Im <i>Online</i> Modus:
+<ul>
+  <li>Sämtliche Seiten werden lokal gespeichert und können später erneut aufgerufen werden.
+  <li>Seiten, die sich nicht geändert haben, werden nicht geholt (das spart Übertragung).
+  <li>Seiten, die verschlüsselt sind (SSL) werden durchgeschleust, aber nicht gespeichert.
+</ul>
+<p>
+Im <i>Offline</i> Modus:
+<ul>
+  <li>Seiten, die noch nicht heruntergeladen wurden, können bestellt werden.
+  <li>Die Bedienung erfolgt aus dem Browser heraus, oder via Kommandozeile.
+  <li>Auf jeder Seite gibt es (optional) eine Fußzeile von <i>wwwoffle</i>, die Aktualisieren, Löschen uvm. erlaubt.
+  <li>HTML Forms werden unterstützt.
+  <li>Ebenfalls werden kennwortgeschützte Seiten unterstützt (NEU).
+  <li>Es kann (optional) bei Bedarf automatisch eine Verbindung hergestellt werden.
+</ul>
+<p>
+Automatischer Download
+<ul>
+  <li>Seiten können interaktiv bestellt werden, das auch rekursiv.
+  <li>Bilder in den Seiten werden (optional) automatisch mit geholt.
+  <li>Ebenso funktioniert dies mit Frames.
+  <li>Seiten, die auf dem Server verschoben wurden, werden automatisch aktualisiert.
+  <li>Es können Seiten abonniert werden, d.h. sie werden z.B. alle sieben Tage automatisch geholt.
+  <li>Jede Seite wird gesichert, so daß eine Fehlermeldungsseite vom Server nicht das schon vorhandene, intakte Original überschreibt.
+</ul>
+<p>
+Funktionen:
+<ul>
+  <li>HTTP, FTP und FINGER Protokolle werden unterstützt.
+  <li>Eine Einführung mit Information und einen eingebauten Web-Server für Konfigurationsseiten.
+  <li>Verschieden sortierte und organisierte Index-Seiten für den Cache.
+  <li>Interaktive oder Kommandozeilenbedienung für den Online/Offline-Modus und für die sonstige Bedienung.
+  <li>Seiten können auf URL-Basis von Cache gelöscht werden.
+  <li>Seiten können rekursiv bestellt werden (ebenfalls auch per Browser).
+  <li>Die Konfigurationsdatei kann aus einem Browser heraus bearbeitet werden.
+  <li>Automatische Proxy-Konfiguration für Netscape.
+  <li>Der Index ist komplett durchsuchbar, mit dem (zusätzlich zu installierenden) <i>ht://Dig</i> Programm.
+</ul>
+<p>
+Allgemeines:
+<ul>
+  <li><i>WWWOFFLE</i> kann auf einen oder mehrere externe Proxies zurückgreifen.
+  <li>Automatische Proxy-Authentifikation für diese Proxies (falls notwendig).
+  <li>Intranet-Seiten (lokal) sind auch im Offline-Modus noch verfügbar.
+  <li><i>WWWOFFLE</i> kann konfiguriert werden, bestimmte URLs nicht zu holen oder nicht zu speichern (beispielsweise *chat.com).
+  <li><i>WWWOFFLE</i> kann ausgehende HTTP Daten (User-Agent, Referer, ...) zensieren.
+  <li>Sämtliche Optionen werden durch eine Konfigurationsdatei kontrolliert.
+  <li><i>WWWOFFLE</i> kann durch ein Passwort geschützt werden.
+  <li>Sämtliche Meldungen von <i>WWWOFFLE</i> können vom Benutzer angepaßt werden.
+</ul>
+
+
+<h2><a name="browserconf">Web Browser Konfiguration</a></h2>
+
+Damit <i>WWWOFFLE</i> auch benutzt wird, müssen Sie ihren Browser darauf
+konfigurieren. Der Name des Proxy-Servers wird in der Regel
+<code>localhost</code> sein, außer Sie benutzen <i>WWWOFFLE</i> in einem
+lokalen Netzwerk mit mehreren Rechnern. Die Portnummer wird, außer Sie
+haben die Standardeinstellungen verändert, 8080 sein. 
+
+<p><b>Automatische Konfiguration (Netscape ab Version 2.0):</b><br> 
+
+Sie haben es einfach :-) In den Proxy-Einstellungen von Netscape einfach
+auf "Automatische Konfiguration" klicken und
+<code>http://localhost:8080/wwwoffle.pac</code> in die Eingabezeile eingeben.
+
+<p><b>Manuelle Konfiguration:</b><br>
+<dl>
+<dt>Netscape 1.x</dt> <dd> Im Menü "Options/Preferences" einfach bei
+"Proxies" <code>localhost</code> als Rechner und <code>8080</code> als Port
+(oder je nach dem wie Ihr Netzwerk aussieht) eingeben.
+</dd>
+<dt>Netscape 2.x und 3.x</dt> <dd>Im Menü "Options/Preferences" bei
+"Proxies" wählen Sie die manuelle Proxy-Konfiguration und geben wie gehabt
+Proxy-Server Namen und Portnummer ein.
+</dd>
+<dt>Netscape 4.x</dt> <dd>Im Menü "Edit/Preferences" wählen Sie den letzten
+Menüpunkt ("Advanced"), dort dann "Proxies", dort wählen Sie "Manual Proxy
+Configuration" und setzen den Namen und die Portnummer in die
+entsprechenden Felder (ggf. mehrmals) ein.
+</dd>
+<dt>Mosaic, Lynx, Arena, Emacs-W3</dt> <dd> Geben sie folgendes vor Start
+des Programmes ein (oder schreiben Sie entsprechende Aufrufe in Ihre
+Startskripte): <code>setenv http_proxy http://localhost:8080/</code> (bei
+C-Shells) oder <code>export http_proxy http://localhost:8080/</code> (bei
+Bourne Shells). Genauso verfahren Sie mit <code>ftp_proxy</code>.
+</dl>
+
+Es   macht  außerdem Sinn, den   Cache   des Browsers selbst  abzuschalten,
+wenigstens den auf der Festplatte  --  <i>WWWOFFLE</i> macht das auch,  und
+ist dabei flexibler und vielseitiger (und u.U. auch schneller).
+<p>
+Manche Browser besitzen   außerdem  zwei Varianten, eine Seite   erneut  zu
+laden: eine stellt  nur die Seite  neu dar, bzw.   stellt sicher, daß alles
+komplett da ist, die andere Variante  zwingt auch sämtliche zwischen Quelle
+und Ihnen  liegenden   'Agents' (also  z.B.   Proxies),  die  Seite(n)  neu
+anzufordern.  Bei  der Benutzung von  <i>WWWOFFLE</i> ist die letzte Option
+sinnvoll.   (Anm.d.Übers.:  Bei Netscape  soll   das gehen, indem  man  die
+<kbd>SHIFT</kbd> Taste gedrückt hält,  während  man auf den "Reload"  Knopf
+drückt).
+<p>
+Die neusten Informationen bezüglich der Kompatibilität von <i>WWWOFFLE</i>
+im Bezug auf verschiedene Browser gibt es bei <a
+href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.4/browser.html">
+http://www.gedanken.demon.co.uk/wwwoffle/version-2.4/browser.html</a>.
+
+
+
+<h2><a name="welcomepage">WWWOFFLE Willkommensseite</a></h2>
+
+Es gibt eine Willkommensseite bei <a
+href="http://localhost:8080/">http://localhost:8080/</a>, welche eine kurze
+Einführung zu <i>WWWOFFLE</i> bietet und zu den verschiedenen Indexseiten,
+Konfigurationsoptionen und der <i>WWWOFFLE</i> Internet-Homepage führt.
+<p>
+Die wichtigste Informationsquelle für <i>WWWOFFLE</i>-Benutzer ist die
+Homepage bei <a href="http://www.gedanken.demon.co.uk/wwwoffle">
+http://www.gedanken.demon.co.uk/wwwoffle</a>, oder besser noch die
+<i>WWWOFFLE Users Page</i> bei 
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.4/user.html">
+http://www.gedanken.demon.co.uk/wwwoffle/version-2.4/user.html</a>, die
+diese Version von <i>WWWOFFLE</i> insbesondere behandelt.
+<p>
+[Und die komplette Übersetzung ist natürlich auch vorhanden:
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.4/de/">
+http://www.gedanken.demon.co.uk/wwwoffle/version-2.4/de/</a>, Anm.d.Übers.]
+
+
+<h2><a name="indexpages">WWWOFFLE Indexseiten</a></h2>
+
+Die Indexseiten sind über <a
+href="http://localhost:8080/">http://localhost:8080/</a> erreichbar. Sie
+sind folgendermaßen gegliedert:
+
+<UL>
+<LI> Eine Liste von angeforderten Bestellungen ("outgoing").</li>
+<LI> Eine Liste von Dateien, die in der letzten, vorletzten und vorvorletzten
+     "online" Sitzung geholt wurden. ("lasttime")</li>
+<LI> Eine Liste von abonnierten URLs. ("monitored")</li>
+<LI> Eine Liste von zuletzt geholten Dateien ("latest")</li>
+<LI> Eine Liste von sämtlichen Rechnern ("hosts"), sortiert nach Protokollen
+     (HTTP, FTP, GOPHER, etc) die von <i>WWWOFFLE</i> angesprochen wurden</li>
+<LI> Eine Liste von sämtlichen Dateien, sortiert nach diesen Rechnernamen.
+</UL>
+
+Diese Indizes können folgendermaßen sortiert werden:
+<UL>
+<LI> Überhaupt nicht</li>
+<LI> Nach Zeit der letzten Änderung/Aktualisierung</li>
+<LI> Nach Zeit des letzten Zugriffs</li>
+<LI> Nach Datum der letzten Aktualisierung, täglich</li>
+<LI> Alphabetisch</li>
+<LI> Nach Dateityp (Datei-Endung)</li>
+</UL>
+
+Für jedes angezeigte Objekt gibt es eine Option zum Löschen, Aktualisieren,
+erneut  bestellen,  und abonnieren  der  jeweiligen  URL. Ebenfalls ist  es
+möglich,  in der  Konfigurationsdatei  festzulegen,  welche Dateien  <b>gar
+nicht</b> im Index erscheinen (obwohl sie vorhanden sind).
+
+
+<h2><a name="refreshpage">Bestellen von URLs</a></h2>
+
+Seiten können entweder mit Hilfe des Browsers ganz normal heruntergeladen
+werden (z.B. bei Netscape mit Shift+Klick), oder sie können <b>bestellt</b>
+werden.  <i>WWWOFFLE</i> merkt sich dann diese URL und sie wird im
+Hintergrund automatisch heruntergeladen oder aktualisiert (wenn sie schon
+im Cache vorhanden war). Dies funktioniert auch rekursiv, d.h. es werden
+alle Seiten ebenfalls heruntergeladen, die auf der bestellten Seite
+referenziert waren ("gelinked" waren). Wenn man hier nicht aufpaßt, kann
+man sich ganz schnell das gesamte Universum auf seine Festplatte
+replizieren ;-) also gibt es Beschränkungen für diese Suche: Man kann
+<i>WWWOFFLE</i> verbieten, während einer rekursiven Bestellung auf einen
+anderen Rechner zu wechseln, die Rekursionstiefe einschränken, Wechsel in
+andere Verzeichnisse verbieten, und noch viel mehr. Diese Funktionen sind
+auch im <code>wwwoffle</code> Kommandozeilenprogramm enthalten.
+<p>
+
+
+<h2><a name="monitorpage">Abonnieren von URLs</a></h2>
+
+Es können Seiten angegeben werden, die regelmäßig in bestimmten Intervallen
+heruntergeladen werden, oder in jeder "online" Sitzung. Die Seiten werden
+heruntergeladen, wenn der angegebene Monat, Wochentag, Tag und die
+Zeitspanne stimmen, die der Benutzer angegeben hat. 
+<p>
+Um zum Beispiel eine bestimmte URL jeden Sonntag morgen zu holen, geben Sie
+folgendes ein:
+<p>
+<pre>
+Month of year : all
+Day of Month  : all
+Day of Week   : Sunday
+Hour of Day   : 0 (24 hour clock)
+</pre>
+<p>
+
+
+<h2><a name="interactivecontrol">Interaktive Steuerung/Konfiguration per Browser</a></h2>
+
+Der <i>WWWOFFLE</i> Server kann vollständig via Browser kontrolliert und
+zwischen seinen verschiedenen Modi umgeschaltet werden, die Seite für die
+Steuerung lautet <a
+href="http://localhost:8080/control/">http://localhost:8080/control/</a>.
+Die dort befindlichen Schaltflächen bewirken das gleiche wie die
+entsprechenden Optionen des Kommandozeilenprogramms <code>wwwoffle</code>.
+Ebenfalls gibt es eine Möglichkeit, Seiten aus dem Cache oder aus der
+Bestellliste zu löschen.
+<p>
+Hier gibt es ebenfalls eine Seite, um die Konfigurationsdatei von
+<i>WWWOFFLE</i> zu bearbeiten. Die Kommentare aus der Datei werden mit
+angezeigt, so daß man die entsprechende Referenz gleich zur Hand hat.
+<p>
+
+
+<h2><a name="cachesearch">Den WWWOFFLE-Cache durchsuchen</a></h2>
+
+Wenn Sie das Programm <code>ht://Dig</code> (Version 3.08 oder neuer)
+installiert haben (Sie bekommen es bei <a
+href="http://htdig.sdsu.edu/">http://htdig.sdsu.edu/</a>), können Sie damit
+eine Such-Datenbank aus dem <i>WWWOFFLE</i> Cache aufbauen, und diese
+schnell durchsuchen. Die Seite <a
+href="http://localhost:8080/search/htdig/">http://localhost:8080/search/htdig/</a>
+liefert dafür das entsprechende Suchformular. Nähere Informationen, wie man
+<i>WWWOFFLE</i> und <code>ht://Dig</code> zur Zusammenarbeit bringt,
+liefert die Datei <code>README.htdig</code>.
+<p>
+
+
+<h2><a name="webserver">Eingebauter Web-Server</a></h2>
+
+Alle URLs, die in das Verzeichnis <code>http://localhost:8080/local/</code>
+auf dem <i>WWWOFFLE</i> Rechner zeigen, werden von <i>WWWOFFLE</i> aus dem
+Verzeichnis <code>/html/local/</code> bedient. Es ist hiermit möglich,
+einen trivialen Web-Server aufzubauen (keine CGIs, keine Skripte, keine
+Spielereien) für kleine interne Web-Seiten. Die MIME-Types (für die
+HTTP-Kommunikation zwischen Server und Browser) werden der
+Konfigurationsdatei entnommen.
+<p>
+<table border=1 bgcolor="#ff9999"><tr><td> <b>Achtung:</b> Der Web-Server
+folgt symbolischen Links im Dateisystem, liefert aber nur Dateien, die auf
+dem System sowieso jeder lesen könnte. Siehe auch das Kapitel zur
+Sicherheit in der FAQ.  </td></tr></table>
+<p>
+
+
+<h2><a name="deletingrequests">Bestellungen entfernen/löschen</a></h2>
+
+Falls in der <i>WWWOFFLE</i> Konfigurationsdatei kein Kennwort angegeben
+wurde, kann <b>JEDER</b> die Bestellungen von <b>ALLEN</b> Benutzern
+löschen und modifizieren. Falls ein Kennwort angegeben wurde, kann es
+jeder, der dieses Kennwort kennt. Wie gesagt -- Bombensicherheit war nicht
+eines der Hauptkriterien für die Entwicklung von <i>WWWOFFLE</i>.
+<p>
+Jeder kann auf jeden Fall seine eigenen Bestellungen <b>sofort</b> nach
+deren Aufgabe löschen (falls man sich schnell umentschieden hat :), indem
+er auf den "Löschen" Knopf gleich nach der Bestätigungsmeldung von
+<i>WWWOFFLE</i> klickt. Diese Funktion beinhaltet ein Einweg-Kennwort.
+
+
+<h2><a name="backupcopies">Sicherungskopien von Seiten</a></h2>
+
+Falls bei einem erneuten Herunterladen einer Seite, die schon im Cache
+vorhanden ist, ein Fehler auftritt, überschreibt diese Fehlermeldung u.U.
+die lokal vorhandene (ggf. ältere, aber immerhin vollständige)
+Version. Dies wird vermieden, indem von jeder Seite, die erneut
+heruntergeladen wird, eine Sicherungskopie angefertigt wird; diese wird
+solange anstelle der (alten) Originalseite behalten, bis sie gelesen wurde.
+<p>
+Diese Funktion ist für den Benutzer nicht mehr und nicht weniger
+transparent als die Fehlermeldung vom Server selbst, genauso viel oder
+wenig Benutzereingriffe sind also notwendig wie ohne Proxy.
+<p>
+
+
+<h2><a name="lockfiles">"Lock"-Dateien</a></h2>
+
+Falls eine Seite von einem Proxy-Prozeß heruntergeladen wird und von einem
+weiteren erneut angefordert wird, wartet der zweite Prozeß, bis die Seite
+vollständig da ist, bis er sie lesen kann. So wird verhindert, daß ein und
+dieselbe Seite mehrmals (womöglich auch noch gleichzeitig) geholt wird.
+<p>
+Sollte der erste Prozeß die Datei nicht innerhalb einer bestimmten Zeit
+freigeben, wird der zweite Prozeß eine entsprechende Fehlermeldung an Ihren
+Browser weiterleiten.
+<p>
+
+
+<h2><a name="spooldir-layout">Das WWWOFFLE "Spool"-Verzeichnis</a></h2>
+
+Das Spool-Verzeichnis ist erst einmal in die verschiedenen Protokolle
+aufgeteilt, diese Unterverzeichnisse enthalten jeweils dann für jeden
+bisher angesprochenen Rechner ein Unterverzeichnis (z.B. <code>
+http/www.gedanken.demon.co.uk/</code>). 
+<p>
+In jedem dieser Verzeichnisse sind für jede Seite zwei Dateien: eine
+beginnt mit 'D' und enthält die Daten, die andere beginnt mit 'U' und
+enthält die URL. Die Namen sind ansonsten identisch (wenn auch kryptisch,
+Anm.d.Übers. ;).
+<p>
+Das Verzeichnis mit den Bestellungen ("outgoing") enthält auch wieder zwei
+Dateien pro Bestellung, beginnend mit jeweils 'O' für die eigentliche
+Bestellung und 'U' für die URL.
+<p>
+Das "lasttime" Verzeichnis (die letzten geholten Seiten, s.o.) enthält
+einen Link zur wirklichen Datei, der mit 'D' beginnt, und eine Datei
+beginnend mit 'U', die die URL enthält.
+<p>
+Falls eines der "Rechnernamen"-Verzeichnisse ein symbolischer Link in ein
+anderes Verzeichnis innerhalb des <i>WWWOFFLE</i>-Baumes ist, dann werden
+die beiden Rechner als gegenseitige Spiegel ("mirrors") betrachtet,
+i.e. was sich in dem einen ändert, ändert sich auch in dem anderen, und es
+ist egal, welche Adresse man in seinem Browser aufruft.
+<p>
+
+
+<h2><a name="programs">Die Programme und die Konfigurationsdatei</a></h2>
+
+Es gibt zwei Programme, die zusammenarbeiten, und drei getrennte Aufgaben
+erledigen: 
+
+<DL>
+<DT>wwwoffle</dt><dd> Das Programm, welches den HTTP Proxy 'daemon'
+kontrolliert und konfiguriert, außerdem die Schnittstelle zum Benutzer auf
+der Kommandozeile.
+</dd>
+<DT>wwwoffled</dt><dd> Der 'daemon' Prozeß, welcher die eigentliche
+Funktionalität eines HTTP Proxies besitzt.
+</dd>
+<dt>wwwoffles</dt><dd> Ein Server, welcher das eigentliche Herunterladen
+von Seiten erledigt.
+</dd></DL>
+
+Die beiden Programme <code>wwwoffles</code> und <code>wwwoffled</code> sind
+seit Version 1.1 zu einem Programm zusammengeschmolzen, dies erleichtert
+die Wartung des Servers und ist für spätere Erweiterungen besser gerüstet.
+<p>
+Die Konfigurationsdatei <code>wwwoffle.conf</code> enthält alle
+Einstellungen, die festlegen wie die ganze <i>WWWOFFLE</i>-Programmsuite
+sich der Außenwelt gegenüber verhalten soll.
+<p>
+
+<h3><a name="wwwoffle">wwwoffle - die Kommandozeile</a></h3>
+
+Das Programm <code>wwwoffle</code> stellt die Schnittstelle zum
+'browser-losen' Benutzer ;) dar, und wird zum Festlegen der Betriebsmodi
+(online, offline, autodial) benutzt, damit der Server weiß, wann und wie er
+auf welche Anfragen reagieren muß/darf.
+<p>
+<table border=0 cellspacing=5>
+<tr><td width="25%" valign=top><code>wwwoffle -online</code></td>
+<td>Den WWWOFFLE Daemon in den 'online' Modus schalten.</td></tr>
+<tr><td valign=top><code>wwwoffle -autodial</code></td>
+<td>Den WWWOFFLE Daemon in den 'autodial' Modus schalten.</td></tr>
+<tr><td valign=top><code>wwwoffle -offline</code></td>
+<td>Den WWWOFFLE Daemon in den 'offline' Modus schalten.</td></tr>
+<tr><td valign=top><code>wwwoffle -fetch</code></td>
+<td>Den WWWOFFLE Daemon dazu bringen, bestellte/abonnierte Seiten zu holen.
+    Dies funktioniert nur, wenn vorher <code>wwwoffle -online</code> 
+    ausgeführt wurde!</td></tr>
+<tr><td valign=top><code>wwwoffle -config</code></td>
+<td>Den WWWOFFLE Daemon die Konfigurationsdatei neu einlesen lassen.</td></tr>
+<tr><td valign=top><code>wwwoffle -purge</code></td>
+<td>Den WWWOFFLE Daemon zum Aufräumen des Caches veranlassen, d.h. es werden
+    alle Seiten, die älter sind als die in der Konfigurationsdatei angegebenen
+    Werte, gelöscht.</td></tr>
+<tr><td valign=top><code>wwwoffle -kill</code></td>
+<td>Den WWWOFFLE Daemon dazu bringen, sämtliche Unterprozesse zu beenden und
+    sich dann sauber zu beenden. Falls einige Prozesse noch am Herunterladen
+    sind, kann dies etwas dauern.</td></tr>
+</table><p>
+
+Man kann mit <code>wwwoffle</code> allerdings auch Aufträge an den Daemon
+weitergeben:
+<p>
+<table border=0 cellspacing=5>
+<tr><td width="25%" valign=top><code>wwwoffle &lt;URL&gt;</code></td>
+<td>WWWOFFLE holt die angegebenen URLs sofort (wenn 'online'), ansonsten 
+    werden sie bestellt.</td></tr>
+<tr><td valign=top><code>wwwoffle &lt;DATEI.html&gt;</code></td>
+<td>WWWOFFLE liest die angegebene HTML Datei ein und behandelt dort 
+    enthaltene Links als Bestellungen.</td></tr>
+<tr><td valign=top><code>wwwoffle -F &lt;URL&gt;</code></td>
+<td>WWWOFFLE wird gezwungen die URL neu zu laden, auch wenn sie schon 
+    vorhanden ist.</td></tr>
+<tr><td valign=top><code>wwwoffle -g[Sisfo]</code></td>
+<td>WWWOFFLE wird die heruntergeladene(n) Seite(n) auf Stylesheets("s"), 
+    Bilder (Images, "i"), Skripts ("s") und Frames ("f") untersuchen und diese
+    ggf. auch mit herunterladen.</td></tr>
+<tr><td valign=top><code>wwwoffle -r[X]</code></td>
+<td>WWWOFFLE wird die angegebene Seite X-fach rekursiv holen, d.h. auch Links
+    auf der heruntergeladenen Seite werden verfolgt. Hier bleibt WWWOFFLE
+    jedoch auf dem gleichen Server.</td></tr>
+<tr><td valign=top><code>wwwoffle -R[X]</code></td>
+<td>Hier nicht mehr! (Vorsicht, Rekursionstiefen über 3 sind selten sinnvoll!)
+    [Anm.d.Übers.]</td></tr>
+<tr><td valign=top><code>wwwoffle -d[X]</code></td>
+<td>Diese Option ist noch einschränkender als die vorherige, hier werden nur
+    Verweise berücksichtigt, deren Ziele im gleichen Verzeichnis (oder 
+    innerhalb Unterverzeichnissen) liegen.</td></tr>
+</table><p>
+
+<code>wwwoffle</code> erlaubt es einem auch, selektiv Dateien aus dem Cache
+zu extrahieren, ohne die Verzeichnisstruktur durchwühlen zu müssen:
+<p>
+<table border=0 cellspacing=5>
+<tr><td width="25%" valign=top><code>wwwoffle -o &lt;URL&gt;</code></td>
+<td>WWWOFFLE holt die entsprechende URL aus dem Cache und gibt sie auf der
+    Standardausgabe (STDOUT) aus.</td></tr>
+<tr><td valign=top><code>wwwoffle -O &lt;URL&gt;</code></td>
+<td>WWWOFFLE holt die entsprechende URL und gibt sie inklusive der HTTP
+    Headerzeilen auf der Standardausgabe aus.</td></tr>
+</table><p>
+
+Der wichtigste Modus von <code>wwwoffle</code> ist natürlich folgender:
+<p>
+<table border=0 cellspacing=5>
+<tr><td width="25%" valign=top><code>wwwoffle -h</code></td>
+<td>WWWOFFLE gibt eine Zusammenfassung der verfügbaren Optionen aus.</td></tr>
+</table>
+<p>
+
+An sämtliche der oben angegebenen Optionen kann noch folgendes angehängt
+werden:
+<p>
+<table border=0 cellspacing=5>
+<tr><td width="25%" valign=top><code>-c &lt;configfile&gt;</code></td>
+<td>Die Konfigurationsdatei explizit angeben. Dies wird 
+    <strong>benötigt</strong>, wenn Sie WWWOFFLE mit einem Kennwort
+    geschützt haben!.</td></tr>
+<tr><td width="25%" valign=top><code>-p &lt;host&gt;[&lt;port&gt;]</code></td>
+<td>Den Port, auf dem der WWWOFFLE Server auf Steuernachrichten bzw. 
+    Proxybefehle  horcht, explizit angeben.</td></tr>
+<tr><td width="25%" valign=top><code>$WWWOFFLE_PROXY</code></td>
+<td>Eine Umgebungsvariable, die den WWWOFFLE Hostnamen/Port beinhaltet. Die
+    Syntax für die Variable ist ähnlich wie in der Kommandozeile, es können
+    hier aber <i>beide</i> Ports angegeben werden, z.B.:
+    <pre> WWWOFFLE_PROXY="localhost:8080:8081" </pre></td></tr>
+</table>
+<p>
+
+
+
+<h3><a name="wwwoffled">WWWOFFLED - Der Dämon ;-)</a></h3>
+
+Der Daemon <code>wwwoffled</code> fungiert als HTTP Proxy und akzeptiert
+nebenbei Steuerbefehle von <code>wwwoffle</code>. Er verwaltet und
+koordiniert die verschiedenen Modi von <i>WWWOFFLE</i> (online, offline,
+etc) und die Parameter in der Konfigurationsdatei und startet bei HTTP
+Proxy Anfragen Serverprozesse (via 'fork'), die die angeforderten Daten
+holen (das ist der oben angesprochene <code>wwwoffles</code> Teil). Der
+Server kann sich u.U. auch selbst 'fork'en.
+<p>
+<table border=0 cellspacing=5>
+<tr><td width="25%" valign=top><code>wwwoffled -c &lt;configfile&gt;</code></td>
+<td>Startet den HTTP Proxy mit der angegebenen Konfigurationsdatei.</td></tr>
+<tr><td width="25%" valign=top><code>wwwoffled -d [X]</code></td>
+<td>Startet den HTTP Proxy im DEBUG Modus: Er läuft nicht im Hintergrund,
+    sondern gibt je nach Debugging-Level 'X' (0 bis 5) auf dem Terminal, auf
+    dem er gestartet wurde, mehr oder weniger Status- und Fehlermeldungen
+    aus. Falls nicht angegeben, wird der Wert aus <code>log-level</code> aus
+    der Konfigurationsdatei benutzt.</td></tr>
+<tr><td width="25%" valign=top><code>-h</code></td>
+<td>Gibt eine kurze Erklärung der Kommandozeilenoptionen aus.</td></tr>
+</table>
+<p>
+Es gibt eine Anzahl von Status- und Fehlermeldungen, die während des
+Betriebes von <i>WWWOFFLE</i> generiert werden können. Standardmäßig werden
+diese an den <code>syslog</code> Dienst weitergeleitet, mit dem
+<code>-d</code> Parameter werden sie zusätzlich auf dem Terminal angezeigt,
+auf dem <code>wwwoffled</code> gestartet wurde.
+<p>
+Mit den Optionen <code>run-uid / run-gid</code> aus der Konfigurationsdatei
+ist es möglich, <code>wwwoffled</code> als ganz bestimmten Benutzer laufen
+zu lassen. Dies erfordert allerdings, daß das Programm von <code>root</code>
+gestartet wurde (sonst kann es nicht seine eigenen Benutzerrechte anpassen)
+und daß der "Zielbenutzer" sämtliche Rechte im Spool-Verzeichnis hat.
+<p>
+
+<h3><a name="wwwoffles">WWWOFFLES - Der Server</a></h3>
+
+Der Server wird normalerweise vom Daemon (s.o.) via 'fork' gestartet. Er 
+befindet sich dann in einem von drei verschiedenen Modi:
+<p>
+<table border=0 cellspacing=5>
+<tr><td width="20%" valign=top>Real Mode</td>
+<td>Der normale Betrieb. Das System ist online, agiert als Proxy für einen
+    Browser (pro <code>wwwoffles</code>-Prozeß). Jede Anfrage nach einer URL
+    erzeugt einen neuen Server, der diese Anfrage an den Zielhost weiterleitet,
+    die Seite abholt, sie an den Browser schickt und zusätzlich im Spool-
+    Verzeichnis ablegt. Existiert diese Seite schon im Spool-Verzeichnis,
+    wird der Zielhost vorher gefragt, ob eine neuere Version existiert, sonst
+    wird einfach die Seite aus dem Cache benutzt.</td></tr>
+<tr><td valign=top>SpoolOrReal Mode</td>
+<td>Der 'autodial'-Betrieb. Hier wird erst bei einer Anfrage entschieden, ob
+    diese sofort aus dem Cache (ohne jeden Verbindungsaufbau nach außen)
+    bedient wird oder ob eine Verbindung aufgebaut wird, wenn diese Seite nicht
+    existiert.</td></tr>
+<tr><td valign=top>Spool Mode</td>
+<td>Das System ist offline, es existiert keine Verbindung nach außen und es
+    wird auch keine aufgebaut. Die angeforderte Seite wird entweder aus dem
+    Cache bedient, oder es wird eine 'Dummy-Seite' geliefert, mit der der
+    Benutzer (je nach Konfiguration) die angeforderte Seite ggf. bestellen
+    kann. Falls die Seite im Cache eine Fehlermeldung war (z.B. ein
+    fehlgeschlagener Download), wird sie hiernach gelöscht, so daß eine
+    erneute Anfrage ggf. einen weiteren Downloadversuch starten kann.</td></tr>
+<tr><td valign=top>Fetch Mode</td>
+<td>Es werden bestellte und abonnierte Seiten nach Bedarf aus den 
+    entsprechenden Verzeichnissen heruntergeladen. Diese Seiten werden im
+    Cache gespeichert, kein Browser bekommt sie (vorerst) zu sehen.
+</table><p>
+
+Zusätzlich gibt es noch die folgenden Modi, die primär davon abhängen, ob
+angeforderte Dateien im Spool existieren oder nicht.
+<p>
+<table border=0 cellspacing=5>
+<tr><td width="20%" valign=top>RealNoCache Mode</td>
+<td>Es werden Seiten geholt, aber nicht im Spool gespeichert. Siehe 
+    <code>DontCache</code> Abschnitt in der Konfigurationsdatei.</td></tr>
+<tr><td width="20%" valign=top>RealRefresh Mode</td>
+<td>Eine Seite wird noch einmal heruntergeladen, obwohl sie schon im Cache
+    existiert. Diese Funktion wird von der "Aktualisieren"-Funktion am Fuß
+    jeder HTML-Seite benutzt.</td></tr>
+<tr><td width="20%" valign=top>RealPassword Mode</td>
+<td>Wird benutzt, wenn ein Kennwort angegeben wurde, und zwei Exemplare der
+    Seite benötigt werden, eine mit und eine ohne Kennwort.</td></tr>
+<tr><td width="20%" valign=top>SpoolGet Mode</td>
+<td>Wenn eine Seite nicht im Cache existiert, angefordert wurde und sie in
+    die Bestellliste eingetragen werden muß.</td></tr>
+<tr><td width="20%" valign=top>SpoolWillGet Mode</td>
+<td>Wenn eine Seite nicht im Cache existiert, angefordert wurde, sie aber schon
+    in der Bestellliste eingetragen wurde.</td></tr>
+<tr><td width="20%" valign=top>SpoolRefresh Mode</td>
+<td>Wenn die "Aktualisieren"-Funktion am Fuß einer HTML-Seite benutzt wurde,
+    aber WWWOFFLE nicht 'online' ist, wird eine Bestellung gespeichert und
+    die momentane Version der Seite aber beibehalten.</td></tr>
+<tr><td width="20%" valign=top>SpoolPragma Mode</td>
+<td>Wenn ein Browser die Seite mittels <code>"Pragma: no-cache"</code> 
+    aktualisieren will. Die momentane Seite wird behalten und eine Bestellung
+    wird gespeichert.</td></tr>
+</table>
+<p>
+
+<h3><a name="wwwoffletools">WWWOFFLE-TOOLS - Der Werkzeugkasten ;-)</a></h3>
+
+Dies ist eher ein 'quick hack', eine kleine Sammlung von Progrämmchen, die
+das Manipulieren des Caches von <i>WWWOFFLE</i> erlauben.
+<p>
+<table border=0 cellspacing=5>
+<tr><td width="20%" valign=top><code>wwwoffle-rm</code></td>
+<td>URLs aus dem Cache löschen. Allerdings ist dies nur für einzelne URLs
+    gut -- um einen ganzen Host zu löschen, kann man auch direkt das 
+    Verzeichnis aus dem Cache löschen, das stört WWWOFFLE überhaupt nicht.
+    (Oder einen Browser benutzen.)</td></tr>
+<tr><td width="20%" valign=top><code>wwwoffle-mv</code></td>
+<td>URLs im Cache verschieben. Da die URL selbst in den 'kryptischen' Namen
+    der Dateien im Cache enthalten ist, wird man mit <code>'mv'</code> nicht
+    weit kommen. Stattdessen benutze man bitte <code>'wwwoffle-mv'</code>.
+    </td></tr>
+<tr><td width="20%" valign=top><code>wwwoffle-ls</code></td>
+<td>Den Cache-Inhalt anzeigen, im Stil von <code>'ls -l'</code>. </td></tr>
+<tr><td width="20%" valign=top><code>wwwoffle-write</code></td>
+<td>Eine URL direkt in den Cache schreiben. Achtung: es wird ein korrekter
+    HTTP-Header benötigt, sonst kommen viele Browser durcheinander! z.B:
+    <pre> 
+      ( echo "HTTP/1.0 200 OK" ; echo "" ; cat bar.html ) | \
+          wwwoffle-write http://www.foo.com/bar.html
+    </pre></td></tr>
+</table>
+
+Noch einmal: Dies sind schnelle kleine Hacks, sie gelten nicht als voll
+funktionsfähige und voll ausgebaute Programme.
+<p>
+
+<h3><a name="auditusage">audit-usage.pl -- Protokolle analysieren</a></h3>
+
+Das Perl-Skript <code>'audit-usage.pl'</code> analysiert die Logdateien des
+<code>wwwoffled</code> Servers und kann bei entsprechend hohem Loglevel
+(mindestens 4) genaue Informationen herausfiltern, wer wann welche URL über
+den Proxy angefordert hat. (mit "Wer" ist hier "welcher Rechner" gemeint.)
+<pre>
+ wwwoffled -c /etc/wwwoffle/wwwoffle.conf -d 4   &gt;&gt; /tmp/audit.log   &
+</pre>
+liefert die Datei <code>audit.log</code>, welche dann von
+<code>audit-usage.pl</code> ausgewertet werden kann. 
+
+
+<h2><a name="testprograms">Test-Programme für WWWOFFLE</a></h2>
+
+Im Verzeichnis <code>testprogs</code> befinden sich zwei kleine
+Testprogramme, die bei Bedarf kompiliert werden können. Sie werden für den
+normalen Betrieb nicht benötigt, aber falls Sie <i>WWWOFFLE</i>
+weitergehend anpassen möchten oder den HTML Parser für die automatisch
+generierten Seiten überprüfen, dann könnten sie nützlich sein.
+<p>
+Diese sind allerdings noch viel mehr 'dirty hacks' als die
+"wwwoffle-tools", also benutzen Sie sie auf eigene Gefahr!
+
+
+<h2><a name="koppirait">Autor und Copyright</a></h2>
+
+Ich schreibe die original-Statments des Autos hier verbatim ab, nicht daß es
+irgendwelche rechtlichen Streitereien wegen einer ungünstigen Übersetzung
+gibt. :-))
+<p>
+<center><table border=1 width="90%">
+<tr><td>
+The two programs wwwoffle and wwwoffled were written by Andrew M. Bishop in
+1996,97,98 and are copyright Andrew M. Bishop 1996,97,98.
+<p>
+The programs update-cache, endian-cache and the programs known as
+wwwoffle-tools were written by Andrew M. Bishop in 1997,98 and are
+copyright Andrew M. Bishop 1997,98.
+<p>
+The Perl scripts update-config.pl and audit-usage.pl were written by Andrew
+M. Bishop in 1998 and are copyright Andrew M. Bishop 1998.
+<p>
+They can be freely distributed according to the terms of the GNU General
+Public License (see the file `COPYING').
+<p>
+If you wish to submit bug reports or other comments about the programs then
+email the author amb@gedanken.demon.co.uk and put wwwoffle in the subject
+line.
+<p>
+The htdig package is copyright Andrew Scherpbier
+&lt;andrew@contigo.com&gt;. The icons in the html/htdig directory come from
+htdig as do the html/htdig/search.html and html/htdig/conf/htsearch.conf
+files with modifications by myself.
+<p>
+<pre>
+With Source Code contributions from:
+
+Yannick Versley &lt;sa6z225@public.uni-hamburg.de&gt; 
+        Initial syslog code (much rewritten before inclusion).
+
+Axel Rasmus Wienberg &lt;2wienbe@informatik.uni-hamburg.de&gt;
+        Code to run wwwoffled as a specified uid/gid.
+
+Andreas Dietrich &lt;quasi@baccus.franken.de&gt;
+        Code to detach the program from the terminal like a *real* demon.
+
+Ullrich von Bassewitz &lt;uz@wuschel.ibb.schwaben.com&gt;
+        Better handling of signals.
+        Optimisation of the file handling in the outgoing directory.
+        The log-level, max-servers and max-fetch-servers config options.
+
+Tilman Bohn &lt;tb@bohn.isdn.uni-heidelberg.de&gt;
+        Autodial mode.
+
+Walter Pfannenmueller &lt;pfn@online.de&gt;
+        Fetching objects (applets)
+</pre>
+</td></tr></table></center>
+
+<p>
+<hr>
+Die Übersetzung dieses Dokumentes wurde von 
+<a href="mailto:jens@pinguin.conetix.de">Jens Benecke</a> erstellt. Es
+gelten die gleichen Lizenzbestimmungen wie für das gesamte WWWOFFLE Paket,
+ich betrachte die von mir übersetzte Dokumentation als Teil der Software.
+Jeder, der dieses Dokument liest, sollte sich moralisch verpflichtet fühlen,
+mir Fehler oder Unstimmigkeiten sofort per eMail mitzuteilen ;-)
+
+<hr>
+  </body>
+</html>

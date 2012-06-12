@@ -1,0 +1,40 @@
+
+<H2>Basic Information</H2>
+
+<dl>
+  <dt><b>Subject:</b>
+    <dd>$dn
+  <dt><b>Issuer:</b>
+    <dd>$issuer_dn
+  <dt><b>Activation Time:</b>
+    <dd>$activation
+  <dt><b>Expiration Time:</b>
+    <dd>$expiration
+  <dt><b>Key Algorithm:</b>
+    <dd>$key_algo
+  <dt><b>Key is Certificate Authority:</b>
+    <dd>$key_ca
+  <dt><b>Key Usage:</b>
+    <dd>$key_usage
+</dl>
+
+
+$type?=root{
+<H2>Downloadable Version</H2>
+
+The WWWOFFLE root certificate can be downloaded in PEM format for installation
+in a browser.
+<p>
+<a href="root-cert.pem">[Download Certificate]</a>
+
+}{}
+
+
+<H2>XML Format</H2>
+
+The certificate information (in full XML format from the gnutls functions) is
+shown below.
+
+<pre>
+%html[xml]
+</pre>

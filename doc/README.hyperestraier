@@ -1,0 +1,93 @@
+            WWWOFFLE - World Wide Web Offline Explorer - Version 2.9
+            ========================================================
+
+
+The program Hyper Estraier is a free (LGPL) text indexing and search program.
+
+        Hyper Estraier is a full-text search system.  You can search lots of
+        documents for some documents including specified words.  If you run a
+        web site, it is useful as your own search engine for pages in your site.
+        Also, it is useful as search utilities of mail boxes and file
+        servers.
+
+Hyper Estraier can be used to search files of many different sorts, including
+HTML files.  There are lots of ways that the files can get into Hyper Estraier,
+but the one used with WWWOFFLE is to read the cache directly.
+
+
+Getting Hyper Estraier
+----------------------
+
+Hyper Estraier is available from the web site
+
+      http://hyperestraier.sourceforge.net/
+
+You need to have version 0.5.7 or later to have support for indexing the
+WWWOFFLE cache.  (Back to version 0.5.3 it worked, but did not index all cached
+pages).
+
+No special compile-time configuration of Hyper Estraier is required to be able
+to use it with WWWOFFLE.
+
+
+I tested with version 0.9.0 using the official Debian package.
+
+
+Configure WWWOFFLE to run with Hyper Estraier
+---------------------------------------------
+
+The configuration files for the Hyper Estraier programs as used with WWWOFFLE
+will have been installed in /var/spool/wwwoffle/search/hyperestraier/conf when
+WWWOFFLE was installed.  The scripts used to run the Hyper Estraier programs
+will have been installed in /var/spool/wwwoffle/search/hyperestraier/scripts
+when WWWOFFLE was installed.  In both these cases the directory
+/var/spool/wwwoffle can be changed at compile time with options to the configure
+script.
+
+These files should be correct if the information at the time of running
+configure was set correctly.  Check them, they should have the spool directory
+set correctly.
+
+Also they should be checked to ensure that the Hyper Estraier and wwwoffle-ls
+programs are on the path (you can edit the PATH variable here if they are not in
+/usr/local/bin).
+
+
+Indexing
+--------
+
+Indexing is the name that is given to the process of searching through the
+web-pages to make the search database.
+
+To work with WWWOFFLE I have produced my own scripts that should be used
+to call the Hyper Estraier indexer progam (estcmd).
+
+   /var/spool/wwwoffle/search/hyperestraier/scripts/wwwoffle-estcmd-full
+
+This script will do a full search and index all of the HTTP URLs in the cache.
+
+
+Searching
+---------
+
+The search page for using Hyper Estraier with WWWOFFLE is
+http://localhost:8080/search/hyperestraier/ and is linked to from the "Welcome
+Page".  The word or words that you want to search for should be entered here.
+
+This form actually calls the script
+
+   /var/spool/wwwoffle/search/hyperestraier/scripts/wwwoffle-estseek
+
+to do the searching so it is possible to edit this to modify it if required.
+
+
+Thanks to
+---------
+
+Thanks to Mikio Hirabayashi <mikio@users.sourceforge.net> for writing the Hyper
+Estraier and making it work with WWWOFFLE.
+
+
+
+Andrew M. Bishop
+5th Sep 2005

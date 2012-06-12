@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+ <TITLE>WWWOFFLE mnoGoSearch</TITLE>
+</HEAD>
+
+
+<body BGCOLOR="#FFFFFF" LINK="#0050A0" VLINK="#0050A0" ALINK="#0050A0">
+<center>
+
+<H1>WWWOFFLE mnoGoSearch</H1>
+
+Questo modulo di ricerca ti permette di cercare tra i contenuti di
+tutti i documenti presenti nella cache di questo server WWWOFFLE.
+
+<FORM METHOD="GET" ACTION="/search/mnogosearch/mnogosearch">
+<table bgcolor="#eeeee0" width="100%">
+<tr><td>
+<BR>
+Cerca: <INPUT TYPE="text" NAME="q" SIZE=50 VALUE="">
+<INPUT TYPE="submit" VALUE="Cerca!"><BR>
+
+Risultati per pagina:
+<SELECT NAME="ps">
+<OPTION VALUE="10">10
+<OPTION VALUE="20" SELECTED>20
+<OPTION VALUE="50">50
+</SELECT>
+
+Formato dell'Output:
+<SELECT NAME="o">
+<OPTION VALUE="0" SELECTED>Lungo
+<OPTION VALUE="1">Breve
+<OPTION VALUE="2">URL
+</SELECT>
+
+
+Metodo:
+<SELECT NAME="m">
+<OPTION VALUE="all" SELECTED>Tutte (AND)
+<OPTION VALUE="any">Qualsiasi (OR)
+</SELECT>
+
+<!-- Use this to limit URL match -->
+
+<input type="HIDDEN" NAME="ul" VALUE="">
+
+</td></tr>
+</table>
+</form>
+</center>
+
+<HR>
+
+<center>
+<img src="/search/mnogosearch/m-search.gif">
+<font size="-1">Powered by <a href="http://mnogosearch.org/">mnoGoSearch</a></font><br>
+</center>
+
+</BODY>
+</HTML>

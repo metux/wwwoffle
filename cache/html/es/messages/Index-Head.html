@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+type      = The type of index that was asked for (='$type').
+            One of: '' outgoing, monitor, lasttime, prevtime, lastout, prevout,
+                    http, ftp, finger.
+subtype   = The hostname for the indexes of each protocol (='$subtype').
+            or the previous time number.
+sort      = The sort mode that was asked for (='$sort').
+            One of: none, mtime, atime, dated, alpha, type, random
+delete    = The choice of showing the delete option or not (='$delete').
+refresh   = The choice of showing the refresh option or not (='$refresh').
+monitor   = The choice of showing the monitor option or not (='$monitor').
+all       = The choice to show all pages or exclude those in the DontÍndice section (='$all').
+config    = The choice to display the configuration editing page link (='$config').
+info      = The choice to display the information page link (='$info').
+
+-->
+
+<HEAD>
+$type?       {}{<TITLE>WWWOFFLE Índice - Índice Principal</TITLE>}
+$type?=outgoing{<TITLE>WWWOFFLE Índice - Peticiones Salientes</TITLE>}{}
+$type?=monitor {<TITLE>WWWOFFLE Índice - Páginas Monitorizadas</TITLE>}{}
+$type?=lasttime{<TITLE>WWWOFFLE Índice - Páginas visitadas en la última conexión</TITLE>}{}
+$type?=prevtime{<TITLE>WWWOFFLE Índice - Páginas visitadas en las conexiones anteriores ($subtype)</TITLE>}{}
+$type?=lastout {<TITLE>WWWOFFLE Índice - Páginas salientes en la última conexión</TITLE>}{}
+$type?=prevout {<TITLE>WWWOFFLE Índice - Páginas salientes en las conexiones anteriores ($subtype)</TITLE>}{}
+$type?=http    {<TITLE>WWWOFFLE Índice - $type://$subtype</TITLE>}{}
+$type?=https   {<TITLE>WWWOFFLE Índice - $type://$subtype</TITLE>}{}
+$type?=ftp     {<TITLE>WWWOFFLE Índice - $type://$subtype</TITLE>}{}
+$type?=finger  {<TITLE>WWWOFFLE Índice - $type://$subtype</TITLE>}{}
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+$typesubtype=$type$subtype
+$type?=prevtime{$type=$type$subtype $subtype=}{}
+$type?=prevout{$type=$type$subtype $subtype=}{}
+$typesubtype?=http{$type=$type/}{}
+$typesubtype?=https{$type=$type/}{}
+$typesubtype?=ftp{$type=$type/}{}
+$typesubtype?=finger{$type=$type/}{}
+$subtype?{$subtype=/$subtype}{}
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Índice de la Caché</H1>
+
+<div class="wwwoffle-index-buttons-top" align="center">
+$type?{<a href="/index/?sort=none">[Índice&nbsp;Principal]</a>}{<strong>[Índice&nbsp;Principal]</strong>}
+<br>
+$type?=outgoing{<strong>[Salientes]</strong>}             {<a href="/index/outgoing/?sort=$sort$delete$refresh$monitor$all$config$info">[Salientes]</a>}
+$type?=monitor {<strong>[Monitorizadas]</strong>}         {<a href="/index/monitor/?sort=$sort$delete$refresh$monitor$all$config$info">[Monitorizadas]</a>}
+$type?=lasttime{<strong>[Última&nbsp;Vez]</strong>}       {<a href="/index/lasttime/?sort=$sort$delete$refresh$monitor$all$config$info">[Última&nbsp;Vez]</a>}
+$type?=lastout {<strong>[Últimas&nbsp;Salientes]</strong>}{<a href="/index/lastout/?sort=$sort$delete$refresh$monitor$all$config$info">[Últimas&nbsp;Salientes]</a>}
+$type?=http/   {<strong>[http]</strong>}                  {<a href="/index/http/?sort=$sort$delete$refresh$monitor$all$config$info">[http]</a>}
+$type?=https/  {<strong>[https]</strong>}                 {<a href="/index/https/?sort=$sort$delete$refresh$monitor$all$config$info">[https]</a>}
+$type?=ftp/    {<strong>[ftp]</strong>}                   {<a href="/index/ftp/?sort=$sort$delete$refresh$monitor$all$config$info">[ftp]</a>}
+$type?=finger/ {<strong>[finger]</strong>}                {<a href="/index/finger/?sort=$sort$delete$refresh$monitor$all$config$info">[finger]</a>}
+<br>
+$sort?=none  {<strong>[Desordenadas]</strong>}                    {<a href="/index/$type$subtype?sort=none$delete$refresh$monitor$all$config$info">[Desordenadas]</a>}
+$sort?=mtime {<strong>[Tiempo&nbsp;de&nbsp;Modificación]</strong>}{<a href="/index/$type$subtype?sort=mtime$delete$refresh$monitor$all$config$info">[Tiempo&nbsp;de&nbsp;Modificación]</a>}
+$sort?=atime {<strong>[Tiempo&nbsp;de&nbsp;Acceso]</strong>}      {<a href="/index/$type$subtype?sort=atime$delete$refresh$monitor$all$config$info">[Tiempo&nbsp;de&nbsp;Acceso]</a>}
+$sort?=dated {<strong>[Fecha&nbsp;Cambiada]</strong>}             {<a href="/index/$type$subtype?sort=dated$delete$refresh$monitor$all$config$info">[Fecha&nbsp;Cambiada]</a>}
+$sort?=alpha {<strong>[Alfabético]</strong>}                      {<a href="/index/$type$subtype?sort=alpha$delete$refresh$monitor$all$config$info">[Alfabético]</a>}
+$sort?=domain{<strong>[Nombre&nbsp;de&nbsp;Dominio]</strong>}     {<a href="/index/$type$subtype?sort=domain$delete$refresh$monitor$all$config$info">[Nombre&nbsp;de&nbsp;Dominio]</a>}
+$sort?=type  {<strong>[Tipo&nbsp;de&nbsp;Fichero]</strong>}       {<a href="/index/$type$subtype?sort=type$delete$refresh$monitor$all$config$info">[Tipo&nbsp;de&nbsp;Fichero]</a>}
+$sort?=random{<strong>[Random]</strong>}                          {<a href="/index/$type$subtype?sort=random$delete$refresh$monitor$all$config$info">[Random]</a>}
+<br>
+$delete?
+{<a href="/index/$type$subtype?sort=$sort$refresh$monitor$all$config$info">(Sin&nbsp;Opciones&nbsp;de&nbsp;Borrado)</a>}
+{<a href="/index/$type$subtype?sort=$sort;delete$refresh$monitor$all$config$info">(Con&nbsp;Opciones&nbsp;de&nbsp;Borrado)</a>}
+$refresh?
+{<a href="/index/$type$subtype?sort=$sort$delete$monitor$all$config$info">(Sin&nbsp;Opciones&nbsp;de&nbsp;Recarga)</a>}
+{<a href="/index/$type$subtype?sort=$sort$delete;refresh$monitor$all$config$info">(Con&nbsp;Opciones&nbsp;de&nbsp;Recarga)</a>}
+$monitor?
+{<a href="/index/$type$subtype?sort=$sort$delete$refresh$all$config$info">(Con&nbsp;Opciones&nbsp;de&nbsp;Monitorización)</a>}
+{<a href="/index/$type$subtype?sort=$sort$delete$refresh;monitor$all$config$info">(Opciones&nbsp;de&nbsp;Monitorización)</a>}
+$all?
+{<a href="/index/$type$subtype?sort=$sort$delete$refresh$monitor$config$info">(Ocultar&nbsp;Páginas)</a>}
+{<a href="/index/$type$subtype?sort=$sort$delete$refresh$monitor;all$config$info">(Todas&nbsp;las&nbsp;Páginas)</a>}
+$config?
+{<a href="/index/$type$subtype?sort=$sort$delete$refresh$monitor$all$info">(No&nbsp;Config&nbsp;Options)</a>}
+{<a href="/index/$type$subtype?sort=$sort$delete$refresh$monitor$all;config$info">(Config&nbsp;Options)</a>}
+$info?
+{<a href="/index/$type$subtype?sort=$sort$delete$refresh$monitor$all$config">(No&nbsp;Info&nbsp;Options)</a>}
+{<a href="/index/$type$subtype?sort=$sort$delete$refresh$monitor$all$config;info">(Info&nbsp;Options)</a>}
+</div>
+<hr class="wwwoffle-index-buttons-top" width="50%">
+
+<!-- This is just the head of this file since the body is different for each index -->

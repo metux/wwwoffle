@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+section   = The name of the section that has been updated (='$section').
+reason    = The reason that the update failed (='$reason')
+              ReadError  - The config file could not be read.
+              BadSection - The specified section does not exist.
+              BadBody    - The body of the request from the browser was invalid.
+              WriteError - The config file could not be written.
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Error Actualizando la Configuración</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Error Actualizando la Configuración</H1>
+
+<div class="wwwoffle-message" align="center">
+$reason?=ReadError{
+
+No se pudo abrir el fichero de configuración <b><tt>wwwoffle.conf</tt></b>
+para leerlo o hubo un error en la lectura del fichero de configuración.
+
+}{}
+$reason?=BadSection{
+
+en el fichero de configuración <b><tt>wwwoffle.conf</tt></b> no existe 
+una sección llamada <b><tt>$section</tt></b> que actualizar.
+
+}{}
+$reason?=BadBody{
+
+El cuerpo de la petición estaba vacio o era inválido.
+
+}{}
+$reason?=WriteError{
+
+No se pudo abrir el fichero de configuración <b><tt>wwwoffle.conf</tt></b> 
+para escribir.
+
+}{}
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Ayuda</h2>
+
+<div class="wwwoffle-inline-help">
+$reason?=ReadError{
+
+El fichero de configuración no se pudo abrir o su contenido era
+ininteligible.  Compruebe que el fichero <tt>wwwoffle.conf</tt> que usó
+para iniciar <tt>wwwoffled</tt> existe.  También debe tener permisos de
+lectura para el usuario que ejecuta el programa.
+
+}{}
+$reason?=BadSection{
+
+Los formularios de la página de Edición del Fichero de Configuración son los
+únicos que se pueden usar para actualizar el fichero de configuración.
+Todos los formularios de esta página permiten la modificación de una de las
+secciones del fichero de configuración.  La petición que su navegador mandó
+no concuerda con ninguna sección.  Compruebe que está usando los formularios
+correctos para actualizar la información.
+
+}{}
+$reason?=BadBody{
+
+El navegador ha enviado una respuesta inválida al formulario de la página de
+Edición del Fichero de Configuración.  O bien el navegador ha enviado una
+respuesta vacía en vez de los datos del formulario, hubo un error de red al
+enviar los datos del formulario o los datos que envió no eran válidos.
+Debería intentar rellenar otra vez la información y enviarla de nuevo.
+
+}{}
+$reason?=WriteError{
+
+El fichero de configuración no pudo abrirse para escribir.  Compruebe que el
+fichero <tt>wwwoffle.conf</tt> que se usó para iniciar <tt>wwwoffled</tt> 
+existe. Debe tener también permisos de escritura para el usuario que ejecuta
+el programa.
+
+}{}
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<div class="wwwoffle-nav" align="center">
+[<a href="/control/edit/">Página de Edición de la Configuración</a>]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Página de Bienvenida</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

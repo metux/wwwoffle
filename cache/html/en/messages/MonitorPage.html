@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL to be monitored by default (if any) (='$url').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Interactive Monitor Page</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Interactive Monitor Form</H1>
+
+You can use this form to monitor any URL at regular intervals.
+<br>
+To monitor a page using extra fetch options go to the
+<a href="/refresh-options/?$url">Interactive Refresh Form</a> and select the
+options first.
+
+<p>
+
+<form action="/monitor-request/" method=post>
+Monitor <input type="text" name="url" value="$url" size=60>
+
+<p>
+When the following four conditions are all true:
+<dl>
+<dt>The month is:
+<dd>
+<ul>
+<li><input name="mofy1"  type="checkbox" $mofy1?{checked}{}  value="Y"> January
+<li><input name="mofy2"  type="checkbox" $mofy2?{checked}{}  value="Y"> February
+<li><input name="mofy3"  type="checkbox" $mofy3?{checked}{}  value="Y"> March
+<li><input name="mofy4"  type="checkbox" $mofy4?{checked}{}  value="Y"> April
+<li><input name="mofy5"  type="checkbox" $mofy5?{checked}{}  value="Y"> May
+<li><input name="mofy6"  type="checkbox" $mofy6?{checked}{}  value="Y"> June
+<li><input name="mofy7"  type="checkbox" $mofy7?{checked}{}  value="Y"> July
+<li><input name="mofy8"  type="checkbox" $mofy8?{checked}{}  value="Y"> August
+<li><input name="mofy9"  type="checkbox" $mofy9?{checked}{}  value="Y"> September
+<li><input name="mofy10" type="checkbox" $mofy10?{checked}{} value="Y"> October
+<li><input name="mofy11" type="checkbox" $mofy11?{checked}{} value="Y"> November
+<li><input name="mofy12" type="checkbox" $mofy12?{checked}{} value="Y"> December
+</ul>
+
+<p>
+<dt>The day of the month is: (default: any day, example: 1,3,5-10)
+<dd>
+<input type="text" name="dofm" value="$dofm" size=60>
+
+<p>
+<dt>The day of the week is:
+<dd>
+<ul>
+<li><input name="dofw0" type="checkbox" $dofw0?{checked}{} value="Y"> Sunday
+<li><input name="dofw1" type="checkbox" $dofw1?{checked}{} value="Y"> Monday
+<li><input name="dofw2" type="checkbox" $dofw2?{checked}{} value="Y"> Tuesday
+<li><input name="dofw3" type="checkbox" $dofw3?{checked}{} value="Y"> Wednesday
+<li><input name="dofw4" type="checkbox" $dofw4?{checked}{} value="Y"> Thursday
+<li><input name="dofw5" type="checkbox" $dofw5?{checked}{} value="Y"> Friday
+<li><input name="dofw6" type="checkbox" $dofw6?{checked}{} value="Y"> Saturday
+</ul>
+
+<p>
+<dt>The hour of the day (24hr clock) is: (default: once per day, example: 6,9-18,20)
+<dd>
+<input type="text" name="hofd" value="$hofd" size=60>
+</dl>
+<input type="submit" value="Monitor Now">
+</form>
+
+$url?{
+<p>
+<hr width="50%">
+<p>
+You can use this form to delete monitoring for any URL.
+<p>
+<form action="/control/delete/mon" method="get">
+Stop Monitoring <input type="text" name="url" value="$url" size="60">
+<p>
+<input type="submit" value="Stop Monitoring">
+</form>
+}{}
+
+<div class="wwwoffle-nav" align="center">
+[<a href="/index/monitor/?sort=alpha">View the list of monitored pages</a>]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html" title="An introduction to WWWOFFLE">Welcome Page</a>| \
+<a href="$localurl/FAQ.html" title="Frequently Asked Questions about WWWOFFLE">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

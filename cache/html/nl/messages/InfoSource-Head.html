@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that the request was for (='$url').
+cached    = A flag to indicate if the file is cached (='$cached').
+text      = A flag to indicate if the file is plain text (='$text').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE Gecachete Pagina Broncode</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Gecachete Pagina Broncode</H1>
+
+$cached?{}{
+De pagina voor de URL
+<b><tt><a href="%html[url]">$url</a></tt></b>
+is niet beschikbaar in de WWWOFFLE cache.
+$text=
+}
+
+$text?=yes{
+Deze pagina bevat de onaangepaste versie van de broncode voor de URL
+<b><tt><a href="%html[url]">$url</a></tt></b>
+die beschikbaar is in de WWWOFFLE cache.
+
+<h2>Pagina Broncode</h2>
+
+<pre>
+}{}
+$text?=no{
+De webpagina voor de URL
+<b><tt><a href="%html[url]">$url</a></tt></b>
+is geen HTML of ander gewoon tekst formaat die getoond kan worden.
+
+}{}

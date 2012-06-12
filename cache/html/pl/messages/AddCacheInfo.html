@@ -1,0 +1,47 @@
+
+<!-- The following section added by WWWOFFLE -->
+
+<STYLE type="text/css">
+<!-- @import "$localurl/wwwoffle.css"; -->
+</STYLE>
+
+$unit?=m{$unitstr1=minutê  $unitstr2=minuty   $unitstr=minut   }{}
+$unit?=h{$unitstr1=godzinê $unitstr2=godziny  $unitstr=godzin  }{}
+$unit?=d{$unitstr1=dzieñ   $unitstr2=dni      $unitstr=dni     }{}
+$unit?=w{$unitstr1=tydzieñ $unitstr2=tygodnie $unitstr=tygodni }{}
+$unit?=M{$unitstr1=miesi±c $unitstr2=miesi±ce $unitstr=miesiêcy}{}
+$time?=1{$unitstr=$unitstr1}{}
+$time?=2{$unitstr=$unitstr2}{}
+$time?=3{$unitstr=$unitstr2}{}
+$time?=4{$unitstr=$unitstr2}{}
+$time?=22{$unitstr=$unitstr2}{}
+$time?=23{$unitstr=$unitstr2}{}
+$time?=24{$unitstr=$unitstr2}{}
+$time?=32{$unitstr=$unitstr2}{}
+$time?=33{$unitstr=$unitstr2}{}
+$time?=34{$unitstr=$unitstr2}{}
+$time?=42{$unitstr=$unitstr2}{}
+$time?=43{$unitstr=$unitstr2}{}
+$time?=44{$unitstr=$unitstr2}{}
+$time?=52{$unitstr=$unitstr2}{}
+$time?=53{$unitstr=$unitstr2}{}
+$time?=54{$unitstr=$unitstr2}{}
+
+$encurl=%encode[url]
+
+<hr class="wwwoffle-addinfo" />
+<div class="wwwoffle-addinfo" align="center">
+WWWOFFLE - $date ($time $unitstr temu) - [ \
+<a href="$localurl/index/url?$encurl">Indeks</a>| \
+<a href="$localurl/refresh/?$encurl">Od¶wie¿</a>: \
+<a href="$localurl/refresh-options/?$encurl">Opcje</a>| \
+<a href="$localurl/monitor-options/?$encurl">Monitoruj</a>| \
+<a href="$localurl/control/delete/url?url=$encurl">Usuñ</a>| \
+<a href="$localurl/configuration/url?$encurl">Konfiguruj</a>| \
+<a href="$localurl/info/url?$encurl">Info</a> \
+] - WWWOFFLE
+</div>
+<hr class="wwwoffle-addinfo" />
+
+<!-- The previous section added by WWWOFFLE -->
+

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that was asked for (='$url').
+
+$decurl=%decode[url]
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Host wird nicht im Cache gespeichert</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Host wird nicht im Cache gespeichert</H1>
+
+<div class="wwwoffle-message" align="center">
+Ihr Anfrage nach der URL
+<p class="wwwoffle-url">
+<b><tt>$decurl</tt></b>
+</p>
+ist fehlgeschlagen, da die URL in der Liste der Hosts und Pfade ist, die
+nicht im Cache gespeichert werden und nicht offline angefragt werden k&ouml;nnen.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Hilfe</h2>
+
+<div class="wwwoffle-inline-help">
+Der WWWOFFLE-Proxy-Server wurde so konfiguriert, dass Anfragen nach dieser URL nicht im 
+Cache gespeichert werden und nur im Online-Betrieb zul&auml;ssig sind. Dies wird gesteuert
+durch den <tt>DontCache</tt>-Abschnitt der Konfigurationsdatei <tt>wwwoffle.conf</tt>
+Die Konfigurationsdatei enth&auml;lt Informationen dar&uuml;ber, wie Hosts, die nicht im Cache 
+gespeichert werden, angegeben werden k&ouml;nnen.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Willkommensseite</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

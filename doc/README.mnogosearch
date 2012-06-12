@@ -1,0 +1,154 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9
+          ========================================================
+
+
+The progam mnoGoSearch (formally known as UdmSearch) is a free (GPL) internet
+indexing and search program.  The mnoGoSearch web-page describes itself as
+follows:
+
+        mnoGoSearch (formerly known as UdmSearch) is a full-featured search
+        software for intranet and internet servers. mnoGoSearch is a free
+        software covered by the GNU General Public License.
+
+        mnoGoSearch software has a number of unique features, which makes it
+        appropriate for a wide range of applications from search within your
+        site to specialized search systems such as cooking recipes or newspaper
+        searches, ftp archive search, MP3 search, news articles search or even
+        national-wide portal search engine.
+
+I have written WWWOFFLE so that mnoGoSearch can be used with it to allow the
+entire cache of pages can be indexed.  There are three stages to using the
+program that are described in this document; installation, indexing and
+searching.
+
+
+Installing mnoGoSearch
+----------------------
+
+mnoGoSearch is available from the web site
+
+        http://mnogosearch.org/
+
+You need to have version 3.1.0 or later of mnoGoSearch.
+
+No special compile-time configuration of mnoGoSearch is required to be able to
+use it with WWWOFFLE.
+
+
+I tested with version 3.1.0.
+
+
+Configure WWWOFFLE to run with mnoGoSearch
+------------------------------------------
+
+The configuration files for the mnoGoSearch programs as used with WWWOFFLE will
+have been installed in /var/spool/wwwoffle/search/mnogosearch/conf when WWWOFFLE
+was installed.  The scripts used to run the mnoGoSearch programs will have been
+installed in /var/spool/wwwoffle/search/mnoGoSearch/scripts when WWWOFFLE was
+installed.  In both these cases the directory /var/spool/wwwoffle can be changed
+at compile time with options to the configure script.
+
+These files should be correct if the information at the time of running
+configure was set correctly.  Check them, they should have the spool directory
+and the proxy hostname and port set correctly.
+
+Also they should be checked to ensure that the mnoGoSearch programs are on the
+path (you can edit the PATH variable here if they are not in /usr/local/bin).
+
+
+Configure database to work with mnoGoSearch
+-------------------------------------------
+
+MySQL
+- - -
+
+Create the MySQL database using the 'mysqladmin' command
+
+$ mysqladmin create mnogosearch
+
+Setup the database structure for the mnoGoSearch database.
+
+$ mysql mnogosearch < mnogosearch-3.1.13/create/mysql/create.txt
+$ mysql mnogosearch < mnogosearch-3.1.13/create/mysql/crc-multi.txt
+
+Create the MySQL user called wwwoffle and allow access to the mnogosearch
+database.  This requires running the mysql program and entering commands at the
+'mysql>' prompt (I have broken up the second line to allow it to fit, it should
+all be one line).
+
+$ mysql -u root mysql
+
+mysql> INSERT INTO user (Host,User,Password) VALUES('localhost','wwwoffle','');
+mysql> INSERT INTO db (Host,Db,User,Select_priv,Insert_priv,Update_priv,
+       Delete_priv,Create_priv,Drop_priv)
+       VALUES('localhost','mnogosearch','wwwoffle','Y','Y','Y','Y','Y','Y');
+mysql> FLUSH PRIVILEGES;
+mysql> quit
+
+
+Postgres SQL
+- - - - - -
+
+The Postgres database server needs to be configured so that it users TCP/IP and
+so that access is allowed from the host that the udmsearch program will be run
+from.
+
+The option PGALLOWTCPIP=yes in postmaster.init needs to be set to allow TCP/IP
+access.
+
+The options PGFSYNC=no in postmaster.init needs to be set to get good
+performance.
+
+You will need to create a database user and set up the database for mnoGoSearch.
+
+$ createuser -U postgres --createdb --no-adduser wwwoffle
+$ createdb -U wwwoffle mnogosearch
+
+Setup the database structure for the mnogosearch database.
+
+$ psql -U wwwoffle mnogosearch < mnogosearch-3.1.13/create/pgsql/create.txt
+$ psql -U wwwoffle mnogosearch < mnogosearch-3.1.13/create/pgsql/crc-multi.txt
+
+
+Indexing
+--------
+
+Indexing is the name that is given to the process of searching through the
+web-pages to make the search database.
+
+To work with WWWOFFLE I have produced my own scripts that should be used
+to call the mnoGoSearch indexer.
+
+   /var/spool/wwwoffle/search/mnogosearch/scripts/wwwoffle-mnogosearch-full
+   /var/spool/wwwoffle/search/mnogosearch/scripts/wwwoffle-mnogosearch-lasttime
+
+The first of these scripts will do a full search and index all of the URLs in
+the cache.  The second one will do a search of the URLs in the lasttime
+directory.
+
+
+Searching
+---------
+
+The search page for mnoGoSearch is at http://localhost:8080/search/mnogosearch/
+and is linked to from the "Welcome Page".  The word or words that you want to
+search for should be entered here.
+
+This form actually calls the script
+
+   /var/spool/wwwoffle/search/mnogosearch/scripts/wwwoffle-mnogosearch
+
+to do the searching so it is possible to edit this to modify it if required.
+
+
+Thanks to
+---------
+
+Thanks to Volker Wysk <vw@volker-wysk.de> for providing the initial information
+about using mnoGoSearch.  I have used his useful e-mail about how to configure
+the mnoGoSearch program and MySQL in this document (with modifications).
+
+
+
+Andrew M. Bishop
+12th Aug 2000

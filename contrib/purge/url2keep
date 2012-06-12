@@ -1,0 +1,101 @@
+#!/usr/bin/perl
+################################################################
+#                                                              #
+#  url2keep         Extracts hostnames from html files         #
+#                   and adds them to the no-purge              #
+#                   section of the WWWOffle proxy server.      #
+#                                                              #
+#  Requires: HTML::LinkExtor (get it it from www.cpan.org)     #
+#                                                              #
+################################################################
+#                                                              #
+# Copyright (C)2000 by Joerg Mensmann <joerg.mensmann@gmx.net> #
+# This script is released under the GNU Public License.        #
+#                                                              #
+################################################################
+# sam mar 25 CET 2000                                          #
+# modified as a filter by Jacques L'helgoualc'h <lhh@free.fr>  #
+# Mon Mar 27 CEST 2000                                         #
+# added LinkExtor; now works correctly with "=" in URLs. jm    #
+# Mon Feb  5 CET 2001                                          #
+# updated for WWWOffle 2.6 version. Lhh                        #
+################################################################
+#
+# To use this with WWWOffle:
+#
+# 1. Save the contents of the "Purge" section in "wwwoffle.conf"
+#    (everything between "{" and "}") to a file called
+#    "wwwoffle.purge.conf" in the same directory
+#
+# 2. Replace the "Purge" section by:
+#      Purge
+#      [
+#        wwwoffle.purge-extended.conf
+#      ]
+#
+# ---------------
+#
+# 3. Choose html file(s) containing urls to keep in wwwoffle cache,
+#    for instance
+#
+#    FILES="~/.netcape/bookmarks.html ~/.lynx_bookmarks.html"
+#
+# 4. Do
+#    url2keep $FILES | sort | uniq > wwwoffle.purge-extended.conf
+#    cat wwwoffle.purge           >> wwwoffle.purge-extended.conf
+#
+# 5. Let WWWOffle re-read the config file: "wwwoffle -config"
+#
+#
+# Repeat steps 3, 4 and 5 every time you change the bookmarks files.
+# You can also put them in a cron job, or use it as a filter:
+#
+# lynx -source http://gedanken.demon.co.uk/ | url2keep | ...
+#
+################################################################
+
+require HTML::LinkExtor;  # for extracting links out of HTML
+
+sub WorkOnLink
+{
+    my($tag, @attr) = @_; 
+    return if $tag ne 'a';  # only work on <a>-tags
+
+    $link = join(" ", @attr);
+
+    # extract href and extract the wanted fields
+    if (!($link =~ /href (((ht|f)tp):\/\/([^\/]*)([^\ ]*))/i)) { return };
+    $url = $1;
+    $proto = $2;
+    $server = $4;
+    $file = $5;
+
+    # Remove "=" from URL
+    if( $file =~ /=/) {
+        $file =~ s/\?[^\/]*=.*/?\*/g;  # for CGI parameters
+        $file =~ s/[^\/]*=.*//g;       # no CGI -> remove last part
+    }
+
+    # Try to find out what to keep - This is only taken into account
+    # if "use-url" is set to yes in wwwoffle.conf. If it's not then
+    # always the entire server is kept.
+
+    # root directory or root-index file => keep entire server
+    if ($url =~ /^((ht|f)tp):\/\/([^\/]*)(\/((index|default)\.[^\/]*)?)?$/i) {
+        $nopurge = "$proto://$server";
+    }
+    # subdirectory or sub-index file => keep directory
+    elsif ($file =~ /.\/((index|default)\.[^\/]*)$/i) {
+        $file =~ s/\/[^\/]*$//g;
+        $nopurge = "$proto://$server$file/*";
+    }
+    # keep single file
+    else {
+        $nopurge = "$proto://$server$file";
+    }
+    print "  <$nopurge> age = -1\n";
+}
+
+$parser = HTML::LinkExtor->new(\&WorkOnLink);
+for (<>) { $parser->parse($_) }
+$parser->eof;

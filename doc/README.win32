@@ -1,0 +1,198 @@
+      WWWOFFLE - World Wide Web Offline Explorer - Version 2.7 - Win32
+      ================================================================
+
+
+    *************************************************************************
+    ** This file is rather out of date because it was written for earlier  **
+    ** versions of WWWOFFLE and cygwin.  If you compile WWWOFFLE for Win32 **
+    ** and can suggest changes then please let me know.                    **
+    *************************************************************************
+
+
+This is the Windows 32-bit version of the World Wide Web OFFline Explorer,
+otherwise know as WWWOFFLE.  A UNIX version of this program has been available
+since the start of 1997.  The possibility of a Windows version of the program
+was brought to my attention by an investigation of the Cygwin development kit.
+
+
+The Cygwin Development Kit
+--------------------------
+
+The Cygwin development kit is described in its FAQ as follows:
+
+        The Cygwin tools are Win32 ports of the popular GNU development
+        tools for Windows NT, 95, and 98. They function through the use
+        of the Cygwin library which provides a UNIX-like API on top of
+        the Win32 API.
+
+        Use the tools to: 
+        o Develop Win32 console or GUI applications, using the Win32 API.
+        o Easily port many significant UNIX programs to Windows NT/9x
+          without making significant source code changes. Configure and
+          build most GNU software from source using standard Unix build
+          procedures. 
+        o Work in a fairly complete UNIX-like environment, with access to
+          many common UNIX utilities (from both the provided bash shell
+          and the standard Win32 command shell). 
+
+More information about the Cygnus development kit and the GNU tools that are in
+the development kit can be obtained from their web-sites.
+
+http://cygwin.com/
+http://www.gnu.org/
+
+To compile WWWOFFLE you should use the latest version of the cygwin library.
+
+
+Using WWWOFFLE
+--------------
+
+Because this version of WWWOFFLE is a port of a UNIX program (with negligible
+changes from the UNIX version) some of the concepts and features may not be
+familiar to users of MS Windows.
+
+Filenames
+- - - - -
+
+On UNIX systems the '/' character is used as a path separator, DOS uses '\', you
+should use the UNIX format in the wwwoffle.conf configuration file and in the
+command line arguments.  One other change that has been made is that on DOS the
+':' character is not allowed in filenames so the '!' character has been used in
+the host sub-directory names instead.
+
+On UNIX systems the filenames are case-sensitive and can be longer than 8.3
+characters.  WWWOFFLE requires that the files that it creates keep their case
+and are longer than 8.3 characters.
+
+On UNIX systems there is no distinction between the separate disk drives like
+there is under DOS.  With a DOS system there are drives 'A:', 'C:', 'D:' etc, on
+UNIX all of the disks are accessed from the root directory '/'.  In the Cygnus
+CDK and hence in WWWOFFLE all pathnames are expected to be in this format, the
+drive that the operating system booted from (normally drive C:) is '/', drive
+'A:' would be '//a/', drive 'D:' would be '//d/'.  You must use this format in
+the wwwoffle.conf configuration file and in the command line arguments.
+
+The default installation location for WWWOFFLE on UNIX is different from that
+for Windows-32.
+
+                        UNIX                                    Windows-32
+
+Cached files:   /var/spool/wwwoffle                     /wwwoffle
+Config file:    /etc/wwwoffle/wwwoffle.conf             /wwwoffle/wwwoffle.conf
+Executables:    /usr/local/bin & /usr/local/sbin        /wwwoffle/bin
+Documentation:  /usr/local/man/man*                     /wwwoffle/doc
+
+In the documentation and the program you may find references to these pathnames
+and filenames, you should make the appropriate conversions.
+
+Other Terms
+- - - - - -
+
+Syslog        - The system logfile, many daemon processes (servers) write their
+                status to this file.
+Daemon        - A program (usually some type of server) that runs in the
+                background and sleeps until it is called upon to do anything.
+Username/uid  - Users on a UNIX system have to log on and are assigned a
+                username and a numberic user ID (uid).
+                [Not the same as a Windows 95/98 logon username]
+Groupname/gid - Users on UNIX are also assigned to a group that has a name and a
+                numeric Group ID (gid).
+                [Not applicable to Windows 95/98]
+
+
+Running WWWOFFLE
+----------------
+
+The WWWOFFLE server program 'wwwoffled' is typically it is started from the boot
+time scripts (the equivalent to autoexec.bat on DOS). On a Win32 system I do not
+know the best way of starting a program at boot time so I leave it to you to
+decide.
+
+The WWWOFFLE helper program 'wwwoffle' is run each time that the dial-up
+connection is started or stopped.  This is normally done by the scripts that are
+automatically run by the PPP connection process.  Again I do not know the best
+way of doing this on Win32, the graphical interface to DUN does not appear to
+allow for this.
+
+Quick Demonstration
+- - - - - - - - - -
+
+To see what WWWOFFLE does, use the following steps for a quick demonstration.
+
+1) Edit the configuration file
+   c:\wwwoffle\wwwoffle.conf
+
+2) Start the WWWOFFLE demon running.
+   c:\wwwoffle\bin\wwwoffled
+
+3) Start your web browser and set up localhost:8080 as the proxy.
+   Disable caching between sessions within the browser.
+
+4) a) Connect to the internet
+   b) Tell the WWWOFFLE demon that you are online
+        c:\wwwoffle\bin\wwwoffle -online
+   c) Start browsing
+   d) Tell the WWWOFFLE demon that you are offline
+        c:\wwwoffle\bin\wwwoffle -offline
+   e) Disconnect from the internet
+
+5) Go back and browse the pages again while not connected, follow some different
+   links this time (you will see a WWWOFFLE server message in the browser).
+
+6) a) Connect to the internet
+   b) Tell the WWWOFFLE demon that you are online
+        c:\wwwoffle\bin\wwwoffle -online
+   c) Tell the WWWOFFLE demon to fetch the new pages
+        c:\wwwoffle\bin\wwwoffle -fetch
+   d) Tell the WWWOFFLE demon that you are offline
+        c:\wwwoffle\bin\wwwoffle -offline
+   e) Disconnect from the internet
+
+7) a) Go to http://localhost:8080/index/ and find the newly downloaded pages.
+   b) Browse the new pages that have just been fetched.
+
+
+Running WWWOFFLE as a service
+-----------------------------
+
+One way to run WWWOFFLE is to install it as a service using the cygrunsrv
+program that comes with the cygnus toolset.
+
+The command that you would use to do this is (all on one line):
+
+cygrunsrv -I wwwoffle -p /usr/local/sbin/wwwoffled.exe -o
+          -a "-c /etc/wwwoffle/wwwoffle.conf -d"
+
+
+Win32 Problems
+--------------
+
+If accessing WWWOFFLE is very slow then it could be that there are problems with
+performing DNS lookups to see which hosts are connecting to WWWOFFLE.  Windows
+can use a UNIX style hosts file to specify local hostnames.  The file is named
+c:\windows\hosts or c:\winnt\hosts and contains a list of IP addresses and
+hostnames.
+
+For example if you have two hosts on the 192.168.0.* subnet called host1 and
+host2 you would put the following in the hosts file.
+
+192.168.0.1   host1
+192.168.0.2   host2
+
+
+Other Information
+-----------------
+
+You should read the rest of the documentation about WWWOFFLE, in particular the
+FAQ and README.1st file.  These should answer your questions or at least point
+you in the direction of how to contact me for information.
+
+There may be other UNIX biased features of WWWOFFLE in the documentation of the
+program itself.  Since this is the first version of WWWOFFLE that works on Win32
+platforms I hope that you will try and work around any problems.  I will try and
+make sure that the next version has more applicable information.
+
+
+
+Andrew M. Bishop
+August 24th 2001

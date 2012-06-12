@@ -1,0 +1,221 @@
+<!--
+
+    This is default template file for mnoGoSearch 3.0
+    (C) 1999, mnoGoSearch developers team <devel@search.udm.net>
+
+    Please rename to search.htm and edit as desired. 
+    See doc/README.templates for detailed information.
+    You may want to keep the original file for future reference.
+    
+    WARNING: Please keep the file chmod 600 to protect your passwords!
+    
+-->
+<!--variables
+# Database parameters are to be used with SQL backend
+# and do not matter for built-in text files support
+# Format: <DBType>:[//[DBUser[:DBPass]@]DBHost[:DBPort]]/DBName/
+
+DBAddr	pgsql://wwwoffle@localhost/mnogosearch/
+#DBAddr	mysql://wwwoffle@localhost/mnogosearch/
+
+# Choose storage mode (see explanation in indexer.conf-dist):
+#DBMode  single
+#DBMode  multi
+#DBMode  crc
+DBMode  crc-multi
+
+
+#  Uncomment this line if you do not want eliminate and show clones
+#Clones	no
+# Local charset, use proper one:
+#LocalCharset	iso-8859-1
+#LocalCharset	iso-8859-2
+#LocalCharset	iso-8859-5
+#LocalCharset	koi8-r
+#LocalCharset	cp1251
+#LocalCharset	cp1250
+#LocalCharset	cp1256
+#LocalCharset	cp866
+
+
+#   Load ispell data from database:
+#IspellMode db
+#   or load ispell data from files:
+#Affix en /usr/dict/en.aff
+#Affix ru /usr/dict/ru.aff
+#Spell en /usr/dict/en.dict
+#Spell ru /usr/dict/ru.dict
+#
+
+-->
+
+<!--top-->
+<HTML>
+<HEAD>
+ <TITLE>WWWOFFLE mnoGoSearch</TITLE>
+</HEAD>
+
+
+<body BGCOLOR="#FFFFFF" LINK="#0050A0" VLINK="#0050A0" ALINK="#0050A0">
+<center>
+
+<H1>WWWOFFLE mnoGoSearch</H1>
+
+<FORM METHOD=GET ACTION="/search/mnogosearch/mnogosearch">
+<table bgcolor=#eeeee0 order=1 width=100%>
+<tr><td>
+<BR>
+Cerca: <INPUT TYPE="text" NAME="q" SIZE=50 VALUE="$Q">
+<INPUT TYPE="submit" VALUE="Cerca!"><BR>
+
+Risultati per pagina:
+<SELECT NAME="ps">
+<OPTION VALUE="10" SELECTED="$ps">10
+<OPTION VALUE="20" SELECTED="$ps">20
+<OPTION VALUE="50" SELECTED="$ps">50
+</SELECT>
+
+Formato dell'Output:
+<SELECT NAME="o">
+<OPTION VALUE="0" SELECTED="$o">Lungo
+<OPTION VALUE="1" SELECTED="$o">Breve
+<OPTION VALUE="2" SELECTED="$o">URL
+</SELECT>
+
+
+Metodo:
+<SELECT NAME="m">
+<OPTION VALUE="all" SELECTED="$m">Tutte (AND)
+<OPTION VALUE="any" SELECTED="$m">Qualsiasi (OR)
+</SELECT>
+
+<!-- Use this to limit URL match -->
+
+<HIDDEN NAME="ul" VALUE="">
+
+</td></tr>
+</table>
+</form>
+</center>
+<!--/top-->
+
+
+
+<!--restop-->
+Risultati della ricerca:
+<small>$W</small><HR>
+Visualizzazione di $f-$l documenti su un totale di <B>$t</B> trovati.
+<!--/restop-->
+<!--res-->
+<DL><DT>
+<b>$DN.</b> <a href="$DU" TARGET="_blank"><b>$DT</b></a> [<b>$DR</b>]<DD>
+$DX...<BR>
+<UL>
+<li><A HREF="$DU" TARGET="_blank">$DU</A> ($DC) $DM, $DS bytes
+$CL
+</UL>
+</DL>
+<!--/res-->
+<!--resbot-->
+<HR>
+<CENTER>
+$V
+</CENTER>
+<!--/resbot-->
+
+
+
+
+
+<!--restop-->
+Risultati della ricerca:
+<small>$W</small><HR>                                                                            
+Visualizzazione di $f-$l documenti su un totale di <B>$t</B> trovati.
+<!--/restop-->
+<!--res-->
+<DL><DT>
+<b>$DN.</b> <a href="$DU" TARGET="_blank"><b>&nbsp; $DT</b></a> [<b>$DR</b>]<DD>
+</DL>
+<!--/res-->
+<!--resbot-->
+<HR>
+<CENTER>
+$V
+</CENTER>
+<!--/resbot-->
+
+
+
+<!--restop-->
+Risultati della ricerca:
+<small>$W</small><HR>
+Visualizzazione di $f-$l documenti su un totale di <B>$t</B> trovati.
+<!--/restop-->
+<!--res-->
+<DL><DT>
+<b>$DN.</b> <a href="$DU" TARGET="_blank"><b>$DU</b></a> [<b>$DR</b>]<DD>
+</DL>
+<!--/res-->
+<!--resbot-->
+<HR>
+<CENTER>
+$V
+</CENTER>
+<!--/resbot-->
+
+
+
+
+<!--clone-->
+<li><A HREF="$DU" TARGET="_blank">$DU</A> ($DC) $DM
+<!--/clone-->
+
+<!--navigator-->
+<TABLE BORDER=0><TR>$NL $NB $NR</TR></TABLE>
+<!--/navigator-->
+
+<!--navleft-->
+<TD><A HREF="$NH">Prec.</A></TD>
+<!--/navleft-->
+
+<!--navbar1-->
+<TD><A HREF="$NH">$NP</A></TD>
+<!--/navbar1-->
+
+<!--navbar0-->
+<TD>$NP</TD>
+<!--/navbar0-->
+
+<!--navright-->
+<TD><A HREF="$NH">Succ.</TD>
+<!--/navright-->
+
+<!--notfound-->
+Risultati della ricerca:
+<small>$W</small><HR>
+<CENTER>
+Spiacente, ma la ricerca non ha prodotto risultati.<P>
+<I>Prova a inserire una richiesta meno restrittiva.</I>
+</CENTER>
+<HR>
+<!--/notfound-->
+
+<!--error-->
+<CENTER>
+<FONT COLOR="#FF0000">Si &egrave; verificato un errore!</FONT>
+<P><B>$E</B>
+</CENTER>
+<!--/error-->
+
+
+
+
+<!--bottom-->
+<HR>
+<center>
+<img src="/search/mnogosearch/m-search.gif">
+<font size="-1">Powered by <a href="http://mnogosearch.org/">mnoGoSearch</a></font><br>
+<p>
+</BODY>
+</HTML>
+<!--/bottom-->

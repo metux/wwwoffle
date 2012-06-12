@@ -1,0 +1,31 @@
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+entry = The entry in the configuration file (= '$entry').
+section     = The section of the configuration file (= '$section').
+item        = The item in the section of the configuration file (= '$item').
+template    = The template for the item.
+description = The description of the item.
+current     = The current matching value for the item.
+
+-->
+
+$section?=$lastsection{}{
+<h2><a href="$localurl/configuration/$section?%encode[url]">Section: $section</a></h2>
+$lastsection=$section
+}
+
+<H3><a href="$localurl/configuration/$section/$item?{$item}{no-name}?%encode[url]">Item: $item?{$item}{<i>no-name</i>}</a></H3>
+
+$template?{<tt>%html[template]</tt>}{<i>No template</i>}
+
+<p>
+
+$description?{$description}{<i>No description</i>}
+
+$current?{
+<ul>
+  <li>%html[current]
+</ul>
+}{}

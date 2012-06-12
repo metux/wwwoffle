@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+<title>ht://Dig - Przeszukiwanie WWWOFFLE</title>
+</head>
+<body bgcolor="#eef7ff">
+<h1>
+<a href="http://www.htdig.org"><IMG SRC="/search/htdig/htdig.gif" align=bottom alt="ht://Dig" border=0></a>
+WWWOFFLE - Wyszukiwanie</H1>
+<hr noshade size=4>
+Ten formularz wyszukiwania pozwoli ci na przeszukanie zawartości wszystkich
+dokumentów buforowanych na tym serwerze WWWOFFLE.
+<br>
+<p>
+<form method="get" action="/search/htdig/htsearch">
+<font size=-1>
+Dopasuj: <select name=method>
+<option value=and>Wszystkie
+<option value=or>Którekolwiek
+</select>
+Format: <select name=format>
+<option value=builtin-long>Długi
+<option value=builtin-short>Krótki
+</select>
+</font>
+<input type=hidden name=config value="htsearch">
+<input type=hidden name=restrict value="">
+<input type=hidden name=exclude value="">
+<br>
+Znajdź:
+<input type="text" size="30" name="words" value="">
+<input type="submit" value="Szukaj">
+</form>
+<hr noshade size=4>
+
+</body>
+</html>

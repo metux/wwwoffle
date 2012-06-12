@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+section   = The name of the section that has been updated (='$section').
+reason    = The reason that the update failed (='$reason')
+              ReadError  - The config file could not be read.
+              BadSection - The specified section does not exist.
+              BadBody    - The body of the request from the browser was invalid.
+              WriteError - The config file could not be written.
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Errore di Aggiornamento della Configurazione</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Errore di Aggiornamento della Configurazione</H1>
+
+<div class="wwwoffle-message" align="center">
+$reason?=ReadError{
+
+Impossibile aprire il file di configurazione <b><tt>wwwoffle.conf</tt></b> in
+lettura oppure errore di interpretazione in fase di lettura.
+
+}{}
+$reason?=BadSection{
+
+Non esiste una sezione chiamata <b><tt>$section</tt></b> nel file di configurazione 
+<b><tt>wwwoffle.conf</tt></b> da aggiornare.
+
+}{}
+$reason?=BadBody{
+
+Il corpo della richiesta &egrave; vuoto o non valido.
+
+}{}
+$reason?=WriteError{
+
+Impossibile aprire il file di configurazione <b><tt>wwwoffle.conf</tt></b> in scrittura.
+
+}{}
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Aiuto</h2>
+
+<div class="wwwoffle-inline-help">
+$reason?=ReadError{
+
+Impossibile aprire il file di configurazione oppure pu&ograve; essere aperto ma
+il contenuto non pu&ograve; essere interpretato.  Controlla che il file
+<tt>wwwoffle.conf</tt> che &egrave; stato usato per avviare il programma
+<tt>wwwoffled</tt> esista.  Deve inoltre essere leggibile dall'utente per il
+quale &egrave; in esecuzione.
+
+}{}
+$reason?=BadSection{
+
+I moduli nella Pagina di Modifica del File di Configurazione sono gli unici che
+possono essere usati per aggiornare il file di configurazione.  Ogni modulo in
+quella pagina permette di modificare una delle sezioni del file di
+configurazione.  La richiesta inviata dal tuo browser non coincide con nessuna
+di queste sezioni.  Assicurati di stare usando il modulo corretto per aggiornare
+l'informazione.
+
+}{}
+$reason?=BadBody{
+
+Il browser ha inviato una risposta non valida al modulo della Pagina di Modifica
+del File di Configurazione.  Il browser ha inviato una risposta vuota invece dei
+dati richiesti, c'&egrave; stato un errore di rete nell'invio dei dati, oppure i
+dati inviati non erano validi.  Prova a reinserire i dati nel modulo e a
+inviarli di nuovo.
+
+}{}
+$reason?=WriteError{
+
+Impossibile aprire il file di configurazione in scrittura. 
+
+Controlla che il file <tt>wwwoffle.conf</tt> che &egrave; stato usato per
+avviare il programma <tt>wwwoffled</tt> esista.  Deve inoltre essere scrivibile
+dall'utente per il quale &egrave; in esecuzione.
+
+}{}
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<div class="wwwoffle-nav" align="center">
+[<a href="/control/edit/">Pagina di Modifica della Configurazione</a>]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Pagina di Benvenuto</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

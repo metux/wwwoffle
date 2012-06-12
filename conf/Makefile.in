@@ -1,0 +1,83 @@
+# $Header: /home/amb/wwwoffle/conf/RCS/Makefile.in 1.7 2003/12/09 19:38:23 amb Exp $
+#
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.8b.
+#
+# Configuration file Makefile.
+#
+# Written by Andrew M. Bishop
+#
+# This file Copyright 1996,97,98,99,2000,01,02,03 Andrew M. Bishop
+# It may be distributed under the GNU Public License, version 2, or
+# any higher version.  See section COPYING of the GNU Public license
+# for conditions under which this file may be redistributed.
+#
+
+######## DEFINITIONS ########
+
+# Make things
+
+SHELL=/bin/sh
+
+# The installation locations
+
+prefix=@prefix@
+
+SPOOLDIR=$(DESTDIR)@SPOOLDIR@
+CONFDIR=$(DESTDIR)@CONFDIR@
+
+REAL_SPOOLDIR=@SPOOLDIR@
+REAL_CONFDIR=@CONFDIR@
+
+# The installation program.
+
+PERL=@PERL@
+INSTALL=@INSTALL@
+
+# The translations
+
+LANGUAGES=@LANGUAGES@
+DEFLANG=@DEFLANG@
+
+######## COMPILATION ########
+
+compile : conf-file
+
+######## INSTALLATION ########
+
+install : compile
+	sed -e 's%SPOOLDIR%$(REAL_SPOOLDIR)%' -e 's%CONFDIR%$(REAL_CONFDIR)%' < wwwoffle.conf > wwwoffle.conf.install
+	[ -x $(CONFDIR) ] || $(INSTALL) -d -m 750 $(CONFDIR)
+	@[ ! -f $(DESTDIR)/etc/wwwoffle.conf ] || \
+	 (echo "WWWOFFLE: " ;\
+	  echo "WWWOFFLE: There is a config file $(DESTDIR)/etc/wwwoffle.conf." ;\
+	  echo "WWWOFFLE: This is no longer the recommended location, use $(CONFDIR)/wwwoffle.conf." ;\
+	  echo "WWWOFFLE: " )
+	@[ ! -f $(CONFDIR)/wwwoffle.conf ] || \
+	 (echo "WWWOFFLE: " ;\
+	  echo "WWWOFFLE: There is already a config file $(CONFDIR)/wwwoffle.conf." ;\
+	  echo "WWWOFFLE: Run 'conf/upgrade-config.pl $(CONFDIR)/wwwoffle.conf' to upgrade it." ;\
+	  echo "WWWOFFLE: " )
+	[  ! -f $(CONFDIR)/wwwoffle.conf ] || $(INSTALL) -c -m 640 wwwoffle.conf.install $(CONFDIR)/wwwoffle.conf.install
+	[    -f $(CONFDIR)/wwwoffle.conf ] || $(INSTALL) -c -m 640 wwwoffle.conf.install $(CONFDIR)/wwwoffle.conf
+
+######## CONF FILE ########
+
+conf-file :
+	for lang in $(LANGUAGES); do \
+	  [ ! -f ../doc/$$lang/README.CONF -o ! -f $$lang/wwwoffle.conf.template -o "x$(PERL)" = "x" ] || \
+	    ( rm -f $$lang/wwwoffle.conf ;\
+	      $(PERL) ../doc/scripts/README.CONF-conf.pl $$lang/wwwoffle.conf.template < ../doc/$$lang/README.CONF > $$lang/wwwoffle.conf ) ;\
+	done
+
+######## CLEAN UP ########
+
+clean :
+	-rm -f core *~
+	-rm -f wwwoffle.conf.install
+
+########
+
+distclean : clean
+	-rm -f Makefile
+
+########

@@ -1,0 +1,110 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Versión 2.6
+          ========================================================
+
+
+Esta es la lógica que sigue el programa WWWOFFLE al manejar peticiones de
+URLs que tienen una contraseña en la cabecera o en la URL misma.
+
+
+Trasfondo
+---------
+
+1) Cuando un navegador pide una página protegida por contraseña se realiza una 
+   petición sin la contraseña.  Esto es obvio ya que no hay ninguna forma de
+   saber que páginas tienen contraseña.
+
+2) Cuando el servidor recibe una petición por la página que requiere
+   autentificación pero no lleva ninguna contraseña devuelve una respuesta 
+   '401 No autorizado'. Esta contiene un "reino" que define el rango de 
+   página sobre las cuales este par usuario/contraseña es válido.
+   Un reino no es un rango bien definido. Puede ser cualquier conjunto de
+   páginas en el mismo servidor. No tienen porqué tener relación entre sí,
+   aunque normalmente la tienen.
+
+3) Cuando un navegador recibe una respuesta '401' preguntará al usuario por 
+   un usuario y contraseña si no tiene una especificado para el reino actual.
+   Si ya se conoce una no es necesario molestar al usuario de nuevo.
+
+4) La petición que el navegador devuelve esta vez incluye en la cabecera el
+   para nombre de usuario y la contraseña o si no la misma petición que en
+   el caso (1).
+
+5) El servidor manda de vuelta la página pedida.
+
+6) Algunos navegadores siguen los pasos (1)-(5) en todas las páginas del
+   servidor. Otros intentan adivinar el rango de páginas que pertenecen a un
+   reino. Por ejemplo, mandan el par usuario/contraseña para todas las páginas 
+   en el mismo directorio.  Esto significa que siguen los pasos (3)-(5) y
+   que no usan los pasos (1) y (2) para estas páginas.
+
+
+Implementación de WWWOFFLE
+--------------------------
+
+1) Si se especifica una contraseña en la petición se maneja como si
+   estuviera en la propia URL.  Esto significa que el fichero de la caché
+   es pasado por una tabla de referencias de la misma forma que una URL
+   normal, pero que contiene el usuario/contraseña.
+
+2) Una página con contraseña siempre se guarda en la caché sin el 
+   usuario/contraseña.  Esto asegura que cuando la página sea pedida más
+   adelante estando desconectado se enviará al navegador la versión sin
+   contraseña.  Esto es así para resolver el problema de los navegadores que
+   envían el par usuario/contraseña a todas las páginas cuando se arranca o
+   se cierra el navegador. Una petición de una de las páginas (quizás
+   apuntada en el marca páginas) no funcionará ya que la página con el
+   usuario/contraseña no está guardada y será pedida para ser recogida
+   posteriormente.
+
+3) El modo de operación del servidor WWWOFFLE es el siguiente:
+
+URL   = URL sin contraseña
+URLpw = URL con contraseña
+
+modo WWWOFFLES - Vea README
+
+
+WWWOFFLES |¿Se provee | ¿URL en |¿URLpw en| Acción a realizar
+   modo   |contraseña?|la caché?|la caché?|
+----------+-----------+---------+---------+-------------------------------------
+  Spool   |    No     |   No    |   n/a   | Pedir URL (->F)
+  Spool   |    No     |   Sí    |   n/a   | Almacenar URL
+  Spool   |    Sí     |   No    |   No    | Pedir URLpw (->F)
+  Spool   |    Sí     |   No    |   Sí    | Almacenar URLpw, Request URL (->F)
+  Spool   |    Sí     |   Sí    |   No    | si(!401) Almacenar URL
+  Spool   |    Sí     |   Sí    |   No    | si(401)  Pedir URLpw (->F)
+  Spool   |    Sí     |   Sí    |   Sí    | si(!401) Almacenar URL
+  Spool   |    Sí     |   Sí    |   Sí    | si(401)  Almacenar URLpw
+----------+-----------+---------+---------+-------------------------------------
+  Fetch   |    No     |   n/a   |   n/a   | Descargar URL
+  Fetch   |    Sí     |   No    |   n/a   | Descargar URL, si(401) Descargar URLpw
+  Fetch   |    Sí     |   Sí    |   n/a   | si(!401) Descargar URL
+  Fetch   |    Sí     |   Sí    |   n/a   | si(401)  Descargar URLpw
+----------+-----------+---------+---------+-------------------------------------
+  Real    |    No     |   n/a   |   n/a   | Descargar URL
+  Real    |    Sí     |   No    |   n/a   | Descargar URL, si(401) Descargar URLpw
+  Real    |    Sí     |   Sí    |   n/a   | si(!401) Descargar URL
+  Real    |    Sí     |   Sí    |   n/a   | si(401)  Descargar URLpw
+----------+-----------+---------+---------+-------------------------------------
+
+Los otros modos menores (SpoolOrReal, RealPragma etc.) actúan como en los
+que están basados.
+
+4) Cuando se descarga recursivamente el usuario/contraseña se usa sólo en el
+   mismo servidor pero para todas las peticiones (el modo de recogida ordena
+   las que lo necesitan).
+
+5) Cuando se provee un nombre de usuario pero no contraseña (p.e. en una URL
+   de FTP con el usuario en la URL) siempre se devuelve una página
+   preguntando por la contraseña.
+
+6) Cuando la opción de configuración try-without-password es falsa (por
+   defecto es verdadera) este comportamiento se modifica.  Si la URL se pide
+   con contraseña la existencia de la misma URL sin contraseña se ignora.
+   Esto significa que el comportamiento es el mismo que si la petición de la
+   páginas no tuviera contraseña. Sólo está basada en la propia petición de 
+   la página.
+
+
+Andrew M. Bishop
+17 de Septiembre de 2000

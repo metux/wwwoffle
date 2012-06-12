@@ -1,0 +1,247 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9
+          ========================================================
+
+
+The WWWOFFLE programs simplify World Wide Web browsing from computers that use
+intermittent (dial-up) connections to the internet.
+
+Description
+-----------
+
+The WWWOFFLE server is a proxy web server with special features for use with
+dial-up internet links.  This means that it is possible to browse web pages and
+read them without having to remain connected.
+
+Basic Features
+    - Caching of HTTP, FTP and finger protocols.
+    - Allows the 'GET', 'HEAD', 'POST' and 'PUT' HTTP methods.
+    - Interactive or command line control of online/offline/autodial status.
+    - Highly configurable.
+    - Low maintenance, start/stop and online/offline status can be automated.
+
+While Online
+    - Caching of pages that are viewed for later review.
+    - Conditional fetching to only get pages that have changed.
+        - Based on expiration date, time since last fetched or once per session.
+    - Non cached support for SSL (Secure Socket Layer e.g. https).
+    - Caching for https connections. (compile time option).
+    - Can be used with one or more external proxies based on web page.
+    - Control which pages cannot be accessed.
+        - Allow replacement of blocked pages.
+    - Control which pages are not to be stored in the cache.
+    - Create backups of cached pages when server cannot be contacted.
+        - Option to create backup when server sends back an error page.
+    - Requests compressed pages from web servers (compile time option).
+    - Requests chunked transfer encoding from web servers.
+
+While Offline
+    - Can be configured to use dial-on-demand for pages that are not cached.
+    - Selection of pages to download next time online
+        - Using normal browser to follow links.
+        - Command line interface to select pages for downloading.
+    - Control which pages can be requested when offline.
+    - Provides non-cached access to intranet servers.
+
+Automated Download
+    - Downloading of specified pages non-interactively.
+    - Options to automatically fetch objects in requested pages
+        - Understands various types of pages
+            - HTML 4.0, Java classes, VRML (partial), XML (partial).
+        - Options to fetch different classes of objects
+            - Images, Stylesheets, Frames, Scripts, Java or other objects.
+        - Option to not fetch webbug images (images of 1 pixel square).
+    - Automatically follows links for pages that have been moved.
+    - Can monitor pages at regular intervals to fetch those that have changed.
+    - Recursive fetching
+        - To specified depth.
+        - On any host or limited to same server or same directory.
+        - Chosen from command line or from browser.
+        - Control over which links can be fetched recursively.
+
+Convenience
+    - Optional information footer on HTML pages showing date cached and options.
+    - Options to modify HTML pages
+        - Remove scripts.
+        - Remove Java applets.
+        - Remove stylesheets.
+        - Remove shockwave flash animations.
+        - Indicate cached and uncached links.
+        - Remove the blink tag.
+        - Remove the marquee tag.
+        - Remove refresh tags.
+        - Remove links to pages that are in the DontGet list.
+        - Remove inline frames (iframes) that are in the DontGet list.
+        - Replace images that are in the DontGet list.
+        - Replace webbug images (images of 1 pixel square).
+        - Demoronise HTML character sets.
+        - Fix mixed Cyrillic character sets.
+        - Stop animated GIFs.
+        - Remove Cookies in meta tags.
+    - Provides information about cached pages
+        - Headers, raw and modified.
+        - Contents, images, links etc.
+        - Source code unmodified by WWWOFFLE.
+    - Automatic proxy configuration with Proxy Auto-Config file.
+    - Searchable cache with the addition of the ht://Dig, mnoGoSearch
+      (UdmSearch), Namazu or Hyper Estraier programs.
+    - Built in simple web-server for local pages
+        - HTTP and HTTPS access (compile time option).
+        - Allows CGI scripts.
+    - Timeouts to stop proxy lockups
+        - DNS name lookups.
+        - Remote server connection.
+        - Data transfer.
+    - Continue or stop downloads interrupted by client.
+        - Based on file size of fraction downloaded.
+    - Purging of pages from cache
+        - Based on URL matching.
+        - To keep the cache size below a specified limit.
+        - To keep the free disk space above a specified limit.
+        - Interactive or command line control.
+        - Compression of cached pages based on age.
+    - Provides compressed pages to web browser (compile time option).
+    - Use chunked transfer-encoding to web browser.
+
+Indexes
+    - Multiple indexes of pages stored in cache
+        - Servers for each protocol (http, ftp ...).
+        - Pages on each server.
+        - Pages waiting to be fetched.
+        - Pages requested last time offline.
+        - Pages fetched last time online.
+        - Pages monitored on a regular basis.
+    - Configurable indexes
+        - Sorted by name, date, server domain name, type of file.
+        - Options to delete, refresh or monitor pages.
+        - Selection of complete list of pages or hide un-interesting pages.
+
+Security
+    - Works with pages that require basic username/password authentication.
+    - Automates proxy authentication for external proxies that require it.
+    - Control over access to the proxy
+        - Defaults to local host access only.
+        - Host access configured by hostname or IP address.
+        - Optional proxy authentication for user level access control.
+    - Optional password control for proxy management functions.
+    - HTTPS access to all proxy management web pages (compile time option).
+    - Can censor incoming and outgoing HTTP headers to maintain user privacy.
+
+Configuration
+    - All options controlled using a configuration file.
+    - Interactive web page to allow editing of the configuration file.
+    - User customisable error and information pages.
+    - Log file or syslog reporting with user specified error level.
+
+
+Changes
+-------
+
+Since version 2.8:
+
+Bug Fixes:
+ When modifying HTML check cache status of link aliases.  Fix an error message
+ when executing a change mode script.
+ Fix URL encoding in index pages.  Remove warnings compiling with CYGWIN.  Make
+ the ssl-allow-port config file option work for port 80.  If confirm-requests is
+ enabled don't allow POST/PUT.  Warn if timestamp of monitored file cannot be
+ changed.  Remove fake URL arguments from aliased URL for POST/PUT.  Print
+ internal page headers in ExtraDebug mode.  'wwwoffle -fetch' works in autodial
+ mode.  Avoid config editing pages being cached by browser.  Be more consistent
+ with removing '#' from URLs in all cases.  Handle URLs with URL-encoded
+ hostnames.  Handle purge with age=-1 and min-free or max-size set.  Break
+ socket writes into small pieces for huge data blocks.  Purge from lasttime and
+ prevtime if URL purged from main cache.
+
+Internal Code Changes:
+ Lots of internal modifications to remove years of accumulated ugliness.
+ Source code changes to increase speed and reduce memory size.
+ Use 'const' for fixed data arrays and function parameters where possible.
+ Be careful with integer variables on systems where sizeof(long)!=sizeof(int).
+ Reduce code size if compiling without zlib option.
+
+New Features:
+ Add a new layer of buffering to avoid large number of small network writes.
+ Add checkboxes to protocol indexes (e.g. /index/http) for deleting multiple.
+ Add reset button (and more if javascript) to clear delete checkboxes.
+ Add the ability to use the Hyper Estraier programs to search the cache.
+ Improve the purge output, print more information about what is happening.
+
+Programs:
+ Move the convert-cache and uncompress-cache functions into wwwoffle-tools.
+
+Documentation:
+ Remove the file called CONVERT and all references to ancient WWWOFFLE versions.
+ Add new documentation about Hyper Estraier and update other search documents.
+ Tidy the README.1st file.
+
+
+*NOTE* The configure script will enable IPv6 by default if possible.
+       If you explicitly want it disabled you must do this yourself.
+
+*NOTE* The URLs for deleting cached web pages has changed.
+       For example '/control/delete-url/?xxx' is now '/control/delete/url?xxx'.
+
+*NOTE* The HTML message files no longer have 'localhost' defined, but 'localurl'
+       is used instead (http://$localhost/ -> $localurl/).
+
+
+Since version 2.9-beta:
+
+Bug Fixes:
+ Fix configure script AC_INIT and tests for sys/mount.h.  Block more Javascript
+ when modifying HTML.  Don't change the URL hash for a POST request when
+ fetching it.  Don't handle parameter separately from path in URL.  Don't split
+ up large writes when no timeout is set.
+
+Internal Code Changes:
+ More changes for integer variables on systems where sizeof(long)!=sizeof(int).
+ Change the configure_io_*() functions for each type of IO not each direction.
+
+New Features:
+ Added ability to make secure browser connection to WWWOFFLE using HTTPS.
+ Added ability to cache SSL connection data (https) (config file options).
+ Added a page to show information about the SSL certificates stored by WWWOFFLE.
+
+Documentation:
+ Add new documentation about HTTPS SSL/TLS security, trust and WWWOFFLE.
+
+
+*NOTE* If you want to enable HTTPS/SSL functions in WWWOFFLE you must enable it
+       when running configure prior to compiling.  It is not enabled by default.
+
+*NOTE* If you have compiled WWWOFFLE with gnutls there will be a delay the first
+       time that wwwoffled is started and the first time each https server is
+       accessed due to the creation of secure encryption keys.
+
+
+Since version 2.9-beta-ssl:
+
+Bug Fixes:
+ Fix script removal tag attribute confusion.  Fix cygwin handling of certificate
+ filenames.  Fix audit-usage.pl so that it works with syslog output.  Make sure
+ trusted certificates have valid dates.  Detect and fetch background images in
+ table cells.  Lower the logging level of some unimportant warning messages.
+
+New Features:
+ Added an option 'cookies-force-refresh' so requests with cookies are refreshed.
+
+
+
+Availability
+------------
+
+Version 2.9 uploaded
+
+HTTP server: http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.9.tgz
+
+Web page: http://www.gedanken.demon.co.uk/wwwoffle/
+
+
+Author & Copyright
+------------------
+
+This program is copyright Andrew M. Bishop 1996,97,98,99,2000,01,02,03,04,05,06
+(amb@gedanken.demon.co.uk) and distributed under GPL.
+
+email: amb@gedanken.demon.co.uk
+[Please put wwwoffle in the subject line]

@@ -1,0 +1,81 @@
+Building wwwoffle 2.7d fror Redhat systems
+==========================================
+
+I enclose some files I use for building wwwoffle 2.7d RPMs.
+
+wwwoffle.spec
+=============
+
+wwwoffle.spec is the most important, it tells the rpm command how to build the RPMs.
+
+Copy this file to /usr/src/redhat/SPECS.
+
+DontGet.txt
+===========
+
+[see the directory ../dontget]
+
+Copy this file to /usr/src/redhat/SOURCES.
+
+wwwoffle_hints-tips.txt
+=======================
+
+This is just a copy of
+http://www.gedanken.demon.co.uk/wwwoffle/version-2.7/hints_tips.html
+rendered to text by Netscape.
+
+Copy this file to /usr/src/redhat/SOURCES.
+
+wwwoffled.rc
+============
+
+This is the init script that will be copied to /etc/rc.d/init.d.
+
+Copy this file to /usr/src/redhat/SOURCES.
+
+
+wwwoffle-2.7d.tgz
+=================
+
+Copy http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.7d.tgz
+to /usr/src/redhat/SOURCES.
+
+
+The build
+=========
+
+Just cd to /usr/src/redhat/SPECS, then type 'rpm -ba wwwoffle.spec'
+this will build a binary RPM in /usr/src/redhat/RPMS/i386/.
+
+The sorce RPM will be in /usr/src/redhat/SRPMS/.
+
+
+Channges from the defaults
+==========================
+
+The daemon runs with user and group IDs wwwoffle, which are created
+during the install of thhe binary RPM.
+
+The configuration files are stored in a new directory /etc/wwwoffle
+which is owned by the new user 'wwwoffle', allowing run-time
+reconfiguration via the web pages.
+
+/var/spool/wwwoffle has empty subdirectories ftp and finger.
+
+
+Notes
+=====
+
+Based upon the RPM for wwwoffle 2.6 found on rpmfind.net, including
+the trenslations of the descriptions and summaries.
+
+The user is left to update /etc/ppp/ip-{up,down}.local.  I use 
+'wwwoffle -online' and 'wwwoffle -fetch' in ip-up.local, and
+'wwwoffle -offline' in ip-down.local.
+
+
+Compatibility
+=============
+
+Builds fine under Redhat 6.2 and 7.2, so should also build on all
+recent distributions.

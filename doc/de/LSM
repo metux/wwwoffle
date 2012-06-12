@@ -1,0 +1,28 @@
+Begin3
+Title:		WWWOFFLE - World Wide Web Offline Explorer
+Version:	2.6d [Jul-01-01]
+Entered-Date:	01JUL01
+Description:	Ein (HTTP/FTP) Proxy Server für Computer mit
+		Wählverbindungen ins Internet. Folgendes wird unterstützt:
+		- Seiten werden lokal gespeichert und können jederzeit
+		  erneut abgerufen werden, auch OHNE Verbindung ins Internet
+		- Seiten, die nicht lokal vorhanden sind, werden 'bestellt'.
+		- Seiten können abonniert, d.h. regelmäßig heruntergeladen,
+		  werden; dies auch rekursiv.
+		- Alle lokal vorhandenen Seiten sind auf verschiedene Weisen
+		  indiziert und durchsuchbar.
+		- Steuerung erfolgt per Web-Browser, Kommandozeile und einer
+		  einfachen Konfigurationsdatei
+		- Jede Meldung von WWWOFFLE kann durch eigene ersetzt werden
+		  (so wurde auch diese Übersetzung realisiert)
+		- WWWOFFLE unterstützt verschiedene Authentifikationsmethoden
+Keywords:       WWW HTTP FTP proxy offline server
+Author:         amb@gedanken.demon.co.uk
+Maintained-by:  amb@gedanken.demon.co.uk
+Primary-site:   ftp.demon.co.uk /pub/unix/httpd
+                630k wwwoffle-2.6d.tgz
+Alternate-site: ftp.ibiblio.org /pub/Linux/apps/www/servers
+Original-site:  
+Platforms:      UNIX
+Copying-policy: GPL
+End

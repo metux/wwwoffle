@@ -1,0 +1,27 @@
+#!/bin/sh
+
+#### THE SPOOL DIR IS "SPOOLDIR" IN THE LINE BELOW ####
+
+wwwoffle_spool=SPOOLDIR
+
+####
+
+cd $wwwoffle_spool
+
+# Set the path to include the mknmz executable
+
+PATH=$PATH:/usr/local/bin
+export PATH
+
+# Set up a log file.
+
+echo > search/namazu/wwwoffle-namazu.log
+
+# Do the indexing
+
+mknmz-wwwoffle -f search/namazu/conf/mknmzrc \
+               -T search/namazu/conf \
+               -O search/namazu/db \
+               -V \
+               http ftp \
+    >> search/namazu/wwwoffle-namazu.log 2>&1

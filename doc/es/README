@@ -1,0 +1,809 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Versión 2.6
+          ========================================================
+
+El programa WWWOFFLE simplifica la navegación por la telaraña mundial en 
+ordenadores que usan una conexión intermitente (dial-up) a Internet.
+
+Descripción
+-----------
+
+El servidor WWWOFFLE es un simple servidor proxy con características
+especiales para ser usado con conexiones intermitentes (dial-up) a Internet.
+Esto significa que es posible navegar por páginas y leerlas sin tener que
+permanecer conectado.
+
+
+Características Básicas
+    - Almacenamiento de protocolos HTTP, FTP y finger.
+    - Permite los métodos HTTP 'GET', 'HEAD', 'POST' y 'PUT'.
+    - Control de estado (Conectado/Desconectado/Auto-llamada) interactivo 
+      o en línea de comandos.
+    - Altamente Configurable.
+    - Bajo Mantenimiento, los estados Arranque/Parada y
+      Conectado/Desconectado pueden ser automatizados.
+
+Mientras se está Conectado
+    - Almacenado de páginas que se están viendo para releerlas más tarde.
+    - Recogida de sólo las páginas que han cambiado.
+        - Basada en la fecha de caducidad, el tiempo desde la
+          última recogida o una vez por sesión.
+    - Soporte sin Almacenamiento de SSL (Secure Socket Layer) (https).
+    - Puede ser usado con uno o más proxys externos basado en páginas web.
+    - Controla que páginas no pueden ser accedidas.
+        - Permite el reemplazo de páginas bloqueadas.
+    - Controla que páginas no se deben almacenar en la caché.
+
+Mientras se está Desconectado
+
+    - Puede ser configurado para ser usado con llamada-bajo-demanda con
+      páginas que no están almacenadas.
+    - Selección de páginas para ser bajadas la siguiente vez que se
+      conecte.
+        - Usando un navegador para seguir los enlaces.
+        - Desde la interfaz de línea de comandos para seleccionar
+          las páginas.
+    - Controla qué páginas puedes ser pedidas cuando está desconectado.
+    - Proporciona acceso sin almacenamiento a servidores de intranet.
+
+Recogida Automática
+
+    - Recogida de las páginas especificadas de forma no interactiva.
+    - Opciones para descargar objetos de las páginas seleccionadas.
+            - Entiende varios tipos de página.
+                    - HTML 4.0, clases Java, VRML (parcialmente), XML
+                      (parcialmente).
+            - Opciones para descargar diferente tipos de objetos
+                    - Imágenes, Hojas de Estilo, Marcos, Guiones, Java
+                      u otros objetos.
+    - sigue automáticamente enlaces de las páginas que han sido trasladadas.
+    - Puede monitorizar páginas a intervalos regulares para descargar
+      las que han cambiado.
+    - Recogida recursiva
+        - Hasta la profundidad especificada.
+        - En cualquier servidor o limitada al mismo servidor o directorio.
+        - Seleccionada desde la línea de comandos o desde un navegador.
+        - Controla que enlaces puedes ser recogidos recursivamente.
+
+Conveniencia
+    - Pie de página opcional en las páginas HTML mostrando la fecha de
+      almacenamiento y otras opciones.
+    - Opciones para modificar las páginas HTML
+        - Quitar el Javascript.
+        - Parar los GIFs animados.
+        - Indicar los enlaces almacenados y no almacenados.
+        - Quitar la etiqueta de parpadeo (blink tag).
+    - Configuración automática del proxy para Netscape.
+    - Búsqueda en la caché con la adición del programa ht://Dig o UdmSearch.
+    - Pequeño servidor web integrado para las páginas locales.
+    - Tiempos de espera para evitar bloqueos del proxy
+        - Búsqueda en el servidor de nombres (DNS).
+        - Conexión al servidor remoto.
+        - Transferencia de datos.
+    - Continua o para una descarga interrumpida por el cliente.
+        - Basada en el tamaño del fichero o fracción descargada.
+    - Eliminación de las páginas de la caché
+        - Basada en la correspondencia de URL.
+        - Para tener el tamaño de la caché bajo un límite
+          específico.
+        - Para tener el espacio libre de un disco sobre un límite 
+          específico.
+        - Control interactivo o en línea de comandos.
+
+Índices
+    - Múltiples índices de las páginas almacenadas en la caché
+        - Servidores por cada protocolo (http, ftp ...).
+        - Páginas en cada servidor.
+        - Páginas esperando ser recogidas.
+        - Páginas recogidas la última conexión
+        - Páginas monitorizadas de una forma regular.
+    - Índices Configurables
+        - Ordenados por nombre, fecha, nombre del dominio del
+          servidor, tipo de fichero.
+        - Opciones para borrar, recargar o monitorizar páginas.
+        - Selección de una completa lista de páginas u ocultación de 
+          las páginas no interesantes.
+
+Seguridad
+    - Trabaja con páginas que requieren autentificación básica de
+      nombre/contraseña.
+    - Automatiza la autentificación frente a proxys externos que lo
+      requieran.
+    - Controla el acceso al proxy
+        - Por defecto sólo permite sólo acceso local.
+        - Acceso de huéspedes configurado por nombre de huésped o IP.
+        - Autentificación opcional del proxy a nivel de usuario.
+    - Control opcional mediante contraseña para la administración del proxy.
+    - Puede censurar las cabeceras HTTP entrantes y salientes para
+      mantener la privacidad del usuario.
+
+Configuración
+    - Todas las opciones se controlan usando un fichero de configuración.
+    - Página web interactiva para la edición del fichero de configuración.
+    - Páginas de error e información personalizables por el usuario.
+
+Cómo configurar un Navegador Web
+--------------------------------
+
+Para usar el programa WWWOFFLE, se requiere que su navegador esté configurado 
+para usar un proxy. El nombre del proxy será 'localhost' (o el nombre del
+servidor en el que wwwoffle se esté ejecutando),y el número de puerto que
+esté usando wwwoffled (por defecto 8080).
+
+Configuración Manual
+
+    Netscape V1:
+        En la ventana de diálogo Opciones->Preferencias, teclee localhost 
+        como proxy http y ftp y 8080 como número de puerto.
+
+    Netscape V2,3:
+        En la ventana de diálogo Opciones->Preferencias, bajo la casilla 
+        Proxies seleccione la opción "Configuración Manual de Proxy" y
+        teclee localhost como proxy http y ftp y 8080 como número de
+        puerto.
+
+    Netscape V4:
+        En la ventana de diálogo Edición->Preferencias seleccione Avanzado 
+        y luego Proxies, seleccione la opción "Configuración Manual de
+        Proxy" y teclee localhost como proxy http y ftp y 8080 como número
+        de puerto.
+
+    Mosaic V2.6, Lynx, Arena, Emacs-W3:
+        Ponga las variables de entorno http_proxy y ftp_proxy apuntando a
+        http://localhost:8080/
+
+Configuración Automática
+
+    Netscape 2+:
+        En vez de seleccionar la opción "Configuración Manual de Proxy" como 
+        se describe arriba seleccione la opción "Configuración
+        Automática de Proxy" y escriba http://localhost:8080/wwwoffle.pac en
+        la caja de entrada de texto.
+
+También necesitará desactivar el caché que el navegador realiza entre 
+sesiones para obtener el mejor resultado del programa.
+
+Dependiendo de que navegador use y que versión, es posible pedir páginas
+mientras se está desconectado.  Esto se hace usando en botón "recargar" en
+el navegador.  En muchos navegadores, hay dos formas de hacerlo, una fuerza
+al proxy a recargar la página, y es esta la que causará que la página se
+refresque.
+
+La última información de compatibilidad de navegadores está disponible en:
+http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/browser.html
+
+
+Página de Bienvenida
+--------------------
+
+Hay una página de bienvenida en la URL 'http://localhost:8080/' que da una
+somera descripción del programa y tiene enlaces a las páginas índice,
+página interactiva de control y las páginas de WWWOFFLE en Internet.
+
+Los sitios más importantes para encontrar información sobre WWWOFFLE son la
+página web 'http://www.gedanken.demon.co.uk/wwwoffle/' que contiene información
+de WWWOFFLE en general.  O incluso mejor la página de usuario de la versión 2.6
+de WWWOFFLE 'http://www.gedanken.demon.co.uk/wwwoffle/Version-2.6/user.html'
+que tiene más información acerca de esta versión de WWWOFFLE.
+
+
+Índice de Ficheros Almacenados
+------------------------------
+
+Para ver el índice de ficheros almacenados, use la URL 
+'http://localhost:8080/index/'.
+Hay suficientes enlaces en cada página página índice como para permitir 
+fácilmente la navegación por las páginas.
+
+Los índices suministran diversos niveles de información:
+   Una lista de peticiones salientes.
+   Una lista de los ficheros recogidos en la última conexión y también 
+      de las 5 veces anteriores.
+   Una lista de los ficheros pedidos la última vez que el programa estuvo 
+      desconectado. y también de las 5 veces anteriores.
+   Una lista de los ficheros que están siendo monitorizados.
+   Una lista de los ficheros recogidos recientemente.
+   Una lista de todos los servidores por cada protocolo (http,ftp etc.).
+   Una lista de todos los ficheros de un servidor en particular.
+
+Estos índices pueden ser ordenados de diferentes formas:
+   Sin ordenar
+   Por tiempo desde la última modificación (cambio).
+   Por tiempo del último acceso.
+   Por fecha de la última modificación con marcas para cada día.
+   Alfabéticamente.
+   Por extensión del fichero.
+
+Para cada una de las páginas que son almacenadas hay opciones para borrarla,
+recargarla, seleccionar la página interactiva de recarga con la URL ya
+rellenada o añadir la página a la lista que se monitorea regularmente.
+
+También es posible especificar en el fichero de configuración que URLs no 
+se deben listar en los índices.
+
+
+Página Interactiva de Recarga
+-----------------------------
+
+Se pueden especificar páginas usando cualquier método que provea el navegador
+que se está usando o alternativamente se puede usar la página
+interactiva de recarga. Esta permite al usuario introducir la URL y luego 
+descargarla si no está almacenada o recargarla si está en la caché. Hay
+también una opción de recogida recursiva de las páginas que están enlazadas
+a la página especificada. Esta recogida recursiva se puede limitar a las
+páginas del mismo servidor, estrechada a los enlaces en el mismo directorio
+(o subdirectorio) o ensanchada para descargar páginas de cualquier servidor
+web. Esta funcionalidad se provee también desde la línea de comandos del
+programa 'wwwoffle'.
+
+
+Cómo Monitorizar Páginas Web
+----------------------------
+
+Se pueden especificar páginas para que sean monitorizadas a intervalos 
+regulares. Esto puede ser cada vez que WWWOFFLE está conectado o en
+intervalos especificados por el usuario. La página será monitorizada
+cuando se cumplan las cuatro condiciones especificadas:
+Un mes del año en el que se puede descargar la página (se puede poner a todos 
+los meses). 
+Un día del mes en el que se puede descargar la página (se puede poner a todos 
+los días). 
+Un día de la semana en el que se puede descargar la página (se puede poner 
+a todos los días). 
+Una hora del día en la que la página debe ser recogida (puede ser más de una). 
+Por ejemplo, para descargar la URL cada sábado por la mañana, use lo siguiente:
+
+Mes del año: todos
+Día del mes: todos
+Día de la semana: Sábado
+Hora del día: 0 (Reloj de 24 horas)
+
+
+Página Interactiva de Control
+-----------------------------
+
+El comportamiento del modo de operación del demonio WWWOFFLE se puede
+controlar desde una página interactiva de control situada en 
+'http://localhost:8080/control/'.
+Esta tiene un número de botones que cambian el modo del servidor proxy.
+Estos proveen las mismas funciones que la linea de comandos del programa 
+'wwwoffle'. Por seguridad esta página se puede proteger con contraseña. 
+También se pueden borrar páginas de la caché o de las encoladas en el 
+directorio de peticiones salientes.
+
+
+Página Interactiva de Edición del Fichero de Configuración
+----------------------------------------------------------
+
+La página interactiva de edición del fichero de configuración permite editar 
+el fichero wwwoffle.conf.  Esto se puede hacer desde la página de control 
+'http://localhost:8080/control/'. Cada sección en el fichero de configuración
+tiene una caja de diálogo separada que permite cambiar los contenidos de la 
+sección de configuración. Los comentarios del fichero de configuración se
+muestran en la página para que la descripción de los diferentes valores
+se pueda consultar fácilmente. Tras actualizar el contenido de las secciones
+el fichero de configuración puede ser releído seleccionando el enlace al 
+final de la página.
+
+
+Búsqueda en la Caché
+--------------------
+
+Se pueden usar dos programa indexadores de páginas web ht://Dig y UdmSearch
+para crear un índice de búsqueda de la caché de WWWOFFLE.
+
+Para usar ht://Dig se necesita la versión 3.1.0b4 o posterior. Lo puede 
+encontrar en http://htdig.sdsu.edu/
+
+Para usar UdmSearch necesita la versión 3.0.0 o posterior. Lo puede
+encontrar en http://search.mnogo.ru/download.html.
+
+Los formularios de búsqueda de estos programas se encuentran en la página
+'http://localhost:8080/search/htdig/' y
+'http://localhost:8080/search/udmsearch/'. Estos formularios permiten a los
+programa de búsqueda encontrar la páginas web de la caché que quiera.
+
+Para consultar más información sobre la configuración de estos programa
+debería leer los ficheros README.htdig o README.udmsearch.
+
+
+Servidor Web Incorporado
+-----------------------
+
+Cualquier URLs dirigida a WWWOFFLE en el puerto 8080 que se refiera al 
+directorio '/local/' es cogida de los ficheros en el subdirectorio
+'html/local'del directorio de almacenaje. Esto permite el manejo de
+páginas web sin el uso de un servidor web separado, no se permiten CGIs.
+El tipo MIME usado para estos ficheros son los que se especifican en el
+fichero de configuración.
+
+Importante: El servidor web local seguirá enlaces simbólicos, pero solo 
+            permitirá el acceso a ficheros que sean de lectura para todo 
+            el mundo. Lea el FAQ para informarse sobre aspectos de seguridad.
+
+
+Cómo Borrar peticiones
+----------------------
+
+Si no se usa una contraseña para las páginas de control entonces cualquier 
+persona puede borrar las peticiones que están guardadas.  Si se ha
+asignado una contraseña entonces los usuarios que conozcan esta contraseña
+pueden borrar las peticiones (o fichero almacenado o cualquier otra cosa).
+los usuarios que no sepan la contraseña pueden borrar las páginas que han 
+pedido siempre que lo hagan antes de que aparezca la página "Se Descargará",
+El botón "Cancelar" tiene una contraseña,que solo funcionará una vez, que 
+borrará esa petición.
+
+
+Copias de Seguridad de las páginas
+----------------------------------
+
+Cuando se descarga una página mientras se está conectado cualquier error
+sobreescribirá la página existente.  En este caso se creará una copia de 
+seguridad de la página para que cuando se lea el error mientras se está
+desconectado se reemplace por la página que había anteriormente en la
+caché. Esto es automático para todos los casos de ficheros que han tenido un 
+error del servidor remoto (y que no usan proxys externos), no se
+necesita intervención por parte del usuario.
+
+
+Ficheros de Bloqueo
+-------------------
+
+Cuando un proceso de WWWOFFLE está bajando un fichero, cualquier otro proceso 
+WWWOFFLE que intente leer ese mismo fichero no podrá hacerlo mientras el
+primero no haya acabado. Esto elimina el problema de visualización de
+páginas incompletas en el segundo navegador o la recogida de una segunda
+copia de la página que se está recogiendo. Si el fichero de bloqueo no es
+borrado por el primer proceso en un período de tiempo entonces el segundo
+proceso producirá un error indicando el problema.
+
+Esto es ahora una opción configurable, la opción por defecto es que no se
+usen fichero de bloqueo.
+
+Descripción del Directorio Almacén
+----------------------------------
+
+En el directorio almacén hay un directorio para cada uno de los protocolos
+de red que son manejados.  En cada directorio hay un directorio para cada
+servidor que ha sido contactado y tiene páginas guardadas. Estos directorios
+tiene el nombre del servidor.  En cada uno de estos directorios hay una
+entrada por cada una de las páginas almacenadas, generada usando una tabla
+de referencias(hash) para darle una longitud constante.  La entrada consiste
+en dos ficheros, uno precedido por 'D' que contiene los datos y otro
+precedido por 'U' que contiene la URL.
+
+El directorio saliente es un sólo directorio que contiene todas las
+peticiones pendientes, en el mismo formato de dos ficheros pero usando 'O'
+para el fichero que contiene la petición,en vez de 'D' y otro precedido por
+'U' que contiene la URL.
+
+Los directorios "lasttime"(y "prevtime") son un solo directorio que contiene
+una entrada por cada uno de los ficheros que fueron recogidos la última vez
+que el programa estuvo conectado.  Cada entrada consiste de dos ficheros uno
+precedido por 'D' que es un enlace duro al fichero real y otro precedido por
+'U' que contiene la URL.
+
+Los directorios "lastout"(y "prevtime") son un solo directorio que contiene
+una entrada por cada uno de los ficheros que fueron pedidos la última vez
+que el programa estuvo desconectado.  Cada entrada consiste de dos ficheros uno
+precedido por 'D' que es un enlace duro al fichero real y otro precedido por
+'U' que contiene la URL.
+
+El directorio "monitor" es un solo directorio que contiene todas la
+peticiones regulares que son monitorizadas. El formato es el mismo que el de
+peticiones salientes con dos ficheros con los prefijos 'O' y 'U'.
+También hay otro ficheros con el prefijo 'M' que contiene información sobre
+cuando monitorizar la URL.
+
+
+Los Programas y el Dichero de Configuración
+-------------------------------------------
+
+Hay tres programas que componen esta utilidad, con tres funciones distintas.
+
+wwwoffle  - Un programa que interactúa y controla el demonio proxy HTTP.
+
+wwwoffled - Un proceso demonio que actúa como un proxy HTTP.
+wwwoffles - Un servidor que hace la recogida de las páginas web.
+
+la función de wwwoffles se combina con la de wwwoffled desde la versión 1.1
+en adelante.  Esto es así para simplificar el procedimiento de arranque de
+servidores y permitir futuras mejoras.
+
+El fichero de configuración, llamado wwoffle.conf por defecto contiene todos 
+los parámetros que son usados para controlar la forma en la que wwwoffled 
+y wwwoffles actúan.
+
+
+WWWOFFLE - Programa de Control del Usuario
+------------------------------------------
+
+El programa de control (wwwoffle) se usa para controlar la acción del
+programa demonio (wwwoffled), o para pedir páginas que no están en la caché.
+
+El programa demonio necesita saber si el sistema está conectado o no, cuando
+descargar páginas pedidas anteriormente o cuando se necesita purgar las
+páginas viejas de la caché.
+
+
+El primer modo de operación es para controlar el demonio.  Estas son todas
+las funciones que también están disponibles en la página interactiva de 
+control (excepto kill).
+
+wwwoffle -online        Indica al demonio que el sistema está conectado
+
+wwwoffle -autodial      Indica al demonio que el sistema está en modo 
+                        auto marcado esto usará las páginas almacenadas si
+                        existen y usará la red como último caso, para
+                        sistemas en llamada bajo demanda.
+
+wwwoffle -offline       Indica al demonio que el sistema está desconectado.
+
+wwwoffle -fetch         Ordena al demonio descargar las páginas que fueron
+                        pedidas por los navegadores mientras el sistema
+                        estuvo desconectado. wwwoffle sale cuando la
+                        recogida ha sido completada. (Esto requiere
+                        informar al demonio de que se está conectado).
+
+wwwoffle -config        Causa la relectura del fichero de configuración.
+                        El fichero de configuración también puede ser releído 
+                        mandando una señal HUP al proceso wwwoffled.
+
+wwwoffle -purge         Ordena al demonio purgar la caché de páginas que son 
+                        más viejas que el número de días indicado en el
+                        fichero de configuración, usando la hora de
+                        modificación o acceso. O si se ha especificado un
+                        máximo de tamaño entonces borra las páginas más viejas
+                        hasta que no se exceda el tamaño máximo.
+
+wwwoffle -kill          Causa la salida limpia del demonio.
+
+
+El segundo modo de operación es especificar las URLs a descargar.
+
+wwwoffle <URL> .. <URL> especifica al demonio las URLs que se deben
+                        descargar. Si se está conectado se descargan 
+                        inmediatamente, si no la petición se almacena para 
+                        descargarlas más tarde.
+
+wwwoffle <fichero> ...  Especifica el fichero HTML a leer y trata todos los 
+                        enlaces como si se hubieran especificado en la
+                        línea de comando.
+
+wwwoffle -F             Fuerza al servidor wwwoffle a recargar la URL.
+                        (O descargarla si no está almacenada.)
+
+wwwoffle -g[Sisfo]      Especifica que las URLs cuando se recojan se tienen 
+                        que inspeccionar en busca de Hojas de Estilo (s),
+                        imágenes (i), guiones (s), marcos (f) u objetos
+                        (o) y que también se tienen que descargar.
+
+wwwoffle -r[<profundidad>]    Especifica que en la URL cuando se recoja, se
+                              seguirán los enlaces y que esas páginas también 
+                              se descargarán (hasta una profundidad especificada 
+                              por el parámetro opcional "profundidad", por
+                              defecto es 1). Solo se descargarán ficheros en 
+                              el mismo servidor.
+
+wwwoffle -R[<profundidad>]    Esto es lo mismo que la opción '-r' con la 
+                              excepción de que se seguirán los enlaces, aunque
+                              estén en otro servidor.
+
+wwwoffle -d[<profundidad>]    Esto es lo mismo que la opción '-r' excepto que 
+                              los enlaces solo se seguirán si están en el mismo
+                              directorio o subdirectorio.
+
+El tercer modo de operación es descargar la URL de la caché.
+
+wwwoffle <URL>          Especifica la URL a descargar.
+
+wwwoffle -o             Coge la URL y saca su contenido por la salida estándar
+                        (O la pide si no está almacenada.)
+
+wwwoffle -O             Coge la URL y saca su contenido por la salida estándar
+                        incluyendo las cabecera HTTP.
+                        (O la pide si no está almacenada.)
+
+
+El último modo de operación es la ayuda acerca de los otros modos.
+
+wwwoffle -h             Da ayuda acerca de las opciones de la línea de comandos.
+
+
+Con cualquiera de los tres primeros modos de operación el servidor WWWOFFLE
+puede ser especificado de tres formas diferentes.
+
+wwwoffle -c <fichero-configuración>
+                        Puede se usado para especificar el fichero de 
+                        configuración que contiene los números de puertos,
+                        el nombre del servidor (La primera entrada en la
+                        sección LocalHost) y la contraseña (si se requiere
+                        para el primer modo de operación). Si hay
+                        contraseña esta es la única forma de especificarla.
+
+wwwoffle -p <huésped>[:<puerto>]
+                        Puede usarse para especificar el servidor y el puerto 
+                        en el cual el programa demonio escuchará para controlar
+                        los mensajes (primer modo) o las conexiones proxy 
+                        (segundo y tercer modos).
+
+WWWOFFLE_PROXY          Una variable de entorno que se puede usar para 
+                        especificar por igual el argumento de la opción -c
+                        (debe ser el camino completo) o el argumento de la
+                        opción -p.  (En este caso se pueden especificar
+                        dos puertos), el primero para la conexión
+                        proxy y el segundo para el control de la conexión 
+                        p.e. 'localhost:8080:8081' o 'localhost:8080'.)
+
+
+WWWOFFLED - Programa Demonio
+----------------------------
+
+El programa demonio (wwwoffled) se ejecuta como un proxy HTTP y también acepta
+conexiones del programa de control (wwwoffle).
+
+El programa demonio necesita conocer el estado actual del sistema, Conectado
+o Desconectado, así como otros parámetros del fichero de configuración.
+
+Cada vez que se realiza una conexión al proxy HTTP, el programa crea una copia 
+de si mismo (la función wwwoffles) para atender la petición. El programa
+servidor también puede bifurcarse en respuesta a la petición, por parte del 
+programa wwwoffle, de páginas para ser recogidas.
+
+
+wwwoffled -c <fichero-configuración> Comienza el demonio con el nombre del 
+                                     fichero de configuración.
+
+wwwoffled -d [nivel]                 Comienza el demonio en modo de depurado.
+                                     p.e. no se descuelga del terminal y usa 
+                                     la salida de error estándar para mostrar 
+                                     los mensajes. El nivel numérico opcional
+                                     (0 para ninguno y 5 para todo)
+                                     especifica el nivel de mensajes de error 
+                                     que se mostrarán. Si no se especifica 
+                                     ninguno se usará la variable log-level 
+                                     del fichero de configuración.
+
+wwwoffled -p                         Imprime el pid(número de identificación de 
+                                     proceso) del demonio en la salida estándar 
+                                     antes de descolgarse del terminal.
+
+wwwoffled -h                        Da ayuda acerca de las opciones de la línea 
+                                    de comandos.
+
+
+Hay un número de mensajes error y de información que genera el programa
+mientras se ejecuta. Por defecto (en el fichero de configuración) estos van
+al histórico del sistema. Usando la opción -d el demonio no se descuelga del 
+terminal y los errores va también a la salida de error estándar.
+
+Usando las opciones "run-uid" y "run-gid" en el fichero de configuración,
+es posible cambiar la identificación de usuario con la que se ejecuta el 
+sistema Esto requerirá que el programa sea iniciado por root y que el
+usuario especificado tenga acceso al directorio almacén.
+
+
+WWWOFFLES - Programa Servidor
+-----------------------------
+
+El servidor (wwwoffles) comienza siendo desdoblado del demonio (wwwoffled) 
+en uno de tres diferentes modos.
+
+Real  - Cuando el sistema está conectado y actúa como servidor proxy para el 
+        navegador. Todas las peticiones de páginas web son atendidas
+        creando un nuevo servidor que conectará al servidor remoto y
+        que descargará la página. Esta página es almacenada en la caché y 
+        devuelta al navegador. Si la páginas ya está en la caché entonces
+        se pregunta al servidor remoto si existe una nueva versión de la
+        página, sino se usa la versión de la caché.
+
+SpoolOrReal - Cuando el sistema está en modo de auto marcado y no hemos decidido
+        si iremos a modo Real o Spool.  Se selecciona modo Spool si la 
+        página ya está guardada y modo Real como último recurso.
+
+Fetch - Cuando el sistema está conectado y recogiendo página que ha sido 
+        pedidas.  Todas la peticiones de páginas web que estén en el 
+        directorio saliente son recogidas por el servidor conectando con el 
+        servidor remoto para  la página. Esta página se guarda entonces 
+        en la caché si no hay ningún navegador activo. Si la página ha sido 
+        movida entonces se sigue el enlace y es este el que se descarga.
+
+Spool - Cuando el sistema está desconectado y se está actuando como proxy 
+        para un navegador. Todas las peticiones de páginas web son atendidas 
+        creando un servidor que o devolverá una página almacenada en la
+        caché o almacenará la petición. Si la página está almacenada, será
+        devuelta al navegador, si no se devuelve una página simple (y se
+        almacena en la caché), y se almacena la petición saliente. Si la
+        página almacenada se refiere a una página que falló al ser 
+        recogida se borra de la caché.
+
+Dependiendo de la existencia de ficheros en la caché y otras condiciones,
+el modo puede cambiar a varios más.
+
+RealNoCache - Para peticiones de páginas en la máquina servidor o para las que
+              han sido especificadas en el fichero de configuración para no ser 
+              guardadas. 
+
+RealRefresh - Usado por el botón de recarga en el índice del programa wwwoffle
+              para volver a descargar una página mientras el sistema está 
+              conectado.
+
+RealNoPassword - Usado cuando se provee una contraseña y se necesitan dos 
+              copias de la misma página, una con contraseña y la otra sin ella.
+
+SpoolGet - Usado cuando la página no existe en la caché por lo que se debe 
+           guardar una petición en el directorio saliente.
+
+SpoolWillGet - Usado cuando la página no está en la caché pero ya existe
+               una petición en el directorio saliente.
+
+SpoolRefresh - Usado cuando se pulsa el botón de recarga en la página índice
+               o se usa el programa wwwoffle. La página guardada (si existe) 
+               no es borrada pero se almacena una petición.
+
+SpoolPragma - Usado cuando el navegador pide a la caché que recargue la página
+              usando la cabecera 'Pragma: no-cache', La página guardada
+              no es modificada (si existe una), pero se almacena la petición.
+
+SpoolInternal - Usado cuando el programa está generando una página web 
+                internamente o está almacenando una página web sin 
+                modificaciones. Esto crea un fichero temporal y puede poner
+                la cabecera Content-Length correcta, midiendo el tamaño.
+
+WWWOFFLE-TOOLS - Programa de Mantenimiento de la Caché
+------------------------------------------------------
+
+Esto es un parche rápido que escribí para permitir listar el contenido
+de la caché o mover los ficheros de esta.
+
+Todos los programa deben ser llamados desde el directorio almacén.
+
+wwwoffle-rm     - Borra la URL que se especifica en la línea de comandos.
+                  Para borrar todas las URLs de un servidor es más fácil usar
+                  'rm -r http/foo' que usar esto.
+
+wwwoffle-mv     - Para renombrar el directorio de un servidor a otro nombre.
+                  Dado que la URL está codificada en el fichero si renombra
+                  sólo el directorio no funcionará. En vez de hacer 
+                  'mv http/foo http/bar' use 'wwwoffle-mv http/foo http/bar'.
+
+wwwoffle-ls     - Para listar los ficheros en el directorio al estilo de 
+                  'ls -l'. Por ejemplo use 'wwwoffle-ls http/foo' para listar 
+                  las URLs almacenadas en el directorio http/foo.
+
+wwwoffle-read   - Lee directamente de la caché los datos de la URL
+                  especificada en la línea de comandos. Saca la salida por 
+                  la salida estándar (stdout).
+
+wwwoffle-write  - Escribe directamente en la caché los datos de la URL
+                  especificada en la línea de comandos desde la entrada 
+                  estándar (stdin).  Note que requiere la introducción de 
+                  una cabecera HTTP o los navegadores pueden confundirse. 
+                  (echo "HTTP/1.0 200 OK"; echo "" ; cat bar.html ) | \
+                  wwwoffle-write http://www.foo.com/bar.html
+
+Estos son básicamente parches y no pueden considerarse como características 
+plenamente funcionales y probadas completamente.
+
+
+audit-usage.pl - guión Perl para chequear ficheros de log
+----------------------------------------------------------
+
+El script audit-usage.pl puede ser usado para descargar información de los
+mensajes del histórico del programa wwwoffled.
+
+Si wwwoffled es ejecutado como
+
+wwwoffled -c /var/spool/wwwoffle/wwwoffle.conf -d 4
+
+en la salida de error estándar se generará información mientras se ejecuta 
+el programa. El nivel de depuración necesita ser de 4 para que se
+muestre información de las URL.
+
+Si esta es capturada en un fichero histórico entonces puede ser analizada 
+mediante el programa audit-usage.pl.  Este programa mostrará el huésped desde 
+el que se ha hecho la conexión y la URL que se ha pedido.  También incluye 
+información del tiempo de conexión y las conexiones realizadas al centro de
+control de WWWOFFLE.
+
+
+Programa de Testeo
+------------------
+
+En el directorio 'testprogs' hay dos programas de testeo que se pueden compilar
+si lo requiere.  WWWOFFLE no los necesita para funcionar, pero si está 
+personalizando las páginas de información de WWWOFFLE o intentando depurar
+el parser HTML entonces le serán útiles.
+
+Estos son aún más apaños que los programas wwwoffle-tools, úselos por su 
+cuenta y riesgo.
+
+
+Autor y Copyright
+-----------------
+
+Los dos programas wwwoffle y wwwoffled fueron escritos por Andrew M. Bishop en
+1996,97,98,99,2000 y son copyright Andrew M. Bishop 1996,97,98,99,2000.
+
+Los programas update-cache, endian-cache y los comandos conocidos como 
+wwwoffle-tools fueron escritos por Andrew M. Bishop in 1997,98,99,2000 y son
+copyright Andrew M. Bishop 1997,98,99,2000.
+
+Los guiones Perl update-config.pl y audit-usage.pl fueron escritos por Andrew
+M. Bishop en 1998,99,2000 y son copyright Andrew M. Bishop 1998,99,2000.
+
+Pueden ser distribuidos libremente de acuerdo con los términos de la Licencia
+Pública General GNU (vea el fichero `COPYING').
+
+Si quiere informar de algún fallo o hacer comentarios acerca de los programas 
+escriba al autor amb@gedanken.demon.co.uk y ponga WWWOFFLE en la línea del 
+asunto.
+
+
+Ht://Dig
+- - - -
+
+El paquete htdig es copyright de Andrew Scherpbier <andrew@contigo.com>. Los 
+iconos en el directorio html/htdig provienen de htdig así como también los
+ficheros html/htdig/search.html  y html/htdig/conf/htsearch.conf con 
+modificaciones mías.
+
+UdmSearch
+- - - - -
+
+El paquete UdmSearch es copyright Lavtech.Com Corp y se distribuye bajo la
+GPL. El icono Udm en el directorio html/search/udmsearch proviene de
+UdmSearch así como los ficheros html/search/udmsearch/search.html y
+html/udmsearch/conf/indexer.conf con modificaciones mías.
+
+Con Contribuciones de Código de
+- - - - - - - - - - - - - - - -
+
+Yannick Versley <sa6z225@public.uni-hamburg.de>
+        Código del histórico inicial (mucho reescrito antes de incluirlo).
+
+Axel Rasmus Wienberg <2wienbe@informatik.uni-hamburg.de>
+        Código para ejecutar wwwoffled en un uid/gid específico.
+
+Andreas Dietrich <quasi@baccus.franken.de>
+        Código para descolgar el programa del terminal como un demonio *real*.
+
+Ullrich von Bassewitz <uz@wuschel.ibb.schwaben.com>
+        Mejor manejo de las señales.
+        Optimizaciones del manejo de ficheros en el directorio de peticiones
+        salientes.
+        Las opciones log-level, max-servers y max-fetch-servers del archivo 
+        de configuración.
+
+Tilman Bohn <tb@bohn.isdn.uni-heidelberg.de>
+        Modo de Autollamada.
+
+Walter Pfannenmueller <pfn@online.de>
+        Tratamiento de Documentos Java/VRML/XML y algo de HTML.
+
+Ben Winslow <rain@insane.loonybin.net>
+        Reemplazo de URL opcional en la sección DontGet del fichero de
+        configuración.
+        Nuevos comandos de FTP para obtener el tamaño del fichero y el 
+        tiempo de modificación
+
+Ingo Kloecker <kloecker@math.u-bordeaux.fr>
+        Desactivar GIFs animados
+
+Otras Contribuciones Útiles de
+- - - - - - - - - - - - - - - -
+
+Demasiada gente que mencionar - (todo el que me ha escrito e-mails).
+        Sugerencias e informe de fallos.
+
+
+Nota del traductor
+- - - - - - - - - -
+
+Traducción al español por Gorka Olaizola <gorka@escomposlinux.org>
+
+He intentado no cometer ningún error, falta de ortografía o giro extraño
+del idioma pero aún así se me ha podido colar algún gazapo ya que mi
+conocimiento del idioma inglés es limitado.
+Si encuentra algun error comuníquemelo para que pueda ser arreglado en la
+próxima versión, gracias.

@@ -1,0 +1,101 @@
+<!-- This is just the body of this file since the header is shared with the other indexes -->
+
+<h2>Haupt-Index</h2>
+
+Dies ist der Hauptindex f&uuml;r alle Dokumente, die WWWOFFLE gespeichert hat.
+Das Indexformat der Dateien wurde in der Version 2.0 aus folgenden Gr&uuml;nden
+ge&auml;ndert:
+
+<ul>
+  <li>Neue Protokolltypen wurden eingef&uuml;hrt
+  <li>Alle Indexseiten sollten eine konsistente Oberfl&auml;che bekommen
+  <li>Format- und Layout-Verbesserungen
+</ul>
+Das neue Format ist hoffentlich einfacher zu bedienen und macht mehr Sinn
+als das alte :-)
+
+<h3>Hauptindex (erster Level)</h3>
+
+Diese Datei. Sie ist &uuml;ber den ersten Knopf der Buttonleiste zu erreichen.
+
+<h3>Weitere Indizes</h3>
+
+Unterhalb des ersten Levels sind folgende Indizes verf&uuml;gbar:
+<dl>
+  <dt>Bestellungen (Outgoing)
+  <dd>Index aller URL-Anfragen, die im Offline-Modus gemacht wurden
+      und heruntergeladen werden sollen.
+  <dt>Abonnements (Monitored)
+  <dd>Index aller Seiten, die regelm&auml;&szlig;ig heruntergeladen werden sollen.
+  <dt>Letzte Online-Sitzung
+  <dd>Alle Seiten, die w&auml;hrend der letzten Online-Sitzung abgerufen wurden.
+      Hier findet man auch Links zu den Indizies der vorherigen Online-Sitzungen.
+  <dt>Letzte Bestellungen (Last Outgoing)
+  <dd>Alle Bestellungen, die <b>vor</b> der letzten Online-Sitzung gemacht
+      wurden (also jetzt wahrscheinlich zur Verf&uuml;gung stehen). Hier findet
+      man auch Links zu den Bestellungen der vorherigen Online-Sitzungen.
+  <dt>Protokolle (http,ftp etc.)
+  <dd>Jedes Protokoll, das von WWWOFFLE unterst&uuml;tzt wird, hat einen eigenen
+      Index.
+</dl>
+
+<h3>Detailindizes (3. Level)</h3>
+
+Unterhalb der Protokollindizies (s.o.) sind die Indizes einzelner Rechner
+(nicht auf der Buttonleiste zu sehen).
+
+
+<h2>Sortierung</h2>
+
+Alle Indizes im dritten Level k&ouml;nnen nach folgenden Kriterien sortiert
+werden:
+
+<dl>
+  <dt>Unsortiert
+  <dd>Keine Sortierung: Anzeige, wie sie gespeichert wurden bzw. wie das
+      Dateisystem sie zur&uuml;ckliefert
+  <dt>&Auml;nderungszeit
+  <dd>Letzte &Auml;nderung (&uuml;blicherweise die Zeit, zu der die Seite geladen
+      oder aktualisiert wurde).
+  <dt>Zugriffszeit
+  <dd>Letzter Zugriff (&uuml;blicherweise die Zeit, zu der die Seite das letzte
+      Mal von einem Client (Browser) abgerufen, aber nicht ver&auml;ndert  wurde.
+  <dt>Zugriffszeit, geteilt
+  <dd>Siehe Zugriffszeit, aber mit Leerzeilen zwischen weiter (&gt;1h)
+      Stunde auseinanderliegenden Zugriffen und Seperatoren f&uuml;r Tage.
+  <dt>Alphabetisch
+  <dd>Selbsterkl&auml;rend. :-)
+  <dt>Domain-Name
+  <dd>Selbsterkl&auml;rend. :-)
+  <dt>Dateityp
+  <dd>Sortierung anhand von Dateiendung (nicht MIME-Typ).
+  <dt>Zuf&auml;llig
+  <dd>Die Seiten werden in zuf&auml;lliger Reihenfolge (aber reproduzierbar)
+      angezeigt, so da&szlig; nacheinander geladene Seiten nicht nacheinander im
+      Index stehen.
+</dl>
+
+<h2>Anzeigeoptionen</h2>
+
+Die Seiten haben eine Reihe von Optionen, die &uuml;ber die vierte Buttonleiste
+erreichbar sind:
+
+<dl>
+  <dt>L&ouml;schoptionen
+  <dd>Dies l&ouml;scht die Seite aus dem Cache. Es gibt auch die M&ouml;glichkeit,
+      mehrere Seiten zu markieren und alle gleichzeitig zu l&ouml;schen. Einige
+      der Indexseiten erm&ouml;glichen auch das sofortige L&ouml;schen von Dateien.
+  <dt>Aktualisierungsoptionen
+  <dd>Zwei M&ouml;glichkeiten, einmal normales Aktualisieren und einmal die
+      M&ouml;glichkeit zum rekursiven Herunterladen, also inklusive der Links.
+  <dt>Abonnementoptionen
+  <dd>Dies erm&ouml;glicht das Abonnieren (automatisch regelm&auml;&szlig;ig herunterladen)
+      einer Seite.
+</dl>
+
+<p>
+Ferner gibt es eine M&ouml;glichkeit, den <tt>DontIndex</tt> Abschnitt in der
+Konfigurationsseite zu &uuml;berspringen und alles anzuzeigen, auch das was
+sonst versteckt w&auml;re.
+
+<!-- This is just the body of this file since the footer is shared with the other indexes -->

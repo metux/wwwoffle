@@ -1,0 +1,169 @@
+                      WWWOFFLE TRANSLATIONS - Version 2.8
+                      ===================================
+
+There are several non-English language options for WWWOFFLE.  These consist of
+translated documentation and WWWOFFLE message files.
+
+All of the language files are installed when WWWOFFLE is installed.  This are
+(or can be) the HTML messages used by WWWOFFLE, HTML documentation and plain
+text documentation.
+
+The HTML files are selected at runtime based on the browser language settings.
+The default language can be selected by changing the 'default' symbolic link in
+the html directory.
+
+
+Notes for translators
+---------------------
+
+When making a translation of the WWWOFFLE messages and documentation priority
+should be given to the most important files.  The order that I would recommend
+that you translate the files is as follows:
+
+        html/messages/*
+
+        doc/README.CONF         (automatically generates html/README.CONF.html,
+                                 the configuration editing pages and more.)
+
+        html/Welcome.html
+        doc/FAQ                 (automatically generates html/FAQ.html)
+
+        doc/README
+        doc/INSTALL
+
+To automatically update the html/FAQ.html and html/README.CONF.html files from
+the plain text versions run 'make' in the doc directory.
+
+From version 2.8 I have changed all of the HTML files to use the HTML 4.01
+Transitional DTD (look at one of the English messages DOCTYPE header).  I have
+also been through all of the pages to ensure that they produce valid HTML.
+
+
+German = de
+-----------
+
+WWWOFFLE Version: 2.7e
+
+        Nicolai Lissner <nlissne@linux01.gwdg.de>
+
+Previous by: Jens Benecke <jens@jensbenecke.de>
+
+Original by: Nicolai Lissner <nlissne@linux01.gwdg.de>
+
+
+        doc/CHANGES.CONF        (most recent information only)
+        doc/INSTALL
+        doc/LSM
+        doc/NEWS                (most recent information only)
+        doc/README.1st
+        doc/README.html         (HTML version of README)
+        html/Welcome.html
+        html/search/htdig/search.html
+        html/messages/*
+        html/local/index.html
+
+
+French = fr
+-----------
+
+WWWOFFLE Version: 2.7-beta
+
+Jacques L'helgoualc'h <lhh@free.fr>
+
+Original by: Anthony Baire <popov@mail.dotcom.fr>
+             Roland Trique <roland.trique@easynet.fr>
+
+        doc/README.CONF
+        html/Welcome.html
+        html/search/htdig/search.html
+        html/search/udmsearch/search.html
+        html/search/namazu/search.html
+        html/messages/*
+
+
+Spanish = es
+------------
+
+WWWOFFLE Version: 2.6
+
+Gorka Olaizola <gorka@escomposlinux.org>
+
+        doc/CONVERT
+        doc/INSTALL
+        doc/LSM
+        doc/README
+        doc/README.1st
+        doc/README.CONF
+        doc/README.PWD
+        doc/README.URL
+        doc/README.htdig
+        doc/README.udmsearch
+        doc/README.win32
+        contrib/README
+        html/Welcome.html
+        html/FAQ.html
+        html/README.CONF.html   (auto-generated from doc/README.CONF)
+        html/search/*.html
+        html/search/htdig/search.html
+        html/search/udmsearch/search.html
+        html/robots.txt
+        html/wwwoffle.pac
+        html/messages/*
+
+
+Russian = ru
+------------
+
+WWWOFFLE Version: 2.6c
+
+Maxim Popov <popovm@mail.primorye.ru>
+
+        html/Welcome.html
+        html/FAQ.html
+        html/local/index.html
+        html/messages/*
+
+
+Polish = pl
+-----------
+
+WWWOFFLE Version: 2.7-beta
+
+Grzegorz Kowal <g_kowal@poczta.onet.pl>
+
+        doc/README.1st
+        doc/README.lang
+        doc/INSTALL
+        doc/LSM
+        html/Welcome.html
+        html/search/namazu/*.html
+        html/search/htdig/search.html
+        html/search/udmsearch/search.html
+        html/search/udmsearch/results.html
+        html/search/namazu/search.html
+        html/local/index.html
+        html/messages/*
+
+
+Italian = it
+------------
+
+WWWOFFLE Version: 2.6
+
+Antonio Fragola <mrshark@tiscalinet.it>
+
+        html/Welcome.html
+        html/FAQ.html
+        html/search/htdig/search.html
+        html/search/udmsearch/search.html
+        html/messages/*
+
+
+Dutch = nl
+----------
+
+WWWOFFLE Version: 2.8a
+
+Paul Slootman <paul@debian.org>
+
+        html/messages/*

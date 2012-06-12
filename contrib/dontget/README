@@ -1,0 +1,99 @@
+                        WWWOFFLE DontGet Lists
+                        ======================
+
+The potential sources of lists of URLs to put into the DontGet section of the
+WWWOFFLE configuration file are listed below.  There is a description of the
+location of the file, the purpose, the type of information that it contains and
+the name of a program in this directory that can convert it to the WWWOFFLE
+format.
+
+
+WWWOFFLE
+--------
+
+I maintain a copy of my personal WWWOFFLE DontGet list on the WWWOFFLE Hints and
+Tips page.
+
+http://www.gedanken.demon.co.uk/wwwoffle/version-2.7/hints-tips.html
+
+Just download the DontGet.txt file and use it.  A copy is also available in this
+directory.
+
+
+JunkBuster
+----------
+
+Homepage: http://www.junkbusters.com/ijb.html
+
+This is one of the original advert blocking proxies (not replacement), it also
+allows blocking of cookies and some other headers, it does not allow for HTML
+re-writing.
+
+URL lists: http://www.google.com/search?q=junkbuster+blockfile&num=100
+
+Since these lists are published by Junkbuster users their contents is varied.
+
+Conversion: junkbuster.pl junkbuster.sh
+
+Use the either the Perl script or the user-friendly shell script.
+
+        junkbuster.pl blockfile > wwwoffle.DontGet.junkbuster
+
+        junkbuster.sh
+
+The URL lists allow for the use of regular expressions (which WWWOFFLE does not
+support) the script converts those that it can.
+
+
+SquidGuard
+----------
+
+Homepage: http://www.squidguard.org/
+
+This is an add-on for the Squid proxy that allows URLs to be blocked or
+redirected.
+
+URL lists: http://www.squidguard.org/blacklist/
+
+These lists contain adverts, pornographic sites, sites encouraging illegal
+activities etc.
+
+Conversion: squidguard.pl squidguard.sh
+
+Use the either the Perl script or the user-friendly shell script.
+
+        squidguard.pl blacklists/ads/domains > wwwoffle.DontGet.squidguard
+
+        squidguard.sh
+
+SquidGuard allows for the use of regular expressions (which WWWOFFLE does not
+support) but the lists do not contain them.
+
+
+AdZap
+-----
+
+Homepage: http://www.zip.com.au/~cs/adzap/
+
+This is a simple advert blocking filter add-on for Squid that offers different
+replacements.
+
+URL lists: http://www.zip.com.au/~cs/rc/adzap/patterns
+
+These lists are basically adverts.
+
+Conversion: adzap.pl adzap.sh
+
+Use the either the Perl script or the user-friendly shell script.
+
+        adzap.pl patterns > wwwoffle.DontGet.adzap
+
+        adzap.sh
+
+AdZap allows for something close to regular expressions (which WWWOFFLE does not
+support) the script converts what it can of them.
+
+
+--
+Andrew M. Bishop
+May 27 2001

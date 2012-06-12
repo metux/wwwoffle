@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that was asked for (='$url').
+cache     = A flag to indicate if the page is being written to the cache or browser (='$cache').
+backup    = A flag to indicate if there is a backup page in the cache (='$backup').
+reason    = A flag to indicate the reason (='$reason').
+            TimeoutReply    - The server timed out reading the reply.
+            TimeoutTransfer - The server timed out during the transfer.
+            ClientClose     - The connection was closed by the client.
+            ...             - Another reason.
+
+$decurl=%decode[url]
+$encurl=%encode[url]
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Error del Servidor Remoto</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Error del Servidor Remoto</H1>
+
+<div class="wwwoffle-message" align="center">
+Su petición de la URL
+<p class="wwwoffle-url">
+<b><tt>$decurl</tt></b>
+</p>
+falló porque
+<p class="wwwoffle-error">
+$reason?=TimeoutReply
+{El servidor remoto falló a enviar la respuesta dento del tiempo de espera.
+$done="yes"}{}
+$reason?=TimeoutTransfer
+{El servidor remoto falló a enviar algunos de los datos dentro del tiempo de
+espera.
+$done="yes"}{}
+$reason?=DataCorrupt
+{The remote host sent compressed or encoded data that could not be uncompressed or decoded.
+$done="yes"}{}
+$reason?=ClientClose
+{El cliente (navegador) cerró la conexión durante la transferencia.
+$done="yes"}{}
+$done?{}{$reason}
+</p>
+$cache?
+{Este mensaje de error ha sido borrado de la caché}
+{}
+<p>
+$backup?
+{Si recarga esta página se volverá a la versión anterior.}
+{Si recarga esta página se volverá a pedir.}
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Ayuda</h2>
+
+<div class="wwwoffle-inline-help">
+WWWOFFLE fue incapaz de completar la petición de esta URL debido a problemas
+con la descarga de esta página.  Esto puede deberse a que el servidor remoto
+no pudo enviar ninguna respuesta dentro de tiempo de espera de socket o que
+la respuesta fue interrumpida y no se recibieron datos.  Otra posible razón
+para este error es que el navegador cerró la conexión antes de que toda la
+página hubiera sido descargada.  La razón exacta en este caso se muestra en
+el mensaje inferior.
+<p>
+Cuando exista una versión de salvaguarda de la página si recarga la página
+se mostrará esa página.  Cuando no hay versión de salvaguarda si recarga la
+página se pedirá de nuevo.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<div class="wwwoffle-nav" align="center">
+[ \
+<a href="$localurl/refresh/?$encurl">Refresh</a>: \
+<a href="$localurl/refresh-options/?$encurl">Options</a>| \
+<a href="$localurl/monitor-options/?$encurl">Monitor</a>| \
+Delete| \
+<a href="$localurl/index/url?$encurl">Index</a>| \
+<a href="$localurl/configuration/url?$encurl">Configure</a> \
+]
+</div>
+
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Página de Bienvenida</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

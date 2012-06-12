@@ -1,0 +1,295 @@
+/*------------------------------------------------*/
+/*                                                */
+/* WWWOFFLE Version 2.9 - Style Sheet             */
+/*                                                */
+/* Using CSS2 - (Cascading Style Sheets, level 2) */
+/*                                                */
+/*------------------------------------------------*/
+
+
+/*-------------------------*/
+/* Generic HTML formatting */
+/*-------------------------*/
+
+/* Do not use any totally generic HTML formatting.  It will apply to
+   all web pages when the HTMLModify add-cache-info option is used.  */
+
+
+/*----------------------------------*/
+/* WWWOFFLE generic HTML formatting */
+/*----------------------------------*/
+
+/* The WWWOFFLE internal messages are all contained within a BODY
+   element with a class of "wwwoffle-message".  Formatting of the HTML
+   should therefore be only for elements contained within such a body.
+   Use 'BODY.wwwoffle-message P { ... }' instead of 'P { ... }'.  */
+
+BODY.wwwoffle-message   /* default values */
+{
+ background-color: white;
+ color: black;
+}
+
+
+/*-----------------------------------*/
+/* WWWOFFLE specific HTML formatting */
+/*-----------------------------------*/
+
+
+/* WWWOFFLE header at the top of internal pages */
+
+DIV.wwwoffle-header  /* default values */
+{
+ font-family:  sans-serif;
+ font-style:   normal;
+ font-weight:  bold;
+ font-size:    large;
+
+ padding:       5px;
+ border-bottom: solid;
+ margin:        5px;
+}
+
+DIV.wwwoffle-header B  /* Letters that spell out WWWOFFLE */
+{
+ font-weight:  bolder;
+ font-size:    x-large;
+}
+
+HR.wwwoffle-header  /* Horizontal rule, not needed, see DIV */
+{
+ display: none;
+}
+
+
+/* WWWOFFLE footer at the bottom of internal pages */
+
+DIV.wwwoffle-footer  /* default values */
+{
+ font-family:  sans-serif;
+ font-style:   normal;
+ font-weight:  bold;
+ font-size:    large;
+
+ padding:       5px;
+ border-top:    solid;
+ margin:        5px;
+}
+
+DIV.wwwoffle-footer A  /* Links are always blue */
+{
+ color: blue;
+}
+
+HR.wwwoffle-footer  /* Horizontal rule, not needed, see DIV */
+{
+ display: none;
+}
+
+
+/* WWWOFFLE buttons at the top of the index pages */
+
+DIV.wwwoffle-index-buttons-top  /* default values */
+{
+ text-align:     center;
+ padding-bottom: 5px;
+
+ font-family:  sans-serif;
+ font-style:   normal;
+ font-size:    medium;
+ }
+
+DIV.wwwoffle-index-buttons-top A  /* Unselected options (links) are always blue */
+{
+ color: blue;
+ font-weight:  normal;
+}
+
+DIV.wwwoffle-index-buttons-top STRONG  /* Selected options are bold */
+{
+ font-weight:  bold;
+}
+
+HR.wwwoffle-index-buttons-top  /* Horizontal rule, not needed, see DIV */
+{
+ display: none;
+}
+
+
+/* WWWOFFLE buttons at the bottom of the index pages */
+
+DIV.wwwoffle-index-buttons-bottom  /* default values */
+{
+ text-align:     center;
+ padding-top:    5px;
+
+ font-family:  sans-serif;
+ font-style:   normal;
+ font-size:    medium;
+}
+
+DIV.wwwoffle-index-buttons-bottom A  /* Unselected options (links) are always blue */
+{
+ color: blue;
+ font-weight:  normal;
+}
+
+DIV.wwwoffle-index-buttons-bottom STRONG  /* Selected options are bold */
+{
+ font-weight:  bold;
+}
+
+HR.wwwoffle-index-buttons-bottom  /* Horizontal rule, not needed, see DIV */
+{
+ display: none;
+}
+
+
+/* WWWOFFLE messages and sub-parts within web pages */
+
+DIV.wwwoffle-message  /* Style for main part of message */
+{
+ text-align: center;
+}
+
+DIV.wwwoffle-nav  /* Navigation links */
+{
+ margin: 0.5em;
+}
+
+
+P.wwwoffle-url  /* Style for URLs in messages */
+{
+ font-family: monospace;
+ font-weight: bold;
+ font-size: large;
+
+ padding: 0.25em;
+ margin: 0.25em;
+}
+
+P.wwwoffle-error  /* Style for Errors in messages */
+{
+ font-family: monospace;
+ font-weight: bold;
+ font-size: large;
+
+ padding: 0.25em;
+ margin: 0.25em;
+}
+
+
+/* WWWOFFLE help messages within web pages */
+
+H2.wwwoffle-inline-help  /* Style of heading */
+{
+ font-style: italic
+}
+
+DIV.wwwoffle-inline-help  /* default values for body text */
+{
+ font-style: italic
+}
+
+
+/* WWWOFFLE footer added at the bottom of web pages by HTML modify options */
+
+DIV.wwwoffle-addinfo  /* default values */
+{
+ /* Undo any box manipulation CSS inherited from page (CSS 2.0 section 8) */
+ margin:  0;
+ padding: 0;
+ border:  0;
+
+ /* Undo any visual formatting CSS inherited from page (CSS 2.0 section 9) */
+ display:      block;
+ position:     static;
+ float:        none;
+ clear:        both;
+ z-index:      999;
+ direction:    ltr;
+ unicode-bidi: normal;
+
+ /* Undo any visual formatting CSS inherited from page (CSS 2.0 section 10) */
+ width:          auto;
+ height:         auto;
+ line-height:    normal;
+ vertical-align: baseline;
+
+ /* Undo any color manipulation CSS inherited from page (CSS 2.0 section 14) */
+ color:      black;
+ background: white;
+
+ /* Undo any font manipulation CSS inherited from page (CSS 2.0 section 15) */
+ font-family:      sans-serif;
+ font-style:       normal;
+ font-variant:     normal;
+ font-weight:      normal;
+ font-stretch:     normal;
+ font-size:        small;
+ font-size-adjust: none;
+
+ /* Undo any text manipulation CSS inherited from page (CSS 2.0 section 16) */
+ text-indent:     0;
+ text-align:      center;
+ text-decoration: none;
+ text-shadow:     none;
+ letter-spacing:  normal;
+ word-spacing:    normal;
+ text-transform:  none;
+ white-space:     normal;
+
+ /* Undo any user interface manipulation CSS inherited from page (CSS 2.0 section 16) */
+ outline: none;
+
+ /* Border to make it stand out */
+ border:     solid;
+ padding:    0.25em;
+
+ /* Fixed position at the bottom of each screen */
+/*
+ margin-bottom: 0;
+ position: fixed;
+ height: 2em;
+ top: auto;
+ right: 0;
+ bottom: 0;
+ left: 0;
+*/
+}
+
+DIV.wwwoffle-addinfo A  /* Links are always blue */
+{
+ /* Undo any box manipulation CSS inherited from page (CSS 2.0 section 8) */
+ margin:  0;
+ padding: 0;
+ border:  0;
+
+ /* Undo any color manipulation CSS inherited from page (CSS 2.0 section 14) */
+ color:      blue;
+ background: white;
+
+ /* Undo any font manipulation CSS inherited from page (CSS 2.0 section 15) */
+ font-family:      sans-serif;
+ font-style:       normal;
+ font-variant:     normal;
+ font-weight:      normal;
+ font-stretch:     normal;
+ font-size:        small;
+ font-size-adjust: none;
+
+ /* Undo any text manipulation CSS inherited from page (CSS 2.0 section 16) */
+ text-indent:     0;
+ text-align:      center;
+ text-decoration: none;
+ text-shadow:     none;
+ letter-spacing:  normal;
+ word-spacing:    normal;
+ text-transform:  none;
+ white-space:     normal;
+}
+
+HR.wwwoffle-addinfo  /* Horizontal rule, not needed, see DIV */
+{
+ display: none;
+}

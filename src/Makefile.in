@@ -1,0 +1,286 @@
+# $Header: /home/amb/wwwoffle/src/RCS/Makefile.in 1.33 2006/01/31 19:02:32 amb Exp $
+#
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+#
+# Source Makefile.
+#
+# Written by Andrew M. Bishop
+#
+# This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+# It may be distributed under the GNU Public License, version 2, or
+# any higher version.  See section COPYING of the GNU Public license
+# for conditions under which this file may be redistributed.
+#
+
+######## DEFINITIONS ########
+
+# Make things
+
+SHELL=/bin/sh
+
+@SET_MAKE@
+
+# The installation locations
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=$(DESTDIR)@bindir@
+sbindir=$(DESTDIR)@sbindir@
+
+# The installation program.
+
+INSTALL=@INSTALL@
+
+########
+
+CC=@CC@
+CFLAGS=@CFLAGS@
+
+LD=@CC@
+LDFLAGS=@LDFLAGS@
+
+LEX=@LEX@
+
+# Optimal flex options for a very fast but large HTML parser.
+FLEXFLAGS=-i -p -B -F -8 -s
+
+# Use this if you have flex but want a smaller but slower HTML parser.
+#FLEXFLAGS=-i -p -B
+
+# Fallback options if you have lex and not flex.
+LEXFLAGS=-i
+
+########
+
+INCLUDE=@ZLIB_INC@ @GNUTLS_INC@
+LIBRARY=@LIBS@ @ZLIB_LIB@ @GNUTLS_LIB@ @ETR_SOCKET_LIBS@
+
+COMPILE=$(CC) -c $(CFLAGS)
+
+LINK=$(LD) $(LDFLAGS)
+
+######## COMPILATION ########
+
+compile :: wwwoffled \
+	   wwwoffle \
+	   wwwoffle-tools
+
+compile ::
+	@cd testprogs && $(MAKE) compile
+
+######## INSTALLATION ########
+
+install : compile install-unix @install_win32@
+
+install-unix :
+	[ -x $(bindir) ] || $(INSTALL) -d -m 755 $(bindir)
+	$(INSTALL) -c -m 755 wwwoffle $(bindir)
+	$(INSTALL) -c -m 755 wwwoffle-tools $(bindir)
+	ln -sf wwwoffle-tools $(bindir)/wwwoffle-ls
+	ln -sf wwwoffle-tools $(bindir)/wwwoffle-mv
+	ln -sf wwwoffle-tools $(bindir)/wwwoffle-rm
+	ln -sf wwwoffle-tools $(bindir)/wwwoffle-read
+	ln -sf wwwoffle-tools $(bindir)/wwwoffle-write
+	ln -sf wwwoffle-tools $(bindir)/wwwoffle-hash
+	ln -sf wwwoffle-tools $(bindir)/wwwoffle-fsck
+	ln -sf wwwoffle-tools $(bindir)/wwwoffle-gzip
+	ln -sf wwwoffle-tools $(bindir)/wwwoffle-gunzip
+	[ -x $(sbindir) ] || $(INSTALL) -d -m 755 $(sbindir)
+	$(INSTALL) -c -m 755 wwwoffled $(sbindir)
+
+install-win32 :
+	[ -x $(bindir) ] || $(INSTALL) -d -m 755 $(bindir)
+	$(INSTALL) -c -m 755 wwwoffle.exe $(bindir)
+	$(INSTALL) -c -m 755 wwwoffle-tools.exe $(bindir)
+	$(INSTALL) -c -m 755 wwwoffle-tools.exe $(bindir)/wwwoffle-ls.exe
+	$(INSTALL) -c -m 755 wwwoffle-tools.exe $(bindir)/wwwoffle-mv.exe
+	$(INSTALL) -c -m 755 wwwoffle-tools.exe $(bindir)/wwwoffle-rm.exe
+	$(INSTALL) -c -m 755 wwwoffle-tools.exe $(bindir)/wwwoffle-read.exe
+	$(INSTALL) -c -m 755 wwwoffle-tools.exe $(bindir)/wwwoffle-write.exe
+	$(INSTALL) -c -m 755 wwwoffle-tools.exe $(bindir)/wwwoffle-hash.exe
+	$(INSTALL) -c -m 755 wwwoffle-tools.exe $(bindir)/wwwoffle-fsck.exe
+	$(INSTALL) -c -m 755 wwwoffle-tools.exe $(bindir)/wwwoffle-gzip.exe
+	$(INSTALL) -c -m 755 wwwoffle-tools.exe $(bindir)/wwwoffle-gunzip.exe
+	$(INSTALL) -c -m 755 wwwoffled.exe $(bindir)
+	-[ -f cygwin1.dll ] && $(INSTALL) -c -m 755 cygwin1.dll $(bindir)
+	-[ -f cygz.dll ]    && $(INSTALL) -c -m 755 cygz.dll    $(bindir)
+	@[ -f $(bindir)/cygwin1.dll -a -f $(bindir)/cygz.dll ] || \
+	 (echo "WWWOFFLE: " ;\
+	  echo "WWWOFFLE: You will need to copy the files cygwin1.dll and cygz.dll" ;\
+	  echo "WWWOFFLE: into '$(bindir)' if you want to run WWWOFFLE" ;\
+	  echo "WWWOFFLE: from windows and not just from the cygwin prompt." ;\
+	  echo "WWWOFFLE: " )
+
+######## CLEAN UP ########
+
+clean ::
+	-rm -f wwwoffle wwwoffled wwwoffle-tools
+	-rm -f css.c html.c htmlmodify.c messages.c xml.c vrml.c
+	-rm -f core *.o *~
+
+clean ::
+	@cd testprogs && $(MAKE) clean
+
+########
+
+distclean :: clean
+	-rm -f autoconfig.h.in autoconfig.h
+	-rm -f Makefile
+
+distclean :: clean
+	@cd testprogs && $(MAKE) distclean
+
+######## PROGRAMS ########
+
+WWWOFFLE_OBJ=wwwoffle.o \
+	     http.o https.o ftp.o finger.o ssl.o \
+	     refresh.o \
+	     messages.o local.o cgi.o \
+	     parse.o spool.o \
+	     document.o html.o css.o xml.o vrml.o javaclass.o \
+	     configrdwr.o configmisc.o configdata.o configfunc.o \
+	     io.o iopriv.o iozlib.o iognutls.o iochunk.o \
+	     errors.o miscurl.o miscencdec.o headbody.o proto.o certificates.o sockets.o md5.o
+
+wwwoffle : $(WWWOFFLE_OBJ)
+	$(LINK) $(WWWOFFLE_OBJ) -o $@ $(LIBRARY)
+
+####
+
+WWWOFFLED_OBJ=wwwoffled.o wwwoffles.o \
+	      http.o https.o ftp.o finger.o ssl.o \
+	      document.o html.o css.o xml.o vrml.o javaclass.o \
+	      gifmodify.o htmlmodify.o \
+	      connect.o control.o controledit.o search.o index.o info.o certinfo.o monitor.o \
+	      messages.o local.o cgi.o \
+	      parse.o purge.o refresh.o spool.o \
+	      configrdwr.o configmisc.o configdata.o configfunc.o configedit.o \
+	      io.o iopriv.o iozlib.o iognutls.o iochunk.o \
+	      errors.o miscurl.o miscencdec.o headbody.o proto.o certificates.o sockets.o md5.o
+
+wwwoffled : $(WWWOFFLED_OBJ)
+	$(LINK) $(WWWOFFLED_OBJ) -o $@ $(LIBRARY)
+
+####
+
+WWWOFFLE_TOOLS_OBJ=wwwoffle-tools.o \
+	           http.o https.o ftp.o finger.o ssl.o \
+	           spool.o \
+	           messages.o local.o cgi.o \
+	           parse.o \
+	           configrdwr.o configmisc.o configdata.o configfunc.o \
+	           io.o iopriv.o iozlib.o iognutls.o iochunk.o \
+	           errors.o miscurl.o miscencdec.o headbody.o proto.o certificates.o sockets.o md5.o
+
+wwwoffle-tools : $(WWWOFFLE_TOOLS_OBJ)
+	$(LINK) $(WWWOFFLE_TOOLS_OBJ) -o $@ $(LIBRARY)
+
+######## OBJECT FILES ########
+
+.SUFFIXES:
+.SUFFIXES: .c .o
+
+.c.o:
+	$(COMPILE) $< -o $@ $(INCLUDE)
+
+# wwwoffle.c wwwoffled.c wwwoffles.c wwwoffle-tools.c proto.c http.c https.c finger.c ftp.c ssl.c document.c html.c css.c javaclass.c vrml.c xml.c gifmodify.c htmlmodify.c configdata.c configedit.c configfunc.c configmisc.c configrdwr.c connect.c control.c controledit.c index.c info.c certinfo.c monitor.c refresh.c search.c cgi.c local.c messages.c parse.c purge.c spool.c io.c iochunk.c iognutls.c iopriv.c iozlib.c errors.c headbody.c miscencdec.c miscurl.c certificates.c sockets.c md5.c
+#                  #                    autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h proto.h document.h version.h configpriv.h iopriv.h certificates.h md5.h
+
+wwwoffle.o         : wwwoffle.c         autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h proto.h document.h version.h                                           
+wwwoffled.o        : wwwoffled.c        autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h                    version.h                       certificates.h      
+wwwoffles.o        : wwwoffles.c        autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h proto.h document.h                                                     
+
+wwwoffle-tools.o   : wwwoffle-tools.c   autoconfig.h wwwoffle.h io.h misc.h errors.h config.h                              version.h                                           
+
+proto.o            : proto.c            autoconfig.h                 misc.h errors.h config.h           proto.h                                                                
+http.o             : http.c             autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h proto.h                                                                
+https.o            : https.c            autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h proto.h                                            certificates.h      
+finger.o           : finger.c           autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h proto.h                                                                
+ftp.o              : ftp.c              autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h proto.h                                                                
+ssl.o              : ssl.c              autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h proto.h                                                                
+
+document.o         : document.c         autoconfig.h wwwoffle.h      misc.h errors.h config.h           proto.h document.h                                                     
+html.o             : html.c             autoconfig.h wwwoffle.h io.h misc.h errors.h config.h                   document.h                                                     
+css.o              : css.c              autoconfig.h wwwoffle.h io.h misc.h errors.h config.h                   document.h                                                     
+javaclass.o        : javaclass.c        autoconfig.h            io.h misc.h errors.h                            document.h                                                     
+vrml.o             : vrml.c             autoconfig.h wwwoffle.h io.h misc.h errors.h                            document.h                                                     
+xml.o              : xml.c              autoconfig.h wwwoffle.h io.h misc.h errors.h                            document.h                                                     
+
+gifmodify.o        : gifmodify.c        autoconfig.h wwwoffle.h io.h misc.h                                     document.h                                                     
+htmlmodify.o       : htmlmodify.c       autoconfig.h wwwoffle.h io.h misc.h          config.h           proto.h document.h                                                     
+
+configdata.o       : configdata.c       autoconfig.h            io.h misc.h errors.h config.h sockets.h                              configpriv.h                              
+configedit.o       : configedit.c       autoconfig.h wwwoffle.h io.h misc.h errors.h config.h                                        configpriv.h                              
+configfunc.o       : configfunc.c       autoconfig.h                 misc.h errors.h config.h sockets.h                              configpriv.h                              
+configmisc.o       : configmisc.c       autoconfig.h                 misc.h errors.h                                                 configpriv.h                              
+configrdwr.o       : configrdwr.c       autoconfig.h            io.h misc.h errors.h config.h           proto.h                      configpriv.h                              
+
+connect.o          : connect.c          autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h                    version.h                                           
+control.o          : control.c          autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h                                                                        
+controledit.o      : controledit.c      autoconfig.h wwwoffle.h io.h misc.h errors.h config.h                                                                                  
+index.o            : index.c            autoconfig.h wwwoffle.h      misc.h errors.h config.h           proto.h                                                                
+info.o             : info.c             autoconfig.h wwwoffle.h io.h misc.h          config.h                   document.h                                                     
+certinfo.o         : certinfo.c         autoconfig.h wwwoffle.h io.h misc.h errors.h config.h                                                              certificates.h      
+monitor.o          : monitor.c          autoconfig.h wwwoffle.h io.h misc.h errors.h                                                                                           
+refresh.o          : refresh.c          autoconfig.h wwwoffle.h io.h misc.h errors.h config.h           proto.h document.h                                                     
+search.o           : search.c           autoconfig.h wwwoffle.h io.h misc.h errors.h                    proto.h                                                                
+
+cgi.o              : cgi.c              autoconfig.h wwwoffle.h io.h misc.h errors.h config.h sockets.h                    version.h                                           
+local.o            : local.c            autoconfig.h wwwoffle.h io.h misc.h errors.h config.h                                                                                  
+messages.o         : messages.c         autoconfig.h wwwoffle.h io.h misc.h errors.h config.h                              version.h                                           
+
+parse.o            : parse.c            autoconfig.h wwwoffle.h io.h misc.h errors.h config.h                              version.h                                           
+purge.o            : purge.c            autoconfig.h wwwoffle.h io.h misc.h errors.h config.h           proto.h                                                                
+spool.o            : spool.c            autoconfig.h wwwoffle.h io.h misc.h errors.h config.h                                                                                  
+
+io.o               : io.c               autoconfig.h            io.h        errors.h                                                              iopriv.h                     
+iochunk.o          : iochunk.c          autoconfig.h            io.h        errors.h                                                              iopriv.h                     
+iognutls.o         : iognutls.c         autoconfig.h            io.h        errors.h                                                              iopriv.h certificates.h      
+iopriv.o           : iopriv.c           autoconfig.h            io.h        errors.h                                                              iopriv.h                     
+iozlib.o           : iozlib.c           autoconfig.h            io.h        errors.h                                                              iopriv.h                     
+
+errors.o           : errors.c           autoconfig.h            io.h        errors.h                                                                                           
+headbody.o         : headbody.c         autoconfig.h                 misc.h                                                                                                    
+miscencdec.o       : miscencdec.c       autoconfig.h                 misc.h                                                                                               md5.h
+miscurl.o          : miscurl.c          autoconfig.h                 misc.h          config.h           proto.h                                                                
+
+certificates.o     : certificates.c     autoconfig.h wwwoffle.h      misc.h errors.h config.h                                                              certificates.h      
+
+sockets.o          : sockets.c          autoconfig.h                        errors.h          sockets.h                                                                        \
+                     sockets4.c sockets6.c
+
+md5.o              : md5.c                                                                                                                                                md5.h
+
+######## SOURCE FILES ########
+
+css.c : css.l
+	[ ! "$(LEX)" = "flex" ] || $(LEX) $(FLEXFLAGS) -Pcss_yy css.l
+	[   "$(LEX)" = "flex" ] || $(LEX) $(LEXFLAGS)  -Pcss_yy css.l
+	@mv lex.css_yy.c css.c
+
+html.c : html.l
+	[ ! "$(LEX)" = "flex" ] || $(LEX) $(FLEXFLAGS) -Phtml_yy html.l
+	[   "$(LEX)" = "flex" ] || $(LEX) $(LEXFLAGS)  -Phtml_yy html.l
+	@mv lex.html_yy.c html.c
+
+htmlmodify.c : htmlmodify.l
+	[ ! "$(LEX)" = "flex" ] || $(LEX) $(FLEXFLAGS) -Phtmlmodify_yy htmlmodify.l
+	[   "$(LEX)" = "flex" ] || $(LEX) $(LEXFLAGS)  -Phtmlmodify_yy htmlmodify.l
+	@mv lex.htmlmodify_yy.c htmlmodify.c
+
+xml.c : xml.l
+	[ ! "$(LEX)" = "flex" ] || $(LEX) $(FLEXFLAGS) -Pxml_yy xml.l
+	[   "$(LEX)" = "flex" ] || $(LEX) $(LEXFLAGS)  -Pxml_yy xml.l
+	@mv lex.xml_yy.c xml.c
+
+vrml.c : vrml.l
+	[ ! "$(LEX)" = "flex" ] || $(LEX) $(FLEXFLAGS) -Pvrml_yy vrml.l
+	[   "$(LEX)" = "flex" ] || $(LEX) $(LEXFLAGS)  -Pvrml_yy vrml.l
+	@mv lex.vrml_yy.c vrml.c
+
+messages.c : messages.l
+	[ ! "$(LEX)" = "flex" ] || $(LEX) $(FLEXFLAGS) -Pmsg_yy messages.l
+	[   "$(LEX)" = "flex" ] || $(LEX) $(LEXFLAGS)  -Pmsg_yy messages.l
+	@mv lex.msg_yy.c messages.c
+
+########

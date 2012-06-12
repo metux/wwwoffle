@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+location  = The URL that the browser is to be redirected to (='$location').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Web Page Redirect</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+<META http-equiv="refresh" content="1 ; URL=$location">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Web Page Redirect</H1>
+
+<div class="wwwoffle-message" align="center">
+WWWOFFLE is trying to redirect your browser to the URL below, you should not see
+this in your browser unless something has gone wrong.
+<p class="wwwoffle-url">
+<b><tt><a href="$location">$location</a></tt></b>
+</p>
+Select the link above to continue, but you might like to report this as an error
+with WWWOFFLE or with your browser.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html" title="An introduction to WWWOFFLE">Welcome Page</a>| \
+<a href="$localurl/FAQ.html" title="Frequently Asked Questions about WWWOFFLE">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

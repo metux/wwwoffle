@@ -1,0 +1,352 @@
+#!/usr/bin/perl -w
+#
+# wwwoffle-ls2
+#    Alternative implementation of wwwoffle-ls with wildcard matching.
+#
+# Author:    Marc Boucher <marcb@box100.com>
+# Copyright:
+#       Copyright (C) 2003 Marc Boucher
+#       This program can be redistributed and/or modified under the terms
+#       of the GNU General Public License; version 2, or any later version.
+#       See <http://www.fsf.org/copyleft/gpl.html>.
+#
+# Revision:
+#
+# v1.0	sometime...
+#
+#
+# v0.5
+#   2003-06-20: Marc	Code modified to work with perl's warnings ON (-w)
+#			Still having problems with "use strict;"
+#   2003-06-07: Marc	Remark: I've noticed that wwwoffle-rm doesn't change the date of the directory.
+#			wwwoffle-ls2 will not see that something has changed, and will continue to use the old listing.
+#			Patch wwwoffle-tools (-mv) too?
+#   2003-06-07: Marc	now reading Ufiles based uppon 'ls D*' (previously 'ls U*')
+#   2003-06-06: Marc	Added Fast mode and case-sensitive search.
+#   2003-06-06: Marc	Some help text corrections, and wrapped to fit in 80 cols.
+#
+# v0.4
+#   2003-05-13: Marc	Remark: Only one pass decoding. Problem if a %XX has been re-encoded (through a redirect).
+#			Do we need 2 pass?
+#   2003-05-13: Marc	Handling of several options: config file and decoding.
+#   2003-05-11: Marc	Some minor modifications.
+#   2003-05-10: Marc	Remark: when WWWOFFLE purges the cache it removes all listing files.
+#			A patch is available to prevent this.
+# v0.3
+#   2003-05-09: Marc	Remark: Only root can create wwwoffle_ls files.
+#   2003-05-09: Marc	Added: restoring mdate of host-dir after creating a wwwoffle_ls file.
+#   2003-05-08: Marc	Problems with sh expanding '*' in parameters before calling a program.
+#			Error message: "bash: /bin/ls: Argument list too long"
+#			-> rewriting everything in perl.
+# v0.2
+#   2003-05-07: Marc	Reading all U* files is too slow. Implementing cached listings.
+#			Using sed because it's the only way to get a CR after each URL.
+#			Call to sh to test date of "listing" file.
+# v0.1
+#   2003-05-07: Marc	Initial code. The script is only a wrapper calling ls awk & grep.
+#			Using perl for RE usability.
+#
+#
+########################################################################
+
+#use strict;
+
+my $Spool = '/var/spool/wwwoffle/';
+my ($progname) = $0 =~ /^.*?([^\/]+)$/;
+my $version = 'v0.4.3';
+my $url='';
+my $prot;
+my $host;
+my $path;
+
+my $usage="Usage: $progname [OPTIONS] <prot>://<host>/<path>
+
+  <prot>: is either 'ftp', 'http', 'finger' or '*'
+  <host>: wildcard matching hostname (*google* , *.freshmeat.net)
+  <path>: wildcard matching path (image/*.gif)
+    
+  Options:
+    -c <file>  Use Spool directory from option in config <file>.
+    -d         Decode URL (%20 = space). Codes lower than %20 are not decoded.
+    -D         Decode before matching the expression.
+    -f         Fast: don't update outdated 'listing' files. Missing ones are
+               created.
+    -F         Force: 'listing' files for the matched hosts are erased.
+    -i         Case-insensitive search (default behavior).
+    -I         Case-sensitive search (for the path).
+    -h         Here we are...
+    -V         Print version number.
+
+  Remarks:
+    - '*' '.' '?' are escaped for the RE: '.*' '\\.' '\\?'.
+      If you want to use the real character you can escape it with '\\' if the
+      URL is enclosed between \"\" (or ''), or with '\\\\' (double) if the URL is
+      not enclosed. The other metacharacters are passed unchanged to the RE :
+        +(){}[]\$ ...
+    - '?' is only escaped in <path>.
+    - <path> doesn't need a trailing '*' to match.
+      If <path> is empty $progname assumes that you want '/'.
+    - If there is no <path> and no '/' after <host>, $progname will display
+      a list of matching hostnames (eg: http:/*ads* ).
+      IMPORTANT: 'listing' files are not created in this particular situation.
+    - If you need the '|' metacharacter, you must enclose the URL in \" (or ').
+    - Matching is case insensitive by default.\n\n";
+
+
+# Getopts function based on getopts.pl.
+# Modified to allow unordered options mixed with other args (eg. url)
+# Usage: Getopts('a:bc');  # -a takes arg. -b & -c not. Sets $opt_* as a side effect.
+sub Getopts {
+    my ($argumentative) = @_;
+    #local(@args,$_,$first,$rest);
+    my (@args,$first,$rest);
+    my $errs = 0;
+
+    @args = split( / */, $argumentative );
+
+    while(@ARGV) {
+      #if (($_ = $ARGV[0]) =~ /^-(.)(.*)/) {
+      if ( $ARGV[0] =~ /^-(.)(.*)/) {
+         ($first,$rest) = ($1,$2);
+         my $pos = index($argumentative,$first);
+
+         if ($pos >= 0) {
+            if ($pos < $#args && $args[$pos+1] eq ':') {
+               shift(@ARGV);
+               if ($rest eq '') {
+                  ++$errs unless @ARGV;
+                  $rest = shift(@ARGV);
+                  }
+               ${"opt_$first"} = $rest;
+               }
+            else {
+               ${"opt_$first"} = 1;
+               if ($rest eq '') {
+                  shift(@ARGV);
+                  }
+               else {
+                  $ARGV[0] = "-$rest";
+                  }
+               }
+            }
+         else {
+            ++$errs;
+            return $errs; # If we don't understand an option stop here.
+            }
+         }
+      else {
+         if ($url eq '') { $url=$ARGV[0]; } # Copy the shifted arg (not an option) to $url (if empty);
+         shift(@ARGV);
+         #if ($url eq '') { $url=$_; } # Copy the shifted arg (not an option) to $url (if empty);
+         }
+    }
+    #$errs == 0;
+    return $errs;
+}
+
+
+  if (@ARGV==0) {@ARGV=('-h');}  # If no args then display help screen
+  
+  local ($opt_h,$opt_d,$opt_D,$opt_f,$opt_F,$opt_i,$opt_I,$opt_V,$opt_c)=(0,0,0,0,0,0,0,0,0);
+  
+  if (Getopts('hdDfFiIVc:') != 0) { die("Check your options... (-h for help)\n"); }
+
+  if ($opt_V) {
+     print "$progname $version\n";
+     exit;
+     }
+
+  if ($opt_h) {
+     print $usage;
+     exit;
+     }
+
+  my $fast=0;
+  if ($opt_f) {
+     $fast=1;
+     }
+
+  my $force=0;
+  if ($opt_F) {
+     $force=1;
+     }
+
+  if ($opt_i) {
+     # nothing. Just for compatibility.
+     }
+
+  my $case=0;
+  if ($opt_I) {
+     $case=1;
+     }
+
+  if ($opt_c) {
+     my ($newspool) = `grep -E -i "^ *spool-dir" $opt_c` =~ /^\s*spool\-dir\s+\=\s*([^\s]*)/i;
+     #print "DEBUG: reading from file ($opt_c): $newspool\n";
+     if ($newspool =~ /[^\/]$/) { $newspool .= '/'; }
+     if (-d $newspool) {
+        $Spool=$newspool;
+        #print "DEBUG: using spool directory: $Spool\n";
+        }
+     }
+
+  #print "DEBUG: args: $url\n";
+  $url =~ s/\\/\255/g;   # using char 255 to preserve \
+  #print "DEBUG: args: $url\n";
+
+  my $hostonly=0;
+  
+  if ($url =~ /^(http|ftp|finger|\*)\:\/\/([^\/]+)(?:(\/)(.*))?$/i) {
+     $prot=$1;
+     $host=lc($2); # ensures that $host is lower case
+     $path=$4;
+     if (!$3) {$hostonly=1;}  # default value is 0
+     #print "DEBUG:  protocol: $prot\n";
+     #print "DEBUG:  hostname: $host\n";
+     #print "DEBUG:  path:     $path\n";
+     if ($prot eq '*') {$prot='(http|ftp|finger)';}
+     $host =~ s/(?<!\255)\./\\./g;
+     $host =~ s/(?<!\255)\*/[^\/]*/g;
+     if ($path) {
+        $path =~ s/(?<!\255)\./\\./g;
+        $path =~ s/(?<!\255)\*/.*/g;
+        $path =~ s/(?<!\255)\?/\\\?/g;
+        $path =~ s/\255//g;
+        }
+     #print "DEBUG:  path:     $path\n";
+     $host =~ s/\255//g;
+     if (!$path) {$path='$';}
+     }
+  else {print "invalid URL argument\n";exit;}
+
+  #print "DEBUG: looking for proto ($prot) host ($host) path ($path):  ^$prot\:\/\/$host\/$path\n";
+  #print "DEBUG: opening dir: $Spool$prot\n";
+
+  opendir DIRspool, "$Spool" || die "Can't open dir: $Spool";
+  while (my $protdir = readdir DIRspool ) {
+    if (($protdir =~ /^$prot$/) && !($protdir =~ /^\./)) {
+       #print "DEBUG: $protdir\n";
+       
+       opendir DIRhost, "$Spool$protdir" || die "Can't open dir: $Spool$protdir";
+       while (my $hostdir = readdir DIRhost) {
+         if (($hostdir =~ /^$host$/i) && !($hostdir =~ /^\./)) {
+            #print "DEBUG: $protdir://$hostdir\n";
+            
+            if ($hostonly) {
+                print "$protdir://$hostdir\n";
+                }
+            else {
+            
+              # wwwoffle_ls exists?
+              # Size>0 ?
+              # mDate of wwwoffle_ls is newer than directory's mDate?
+              if ( !(-f "$Spool$protdir/$hostdir/wwwoffle_ls") || 
+                    (-z "$Spool$protdir/$hostdir/wwwoffle_ls") ||
+                    ( (-M "$Spool$protdir/$hostdir/wwwoffle_ls" > -M "$Spool$protdir/$hostdir/") && !$fast ) ||
+                    $force
+                 ) {
+               
+                 # Reading directory status (atime and mtime)
+                 my (undef,undef,undef,undef,$uid,$gid,undef,undef,
+                     $atime,$mtime,undef,undef,undef)
+                       = stat("$Spool$protdir/$hostdir/");
+
+                 opendir DIRpath, "$Spool$protdir/$hostdir" || die "Can't open dir: $Spool$protdir/$hostdir";
+                 open LS,">$Spool$protdir/$hostdir/wwwoffle_ls.new";   # Using a alternate name. Halting the process won't leave an incomplete file.
+
+                 # Restoring directory atime and mtime
+		 # In case the user stops the process while writing the file
+                 utime $atime, $mtime, "$Spool$protdir/$hostdir/";
+                 
+                 my $URL;
+
+                 while (my $pathdir = readdir DIRpath) {
+                   #if ($pathdir =~ /^U.*/) {
+                   if ($pathdir =~ /^D(.*)/) {
+                      my $Ufile = "U$1";
+                      if (open Ufile,"$Spool$protdir/$hostdir/$Ufile") {
+                         if (defined($URL = <Ufile>)) { print LS "$URL\n"; }
+                         close Ufile;
+                         }
+                      }
+                   }
+                 close LS;
+                 close DIRpath;
+                 
+                 # renaming the file
+                 rename "$Spool$protdir/$hostdir/wwwoffle_ls.new", "$Spool$protdir/$hostdir/wwwoffle_ls";
+                 
+                 # Setting  the uid and gid of the spool directory
+                 chmod 0644 ,"$Spool$protdir/$hostdir/wwwoffle_ls";
+                 chown $uid, $gid, "$Spool$protdir/$hostdir/wwwoffle_ls";
+                 
+                 # Restoring directory atime and mtime
+                 utime $atime, $mtime, "$Spool$protdir/$hostdir/";
+                 }
+              
+              # At this point wwwoffle_ls should exist.
+              if (-f "$Spool$protdir/$hostdir/wwwoffle_ls") {
+                 open LS,"$Spool$protdir/$hostdir/wwwoffle_ls";
+                 while (my $ls = <LS>) {
+                   if ($opt_D) { $ls =~ s/%([2-9A-F][0-9A-F])/chr(hex($1))/gei; }
+                   if ( ( !$case && ($ls =~ /^$prot\:\/\/$host\/$path/i)) ||
+                        ( $case && ($ls =~ /^$prot\:\/\/$host\/$path/)) ) {
+                      if ($opt_d) { $ls =~ s/%([2-9A-F][0-9A-F])/chr(hex($1))/gei; }
+                      print $ls;
+                      }
+                   }
+                 close LS;
+                 }
+              else { print "Can't find $Spool$protdir/$hostdir/wwwoffle_ls (write permission denied ?)\n";}
+            
+              }
+            }
+         }
+       close DIRhost;
+       }
+    }
+  closedir DIRspool;
+
+
+
+
+
+
+
+# Version 0.2   Can't make it work.
+#
+#     $host2 = $host;
+#     $host2 =~ s/\*/[^\/]*/g;
+#
+#system ("
+# ls -f -d -1 $Spool$prot/$host/ |
+# awk '{if (system(\"if [ \"\$1\"wwwoffle_ls -nt \$1/ ] && [ -s \"\$1\"wwwoffle_ls ]; then exit 1; fi\") == 0) {
+#          system(\"ls -1 \"\$1\" \");
+#          }
+#      print(\"cat \"\$1\"wwwoffle_ls\");print \"\";
+#      }'
+#       |
+# grep -E -i \"^[^:]+://$host2/$path\"
+# ");
+
+
+# Version 0.2
+#
+#system ("
+# ls -f -d -1 $Spool$prot/$host/ |
+# awk '{if (system(\"if [ \"\$1\"wwwoffle_ls -nt \$1/ ] && [ -s \"\$1\"wwwoffle_ls ]; then exit 1; fi\") == 0) {
+#          system (\"sed -e \\\"s/^1/1/\\\" \"\$1\"U\* > \"\$1\"wwwoffle_ls \");
+#          }
+#      system(\"cat \"\$1\"wwwoffle_ls\");print \"\";
+#      }' |
+# grep -E -i \"^[^:]+://$host2/$path\"
+# ");
+
+
+# Version 0.1
+#
+#system ("
+#ls -f -d -1 $Spool$prot/$host/ |
+# awk '{system(\"ls -f -1 \"\$1\"\/U\*\")}' |
+# awk '{system(\"cat \"\$1);print \"\"}' |
+# grep -E -i \"^[^:]+://$host2/$path\" ");

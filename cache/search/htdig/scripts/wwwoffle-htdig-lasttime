@@ -1,0 +1,34 @@
+#!/bin/sh
+
+#### THE SPOOL DIR IS "SPOOLDIR" IN THE LINE BELOW ####
+
+wwwoffle_spool=SPOOLDIR
+
+####
+
+cd $wwwoffle_spool
+
+# Set the path to include the htdig executables
+
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:/opt/www/htdig/bin    # The Suse location
+export PATH
+
+# Set the temporary directory used for merging
+
+#TMPDIR=/tmp
+TMPDIR=search/htdig/tmp
+export TMPDIR
+
+# Set up a log file.
+
+echo > search/htdig/wwwoffle-htdig.log
+
+# Do the digging and merging
+
+htdig -i -v -c search/htdig/conf/htdig-lasttime.conf \
+    >> search/htdig/wwwoffle-htdig.log 2>&1
+
+htmerge -v -m search/htdig/conf/htdig-lasttime.conf \
+    -c search/htdig/conf/htmerge.conf \
+    >> search/htdig/wwwoffle-htdig.log 2>&1

@@ -1,0 +1,14 @@
+                   WWWOFFLE 2.5e - programas de prueba
+                   ===================================
+
+Estos son sólo algunos programa de prueba que uso para comprobar wwwoffle.
+
+test-doc.c    - Comprueba los analizadores de documentos, lista las imágenes
+                en un fichero etc...
+test-msg.c    - Comprueba la generación de mensajes
+test-modify.c - Comprueba el código de modificación de HTML
+
+Para más intrucciones lea el código.
+
+
+Andrew M. Bishop 02-Abril-2000

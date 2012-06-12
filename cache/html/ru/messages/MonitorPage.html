@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL to be monitored by default (if any) (='$url').
+
+-->
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<TITLE>WWWOFFLE - Интерактивная страница наблюдения</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Интерактивная страница наблюдения</H1>
+
+Вы можете использовать эту страницу для наблюдения за любым URL.
+
+<p>
+
+<form action="/monitor-request/" method=post>
+Следить за <input type="text" name="url" value="$url" size=60>
+<p>
+Когда все следующие четыре условия выполняются:
+<dl>
+<dt>Месяц:
+<dd>
+<ul>
+<li><input name="mofy1"  type="checkbox" $mofy1?{checked}{}  value="Y"> Январь
+<li><input name="mofy2"  type="checkbox" $mofy2?{checked}{}  value="Y"> Февраль
+<li><input name="mofy3"  type="checkbox" $mofy3?{checked}{}  value="Y"> Март
+<li><input name="mofy4"  type="checkbox" $mofy4?{checked}{}  value="Y"> Апрель
+<li><input name="mofy5"  type="checkbox" $mofy5?{checked}{}  value="Y"> Май
+<li><input name="mofy6"  type="checkbox" $mofy6?{checked}{}  value="Y"> Июнь
+<li><input name="mofy7"  type="checkbox" $mofy7?{checked}{}  value="Y"> Июль
+<li><input name="mofy8"  type="checkbox" $mofy8?{checked}{}  value="Y"> Август
+<li><input name="mofy9"  type="checkbox" $mofy9?{checked}{}  value="Y"> Сентябрь
+<li><input name="mofy10" type="checkbox" $mofy10?{checked}{} value="Y"> Октябрь
+<li><input name="mofy11" type="checkbox" $mofy11?{checked}{} value="Y"> Ноябрь
+<li><input name="mofy12" type="checkbox" $mofy12?{checked}{} value="Y"> Декабрь
+</ul>
+
+<p>
+<dt>День месяца: (по умолчанию любой день)
+<dd>
+<input type="text" name="dofm" value="$dofm" size=60>
+
+<p>
+<dt>День недели:
+<dd>
+<ul>
+<li><input name="dofw1" type="checkbox" $dofw1?{checked}{} value="Y"> Понедельник
+<li><input name="dofw2" type="checkbox" $dofw2?{checked}{} value="Y"> Вторник
+<li><input name="dofw3" type="checkbox" $dofw3?{checked}{} value="Y"> Среда
+<li><input name="dofw4" type="checkbox" $dofw4?{checked}{} value="Y"> Четверг
+<li><input name="dofw5" type="checkbox" $dofw5?{checked}{} value="Y"> Пятница
+<li><input name="dofw6" type="checkbox" $dofw6?{checked}{} value="Y"> Суббота
+<li><input name="dofw0" type="checkbox" $dofw0?{checked}{} value="Y"> Воскресенье
+</ul>
+
+<p>
+<dt>Час дня (24 часа) is: (по умолчанию один раз в день)
+<dd>
+<input type="text" name="hofd" value="$hofd" size=60>
+</dl>
+<input type="submit" value="Наблюдать">
+</form>
+
+$url?{
+<p>
+<hr width="50%">
+<p>
+You can use this form to stop monitoring any URL.
+<p>
+<form action="/control/delete/mon" method="get">
+Stop Monitoring <input type="text" name="url" value="$url" size="60">
+<p>
+<input type="submit" value="Stop Monitoring">
+</form>
+}{}
+
+<div class="wwwoffle-nav" align="center">
+[<a href="/index/monitor/?sort=alpha">Посмотреть список наблюдаемых страниц</a>]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Добро пожаловать</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

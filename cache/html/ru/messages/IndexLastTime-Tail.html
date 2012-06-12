@@ -1,0 +1,56 @@
+<!-- This is just the tail of the index body since the contents are different for each index -->
+
+</ul>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+indexed    = The number of pages that are indexed (='$indexed').
+notindexed = The number of pages that are not indexed (='$notindexed').
+
+-->
+
+$notindexed?=0{$anynotindexed=0}{$anynotindexed=$total}
+$anynotindexed?=0{}{<a href="/index/$type$subtype?sort=$sort$delete$refresh$monitor;all$config$info"><i>$notindexed не показано</i></a>}
+<p>
+
+$delete?{$indexeddelete=$indexed}{$indexeddelete=0}
+$indexeddelete?=0{}
+{
+<script type="text/javascript" src="$localurl/wwwoffle.js">
+</script>
+<script type="text/javascript">
+<!--//
+document.write("<INPUT onclick=form_make_url_unchecked(this.form) type='button' value='Unselect all'>")
+document.write("<INPUT onclick=form_toggle_url_checked(this.form) type='button' value='Toggle'>")
+document.write("<INPUT onclick=form_make_url_checked(this.form)   type='button' value='Select all'>")
+//-->
+</script>
+<noscript>
+<input type="reset" value="Unselect all">
+</noscript>
+
+<p>
+<input type="submit" value="Удалить выбранное">
+}
+$totaldelete?=0{}
+{
+</form>
+}
+
+<hr class="wwwoffle-index-buttons-bottom" width="50%">
+<div class="wwwoffle-index-buttons-bottom" align="center">
+$number?{<a href="/index/lasttime/?sort=$sort$delete$refresh$monitor$all$config$info">[Последний раз]</a>}{<strong>[Последний раз]</strong>}
+$number?{<strong>[Предыдущий раз</strong>}{[Предыдущий раз}
+$number?=1{<strong>(1)</strong>}{<a href="/index/prevtime1/?sort=$sort$delete$refresh$monitor$all$config$info">(1)</a>}
+$number?=2{<strong>(2)</strong>}{<a href="/index/prevtime2/?sort=$sort$delete$refresh$monitor$all$config$info">(2)</a>}
+$number?=3{<strong>(3)</strong>}{<a href="/index/prevtime3/?sort=$sort$delete$refresh$monitor$all$config$info">(3)</a>}
+$number?=4{<strong>(4)</strong>}{<a href="/index/prevtime4/?sort=$sort$delete$refresh$monitor$all$config$info">(4)</a>}
+$number?=5{<strong>(5)</strong>}{<a href="/index/prevtime5/?sort=$sort$delete$refresh$monitor$all$config$info">(5)</a>}
+$number?=6{<strong>(6)</strong>}{<a href="/index/prevtime6/?sort=$sort$delete$refresh$monitor$all$config$info">(6)</a>}
+$number?=7{<strong>(7)</strong>}{<a href="/index/prevtime7/?sort=$sort$delete$refresh$monitor$all$config$info">(7)</a>}
+$number?{<strong>]</strong>}{]}
+</div>
+
+<!-- This is just the tail of the index body since the contents are different for each index -->

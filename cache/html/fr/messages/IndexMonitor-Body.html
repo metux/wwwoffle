@@ -1,0 +1,10 @@
+$encurl=%encode[url]
+<li> \
+$delete?{[<a href="/control/delete/mon?url=$encurl">Eff</a><input type="checkbox" name="url" value="%html[url]">]}{} \
+$refresh?{[<a href="/refresh/?$encurl">Act</a>|<a href="/refresh-options/?$encurl">Opt</a>]}{} \
+$monitor?{[<a href="/monitor-options/?$encurl">Sui</a>]}{} \
+$config?{[<a href="/configuration/url?$encurl">Config</a>]}{} \
+$info?{[<a href="/info/url?$encurl">Info</a>]}{} \
+&nbsp; \
+[D=$last;P=$next]&nbsp; \
+<a href="%html[link]">%decode[item]</a>

@@ -1,0 +1,178 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Versión 2.6
+          ========================================================
+
+
+El programa UdmSearch es un programa libre (GPL) de indexado y búsqueda de 
+programas. La documentación de UdmSearch lo define así:
+
+        UdmSearch es un motor de búsqueda para servidores intranet e
+        Internet. UdmSearch es software libre cubierto por la Licencia
+        Pública General GNU.
+
+        UdmSearch tiene características únicas que lo hace apropiado para 
+        un amplio rango de aplicaciones. Desde búsquedas dentro de su sitio
+        a sistemas especializados como búsquedas de recetas de cocina o
+        de periódicos, archivos ftp, servidores de noticias, etc.
+
+He escrito WWWOFFLE de forma que pueda usar UdmSearch para indexar toda la
+caché de páginas.  Se necesitan tres fases para usar el programa, que son
+las que describe este documento; Instalación, indexado y búsqueda.
+
+
+Cómo instalar UdmSearch
+-----------------------
+
+Nota: Si ya tiene instalada y funcional la versión 3.0.0 de udmsearch
+      puede saltarse esta sección.
+
+Para poder usar este programa debe instalarlo.  Las instrucciones inferiores
+son una guía paso a paso de este proceso asumiendo que tiene la versión
+3.0.10 de UdmSearch. Las versiones posteriores también deberían funcionar.
+
+1) Obtenga el código fuente de UdmSearch
+
+Descargue el código fuente de UdmSearch desde
+
+        http://search.mnogo.ru/
+
+
+2) Descomprima el código fuente
+
+Use
+
+        tar -xvzf udmsearch-3.0.10.tar.gz
+
+para crear el directorio udmsearch-3.1.10 con el código fuentes del programa.
+
+
+3) Configure el programa UdmSearch
+
+Cambie al directorio udmsearch-3.0.10 y ejecute el programa de configuración
+
+        cd udmsearch-3.0.10
+        ./configure --disable-syslog
+
+
+4) Compile
+
+Ejecute make para compilar UdmSearch
+
+        make
+        make install
+
+Esto lo compilará e instalará.  Para resolver cualquier problema en este paso 
+necesitará usar la documentación de UdmSearch.
+
+
+Cómo configurar WWWOFFLE para que funcione con UdmSearch
+--------------------------------------------------------
+
+Los ficheros de configuración de los programas UdmSearch que utiliza WWWOFFLE
+se habrán instalado en /var/spool/wwwoffle/html/search/udmsearch/conf
+al instalar WWWOFFLE.  Los guiones que usa WWWOFFLE para ejecuta udmsearch
+se habrán instalado en /var/spool/wwwoffle/html/search/udmsearch/scripts al
+instalar WWWOFFLE.
+
+Estos ficheros deberían ser correctos si la información del Makefile de 
+WWWOFFLE (LOCALHOST y SPOOLDIR) se configuró correctamente.  Compruébelo.
+Deben tener el directorio almacén y el nombre del servidor proxy
+configurados correctamente.
+
+También se debe de asegurar de que los programas de UdmSearch estén en la ruta
+por defecto (puede editar la variable PATH si están en un lugar diferente a
+/usr/local/bin).
+
+Un fallo que parece tener la versión 3.0.19 de UdmSearch necesita que borre
+o comente la siguiente línea del fichero robots.txt
+
+        Disallow: /index
+
+
+Cómo configurar la base de datos para que funciones con UdmSearch
+-----------------------------------------------------------------
+
+MySQL
+- - -
+
+Cree la base de datos MySQL usando el comando 'mysqladmin'
+
+$ mysqladmin create udmsearch
+
+Cree la estructura de la base de datos de udmsearch.
+
+$ mysql udmsearch < udmsearch-3.0.10/create/mysql/create.txt
+$ mysql udmsearch < udmsearch-3.0.10/create/mysql/crc-multi.txt
+$ mysql udmsearch < udmsearch-3.0.10/create/stopwords/stop.en.txt
+
+
+
+Postgres SQL
+- - - - - -
+
+Necesita configurar la base de datos Postgres para que use TCP/IP y se pueda
+acceder desde un servidor diferente al que el programa udmsearch esté
+ejecutándose.
+
+Necesita poner la opción PGALLOWTCPIP=yes en postmaster.init para permitir
+el acceso por TCP/IP.
+
+Necesita poner las opciones PGFSYNC=no en postmaster.init para tener un buen
+rendimiento.
+
+Necesita crear un usuario de base de datos y configurar la base de datos
+para udmsearch.
+
+$ /usr/bin/createuser -U postgres --createdb --no-adduser wwwoffle
+$ createdb -U wwwoffle udmsearch
+
+Cree la estructura de la base de datos de udmsearch.
+
+$ psql -U wwwoffle udmsearch < udmsearch-3.0.10/create/pgsql/create.txt
+$ psql -U wwwoffle udmsearch < udmsearch-3.0.10/create/pgsql/crc-multi.txt
+$ psql -U wwwoffle udmsearch < udmsearch-3.0.10/create/stopwords/stop.en.txt
+
+
+Indexado
+--------
+
+Indexar es el nombre que se le da al proceso de búsqueda a través de las
+páginas web para crear la base de datos de búsqueda.
+
+Para que funcione con WWWOFFLE he creado mis propios guiones que deberían
+usarse para llamar al indexador UdmSearch.
+
+   /var/spool/wwwoffle/html/search/udmsearch/scripts/wwwoffle-udmsearch-full
+   /var/spool/wwwoffle/html/search/udmsearch/scripts/wwwoffle-udmsearch-incr
+
+El primero de estos guiones hará una búsqueda completa e indexará todas las 
+URLs en la caché.  El segundo hará una búsqueda incremental y sólo indexará
+los ficheros que hayan cambiando desde la última búsqueda completa.
+
+
+Búsqueda
+--------
+
+La página de búsqueda de UdmSearch está situada en 
+http://localhost:8080/search/udmsearch/ y está enlazada desde la 
+"Página de Bienvenida".  Debería intriducir la palabra o palabras que 
+quiera buscar desde esta página.
+
+Este formulario llama al guión
+
+   /var/spool/wwwoffle/html/search/udmsearch/scripts/wwwoffle-udmsearch
+
+para hacer la búsqueda. Por lo que es posible modificar este guión si 
+lo necesita.
+
+
+Gracias a
+---------
+
+Gracias a to Volker Wysk <vw@volker-wysk.de> por darme la información inicial
+sobre el uso de UdmSearch.  He usado su útil e-mail sobre la configuración del
+programa dmSearch y MySQL en este documento (con modificaciones).
+
+
+
+Andrew M. Bishop
+20 de Agosto de 2000

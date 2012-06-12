@@ -1,0 +1,129 @@
+WWWOffle Version 2.6d  Release  01.07.2001 16:30:00
+---------------------------------------------------
+
+Fehlerbehebungen (Bug Fixes):
+ - Seitenaufteilung in der wwwoffled Manual Page
+ - Absturz bei fehlendem DontCompress Abschnitt
+ - Fehler beim Lesen der Konfiguration in convert-cache, uncompress-cache
+ - Harmloses Zwischenspeicherproblem behoben
+ - Verbesserte Darstellung von URLs in den Indizes
+ - Während der Installation nicht über leere Verzeichnisse beschweren
+ - Pfadnamendarstellung in der URL
+ - Übersetzung auf __bsdi__ Systemen
+ - Konvertierung von Dezimal-IP-Adressen nach 'dotted quad' (xxx.xxx.xxx.xxx)
+ - Unterstützung für Apple MacOS X
+ - HTML-Veränderungen für Fehlermeldungs-Seiten ermöglicht
+ - Groß/Kleinschreibung beim Ändern von HTTP-Headern ignorieren
+ - HTML-Seiten SGML-konform machen
+
+Neue Funktionen:
+ - IPv6
+ - bind-ipv4, bind-ipv6 Optionen
+ - Zufällige Sortier-Option für Indizes
+ - Alphabetische Sortierung als zweites Sortierkriterium in den Indizes
+ - HTTP/1.1 'Cache-Control: max-age= ...' Header Verarbeitung (== "Expires:")
+
+Übersetzungen:
+ - Russisch wurde aktualisiert
+
+---- WICHTIG --------------------------------------------------------------
+Die IPv6 Unterstützung in dieser Version sollte als EXPERIMENTAL betrachtet
+werden. Feedback an den Autor wäre sehr gut,er hatte im speziellen Probleme
+mit Linux v2.2.18 und v2.4.5.
+---- WICHTIG --------------------------------------------------------------
+
+
+
+===========================================================================
+ Falls die Changelogs der alten Versionen noch übersetzt werden sollten,
+ bitte Mail an wwwoffle@jensbenecke.de.
+===========================================================================
+
+
+
+
+WWWOffle Version 2.4  Release  12.12.1998 13:30:00
+--------------------------------------------------
+
+Fehlerbehebungen (Bug fixes):
+ - Kompilierproblem unter FreeBSD
+ - Socket Problem unter Win32
+ - Kommtarbehandlung in der interaktiven Konfiguration (HTML) verbessert.
+ - HTML Links mit unbekannten Protokollen werden ignoriert.
+ - Verbesserung der "HEAD" Methode - ist aber noch nicht optimal.
+ - Leerzeichen in den Meldungs-HTML Seiten werden entfernt.
+ - upgrade-config.pl
+ - Rekursionsproblem mit zyklischen Verweisen (a->b->c->d->a->...) behoben.
+ - Konfiguration: HTML Spezialzeichen.
+
+Cache Werkzeuge:
+ - wwwoffle-ls liest jetzt auch aus den 'prevtime' Verzeichnissen
+   (die vom 'vor(vor(vor(...)))letzten Mal').
+
+ht://Dig:
+ - finger und FTP Protokolle mit localhost:8080 URLs werden indiziert.
+ - Icons von der ht://Dig-Distribution werden benutzt (für die, die ht://Dig
+   schon vorher haben).
+ - Indizieren von Seiten, von denen ht://Dig indiziert ('incremental
+   digging')
+
+
+ACHTUNG:
+ - Update von Version 2.1, 2.2, 2.3: Bitte prüfen Sie ihre Abonnements, die
+   Formate haben sich geändert.
+ - Update von Version 2.0, 2.1: Siehe NEWS unter Version 2.2.
+ - Update von Version 1.x: Siehe NEWS unter Version 2.0.
+
+
+--------------------------------------------------------------------------
+WWWOffle Version 2.4-beta  Release 25.11.1998 18:45:00
+------------------------------------------------------
+
+Fehlerbehebungen (Bug Fixes):
+ - ConfirmRequests repariert
+ - extreme Festplattenaktivität beim Wechseln in den 'online' Modus
+ - Rekursives Herunterladen/Bestellen repariert
+
+Löschen des Caches (purging):
+ - 'tmp' Dateien im 'outgoing' Verzeichnis werden gelöscht.
+ - Dateien, die laut Zeitstempel in der Zukunft erstellt wurden, werden auf
+   das aktuelle Datum zurückgesetzt.
+
+Server-Funktionen:
+ - ht://Dig Suchmaschine wird jetzt unterstützt.
+ - SSL (https, etc) wird jetzt transparent durchgeschleift.
+ - Es werden nur noch die HTTP-Methoden GET, POST, CONNECT erlaubt.
+ - Das Abonnieren von Seiten ist jetzt erheblich flexibler
+ - Verweise (Links) in HTML Seiten können abhängig davon geändert werden, ob
+   sie im Cache liegen oder nicht
+ - Sortieren per Domain im Index ist jetzt möglich
+ - Proxyzugriff via Benutzername/Kennwort authentizieren (HTTP/1.1).
+ - Java .class-Dateien, die von anderen .class-Dateien benötigt werden,
+   werden jetzt automatisch geholt.
+ - Formatierung der HTML-Meldungen von WWWOFFLE verbessert.
+
+Konfigurationsdatei:
+ - Möglichkeit anzugeben, ob URLs nur einmal pro 'online' Session auf
+   Änderungen geprüft werden sollen.
+ - 'offline-requests' wurde durch den Abschnitt 'DontRequestOffline' ersetzt.
+ - HTTP-Header 'Referer' kann jetzt nach Bedarf zensiert werden.
+ - Der 'DontIndex' (nicht indizieren) Abschnitt kann jetzt für jeden Index
+   seperat angegeben werden.
+ - Es können Wildcards (*, ?, ...) für Hostnamen und Pfade benutzt werden.
+
+
+ACHTUNG:
+ - Update von Version 2.1, 2.2, 2.3: Bitte prüfen Sie ihre Abonnements, die
+   Formate haben sich geändert.
+ - Update von Version 2.0, 2.1: Siehe NEWS unter Version 2.2.
+ - Update von Version 1.x: Siehe NEWS unter Version 2.0.
+
+--------------------------------------------------------------------------
+
+Weitere Übersetzungen auf Bedarf, EMail an jens@pinguin.conetix.de
+
+Alle deutschen Übersetzungen unterliegen derselben Lizenz wie das Programm
+WWWOFFLE selbst. Keiner der Übersetzer übernimmt irgendeine Garantie für die
+Korrektheit der Übersetzungen.
+
+--------------------------------------------------------------------------

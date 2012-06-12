@@ -1,0 +1,48 @@
+#!/bin/sh
+# wwwoffle daemon start/stop script.
+#
+# Copyright: Andrew M. Bishop 1997 (was slackware-rc.local)
+# Modified:  A. Kupries       1998, for usage by the S.u.S.e init system.
+# Bug fixed: Christian Garbs  2000
+#
+# Usually this is put in /etc/init.d (at least on machines SYSV R4
+# based systems) and linked to /etc/rc[23].d/S18wwwoffle. When this is
+# done the wwwoffle server will be started when the machine is started.
+
+
+PATH=/sbin:/usr/bin:/usr/sbin:/bin
+configfile=/etc/wwwoffle/wwwoffle.conf
+basedir=/usr/local
+bindir=/usr/local/bin
+sbindir=/usr/local/sbin
+export PATH
+
+mode=$1
+
+# Safeguard (relative paths, core dumps..)
+cd $basedir
+
+case "$mode" in
+  'start')
+    # Start deamon
+
+    if [ -x $sbindir/wwwoffled ]; then
+	echo "Starting wwwoffled."
+
+       $sbindir/wwwoffled -c $configfile
+    fi
+    ;;
+
+  'stop')
+    # Stop deamon
+    echo "Shutting down wwwoffled."
+
+    $bindir/wwwoffle -kill -c $configfile
+    ;;
+
+  *)
+    # usage
+    echo "usage: $0 start|stop"
+    exit 1
+    ;;
+esac

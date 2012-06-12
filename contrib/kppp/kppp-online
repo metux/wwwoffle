@@ -1,0 +1,4 @@
+#!/bin/sh
+/usr/bin/wwwoffle -online -c /etc/wwwoffle/wwwoffle.conf
+/usr/bin/wwwoffle -fetch
+read

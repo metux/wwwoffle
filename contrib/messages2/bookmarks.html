@@ -1,0 +1,28 @@
+<!DOCTYPE NETSCAPE-Bookmark-file-1>
+<!-- Substitute 'localhost:8080' with the host and port number -->
+<!-- of your WWWoffle server.  -->
+<!-- By Dag Hoidahl, Aug. 2000. Do with these whatever you like. -->
+<!-- Inspired by Bookmarklets (http://www.bookmarklets.com/). -->
+<TITLE>WWWoffle bookmarklets</TITLE>
+<H1>WWWoffle bookmarklets</H1>
+
+<DL><p>
+    <DT><A HREF="javascript:Qr=document.URL;location.href='http://localhost:8080/delete-url/?'+Qr;" ADD_DATE="921846140" LAST_VISIT="0" LAST_MODIFIED="0">Delete</A>
+<DD>Delete document from cache.
+    <DT><A HREF="javascript:Qr=document.URL;location.href='http://localhost:8080/refresh/?'+Qr;" ADD_DATE="921846140" LAST_VISIT="0" LAST_MODIFIED="0">Refresh</A>
+<DD>Refresh document in cache.
+    <DT><A HREF="javascript:Qr=document.URL;location.href='http://localhost:8080/refresh-options/?'+Qr;" ADD_DATE="921846140" LAST_VISIT="0" LAST_MODIFIED="0">Refresh options</A>
+<DD>Show document refresh options.
+    <DT><A HREF="javascript:Qr=document.URL;location.href='http://localhost:8080/monitor-options/?'+Qr;" ADD_DATE="921846140" LAST_VISIT="0" LAST_MODIFIED="0">Monitor</A>
+<DD>Monitor document.
+    <DT><A HREF="javascript:Qr=document.URL;location.href='http://localhost:8080/index/url?'+Qr;" ADD_DATE="921846140" LAST_VISIT="0" LAST_MODIFIED="0">Index</A>
+<DD>Show cache index for this URL.
+    <DT><A HREF="javascript:Qr=document.getSelection();if(!Qr){void(Qr=prompt('Url...',''))};if(Qr)location.href='http://localhost:8080/refresh-request/method-none-stylesheets-frames/?'+Qr;" ADD_DATE="921846140" LAST_VISIT="0" LAST_MODIFIED="0">Fetch</A>
+<DD>Fetch selected URL or prompt for a URL <BR>
+if none is selected.
+    <DT><A HREF="javascript:showCacheInfo();" ADD_DATE="966092112" LAST_VISIT="0" LAST_MODIFIED="0">Show cache info</A>
+<DD>Show cache info for this document.<BR>
+Requires a replacement AddCacheInfo.html<BR>
+in WWWOFFLE message directory.
+</DL><p>
+

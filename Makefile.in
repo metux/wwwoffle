@@ -1,0 +1,64 @@
+# $Header: /home/amb/wwwoffle/RCS/Makefile.in 1.4 2001/12/30 10:25:10 amb Exp $
+#
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.7.
+#
+# Top level Makefile.
+#
+# Written by Andrew M. Bishop
+#
+# This file Copyright 1996,97,98,99,2000,01 Andrew M. Bishop
+# It may be distributed under the GNU Public License, version 2, or
+# any higher version.  See section COPYING of the GNU Public license
+# for conditions under which this file may be redistributed.
+#
+
+######## DEFINITIONS ########
+
+# Make things
+
+SHELL=/bin/sh
+
+@SET_MAKE@
+
+# Sub directories.
+
+SUBDIRS=doc cache conf src
+
+######## COMPILATION ########
+
+all : compile
+
+compile :
+	@for dir in $(SUBDIRS); do \
+	  ( cd $$dir && $(MAKE) compile ) \
+	done
+
+######## INSTALLATION ########
+
+install : compile
+	@for dir in $(SUBDIRS); do \
+	  ( cd $$dir && $(MAKE) install ) \
+	done
+
+######## CLEAN UP ########
+
+clean ::
+	-rm -f core *~
+
+clean ::
+	@for dir in $(SUBDIRS); do \
+	  ( cd $$dir && $(MAKE) clean ) \
+	done
+
+########
+
+distclean :: clean
+	-rm -f Makefile src/autoconf.h
+	-rm -f config.log config.status config.cache
+
+distclean :: clean
+	@for dir in $(SUBDIRS); do \
+	  ( cd $$dir && $(MAKE) distclean ) \
+	done
+
+########

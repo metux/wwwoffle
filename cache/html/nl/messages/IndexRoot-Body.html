@@ -1,0 +1,105 @@
+<!-- This is just the body of this file since the header is shared with the other indexes -->
+
+<h2>Hoofd Index</h2>
+
+Dit is de hoofd index pagina voor alles in de wwwoffle cache.
+
+De index van de files in de cache is veranderd vanaf versie 2.0 van wwwoffle
+t.o.v. eerdere versies.
+<br>
+Dit is voor een aantal redenen gedaan:
+
+<ul>
+  <li>Zodat nieuwe protocol types gebruikt kunnen worden.
+  <li>Zodat alle index paginas een consequente layout hebben (de nieuwe knoppenbalken).
+  <li>Om de formattering en layout te verbeteren.
+</ul>
+Hopelijk is de nieuwe layout makkelijker in het gebruik en logischer dan de vorige versie.
+
+<h3>Eerste Niveau Index</h3>
+
+Deze pagina is de niveau 1 index, het is beschikbaar op de eerste van de knoppenbalken.
+
+<h3>Tweede Niveau Indexen</h3>
+
+Onder het eerste niveau zijn verschillende tweede niveau indexen zoals getoond
+op het tweede knoppenbalk.
+<br>
+Deze indexn zijn:
+<dl>
+  <dt>Uitgaand
+  <dd>De index van aanvragen die ingediend zijn in offline mode en die nog opgehaald moeten worden.
+  <dt>Monitored
+  <dd>De index van de paginas die automatisch gemonitored worden na vaste intervals.
+  <dt>Laatste Keer
+  <dd>Alle paginas van alle protocollen die gebruikt zijn de afgelopen keer dat wwwoffle online was.
+      Dit geeft ook toegang tot de historie van de files die gebruikt zijn de laatste vijf keer.
+  <dt>Laatste Keer Uitgaand
+  <dd>Alle paginas van alle protocollen die in de "outgoing" directory stonden de laatste keer dan wwwoffle paginas opgehaald heeft.
+      Dit geeft ook toegang tot de historie van de paginas die offline
+      aangevraagd waren de laatste vijf keer.
+  <dt>Protocollen (http,ftp enz.)
+  <dd>Er is een index voor elk van de protocollen die door wwwoffle ondersteund worden met de hosts waarvan paginas bewaard zijn.
+</dl>
+
+<h3>Derde Niveau Indexen</h3>
+
+Onde de protocol indexen zijn derde niveau indexen (niet op de knoppenbalken).
+<br>
+Deze indexen zijn de lijsten van paginas van bepaalde hosts met een bepaalde protocol.
+
+<h2>Sorteren</h2>
+
+Alle tweede en derde niveau indexen kunnen gesorteerd worden op verschillende manieren door gebruik te maken van het derde knoppenbalk.
+<br>
+Deze manieren zijn:
+<dl>
+  <dt>Ongesorteerd.
+  <dd>Er wordt niets gesorteerd, de standaard volgorde wordt gebruikt.
+  <dt>Aanpassingstijd.
+  <dd>Tijdstip waarop de pagina voor het laatst gewijzigd is (meest recente
+      eerst), dit kan het tijdstip zijn waarop het opgehaald of verversd is.
+  <dt>Gebruikstijd.
+  <dd>Tijdstip waarop de pagina voor het laatst benaderd is (meest recente
+      eerst), wanneer de pagina voor het laatst gelezen is (indien dit later
+      is dan de aanpassingstijd).
+  <dt>Datum Gewijzigd.
+  <dd>Hetzelfde als "Aanpassingstijd", maar duidelijker uitgesplitst
+      op dag met ruimte bij tussenpozen van meer dan &eacute;&eacute;n uur.
+  <dt>Alphabetisch.
+  <dd>De paginas worden alphabetisch gesorteerd.
+  <dt>Domeinnaam.
+  <dd>De paginas worden gesorteerd op volgorde van domeinnaam.
+  <dt>Bestandstype.
+  <dd>De paginas worden alphabetisch op extensie gesorteerd.
+  <dt>Random
+  <dd>The Pages are displayed in a random (but reproducible) order, so successively
+      fetched pages don't appear next to each other.
+</dl>
+
+<h2>Display Opties</h2>
+
+De getoonde paginas hebben een aantal optionele knoppen voor het verwijderen,
+verversen enz.  Deze knoppen kunnen aan- en uitgezet worden met het vierde
+knoppenbalk.
+<br>
+Deze opties zijn:
+<dl>
+  <dt>Verwijder Opties
+  <dd>Een knop om de pagina te verwijderen uit de cache. Er is ook een
+      mogelijkheid om meer dan &eacute;&eacute;n pagina tegelijk te selecteren
+      en die vervolgens te verwijderen. Tevens bieden sommige index paginas de
+      mogelijkheid om alle paginas in een keer uit de cache te verwijderen.
+  <dt>Verversingsopties
+  <dd>Twee knoppen, een voor het forceren van het verversen van een pagina
+      en een voor het recursief ophalen.
+  <dt>Monitor Opties
+  <dd>Een knop om de pagina toe te voegen aan de lijst van URLs die
+      regelmatig gemonitored worden.
+</dl>
+
+<p>
+Er is ook de optie om de <tt>DontIndex</tt> sectie van de configuratie te
+negeren en URLs te tonen die normaal gesproken verborgen blijven.
+
+<!-- This is just the body of this file since the footer is shared with the other indexes -->

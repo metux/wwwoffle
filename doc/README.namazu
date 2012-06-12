@@ -1,0 +1,114 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9
+          ========================================================
+
+
+The program namazu is a free (GPL) web server indexing and search program.
+
+        Namazu is a full-text search engine intended for easy
+        use. Not only does it work as a small or medium scale Web
+        search engine, but also as a personal search system for
+        email or other files.
+
+Namazu is different from most such programs in that it only searches the
+filesystem that is used by the web server and does not access the server
+directly.
+
+The program that performs the searching & indexing for the namazu package is
+called mknmz.  The program mknmz-wwwoffle has been written by WATANABE Yoshimasa
+to allow indexing of the WWWOFFLE cache.  This is performed directly on the
+files in the cache.
+
+
+Getting Namazu
+--------------
+
+Namazu is available from the web site
+
+        http://www.namazu.org/
+
+You need to have version 2.0 or later.
+
+No special compile-time configuration of Namazu is required to be able to use it
+with WWWOFFLE.
+
+
+I tested with version 2.0.5 using the official Debian package.
+
+
+Getting mknmz-wwwoffle
+----------------------
+
+The mknmz-wwwoffle program is available from the web site
+
+        http://www.naney.org/comp/distrib/mknmz-wwwoffle/
+
+You need to have version 0.7 or later.
+
+No special configuration of mknmz-wwwoffle is required to be able to use it with
+WWWOFFLE.
+
+
+I tested with version 0.7.2 using a Debian package from the mknmz-wwwoffle site.
+
+
+Configure WWWOFFLE to run with Namazu & mknmz-wwwoffle
+------------------------------------------------------
+
+The configuration files for the Namazu programs as used with WWWOFFLE will have
+been installed in /var/spool/wwwoffle/search/namazu/conf when WWWOFFLE was
+installed.  The scripts used to run the Namazu programs will have been installed
+in /var/spool/wwwoffle/search/namazu/scripts when WWWOFFLE was installed.  In
+both these cases the directory /var/spool/wwwoffle can be changed at compile
+time with options to the configure script.
+
+These files should be correct if the information at the time of running
+configure was set correctly.  Check them, they should have the spool directory
+and the proxy hostname and port set correctly.
+
+Also they should be checked to ensure that the Namazu programs are on the path
+(you can edit the PATH variable here if they are not in /usr/local/bin).
+
+
+Indexing
+--------
+
+Indexing is the name that is given to the process of searching through the
+web-pages to make the search database.
+
+To work with WWWOFFLE I have produced my own scripts that should be used
+to call the Namazu indexer progam (mknmz).
+
+   /var/spool/wwwoffle/search/namazu/scripts/wwwoffle-mknmz-full
+   /var/spool/wwwoffle/search/namazu/scripts/wwwoffle-mknmz-lasttime
+
+The first of these scripts will do a full search and index all of the URLs in
+the cache.  The second one will do a search on the files in the lasttime
+directory.
+
+
+Searching
+---------
+
+The search page for Namazu is at http://localhost:8080/search/namazu/ and is
+linked to from the "Welcome Page".  The word or words that you want to search
+for should be entered here.
+
+This form actually calls the script
+
+   /var/spool/wwwoffle/search/namazu/scripts/wwwoffle-namazu
+
+to do the searching so it is possible to edit this to modify it if required.
+
+
+Thanks to
+---------
+
+Thanks to WATANABE Yoshimasa <naney@naney.org> for writing the mknmz-wwwoffle
+program without which the Namazu program and WWWOFFLE could not have been used
+together.
+
+
+
+Andrew M. Bishop
+12th Aug 2001
+

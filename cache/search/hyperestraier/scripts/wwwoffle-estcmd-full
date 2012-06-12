@@ -1,0 +1,23 @@
+#!/bin/sh
+
+#### THE SPOOL DIR IS "SPOOLDIR" IN THE LINE BELOW ####
+
+wwwoffle_spool=SPOOLDIR
+
+####
+
+cd $wwwoffle_spool
+
+# Set the path to include the hyperestraier executables
+
+PATH=$PATH:/usr/local/bin
+export PATH
+
+# Set up a log file.
+
+echo > search/hyperestraier/wwwoffle-estcmd.log
+
+# Do the gathering
+
+estwolefind . | estcmd gather -cl -fm -px @uri -sd -cm search/hyperestraier/db - \
+    >> search/hyperestraier/wwwoffle-estcmd.log 2>&1

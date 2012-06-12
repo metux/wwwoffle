@@ -1,0 +1,22 @@
+#
+# WWWOFFLE Version 2.7 - Fichero de exclusión de robots
+#
+# Vea: http://www.robotstxt.org/wc/norobots.html
+#
+
+User-Agent: *
+
+# Las páginas de control
+Disallow: /control
+
+# The configuration pages
+Disallow: /configuration
+
+# Los formularios de recarga
+Disallow: /refresh
+
+# Los formularios de monitorización
+Disallow: /monitor
+
+# Los índices
+Disallow: /index

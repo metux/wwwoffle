@@ -1,0 +1,37 @@
+<!-- Ceci n'est que le corps du fichier, il est repete plusieurs fois -->
+
+<!--
+
+WWWOFFLE : Variables disponibles (mettre le prefixe '$').
+
+section   = Le nom de la section du fichier de configuration (='$section').
+comment   = Les commentaires sur cette section.
+content   = Le contenu de la section.
+
+-->
+
+$section?{
+
+<h2><a name="$section">Section $section</a></h2>
+
+<pre>
+$comment
+</pre>
+
+<form action="/control/edit?$section" method=post>
+<textarea name="value" cols=60 rows=10>$content</textarea>
+<br>
+<input type="submit" value="Mise &agrave; jour"><input type="reset" value="Reset">
+</form>
+
+}{
+
+<h2>Commentaires</h2>
+
+<pre>
+$comment
+</pre>
+
+}
+
+<!-- Ceci n'est que le corps du fichier, il est repete plusieurs fois -->

@@ -1,0 +1,52 @@
+The point of looking at the cached headers is to see why the file was
+fetched more than once.  The sort of things that might be seen are:
+
+Different 'Expires' headers for recent dates
+        WWWOFFLE is re-fetching the page because the headers say that
+        the page has expired.  You can stop WWWOFFLE doing this by
+        setting 'request-expired = no' in the OnlineOptions section of
+        the wwwoffle.conf file.
+
+A 'Cache-Control: no-cache' or 'Pragma: no-cache' header
+        WWWOFFLE is re-fetching the page because it contains a header
+        that says that it is not to be cached.  You can stop WWWOFFLE
+        doing this by setting 'reqeust-no-cache = no' in the
+        OnlineOptions section of the wwwoffle.conf file.
+
+A 'Cache-Control: max-age=...' header and a 'Date' header
+        The specified age in seconds needs to be added to the date,
+        this sets an expiry time for the page and is treated the same
+        way as an 'Expires' header.
+
+Different 'ETag' headers
+        WWWOFFLE is re-fetching the page because when it asks the
+        server if the page has changed (a different Etag) the server
+        says that it has (even though it may not have changed).
+        Disabling this will become an option in the next version of
+        WWWOFFLE.
+
+
+The scripts are in this directory with examples of their use below.
+
+$ ./find-duplicate-urls.sh
+...
+      2 DikktDk-E6-RJzjBO0gLYTw http://images.slashdot.org/topics/topicgamesportable.gif
+...
+
+$ ./find-duplicate-headers.sh DikktDk-E6-RJzjBO0gLYTw
+      2 Accept-Ranges: bytes
+      2 Cache-Control: max-age=604800
+      2 Connection: close
+      2 Content-Length: 1278
+      2 Content-Type: image/gif
+      1 Date: Fri, 27 Jun 2003 05:16:13 GMT
+      1 Date: Sat, 28 Jun 2003 05:22:10 GMT
+      1 ETag: "1b408f-4fe-b7d3a080"
+      1 ETag: "2de1c-4fe-b7d3a080"
+      1 Expires: Fri, 04 Jul 2003 05:16:13 GMT
+      1 Expires: Sat, 05 Jul 2003 05:22:10 GMT
+      2 HTTP/1.1 200 OK
+      2 Last-Modified: Fri, 27 Jun 2003 03:41:38 GMT
+      2 Server: Apache/2.0.46 (Unix) mod_ssl/2.0.46 OpenSSL/0.9.6c
+
+This has probably been refetched because of the Etag header.

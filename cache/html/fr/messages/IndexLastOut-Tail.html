@@ -1,0 +1,56 @@
+<!-- This is just the tail of the index body since the contents are different for each index -->
+
+</ul>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+indexed    = The number of pages that are indexed (='$indexed').
+notindexed = The number of pages that are not indexed (='$notindexed').
+
+-->
+
+$notindexed?=0{$anynotindexed=0}{$anynotindexed=$total}
+$anynotindexed?=0{}{<a href="/index/$type$subtype?sort=$sort$delete$refresh$monitor;all$config$info"><i>$notindexed pages non index&eacute;es</i></a>}
+<p>
+
+$delete?{$indexeddelete=$indexed}{$indexeddelete=0}
+$indexeddelete?=0{}
+{
+<script type="text/javascript" src="$localurl/wwwoffle.js">
+</script>
+<script type="text/javascript">
+<!--//
+document.write("<INPUT onclick=form_make_url_unchecked(this.form) type='button' value='Unselect all'>")
+document.write("<INPUT onclick=form_toggle_url_checked(this.form) type='button' value='Toggle'>")
+document.write("<INPUT onclick=form_make_url_checked(this.form)   type='button' value='Select all'>")
+//-->
+</script>
+<noscript>
+<input type="reset" value="Unselect all">
+</noscript>
+
+<p>
+<input type="submit" value="Effacer les pages s&eacute;lectionn&eacute;es">
+}
+$totaldelete?=0{}
+{
+</form>
+}
+
+<hr class="wwwoffle-index-buttons-bottom" width="50%">
+<div class="wwwoffle-index-buttons-bottom" align="center">
+$number?{<a href="/index/lastout/?sort=$sort$delete$refresh$monitor$all$config$info">[Derni&egrave;re demande]</a>}{<strong>[Derni&egrave;res demandes]</strong>}
+$number?{<strong>[Demande pr&eacute;c&eacute;dente</strong>}{[Demande pr&eacute;c&eacute;dente}
+$number?=1{<strong>(1)</strong>}{<a href="/index/prevout1/?sort=$sort$delete$refresh$monitor$all$config$info">(1)</a>}
+$number?=2{<strong>(2)</strong>}{<a href="/index/prevout2/?sort=$sort$delete$refresh$monitor$all$config$info">(2)</a>}
+$number?=3{<strong>(3)</strong>}{<a href="/index/prevout3/?sort=$sort$delete$refresh$monitor$all$config$info">(3)</a>}
+$number?=4{<strong>(4)</strong>}{<a href="/index/prevout4/?sort=$sort$delete$refresh$monitor$all$config$info">(4)</a>}
+$number?=5{<strong>(5)</strong>}{<a href="/index/prevout5/?sort=$sort$delete$refresh$monitor$all$config$info">(5)</a>}
+$number?=6{<strong>(6)</strong>}{<a href="/index/prevout6/?sort=$sort$delete$refresh$monitor$all$config$info">(6)</a>}
+$number?=7{<strong>(7)</strong>}{<a href="/index/prevout7/?sort=$sort$delete$refresh$monitor$all$config$info">(7)</a>}
+$number?{<strong>]</strong>}{]}
+</div>
+
+<!-- This is just the tail of the index body since the contents are different for each index -->

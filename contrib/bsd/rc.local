@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Copyright Andrew M. Bishop 1997
+#
+
+# To have wwwoffled start when the computer is booted add this to the file
+# /etc/rc.d/rc.local (you may need to change the paths).
+
+# The WWWOFFLE HTTP proxy server.
+if [ -x /usr/local/sbin/wwwoffled ]; then
+   /usr/local/sbin/wwwoffled -c /etc/wwwoffle/wwwoffle.conf
+fi

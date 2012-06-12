@@ -1,0 +1,117 @@
+<!-- This is just the body of this file since the header is shared with the other indexes -->
+
+<h2>Main Index</h2>
+
+This is the main index page for all of the files in the wwwoffle cache.
+
+The index of the files in the cache has changed in version 2.0 of wwwoffle
+compared to earlier versions.
+<br>
+This is for a number of reasons:
+
+<ul>
+  <li>So that the new protocol types can be introduced.
+  <li>To present a consistent interface for all of the index pages (the new
+      button bars).
+  <li>To improve the formatting and layout.
+</ul>
+It is hoped that this new format is easier to use and makes more sense than the
+previous version.
+
+<h3>First Level Index</h3>
+
+This page is the first level index, it is available on the first of the button
+bars.
+
+<h3>Second Level Indexes</h3>
+
+Below the main index there are several second level indexes as shown on the
+second of the button bars.
+<br>
+These indexes are:
+<dl>
+  <dt>Outgoing
+  <dd>The index of the requests that have been made while offline and are
+      waiting to be fetched.
+  <dt>Monitored
+  <dd>The index of the pages that are automatically monitored at fixed
+      intervals.
+  <dt>Last Time
+  <dd>All of the pages from all protocols that were updated the last time that
+      wwwoffle was online.  This also provides access to a history of the files
+      that were accessed the previous five times.
+  <dt>Last Outgoing
+  <dd>All of the pages from all protocols that were in the outgoing directory
+      the last time that wwwoffle fetched pages.  This also provides access to a
+      history of the files that were requested offline the previous five times.
+  <dt>Protocols (http,ftp etc.)
+  <dd>Each of the protocols that wwwoffle supports has an index showing the
+      hosts that have pages stored.
+</dl>
+
+<h3>Third Level Indexes</h3>
+
+Below the protocol indexes there are third level indexes (not shown on the button bars).
+<br>
+These indexes are the list of pages from a particular host using a particular protocol.
+
+<h2>Sorting</h2>
+
+All of the second and third level indexes can be sorted in several ways using
+the third button bar.
+<br>
+These methods are:
+<dl>
+  <dt>Unsorted
+  <dd>No sorting applied, this uses the default directory order.
+  <dt>Modification Time
+  <dd>The time that the page was last modified (most recent first), this could
+      be when it was fetched or refreshed.
+  <dt>Access Time
+  <dd>The time that the page was last accessed (most recent first), this is the
+      time that the page was last viewed (if later than modification time).
+  <dt>Date Changed
+  <dd>The same as for "Modification Time", but with separators for every day and
+      a blank line for gaps of an hour or more.
+  <dt>Alphabetical
+  <dd>The pages are sorted into alphabetical order.
+  <dt>Domain Name
+  <dd>The pages are sorted into order according to the domain name of the host.
+  <dt>File Type
+  <dd>The pages are sorted alphabetically according to the file extension.
+  <dt>Random
+  <dd>The Pages are displayed in a random (but reproducible) order, so successively
+      fetched pages don't appear next to each other.
+</dl>
+
+<h2>Display Options</h2>
+
+The pages that are listed have a number of optional buttons to allow the page to
+be deleted or refreshed etc.  These buttons can be turned on and off with the
+fourth button bar.
+<br>
+These options are:
+<dl>
+  <dt>Delete Options
+  <dd>A button to allow the page to be deleted from the cache.  There is also a
+      method of selecting more than one page with a button to delete the
+      selected pages.  Some of the index pages also allow all of the cached
+      files to be deleted at once.
+  <dt>Refresh Options
+  <dd>Two buttons, one to force a refresh the page and one to select refresh
+      option for recursive fetching.
+  <dt>Monitor Options
+  <dd>A button to add the page to the list of URLs that are monitored on a
+      regular basis.
+  <dt>All Pages / Selected Pages
+  <dd>This does not add any buttons to the index, but will display the entire
+      index or filter it by using the <tt>dont-index</tt> items in the
+      <tt>IndexOptions</tt> section of the configuration file.
+  <dt>Config Options
+  <dd>A button to allow the configuration file entries for this URL to be
+      modified.
+</dl>
+
+<p>
+
+<!-- This is just the body of this file since the footer is shared with the other indexes -->

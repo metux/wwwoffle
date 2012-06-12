@@ -1,0 +1,106 @@
+<!-- This is just the body of this file since the header is shared with the other indexes -->
+
+<h2>Índice principal</h2>
+
+Esta es la página principal del índice de todos los ficheros en la caché de wwwoffle.
+
+El índice de los ficheros en la caché ha cambiado desde la versión 2.0 de wwwoffle.
+<br>
+Esto es así por un número de razones:
+
+<ul>
+<li>Para que se puedan introducir nuevos tipos de protocolos.
+<li>Para presentar una interfaz consistente para todas las páginas de índices
+    (Las barras con nuevos botones).
+<li>Para mejorar el formato y la apariencia.
+</ul>
+Se espera que el nuevo formato sea más fácil y más intuitivo de usar que en
+versiones anteriores.
+
+<h3>Índice de Primer Nivel</h3>
+
+Esta página es el índice de primer nivel, está disponible en la primera de
+las tres barras de botones.
+
+<h3>Índices de Segundo Nivel</h3>
+
+Debajo del índice principal hay varios índices de segundo nivel como se
+muestra en la segunda barra de botones.
+<br>
+Estos índices son:
+<dl>
+  <dt>Salidas
+  <dd>El índice de las peticiones que se han realizado mientras se estaba fuera de línea y están esperando para ser recogidas.
+  <dt>Monitor
+  <dd>El índice de las páginas que son monitorizadas automáticamente a intervalos regulares.
+  <dt>Última Vez
+  <dd>Todas las páginas de todos los protocolos que fueron accedidos la última vez que se conectó wwoffle a internet.
+      También se provee acceso al historial de ficheros que fueron accedidos la tres veces anteriores.
+  <dt>Últimas
+  <dd>Todas las últimas páginas (de los últimos 5 días) para todos los protocolos.
+  <dt>Protocolos (http,ftp etc.)
+  <dd>Cada uno de los protocolos que wwwoffle soporta tiene un índice mostrando los huéspedes que tienen páginas almacenadas.
+</dl>
+
+<h3>Índice de Tercer Nivel</h3>
+
+Debajo de los índices de protocolos están los índices de tercer nivel(no
+mostrados en las barras de botones). <br> 
+Estos índices son la lista de páginas de un servidor particular usando un
+protocolo particular.
+
+<h3>Ordenación</h3>
+
+Todos los índices de segundo y tercer nivel pueden ser ordenados de
+diferentes formas usando la tercera barra de botones.
+<br>
+Estos métodos son:
+<dl>
+  <dt>Desordenado
+  <dd>No se aplica ordenamiento, se usa el orden de directorio por defecto.
+  <dt>Tiempo de Modificación
+  <dd>La hora que la página fue modificada por última vez (la más reciente primero), esta puede ser cuando fue recogida o recargada.
+  <dt>Tiempo de Acceso
+  <dd>La hora que la página fue accedida por última vez (la más reciente primero), 
+      Esta es la hora que la página fue vista por última vez (si es más tarde que la hora de modificación).
+  <dt>Fecha Cambiada
+  <dd>Lo mismo que para "Modificación", pero con separadores para cada día y una línea blanca para cada hora o más.
+  <dt>Alfabético
+  <dd>Las páginas son ordenadas en orden alfabético.
+  <dt>Nombre de Dominio
+  <dd>Las páginas son ordenadas en orden de acuerdo con el nombre de dominio del huésped.
+  <dt>Tipo de Fichero
+  <dd>Las páginas son ordenadas alfabéticamente de acuerdo con la extensión del fichero.
+  <dt>Random
+  <dd>The Pages are displayed in a random (but reproducible) order, so successively
+      fetched pages don't appear next to each other.
+</dl>
+
+<h2>Opciones de Muestra</h2>
+
+Las páginas listadas tienen un número de botones opcionales que permiten borrar,
+recargar, etc... la página.  Estos botones pueden ser encendidos o apagados
+con la cuarta barra de botones.
+<br>
+Las opciones son:
+<dl>
+  <dt>Opciones de Borrado
+  <dd>Un botón que permite borrar las páginas de la caché.  Hay un método
+      para seleccionar más de una página y un botón que borra las páginas
+      seleccionadas.  Algunas de las páginas índice permiten que todos lo
+      ficheros en la caché puedan ser borrados de un golpe.
+  <dt>Opciones de Recarga
+  <dd>Dos botones, uno para forzar la recarga de la página y otro para
+      seleccionar la recogida recursiva.
+  <dt>Opciones de Monitorización
+  <dd>Un botón que añade la página a la lista de URLs que será monitorizadas
+      regularmente.
+</dl>
+
+<p>
+Hay también la opción de pasar la sección <tt>DontIndex</tt> del fichero de configuración
+y mostrar las URLs que normalmente estarían ocultas. 
+
+<!-- This is just the body of this file since the footer is shared with the other indexes -->
+
+

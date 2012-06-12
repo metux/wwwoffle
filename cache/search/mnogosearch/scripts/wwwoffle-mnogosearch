@@ -1,0 +1,25 @@
+#!/bin/sh
+
+#### THE SPOOL DIR IS "SPOOLDIR" IN THE LINE BELOW ####
+
+wwwoffle_spool=SPOOLDIR
+
+####
+
+cd $wwwoffle_spool
+
+# Set the path to include the search.cgi executable
+
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:/usr/local/cgi-bin
+PATH=$PATH:/usr/local/libexec
+PATH=$PATH:/usr/lib/cgi-bin    # The Debian location
+PATH=$PATH:/opt/www/cgi-bin    # The Suse location
+export PATH
+
+# Do the searching
+
+UDMSEARCH_TEMPLATE=search/mnogosearch/conf/result.html
+export UDMSEARCH_TEMPLATE
+
+search.cgi 2> /dev/null

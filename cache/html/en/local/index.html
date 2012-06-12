@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>WWWOFFLE Built-In Web-Server</TITLE>
+<LINK href="/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+<H1 align="center">WWWOFFLE Built-In Web-Server</H1>
+
+Any URLs to WWWOFFLE on port 8080 that refer to the directory '/local/' are
+taken from the files in the 'local' sub-directory of the spool directory or if
+they do not exist there then it will search 'html/$LANG/local',
+'html/default/local' and 'html/en/local'.
+<p>
+This allows trivial web-pages to be
+provided without a separate web-server.  There are no CGIs or directory indexes
+available.  The MIME type used for these files are those that are specified in
+the configuration file.
+
+<p>
+<dl>
+  <dt><b>Important</b>
+  <dd>The local web-page server will follow symbolic links, but will only
+      allow access to files that are world readable.  See the <a href="/FAQ.html">FAQ</a> for
+      security issues.
+</dl>
+
+</BODY>
+</HTML>

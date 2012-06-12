@@ -1,0 +1,14 @@
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+section     = The section of the configuration file or empty for the introduction (= '$section').
+description = The description of the section.
+
+url         = Set to the URL-SPECIFICATION (= '$url').
+
+-->
+
+<h2><a href="$section$url?{?%encode[url]}{}">Section: $section</a></h2>
+
+$description?{$description}{No description}

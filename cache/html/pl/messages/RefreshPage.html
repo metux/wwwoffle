@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that was asked for (or none) (='$url').
+
+The FetchOptions section of the config file:
+    stylesheets (='$stylesheets').
+    images      (='$images').
+    frames      (='$frames').
+    scripts     (='$scripts').
+    objects     (='$objects').
+
+-->
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+<TITLE>WWWOFFLE - Interaktywny formularz odświeżania</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE: Interaktywny formularz odświeżania</H1>
+
+Możesz użyć tego formularza do odświeżenia lub pobrania dowolnego URL'a, zarówno
+pojedynczego jak i rekursywnie przez następujące odnośniki.
+
+<p>
+<form action="/refresh-request/" method=post>
+Pobierz
+<select name="depth">
+<option value="0" selected>bez rekursji
+<option value="1"         >rekursywnie do głębokości 1
+<option value="2"         >rekursywnie do głębokości 2
+<option value="3"         >rekursywnie do głębokości 3
+<option value="4"         >rekursywnie do głębokości 4
+<option value="5"         >rekursywnie do głębokości 5
+</select>
+<select name="method">
+<option value="none" selected>tylko ten URL
+<option value="dir"          >w tym samym katalogu
+<option value="host"         >z tej samej witryny
+<option value="proto"        >z tym samym protokołem
+<option value="any"          >z dowolnej witryny
+</select>
+
+<br>
+<input type="text" name="url" value="$url" size=60>
+
+<br>
+<input name="stylesheets" type="checkbox" value="Y" $stylesheets?{checked}{}>
+Pobierz szablony stylów w stronach
+
+<br>
+<input name="images" type="checkbox" value="Y" $images?{checked}{}>
+Pobierz obrazki w stronach
+
+<br>
+<input name="frames" type="checkbox" value="Y" $frames?{checked}{}>
+Pobierz ramki w stronach
+
+<br>
+<input name="scripts" type="checkbox" value="Y" $scripts?{checked}{}>
+Pobierz skrypty w stronach
+
+<br>
+<input name="objects" type="checkbox" value="Y" $objects?{checked}{}>
+Pobierz obiekty w stronach
+
+<br>
+<input name="force" type="checkbox" value="Y">
+Wymuś odświeżenie nawet jeśli jest już zbuforowany
+
+<br>
+<input type="submit" value="Pobierz teraz">
+
+</form>
+
+<p>
+
+Uwagi:
+<ol>
+  <li>Domyślnym protokołem jest http jeśli nie został określony.
+  <li>Aby uzyskać wykaz katalogu przy użyciu ftp upewnij się, czy ścieżka kończy się znakiem '/'.
+  <li>Aby wykonać finger dla użytkownik@odległy.serwer powinieneś wprowadzić URL jako finger://odległy.serwer/użytkownik.
+</ol>
+
+<div class="wwwoffle-nav" align="center">
+[<a href="/index/outgoing/?sort=alpha">Pokaż wykaz stron do pobrania</a>]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Strona Powitalna</a>| \
+<a href="$localurl/FAQ.html">Pytania i Odpowiedzi</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

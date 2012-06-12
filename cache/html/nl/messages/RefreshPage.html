@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that was asked for (or none) (='$url').
+
+The FetchOptions section of the config file:
+    stylesheets (='$stylesheets').
+    images      (='$images').
+    frames      (='$frames').
+    scripts     (='$scripts').
+    objects     (='$objects').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Interactief Verversingsformulier</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Interactief Verversingsformulier</H1>
+
+U kunt dit formulier gebruiken om een willekeurige URL op te halen of te
+verversen; een enkele of recursief (links volgen binnen de pagina).
+<p>
+<form action="/refresh-request/" method=post>
+Fetch
+<select name="depth">
+<option value="0" selected>alleen deze URL
+<option value="1"         >recursief tot diepte 1
+<option value="2"         >recursief tot diepte 2
+<option value="3"         >recursief tot diepte 3
+<option value="4"         >recursief tot diepte 4
+<option value="5"         >recursief tot diepte 5
+</select>
+<select name="method">
+<option value="none" selected>alleen deze URL
+<option value="dir"          >in dezelfde directory
+<option value="host"         >op dezelfde host
+<option value="proto"        >met hetzelfde protocol
+<option value="any"          >op een willekeurige host
+</select>
+
+<br>
+<input type="text" name="url" value="$url" size=60>
+
+<br>
+<input name="stylesheets" type="checkbox" value="Y" $stylesheets?{checked}{}>
+Ook stylesheets in de paginas
+
+<br>
+<input name="images" type="checkbox" value="Y" $images?{checked}{}>
+Ook plaatjes in de paginas
+
+<br>
+<input name="frames" type="checkbox" value="Y" $frames?{checked}{}>
+Ook frames in de paginas
+
+<br>
+<input name="scripts" type="checkbox" value="Y" $scripts?{checked}{}>
+Ook scripts in de paginas
+
+<br>
+<input name="objects" type="checkbox" value="Y" $objects?{checked}{}>
+Ook objecten in de paginas
+
+<br>
+<input name="force" type="checkbox" value="Y">
+Forceer refresh ook al is de pagina al in de cache
+
+<br>
+<input type="submit" value="Nu Ophalen">
+
+</form>
+
+<p>
+
+Opmerkingen:
+<ol>
+  <li>Het default protocol is HTTP.
+  <li>Om een directory opgave te krijgen met FTP moet het pad eindigen met '/'.
+  <li>Voor "finger user@remote.host" moet de URL opgegeven worden als
+      finger://remote.host/user
+</ol>
+
+<div class="wwwoffle-nav" align="center">
+[<a href="/index/outgoing/?sort=alpha">Toon de lijst van aangevraagde paginas</a>]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html" title="Een introductie tot WWWOFFLE">Welkomst Pagina</a>| \
+<a href="$localurl/FAQ.html" title="Frequent Aangekaarte Questies over WWWOFFLE">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

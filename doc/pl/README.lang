@@ -1,0 +1,118 @@
+                      T£UMACZENIA WWWOFFLE - Wersja 2.6
+                      =================================
+
+Istnieje tutaj kilka opcji nie angielskiej wersji jêzykowej dla WWWOFFLE. Zawieraj±
+one przet³umaczon± dokumentacjê i pliki komunikatów WWWOFFLE.
+
+Aby zainstalowaæ WWWOFFLE z jedn± z tych opcji, zajrzyj do pliku Makefile i zmieñ
+zmienn± LANG na wymagany jêzyk:
+
+Niemiecki  - LANG=de
+Francuski  - LANG=fr
+Hiszpañski - LANG=es
+Rosyjski   - LANG=ru
+Polski     - LANG=pl
+W³oski     - LANG=it
+
+Wtedy, po zainstalowaniu, pliki HTML nadpisz± pliki angielskie. Dokumentacja zostanie
+zainstalowana wraz z angielsk±, ale z dodan± koñcówk± do nazwy '-$LANG' (np. '-de').
+
+
+Niemiecki
+---------
+
+WWWOFFLE Wersja: 2.4e
+
+T³umaczy³:      Jens Benecke <jens@pinguin.conetix.de>
+                Nicolai Lissner <nlissne@linux01.gwdg.de>
+
+
+Przet³umaczono: CHANGES.CONF            (tylko naj¶wie¿sze informacje)
+                INSTALL
+                LSM
+                NEWS                    (tylko naj¶wie¿sze informacje)
+                README.1st
+                README.CONF.html        (wersja HTML README.CONF)
+                README.html             (wersja HTML README)
+                html/Welcome.html
+                html/FAQ.html
+                html/search/htdig/search.html
+                html/messages/*
+
+Francuski
+---------
+
+WWWOFFLE Wersja: 2.5
+
+T³umaczy³:      Anthony Baire <popov@mail.dotcom.fr>
+                Roland Trique <roland.trique@easynet.fr>
+
+Przet³umaczono: html/Welcome.html
+                html/search/htdig/search.html
+                html/messages/*
+
+
+Hiszpañski
+----------
+
+WWWOFFLE Wersja: 2.5
+
+T³umaczy³:      Gorka Olaizola <olsago@jet.es>
+
+Przet³umaczono: CONVERT
+                FAQ.html
+                INSTALL
+                LSM
+                README
+                README.1st
+                README.CONF
+                README.htdig
+                README.lang
+                README.win32
+                UPGRADE
+                contrib/README
+                html/Welcome.html
+                html/FAQ.html
+                html/search/htdig/search.html
+                html/messages/*
+
+
+Rosyjski
+--------
+
+WWWOFFLE Wersja: 2.5c
+
+T³umaczenie:    Maxim Popov <popovm@mail.primotye.ru>
+
+Przet³umaczono: html/Welcome.html
+                html/messages/*
+
+
+Polski
+------
+
+WWWOFFLE Wersja: 2.5c
+
+T³umaczenie:    Grzegorz Kowal <g_kowal@poczta.onet.pl>
+
+Przet³umaczono: README.1st
+                README.lang
+                INSTALL
+                LSM
+                html/FAQ.html      (Dodany tylko polski nag³ówek)
+                html/Welcome.html
+                html/search/htdig/search.html
+                html/messages/*
+
+
+W³oski
+------
+
+WWWOFFLE Wersja: 2.5d
+
+T³umaczenie:    Antonio Fragola <mrshark@tiscalinet.it>
+
+Przet³umaczono: html/Welcome.html
+                html/FAQ.html
+                html/messages/*
+                html/search/htdig/search.html

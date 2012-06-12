@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that was asked for (='$url').
+
+$decurl=%decode[url]
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - File Bloccato</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE File Bloccato</H1>
+
+<div class="wwwoffle-message" align="center">
+La tua richiesta per l'URL
+<p class="wwwoffle-url">
+<b><tt>$decurl</tt></b>
+</p>
+&egrave; gi&agrave; stata modificata da un altro server WWWOFFLE.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Aiuto</h2>
+
+<div class="wwwoffle-inline-help">
+La pagina che hai richiesto &egrave; stata modificata da un altro server e non puoi
+attualmente accedervi. L'aggiornamento di questa pagina aspetter&agrave; fino a quando
+l'altro server non avr&agrave; finito le sue modifiche.
+<p>
+Per assicurare che solo un server WWWOFFLE modifichi un file per volta nella cache,
+viene usato un file di blocco. Mentre un server sta modificando un file nella cache,
+viene creato un file di blocco, per mettere gli altri server a conoscenza del fatto.
+Fino a che il primo server non ha finito, il file nella cache non &egrave; valido e
+non vi si pu&ograve; da un altro server.
+<p>
+Se vedi questa pagina ogni volta, anche quando sei offline, allora &egrave; possibile
+che il file di blocco esista ma non ci sia un server che sta modificando la pagina.
+Questo pu&ograve; succedere solo quando il server WWWOFFLE che stava modificando
+la pagina non &egrave; stato chiuso regolarmente. &Egrave; importante che ti assicuri
+che i server WWWOFFLE finiscano e che non li uccida o spegni la macchina mentre stanno
+modificando una pagina. Per rimuovere il file di blocco &egrave; necessario svuotare
+la cache di WWWOFFLE perch&eacute; questo elimina tutti i vecchi file di blocco corrotti.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Pagina di Benvenuto</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

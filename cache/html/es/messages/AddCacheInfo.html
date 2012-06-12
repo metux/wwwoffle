@@ -1,0 +1,33 @@
+
+<!-- The following section added by WWWOFFLE -->
+
+<STYLE type="text/css">
+<!-- @import "$localurl/wwwoffle.css"; -->
+</STYLE>
+
+$unit?=m{$unitstr=min}{}
+$unit?=h{$unitstr=hora}{}
+$unit?=d{$unitstr=día}{}
+$unit?=w{$unitstr=semana}{}
+$unit?=M{$unitstr=mes}{}
+$unitstr?=mes{$s=es}{$s=s}
+$time?=1{}{$unitstr=$unitstr$s}
+
+$encurl=%encode[url]
+
+<hr class="wwwoffle-addinfo" />
+<div class="wwwoffle-addinfo" align="center">
+WWWOFFLE - $date (hace $time $unitstr) - [ \
+<a href="$localurl/index/url?$encurl">Índice</a>| \
+<a href="$localurl/refresh/?$encurl">Recargar</a>: \
+<a href="$localurl/refresh-options/?$encurl">Opciones</a>| \
+<a href="$localurl/monitor-options/?$encurl">Monitor</a>| \
+<a href="$localurl/control/delete/url?url=$encurl">Borrar</a>| \
+<a href="$localurl/configuration/url?$encurl">Configure</a>| \
+<a href="$localurl/info/url?$encurl">Info</a> \
+] - WWWOFFLE
+</div>
+<hr class="wwwoffle-addinfo" />
+
+<!-- The previous section added by WWWOFFLE -->
+

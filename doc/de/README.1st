@@ -1,0 +1,94 @@
+WWWOFFLE - World Wide Web Offline Explorer - Version 2.6d
+---------------------------------------------------------
+
+Es gibt mehrere Hilfedokumente, dies ist eine Art Metahilfe, um Sie zu dem
+richtigen Dokument zu führen. Für einige Dokumente gibt es eine gleichnamige
+Datei mit der Endung '.de', dies ist dann jeweils die Deutsche Übersetzung.
+
+
+Was ist WWWOFFLE und was kann es?			-> README
+
+Wenn Sie WWWOFFLE noch nicht benutzt haben:		-> README
+							-> INSTALL
+							-> README.CONF
+							-> README.htdig
+							-> README.udmsearch
+
+WWWOFFLE und Mehrsprachigkeit:				-> README.lang
+
+Wenn Sie WWWOFFLE unter Win32 benutzen wollen:		-> README.win32
+
+Wenn Sie WWWOFFLE schon benutzt haben:			-> NEWS
+							-> CHANGES.CONF
+							-> README.CONF
+							-> README.htdig
+							-> README.udmsearch
+
+Wenn Sie WWWOFFLE 2.5 oder kleiner benutz(t)en:		-> CONVERT
+
+Wenn Sie WWWOFFLE kompilieren wollen und die Optionen
+beim Kompilieren kennenlernen wollen:			-> INSTALL
+							-> README.htdig
+							-> README.udmsearch
+						(ggf)	-> README.win32
+
+Wenn Sie WWWOFFLE-Informationen nachschlagen wollen,
+und WWWOFFLE schon installiert ist:			-> man 1 wwwoffle
+							-> man 8 wwwoffled
+							-> README
+							-> README.htdig
+							-> README.udmsearch
+
+WWWOFFLE konfigurieren/anpassen:	-> wwwoffle.conf
+					-> man wwwoffle.conf
+					-> README.CONF
+					-> CHANGES.CONF
+					-> README.htdig
+					-> README.udmsearch
+
+Die Meldungen von WWWOFFLE anpassen:	-> html/messages/README
+
+Verschiedenes zur Automatisation von WWWOFFLE:		-> contrib/README
+							-> contrib-win32/README
+
+
+Die Informationen in den Dateien ist folgendermaßen gegliedert:
+
+NEWS		Änderungen gegenüber den letzten Versionen.
+
+README		Eine Einführung in das Programm, siehe auch html/Welcome.html
+README.1st	Dieses Dokument - ein Meta-Index.
+README.CONF	Das Format der Konfigurationsdatei.
+README.PWD	Wie werden kennwortgeschützte Seiten behandelt/gespeichert?
+README.win32	Der Win32 Port von WWWOFFLE.
+README.htdig	Wie richte ich ht://Dig zur Zusammenarbeit mit WWWOFFLE ein
+README.udmsearch
+		Wie richte ich UDMSearch zur Zusammenarbeit mit WWWOFFLE ein
+
+INSTALL		Eine Installations/Kompilationsanleitung.
+CONVERT		Wie konvertiere ich den Cache einer alten Version?
+CHANGES.CONF	Die Änderungen in der Konfigurationsdatei seit Version 1.3.
+
+wwwoffle(1)	UNIX Manual Page für WWWOFFLE.
+wwwoffle.conf(5)
+		UNIX Manual Page für die Konfigurationsdatei.
+wwwoffled(8)	UNIX Manual Page für den WWWOFFLE daemon.
+
+html/messages/README
+		Format der WWWOFFLE-Meldungsseiten und wie man sie anpaßt.
+
+contrib/README	Kleine Scripts für verschiedene Systeme, die Starten/Stoppen
+		und die verschiedenen Modi des WWWOFFLE Programms
+		automatisieren.
+contrib-win32/README
+		Dito für EvilEmpire(tm)-User.
+
+--------------------------------------------------------------------------
+
+Weitere Übersetzungen auf Bedarf, EMail an wwwoffle@jensbenecke.de
+
+Alle deutschen Übersetzungen unterliegen derselben Lizenz wie das Programm
+WWWOFFLE selbst. Keiner der Übersetzer übernimmt irgendeine Garantie für
+die Korrektheit der Übersetzungen.
+
+--------------------------------------------------------------------------

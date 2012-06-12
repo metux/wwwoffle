@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl    = The root URL of the server running wwwoffled (='$localurl').
+version     = The version of the WWWOFFLE server (='$version').
+section     = The section of the configuration file (= '$section').
+nextsection = The next section of the configuration file (= '$nextsection').
+prevsection = The previous section of the configuration file (= '$prevsection').
+description = The description of the section.
+
+url         = Set to the URL-SPECIFICATION (= '$url').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Interaktive Konfigurations-Seite - $section</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<p align="center">
+<a href="$localurl/configuration/$url?{%encode[url]}{}">^^^ wwwoffle.conf ^^^</a>
+<br>
+<a href="$prevsection$url?{?%encode[url]}{}">&lt;&lt;&lt; $prevsection &lt;&lt;&lt;</a>
+&nbsp;&nbsp;&nbsp; $section &nbsp;&nbsp;&nbsp;
+<a href="$nextsection$url?{?%encode[url]}{}">&gt;&gt;&gt; $nextsection &gt;&gt;&gt;</a>
+</p>
+
+<hr width="50%">
+
+<H1 align="center">WWWOFFLE Interaktive Konfigurations Seite</H1>
+
+<H2>Abschnitt: $section</H2>
+
+$description?{$description}{<i>keine Beschreibung</i>}

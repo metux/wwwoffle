@@ -1,0 +1,91 @@
+.\" $Header: /home/amb/wwwoffle/doc/RCS/wwwoffle.conf.man.template 2.79 2001/09/04 19:13:21 amb Exp $
+.\"
+.\"  WWWOFFLE - World Wide Web Offline Explorer - Version 2.7.
+.\"
+.\"  Manual page for wwwoffle.conf
+.\"
+.\"  Written by Andrew M. Bishop
+.\"
+.\"  This file Copyright 1997,98,99,2000,01 Andrew M. Bishop
+.\"  It may be distributed under the GNU Public License, version 2, or
+.\"  any higher version.  See section COPYING of the GNU Public license
+.\"  for conditions under which this file may be redistributed.
+.\"
+.TH wwwoffle.conf 5 "May 23, 2001"
+
+.SH NOM
+
+wwwoffle.conf \- Le fichier de configuration du serveur proxy WWWOFFLE.
+
+## README.CONF ##
+
+.SH EXEMPLE
+
+ StartUp
+ {
+  http-port     = 8080
+  wwwoffle-port = 8081
+  spool-dir     = /var/spool/wwwoffle
+  use-syslog    = yes
+  password      =
+ }
+
+ Options
+ {
+  add-info-refresh  = no
+  request-changed   = 3600
+ }
+
+ FetchOptions
+ {
+  images = yes
+  frames = yes
+ }
+
+ LocalHost
+ {
+  wwwoffle.foo.com
+  localhost
+  127.0.0.1
+ }
+
+ DontGet
+ [
+  wwwoffle.DontGet.conf
+ ]
+
+ LocalNet
+ {
+  *.foo.com
+ }
+
+ AllowedConnectHosts
+ {
+  *.foo.com
+ }
+
+ Proxy
+ {
+  <http://foo.com/*> proxy = www-cache.foo.com:8080
+ }
+
+ Purge
+ {
+  max-size = 10
+  age = 28
+  <http://*.bar.com/*> age  = 7
+ }
+
+.SH FICHIERS
+
+CONFDIR/wwwoffle.conf Le fichier de configuration de wwwoffled(8).
+.LP
+SPOOLDIR Le répertoire de spool de WWWOFFLE.
+
+.SH VOIR AUSSI
+
+wwwoffle(1), wwwoffled(8).
+
+.SH AUTEUR
+
+Andrew M. Bishop 1996,97,98,99,2000,01 (amb@gedanken.demon.co.uk)

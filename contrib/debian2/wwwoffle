@@ -1,0 +1,47 @@
+#! /bin/sh
+# wwwoffled	script to go e.g., into /etc/init.d/ scripts.
+#
+#		Modified by Remo Petritoli <petritoli@iol.it> 14/02/98
+#               Modified by Joerg Wittenberger <joerg.wittenberger@pobox.com>
+#               from skeleton
+#		file by Miquel van Smoorenburg <miquels@cistron.nl>.
+#		Modified for Debian GNU/Linux
+#		by Ian Murdock <imurdock@gnu.ai.mit.edu>.
+#
+
+PATH=/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin
+NAME=wwwoffled
+DAEMON=/usr/local/sbin/$NAME
+CONFIG=/var/spool/wwwoffle/wwwoffle.conf
+
+test -f $DAEMON || exit 0
+
+case "$1" in
+  start)
+    echo -n "Starting HTTP cache proxy server $NAME..."
+    if start-stop-daemon --start --quiet --exec $DAEMON -- -c $CONFIG
+      then echo "done."
+      else echo "failed."
+    fi
+    ;;
+  stop)
+    echo -n "Stopping HTTP cache proxy server $NAME..."
+    if start-stop-daemon --stop  --quiet --exec $DAEMON
+      then echo "done."
+      else echo "failed."
+    fi
+    ;;
+  reload)
+    echo -n "Reloading $NAME configuration files..."
+    if start-stop-daemon --stop  --signal 1 --quiet --exec $DAEMON
+      then echo "done."
+      else echo "failed."
+    fi
+    ;;
+  *)
+    echo "Usage: /etc/init.d/$NAME {start|stop|reload}"
+    exit 1
+    ;;
+esac
+
+exit 0

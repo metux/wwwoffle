@@ -1,0 +1,128 @@
+# $Header: /home/amb/wwwoffle/doc/RCS/Makefile.in 1.14 2006/01/31 19:02:32 amb Exp $
+#
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+#
+# Documentation Makefile.
+#
+# Written by Andrew M. Bishop
+#
+# This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
+# It may be distributed under the GNU Public License, version 2, or
+# any higher version.  See section COPYING of the GNU Public license
+# for conditions under which this file may be redistributed.
+#
+
+######## DEFINITIONS ########
+
+# Make things
+
+SHELL=/bin/sh
+
+# The installation locations
+
+prefix=@prefix@
+mandir=$(DESTDIR)@mandir@
+docdir=$(DESTDIR)${prefix}/doc/wwwoffle
+
+SPOOLDIR=@SPOOLDIR@
+CONFDIR=@CONFDIR@
+
+# The installation programs.
+
+PERL=@PERL@
+AWK=@AWK@
+INSTALL=@INSTALL@
+
+# The translations
+
+LANGUAGES=@LANGUAGES@
+DEFLANG=@DEFLANG@
+
+######## COMPILATION ########
+
+compile : html-docs man-pages
+
+######## INSTALLATION ########
+
+install : compile install-unix @install_win32@
+
+install-unix : install-man install-doc
+
+install-win32 : install-doc-win32
+
+install-man :
+	[ -x $(mandir) ] || $(INSTALL) -d -m 755 $(mandir)
+	[ -x $(mandir)/man1 ] || $(INSTALL) -d -m 755 $(mandir)/man1
+	$(INSTALL) -c -m 644 wwwoffle.man $(mandir)/man1/wwwoffle.1
+	[ -x $(mandir)/man5 ] || $(INSTALL) -d -m 755 $(mandir)/man5
+	sed -e 's%SPOOLDIR%$(SPOOLDIR)%' -e 's%CONFDIR%$(CONFDIR)%' < wwwoffle.conf.man > wwwoffle.conf.man.install
+	$(INSTALL) -c -m 644 wwwoffle.conf.man.install $(mandir)/man5/wwwoffle.conf.5
+	[ -x $(mandir)/man8 ] || $(INSTALL) -d -m 755 $(mandir)/man8
+	$(INSTALL) -c -m 644 wwwoffled.man $(mandir)/man8/wwwoffled.8
+
+install-doc :
+	[ -x $(docdir) ] || $(INSTALL) -d -m 755 $(docdir)
+	cd $(DEFLANG) ; \
+	  for file in CHANGES.CONF COPYING FAQ INSTALL NEWS README README.* ; do \
+	    [ ! -f $$file ] || $(INSTALL) -c -m 644 $$file $(docdir)/$$file ;\
+	  done
+	for lang in $(LANGUAGES); do \
+	  [ ! -d $$lang -o $$lang = $(DEFLANG) ] || \
+	  ( cd $$lang && \
+	    $(INSTALL) -d -m 755 $(docdir)/$$lang && \
+	    for file in * ; do \
+	      [ ! -f $$file -o $$file = wwwoffle.conf.man.template ] || \
+	        $(INSTALL) -c -m 644 $$file $(docdir)/$$lang/$$file ;\
+	    done ) ;\
+	done
+
+install-doc-win32 : install-unix
+	-rm -f $(docdir)/*.txt
+	for file in $(docdir)/* ; do \
+	  [ ! -f $$file ] || $(AWK) '{print $$0 "\r";}' < $$file > $$file.txt && rm -f $$file ;\
+	done
+	for lang in $(LANGUAGES); do \
+	  rm -f $(docdir)/$$lang/*.txt ; \
+	  for file in $(docdir)/$$lang/* ; do \
+	    [ ! -f $$file ] || $(AWK) '{print $$0 "\r";}' < $$file > $$file.txt && rm -f $$file ;\
+	  done ;\
+	done
+
+######## MAN PAGES ########
+
+man-pages :
+	for lang in $(LANGUAGES); do \
+	  [ ! -f $$lang/README.CONF -o ! -f $$lang/wwwoffle.conf.man.template -o "x$(PERL)" = "x" ] || \
+	    ( rm -f $$lang/wwwoffle.conf.man ;\
+	      $(PERL) scripts/README.CONF-man.pl $$lang/wwwoffle.conf.man.template < $$lang/README.CONF > $$lang/wwwoffle.conf.man ) ;\
+	done
+
+######## HTML DOCUMENTS ########
+
+html-docs :
+	for lang in $(LANGUAGES); do \
+	  [ ! -f $$lang/FAQ -o "x$(PERL)" = "x" ] || \
+	    ( rm -f ../cache/html/$$lang/FAQ.html ;\
+	      $(PERL) scripts/FAQ-html.pl         < $$lang/FAQ         > ../cache/html/$$lang/FAQ.html ;\
+	      chmod 644 ../cache/html/$$lang/FAQ.html ) ;\
+	  [ ! -f $$lang/README.CONF -o "x$(PERL)" = "x" ] || \
+	    ( rm -f ../cache/html/$$lang/README.CONF.html ;\
+	      $(PERL) scripts/README.CONF-html.pl < $$lang/README.CONF > ../cache/html/$$lang/README.CONF.html ;\
+	      chmod 644 ../cache/html/$$lang/README.CONF.html ;\
+	      rm -f ../cache/html/$$lang/messages/README.CONF.txt ;\
+	      $(PERL) scripts/README.CONF-msg.pl  < $$lang/README.CONF > ../cache/html/$$lang/messages/README.CONF.txt ;\
+	      chmod 644 ../cache/html/$$lang/messages/README.CONF.txt ) ;\
+	done
+
+######## CLEAN UP ########
+
+clean :
+	-rm -f core *~
+	-rm -f wwwoffle.conf.man.install
+
+########
+
+distclean : clean
+	-rm -f Makefile
+
+########

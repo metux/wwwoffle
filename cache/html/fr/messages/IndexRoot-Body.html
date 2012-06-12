@@ -1,0 +1,93 @@
+<!-- Ceci n'est que le corps de la page, l'en-tete est partage avec les autres index -->
+
+<h2>Index</h2>
+
+Cette page est l'index principal des fichiers sauv&eacute;s par wwwoffle.
+
+L'index des fichiers du cache a chang&eacute; par rapport aux versions
+pr&eacute;c&eacute;dentes, ceci pour plusieurs raisons :
+<ul>
+ <li>Pour pouvoir g&eacute;rer de nouveaux protocoles.
+ <li>Pour pr&eacute;senter une interface plus coh&eacute;rente entre
+ les pages d'index (nouvelle barre de boutons).
+ <li>Pour am&eacute;liorer le formatage et la disposition des informations.
+</ul>
+Ce nouveau format est destin&eacute; &agrave; faciliter l'utilisation de
+l'index, et &agrave; y apporter plus de coh&eacute;rence que dans l'ancienne
+version.
+
+<h3>Premier Niveau de l'Index</h3>
+
+Cette page est le premier niveau de l'index, il est accessible via la premi&egrave;re barre de trois boutons.
+
+<h3>Deuxi&egrave;me Niveau de l'Index</h3>
+
+Sous l'index principal, il existe plusieurs index de second niveau disponibles sur la deuxi&egrave;me barre de boutons.
+<br>Ces index sont :
+<dl>
+ <dt>En Attente
+ <dd>Index des pages demand&eacute;es quand le serveur n'&eacute;tait pas en-ligne.
+ <dt>Suivies
+ <dd>Index des pages contr&ocirc;l&eacute;es automatiquement aux intervalles fix&eacute;s.
+ <dt>Derni&egrave;re Connexion
+ <dd>Toutes les pages qui ont &eacute;t&eacute; acc&eacute;d&eacute;es
+     la derni&egrave;re fois que wwwoffle &eacute;tait en ligne.
+     Il contient &eacute;galement un historique des fichiers
+     acc&eacute;d&eacute;s au cours des pr&eacute;c&eacute;dentes connexions.
+  <dt>Derni&egrave;re Demande
+  <dd>Toutes les pages, pour tous les protocoles, qui &eacute;taient demand&eacute;es
+      dans la rubrique &laquo; en attente &raquo; la derni&egrave;re fois que wwwoffle a glan&eacute; des pages.
+Donne aussi acc&egrave;s &agrave; l'historique des demandes pr&eacute;c&eacute;dentes.
+ <dt>Protocoles (HTTP,FTP, etc.)
+ <dd>Chaque protocole support&eacute; par wwwoffle poss&egrave;de un
+ index indiquant pour chaque h&ocirc;te les pages stock&eacute;es.
+</dl>
+
+<h3>Troisi&egrave;me Niveau de l'Index</h3>
+
+Dans les index des protocoles, il existe un troisi&egrave;me niveau d'index (qui ne figure pas sur la barre de boutons).
+<br>
+Ces index contiennent la liste des pages provenant d'un h&ocirc;te en fonction d'un protocole particulier.
+
+<h3>Tri</h3>
+
+Tous les index des second et troisi&egrave;me niveaux peuvent &ecirc;tre
+tri&eacute;s du plusieures fa&ccedil;ons en utilisant la troisi&egrave;me barre
+de boutons.
+<br>
+Ces m&eacute;thodes sont :
+<dl>
+ <dt>Non Tri&eacute;
+ <dd>Aucun tri appliqu&eacute;, on retrouve l'ordre des fichiers dans
+ le r&eacute;pertoire.
+ <dt>Date de Modification
+ <dd>La derni&egrave;re fois que la page a &eacute;t&eacute;
+ modifi&eacute;e (la plus r&eacute;cente en premier), cela peut
+ &ecirc;tre le moment o&ugrave; la page a &eacute;t&eacute;
+ captur&eacute;e ou actualis&eacute;e.
+ <dt>Dernier Acc&egrave;s
+ <dd>La derni&egrave;re fois que la page a &eacute;t&eacute;
+ acc&eacute;d&eacute;e (la plus r&eacute;cente en premier), c'est le
+ moment o&ugrave; la page a &eacute;t&eacute; visualis&eacute;e pour
+ la derni&egrave;re fois (s'il est plus r&eacute;cent que la date de
+ modification).
+ <dt>Jour de Modification
+ <dd>Identique &agrave; &laquo; Date de Modification &raquo;, sauf que les
+ intervalles d'un jour ou d'une heure sont respectivement
+ symbolis&eacute;s par une ligne ou par un espace.
+ <dt>Alphab&eacute;tique
+ <dd>Les pages sont tri&eacute;es dans l'ordre alphab&eacute;tique.
+ <dt>Nom de Domaine
+ <dd>Les pages sont tri&eacute;es selon le nom de domaine de l'h&ocirc;te.
+ <dt>Type de fichier
+ <dd>Les pages sont tri&eacute;es selon le type de fichier, puis dans l'ordre alphab&eacute;tique.
+  <dt>Hasard
+  <dd>Les pages sont tri&eacute;es dans un ordre al&eacute;atoire (mais reproductible), aussi les
+      pages successives n'apparaissent pas dans l'ordre de t&eacute;l&eacute;chargement.
+</dl>
+<p>
+Il existe &eacute;galement une option pour ignorer la section DontIndex du
+fichier de configuration, c'est &agrave; dire pour afficher les URL qui
+devraient &ecirc;tre masqu&eacute;s.
+
+<!-- Ceci n'est que le corps de la page, le pied partage avec les autres index -->

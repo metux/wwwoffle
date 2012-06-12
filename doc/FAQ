@@ -1,0 +1,1123 @@
+          WWWOFFLE VERSION 2.9 - FREQUENTLY ASKED QUESTIONS AND ANSWERS
+          =============================================================
+
+
+This file contains a list of frequently asked questions and their answers
+relating to WWWOFFLE version 2.9.
+
+Not all of the questions here are real users questions, some of them have been
+made up to give some help to people trying to use the program who find that the
+README documentation is insufficient.
+
+--------------------------------------------------------------------------------
+
+Section 0 - Why doesn't this FAQ answer my question?
+
+--------------------
+
+Section 1 - What does WWWOFFLE do (and what it doesn't)
+
+Q 1.1   Does WWWOFFLE support http, ftp, finger, https, gopher, ...?
+Q 1.2   Does WWWOFFLE run on systems other than UNIX?
+Q 1.3   Can you change WWWOFFLE so that in the pages that it generates ...?
+
+--------------------
+
+Section 2 - How to use WWWOFFLE to serve an intranet
+
+Q 2.1   Can the WWWOFFLE proxy be accessed by clients other than localhost?
+Q 2.2   Why can't remote clients access the WWWOFFLE proxy?
+Q 2.3   Why can't remote clients follow all of the links?
+Q 2.4   What are the security issues with WWWOFFLE in a multi-user environment?
+Q 2.5   How can I have different configurations for different groups of users?
+
+--------------------
+
+Section 3 - What to look for when WWWOFFLE fails
+
+Q 3.1   Why does my browser return an empty page with WWWOFFLE but not without?
+Q 3.2   Why can't WWWOFFLE find a host when the browser without it can?
+Q 3.3   Why does my browser say "Connection reset by peer" when browsing?
+Q 3.4   Why does following a link on an FTP site go to the wrong server?
+Q 3.5   Why does WWWOFFLE not handle Cookies correctly?
+Q 3.6   Why does WWWOFFLE re-request all pages that are viewed offline?
+Q 3.7   Why does WWWOFFLE not allow access to certain password protected pages?
+Q 3.8   Why does WWWOFFLE ignore some entries in the configuration file?
+Q 3.9   Why are connections refused now that I have upgraded WWWOFFLE?
+Q 3.10  What do the error messages mean when WWWOFFLE starts?
+Q 3.11  Why don't I see the progress of page downloads through WWWOFFLE?
+
+--------------------
+
+Section 4 - Applet handling
+
+Q 4.1   Why doesn't my browser start applet XYZ?
+Q 4.2   Are Unicoded applet names supported?
+Q 4.3   Why does my Netscape browser throw the trustProxy security exception?
+
+--------------------
+
+Section 5 - How to make most use of WWWOFFLE features
+
+Q 5.1   How can I see what monitored pages were downloaded last time online?
+Q 5.2   How can I do a recursive fetch on a regular interval?
+Q 5.3   How can I stop users from accessing the index?
+Q 5.4   How can I use JunkBuster or Privoxy with WWWOFFLE?
+Q 5.5   How can I improve the performance of WWWOFFLE.
+
+--------------------
+
+Section 6 - More information about WWWOFFLE
+
+Q 6.1   Who wrote WWWOFFLE, When and Why?
+Q 6.2   What WWWOFFLE mailing lists are available?
+Q 6.3   How do I report bugs in WWWOFFLE?
+
+--------------------------------------------------------------------------------
+
+Section 0 - Why doesn't this FAQ answer my question?
+
+This FAQ is released with each new version of the WWWOFFLE program so if you are
+reading the supplied version and if the question is one that is frequently asked
+about this new version then you will by definition not find the answer here.
+
+This FAQ is also available on the WWWOFFLE homepage along with much other
+information about the program.
+
+http://www.gedanken.demon.co.uk/wwwoffle/version-2.9/
+
+--------------------------------------------------------------------------------
+
+Section 1 - What does WWWOFFLE do (and what it doesn't)
+
+--------------------
+
+Q 1.1   Does WWWOFFLE support http, ftp, finger, https, gopher, ...?
+
+Some of these are supported and some are not.
+
+http : Yes
+        The original version of WWWOFFLE only supported http.
+
+ftp : Yes
+        Since version 2.0 there has been support for ftp URLs.
+
+finger : Yes
+        Since version 2.1 there has been support for finger.  Although this is
+        not a standard protocol for proxying there is no reason that it cannot
+        usefully be performed.
+
+https : Yes
+        Since version 2.4 there has been support for transparent proxying of
+        Secure Socket Layer (SSL) connections (this does not cache the data).
+        This includes the https protocol.
+
+--------------------
+
+Q 1.2   Does WWWOFFLE run on systems other than UNIX?
+
+For example DOS / Win3 / Win95 / WinNT / OS/2.
+
+UNIX    = Yes
+        This is the system that the program way designed and initially written
+        for, it should work on many versions of UNIX.
+        I know that it works on Linux, SunOS 4.1.x, Solaris 2.x, *BSD.
+
+DOS/Win3 = No
+        The program was not designed for DOS, the filenames used and the
+        multi-process nature of the program do not allow this.
+
+Win95/Win98/WinNT/Win2000/WinXP = Yes (mostly)
+        A Windows 32-bit version of the program is now available thanks to the 
+        Cygwin development kit that provides a UNIX system call library
+        available on MS Windows.
+
+OS/2    = Maybe
+        There is a toolkit called 'EMX' for OS/2 which does what Cygwin does for
+        Windows. So an OS/2 port shouldn't be a problem.
+
+--------------------
+
+Q 1.3   Can you change WWWOFFLE so that in the pages that it generates ...?
+
+This is a question that gets asked a lot.  People want to see Javascript,
+images, different colours ... on the web pages that WWWOFFLE generates.
+
+From version 2.2 this is no longer an issue since it is possible to customise
+all of the web-pages that WWWOFFLE itself generates.  This means that the
+background colour and the font size can all be changed to suit your preferences.
+To find out how to do this look in the /var/spool/wwwoffle/html/*/messages
+directory (replace /var/spool/wwwoffle with the cache directory that you
+configured if it is different) and read the README file.
+
+From version 2.8 there is now a WWWOFFLE style sheet that is included into all
+of the internally generated HTML pages.  This can be customised to change the
+colours, fonts and some of the layout of the message pages.
+
+--------------------------------------------------------------------------------
+
+Section 2 - How to use WWWOFFLE to serve an intranet
+
+--------------------
+
+Q 2.1   Can the WWWOFFLE proxy be accessed by clients other than localhost?
+
+Yes it can, that facility has been present from the beginning.
+
+The other clients can be any type of computer that is connected to the server
+that is running the wwwoffled program.  The only requirement is that they are
+networked to the server and that they have browsers on them configured to access
+the WWWOFFLE proxy.
+
+--------------------
+
+Q 2.2   Why can't remote clients access the WWWOFFLE proxy?
+
+The default situation in the wwwoffle.conf file is to not allow any clients to
+access the proxy other than localhost.  To allow them to access the proxy the
+wwwoffle.conf file needs to be edited as described below and the new
+configuration loaded.
+
+The AllowedConnect section of the configuration file contains a list of hosts
+that are allowed to connect to the WWWOFFLE proxy.  These names are matched
+against the name that WWWOFFLE gets when the connection is made and access is
+allowed or denied.  A form of wildcard matching is applied to the entries in
+this list but no extra name lookups are performed.
+
+For example you are using the private IP address space 192.168.*.* for your
+intranet then your AllowedConnect section in the configuration file should look
+like this.
+
+AllowedConnect
+{
+ 192.168.*
+}
+
+This will allow all hosts that come from this set of IP addresses to connect to
+the WWWOFFLE proxy.
+
+--------------------
+
+Q 2.3   Why can't remote clients follow all of the links?
+
+Some of the links that are generated in the web pages that come out of the
+WWWOFFLE proxy need to point to other pages on the proxy.  To be able to do this
+the name of the host running the proxy needs to be specified in the LocalHost
+section of the configuration file.
+
+For example if the computer running the WWWOFFLE proxy is called www-proxy then
+the LocalHost section of the configuration file would look like this.
+
+LocalHost
+{
+ www-proxy
+ localhost
+ 127.0.0.1
+}
+
+The first of the names is what is used by WWWOFFLE to generate these links.  The
+others are used for names that are equivalent to the first one in some cases.
+
+--------------------
+
+Q 2.4   What are the security issues with WWWOFFLE in a multi-user environment?
+
+Security is a feature that I have considered to some extent when writing
+WWWOFFLE although it has not been one of my biggest concerns.  The issues are
+listed below.
+
+For the Win32 version it should be noted that on Win95/98 there is not the user
+level security that is provided by UNIX.  It is not possible therefore to create
+files that are readable by WWWOFFLE and not by other users.  The security
+features that are present in WWWOFFLE are therefore inapplicable to these
+systems.
+
+Configuration file password
+   This file can have a password specified in it in the StartUp section that is
+   used to limit access to the control features of WWWOFFLE.  If set this
+   password must be used to put WWWOFFLE online, put it offline, purge the
+   cache, stop the server, edit the configuration file etc.  If you have set a
+   password then you should also make the file readable only by authorised users.
+   The password is sent as plain text when using the wwwoffle program to control
+   the wwwoffled server.  The encryption used for the web page authentication is
+   trivial.
+
+Configuration file editing
+   The configuration file editing functions through the http interface that are
+   included in WWWOFFLE add some security concerns.  When the files are edited
+   the WWWOFFLE process will need to be able to write out the new files.  The
+   new files will be written with the same permissions as the old files into the
+   same location.  Included configuration files must be in the same directory as
+   the main configuration file.  To simplify management of this the default
+   location for the configuration files is the directory '/etc/wwwoffle' which
+   must be writable by the WWWOFFLE server but not all users.
+
+Proxy Authentication
+   With the ability to be able to control access to WWWOFFLE using the HTTP/1.1
+   Proxy Authentication method, there is the added security risks of this.  It
+   is basically the same as for the configuration file password, the usernames
+   and passwords are in plaintext in the configuration file and the password is
+   sent to the server using the same trivial encryption method.
+
+WWWOFFLE server uid/gid
+   The uid and gid of the wwwoffled server process can be controlled by the
+   run-uid and run-gid options in the StartUp section of the configuration file.
+   This uid/gid needs to be able to read the configuration file (write is not
+   required unless the interactive edit page is used) and have read/write access
+   to the spool directory.  If this option is used then the server must be
+   started by root.
+
+Deleting requested URLs
+   Only the user that makes a request for a page can delete that request, and
+   then only when the deletion is done immediately.  This is because a password
+   is made by hashing the contents of the file in the outgoing directory.  This
+   means that read access to this directory must be denied for this to be secure.
+
+The built in web server
+   This is a very simple server and will follow symbolic links, as a security
+   feature only files that are world readable can be accessed.  They must also
+   be in a directory that the wwwoffled server can read.  A check is not made for
+   each directory component so world readable files in a directory readable only
+   by the uid that runs wwwoffled are not safe.  The use of CGIs in the local web
+   server is configurable in the configuration file and will refuse to run files
+   that are not world readable and world executable or if WWWOFFLE is running as
+   root (see WWWOFFLE server uid/gid item above).
+
+Accessing the cache
+   If users have read access to the cache then they will be able to read the
+   data that was stored for all users.  If users have write access to the cache
+   they will be able to insert data into the cache for any URL and to modify the
+   timestamps on files which may interfere with the purging operations.
+   Without read access to the cache the data is available only to any user who
+   knows the URL that the data was accessed from.  The indexes and the search
+   functions will help to make this data visible to all users if they are
+   enabled.
+
+Log Files
+   The WWWOFFLE log files may contain information about the URLs that have been
+   requested and the username / password that has been used.  This depends on
+   the log levels that are used and the permissions on the log files.
+
+URLs with Passwords
+   The URLs that use usernames and passwords need to be stored in the cache.
+   For simplicity they are not hidden in any way.  This means that any URL that
+   uses a username/password in it can show up in the log file (with Debug or
+   ExtraDebug levels only).  The files in the cache also contain the username/
+   password information and should be made inaccessible to users for that reason.
+   The username and password are not available in the cache indexes or in the
+   results of the cache search functions although the contents of the pages will
+   be included in the search database.
+
+Accessing The Server
+   Access to the WWWOFFLE server on the proxy port 8080 is limited to the IP
+   addresses and hostnames that are listed in the AllowedConnectHosts section of
+   the configuration file.  By default this is set only to allow localhost
+   access.  Any host that is not listed will not be able to access the proxy,
+   but connections from them will be accepted and checked for validity before
+   being rejected.  This can lead to a denial of service attack where
+   unauthorised hosts can keep WWWOFFLE busy and deny valid accesses.
+
+Secure Socket Layer Connections
+   By default the configuration file does not allow caching or tunnelling of
+   Secure Socket Layer (SSL) connections.
+   Changing options in the configuration file can allow tunnelling of
+   connections, this means that WWWOFFLE cannot see or store the decrypted
+   version of the data that is transfered.  There are no security problems with
+   this except for the possibility that the hostname and port number of the
+   secure server and may be stored in the log files.
+   If WWWOFFLE is compiled with the gnutls library then it is possible to
+   decrypt and re-encrypt the data and cache the un-encrypted data.  The data is
+   stored un-encrypted on the disk and may be more sensitive than other data.
+   Any read access to the cache or the use of the cache indexes can allow the
+   presence and contents of this data to be visible.
+
+SSL Certificates
+   To allow the caching of SSL connections and access to the WWWOFFLE cache
+   through https URLs there are a series of encryption keys and associated
+   certificates stored on the disk.  Access to the certificates for the WWWOFFLE
+   server will allow interception of the encrypted data or impersonation of the
+   WWWOFFLE server.
+
+--------------------
+
+Q 2.5   How can I have different configurations for different groups of users?
+
+When there are two groups of users that will access the same WWWOFFLE cache but
+where each group has different WWWOFFLE configurations it is possible to run two
+instances of WWWOFFLE.
+
+For example in a school it may be required that the students can access the
+cache but they cannot request new pages.  The teachers must be able to access
+the same cache and to be able to use WWWOFFLE online and request pages while
+offline.
+
+The two WWWOFFLE configuration files will be the same in most respects, but
+there will be differences as shown below.
+
+-- wwwoffle.student.conf --               -- wwwoffle.teacher.conf --
+StartUp                                 | StartUp 
+{                                       | {
+ http-port     = 8080                   |  http-port     = 9080
+ wwwoffle-port = 8081                   |  wwwoffle-port = 9081
+ password      = secret                 |  password      = teacher
+}                                       | }
+                                        | 
+OfflineOptions                          | OfflineOptions
+{                                       | {
+ <*://*/*> dont-request = yes           | 
+}                                       | }
+                                        | 
+AllowedConnectUsers                     | AllowedConnectUsers
+{                                       | {
+                                        |  teacher1:password1
+                                        |  teacher2:password2
+}                                       | }
+                                        | 
+AllowedConnectHosts                     | AllowedConnectHosts
+{                                       | {
+                                        |  teacher1pc
+                                        |  teacher2pc
+}                                       | }
+
+The two copies of WWWOFFLE must use different port numbers.  They use the same
+spool directory and therefore the same web-pages are available to both sets of
+users.  You will need to have a password on the students version of WWWOFFLE to
+stop them editing the configuration file, but for the teachers it may not be
+required.  To keep the students from accessing the teachers version of WWWOFFLE
+you must use either the AllowedConnectHosts or the AllowedConnectUsers sections
+in the configuration file.  These will restrict access to either the set of
+machines that the teachers have access to or will require a username/password to
+be entered before browsing starts.
+
+In the example above the students are not allowed to request any pages when
+offline.  This version of WWWOFFLE is never used in online mode so there is
+never any way that the students can browse while online.  Only the teachers
+version of WWWOFFLE is ever used in online mode.
+
+--------------------------------------------------------------------------------
+
+Section 3 - What to look for when WWWOFFLE fails
+
+--------------------
+
+Q 3.1   Why does my browser return an empty page with WWWOFFLE but not without?
+
+When using a browser to visit a web-page nothing is returned when WWWOFFLE is
+used as a proxy but when the site is accessed directly without WWWOFFLE the page
+is visible.
+
+This can have a number of causes (all reported to me or tested myself):
+
+a) The web server that you are accessing requires the User-Agent header.  If it
+   is not present or set to an uncommon value (not Netscape or IE) then it
+   returns an empty page
+   In this case if you have the CensorHeader configuration file section set to
+   remove the User-Agent header then you should either not censor this header
+   line or set a replacement string that is acceptable.
+
+b) As above, but it does not matter what the value is for it to return a
+   non-empty page.
+   The solution is the same except that any User-Agent string can be used.
+
+c) The web server uses cookies to maintain state.  This is common on sites that
+   are more concerned with form than content, often without warning.  See Q 3.5
+   for a description of the reason that pages requiring Cookies are difficult to
+   handle.
+
+d) The browser and server are trying to use HTTP/1.1 extensions that WWWOFFLE is
+   ignoring.
+
+--------------------
+
+Q 3.2   Why can't WWWOFFLE find a host when the browser without it can?
+
+The most likely reason is that the DNS server that was configured when WWWOFFLE
+was started is no longer valid.  This would happen for example if the file
+/etc/resolv.conf was changed after wwwoffled was run.  This is not a WWWOFFLE
+only problem, but will affect any (most) programs when the DNS configuration is
+changed while they are running.
+
+When WWWOFFLE looks up a hostname it uses the standard UNIX library (libc)
+function call gethostbyname().  The name lookup part of libc (called the
+resolver library) is initialised when the program first uses a function from it.
+When a resolver library function is performed later it will use the
+configuration that was in place when the first function was used.
+
+The DNS configuration change may happen without you being aware of.  Some of the
+user friendly PPP setup programs will change the /etc/resolv.conf file depending
+on which ISP you are connecting to.  One example of a program that does this is
+kppp.
+
+Large browser projects (Netscape in particular) may use other methods of
+performing name lookups than the standard library.  This mean that they may work
+even if the DNS configuration has changed since it was started.  A working
+Netscape and a non-working WWWOFFLE may mean that your name server configuration
+has changed and is not a WWWOFFLE bug.
+
+
+It has often been suggested that WWWOFFLE be changed so that it calls the
+res_init() function each time that it goes online.  This is the function that is
+called in all programs the first time that a DNS lookup is performed.  It
+initialises the DNS resolver library.
+
+My objections to this are the following.  There is nothing to say that calling
+res_init() more than once is safe on all systems, that calling res_init() more
+than once works on all systems or that calling res_init() more than once will
+work in future versions of the resolver library.
+
+The res_init() function is a very low-level function in the resolver
+library, it is not intended for this use.  It is intended to
+initialise the resolver library, nowhere that I have seen does it say
+that it is safe to call it more than once or that it can be used to
+change the DNS lookup method.
+
+
+One solution is to install nscd (Name Service Cache Daemon) if it is available
+for your operating system (it is available for Solaris, Linux and other systems
+using GNU libc).  Running 'nscd -i hosts' will cause the cache of hostnames in
+used by the resolver library to be re-read.
+
+Another solution is to run a local DNS server.  The bind package contains the
+standard DNS server, but there are simpler alternatives for end-user systems.
+One option is pdnsd (http://home.t-online.de/home/Moestl/) which is a caching
+DNS server.  Whichever option you choose you will need to make localhost be the
+DNS server and the DNS server configuration needs to be changed when you go
+online.
+
+The other solution is to stop and restart WWWOFFLE (and any other servers that
+use the standard libc DNS functions) each time that you change the
+/etc/resolv.conf file.
+
+--------------------
+
+Q 3.3   Why does my browser say "Connection reset by peer" when browsing?
+
+This happens when using Netscape to access some web-pages.  The cause is not
+known, but the problem is only seen when WWWOFFLE is used and not when a direct
+connection is made.
+
+--------------------
+
+Q 3.4   Why does following a link on an FTP site go to the wrong server?
+
+If there is a directory called '/dir' on an ftp server and you load the page
+'ftp://server/' you get a directory listing that includes a link to '/dir'.
+Following this link should take the browser to 'ftp://server/dir/', but on some
+browsers it goes to 'ftp://dir/' instead.
+
+I think that this behaviour is due to the browser and not WWWOFFLE.  If you went
+to 'http://server/' and followed the link to '/dir/' then you would expect to go
+to 'http://server/dir/' and not to 'http://dir/'.  This is just common sense.
+Why the browser is different for ftp than http I am not sure.
+
+[This should be fixed in version 2.1 of WWWOFFLE, so is not really applicable to
+ this version of the FAQ]
+
+--------------------
+
+Q 3.5   Why does WWWOFFLE not handle Cookies correctly?
+
+Normal proxies cannot cache the result of URLs that are requested with Cookies
+because the result is different for each user.  WWWOFFLE will cache pages that
+have cookies in them because it is intended to reduce the network traffic.
+
+If you want to use cookies when you are browsing then any pages that you see
+should not be considered as valid when you see them offline.  The best way of
+handling this if there is a particular site that you visit is to put it into the
+DontCache section of the configuration file.
+
+It is not possible for WWWOFFLE to cache pages that use cookies to control the
+content in the same way that it handles pages that do not use cookies.  Any
+implementation of cookie handling would need to give different replies to users
+depending on the cookie that is in the request.  This would mean caching
+different pages for the same URL.
+
+But there is a problem that going to page A might set a cookie and then going to
+page B will give a different page.  So, for example, if you have a cookie and
+you have page B cached when you are offline, following the link from B to A may
+give you a new cookie from A (when you go online and fetch A).  This means that
+you cannot now go back to B when offline because the cookie is different (and so
+is the page, but you don't have it cached).
+
+An even worse problem is that reloading page C with the same cookie gives you a
+different page each time.  This is because the cookie is used to count the
+number of times that you have visited the page.  There is no way to know this
+and therefore you would keep getting the same page C (the cached one) even if
+you should be getting different ones.
+
+--------------------
+
+Q 3.6   Why does WWWOFFLE re-request all pages that are viewed offline?
+
+When offline and browsing pages through WWWOFFLE it sometimes happens that pages
+are requested again although they are already in the WWWOFFLE cache.  There are
+two possible causes of this that are known.
+
+1) When choosing bookmarks from Netscape (and possibly other browsers) a new
+   request is made for the bookmarked page.
+
+2) Some users have reported that when using Netscape all pages that are viewed
+   are requested again.  (Not all users see this behaviour and no particular
+   reason has been found why some people see is and other do not.)
+
+In both of these cases the browser is sending a request that tells WWWOFFLE that
+a new version of the page is required.  This is the same as the forced refresh
+option that most browsers offer.  A header is sent with the request that tells
+all proxies between the browser and the server that a new version of the page is
+required and that cached versions should be ignored.
+
+To disable this action in WWWOFFLE there is an option called 'pragma-no-cache'
+that defaults to 'yes'.  When this option is set the requests for a refreshed
+version of the page will force a new version to be requested.  Setting this
+option to 'no' will stop the two types of behaviour that is described above.
+
+--------------------
+
+Q 3.7   Why does WWWOFFLE not allow access to certain password protected pages?
+
+When a browser requests a page that has a username and a password associated
+with it there is defined to be a dialog between the browser and server to
+provide the correct page.
+
+1) When a browser first requests a page that is password protected a normal
+   request is sent without a password in it.  This is obvious since there is no
+   way to decide in advance which pages have passwords.
+
+2) When a server receives a request for page that requires authentication, but
+   for which there is none in the request, it sends back a '401 Unauthorized'
+   response.  This contains a "realm" which defines the range of pages over
+   which this username/password pair is valid.  A realm is not a well defined
+   range, it can be any set of pages on the same server, there is no requirement
+   for them to be related, although they normally are.
+
+3) When a browser receives a '401' reply it will prompt the user for a username
+   and password if it does not already have one for the specified realm.  If one
+   is already known then there is no need to prompt the user again.
+
+4) The request that the browser sends back this time includes in the header the
+   username and password pair, but otherwise the same request as in (1).
+
+5) The server now sends back the requested page.
+
+WWWOFFLE has features in it that make this easier for the user.  Many browsers
+for example will jump straight to step 4 in the list above if they know that
+there is a password set for one of the pages on the server.  This means that if
+a user tries to browse password protected pages when offline then there is
+nothing in the WWWOFFLE cache that will tell the browser that a username and
+password is needed.  Only by storing the result that comes back in step 2 can
+WWWOFFLE store enough information to force the browser to prompt the user.
+
+When a page is requested and there is a username and password in the request
+then WWWOFFLE will first request the page without a username and password.  This
+is so that step 1 above is not missed out even if the browser wanted to.  If
+the page does not require a password then the version of the page without the
+password is sent to the browser.  If a password is required then WWWOFFLE will
+make a second request with the username and password and send this result to the
+browser.
+
+Some servers have taken this further, and they expect users to send a password
+for each page.  If a request is sent without a password then the browser is
+re-directed to the login page.  The special behaviour of WWWOFFLE described
+above does not work in these situations.
+
+To disable this feature in WWWOFFLE there is an option 'try-without-password'
+that defaults to 'yes'.  When this option is set the requests for a page with a
+password will force WWWOFFLE to make a request without a password.  Setting this
+option to 'no' will stop the WWWOFFLE behaviour that is described above.
+
+--------------------
+
+Q 3.8   Why does WWWOFFLE ignore some entries in the configuration file?
+
+When entries in the configuration file contain a URL-SPECIFICATION then only one
+of them can be used for the URL that is being processed.  The one that is used
+is the first one found in the order that they exist in the configuration file
+that matches.
+
+For example, consider the following section of a configuration file:
+
+Section
+{
+ <http://www.foo/*> option = 1
+ <http://*.foo/*>   option = 2
+ <http://*/*>       option = 3
+}
+
+When the URL that is being processed is http://www.bar/foo.html then it will
+match only the third of the entries and the value of the option that is used is
+3.  When the URL being processed is http://www.foo/bar.html then it will match
+all three of the entries, but it is the first one that is used.
+
+The example given above is the correct ordering for these entries, the most
+specific one is first and the least specific (more general ones) are listed
+later.
+
+If the above entries were re-written so that they looked like the following the
+it would not work since the first entry matches all HTTP URLs and the later
+entries in the configuration file will not be checked.
+
+Section
+{
+ <http://*/*>       option = 3
+ <http://*.foo/*>   option = 2
+ <http://www.foo/*> option = 1
+}
+
+--------------------
+
+Q 3.9   Why are connections refused now that I have upgraded WWWOFFLE?
+
+The most likely answer to this question is that the new version of WWWOFFLE that
+you are using has got the IPv6 options enabled and the previous version did not.
+
+Since version 2.6d of WWWOFFLE it has supported the newest version of the
+Internet Protocol which is version 6.  This is often abbreviated to IPv6, the
+previous version of the protocol was version 4 and is often referred to as IPv4.
+This is a fundamental change to the networking functions in WWWOFFLE at the
+lowest level and requires that you are using WWWOFFLE on an operating system
+that supports IPv6.  Nearly all of the changes in WWWOFFLE are hidden from the
+user, but there are some configuration file options that will have changed.
+
+With IPv4 the IP address for the current computer is always '127.0.0.1' which is
+known by the name of 'localhost'.  With IPv6 there is a new localhost address
+called 'ip6-localhost' and using the address '::1'.  (With IPv4 the IP addresses
+are formed from 4 bytes which are written in decimal with a '.' between them.
+With IPv6 the IP addresses are composed of 16 bytes which are written in
+hexadecimal in groups of 16 bits with a ':' between them.  A single consecutive
+set of groups of 16 bits that are all zeroes can be omitted and a '::' used in
+its place, so that '::1' is the same as '0:0:0:0:0:0:0:1').
+
+When an IPv4 client program (a browser) connects to an IPv6 server program
+(WWWOFFLE) on the same computer the IPv6 address that the server sees the
+connection to come from is '::ffff:127.0.0.1'.  This is a special case of the
+IPv6 address naming that allows for including existing IPv4 addresses into the
+IPv6 address space.
+
+The most common cause of not being able to connect to WWWOFFLE when using an
+IPv6 enabled version is that the entry for '::ff:127.0.0.1' is not listed in the
+configuration file as one of the LocalHost entries.  It is also possible that
+the entries in LocalNet or AllowedConnectHosts will need to be updated if you
+are running a local network of clients that connect to the same WWWOFFLE server.
+
+--------------------
+
+Q 3.10  What do the error messages mean when WWWOFFLE starts?
+
+When WWWOFFLE starts it does a number of things during the startup process that
+can cause error messages or warnings to be generated.  These messages will be
+contained in the WWWOFFLE log file (if you started wwwoffled with the '-d'
+option) or in syslog (if enabled).
+
+If there is an error then normally the program will stop and the error message
+will explain what the problem is.  These error messages should be self
+explanatory.
+
+For example:
+
+Fatal: Error in configuration file '/etc/wwwoffle/wwwoffle.conf'
+
+There are also a number of warnings that can appear that while they are not
+fatal may be important to try and fix or they may not.
+
+An example of one that should be fixed is:
+
+Warning: Running with root user or group privileges is not recommended.
+
+This warning is telling you that any security related problems with WWWOFFLE
+will have more serious effects.  The WWWOFFLE programs can be run as any user,
+but it is always a good idea to run programs with the least privileges that
+they require.  In the case of WWWOFFLE there is no need for it to operate as the
+root user.  There are options in the wwwoffle.conf file to operate the program
+as another user.  It would be a good idea to use these options (run-uid and
+run-gid) and start wwwoffled as root or change user before starting wwwoffled.
+
+An example of a less serious warning (with long lines wrapped) is:
+
+Warning: Failed to bind IPv4 server socket to '0.0.0.0' port '8080' [Address \
+         already in use].
+Warning: Cannot create HTTP IPv4 server socket (but the IPv6 one might accept \
+         IPv4 connections).
+Warning: Failed to bind IPv4 server socket to '0.0.0.0' port '8081' [Address \
+         already in use].
+Warning: Cannot create WWWOFFLE IPv4 server socket (but the IPv6 one might \
+         accept IPv4 connections).
+
+These messages will appear if WWWOFFLE is compiled with the IPv6 option and you
+are running it on an operating system where IPv6 sockets will accept IPv4
+connections.  For example Linux users will see this message, but FreeBSD users
+will not.  If the IPv6 compilation option is used then WWWOFFLE will by default
+try to open both an IPv4 socket and IPv6 socket to await connections.  If the
+IPv6 socket will accept IPv4 connections then the IPv4 socket can not be opened
+because the IPv6 one is already open.  This is not a problem, you can remove the
+message by setting 'bind-ipv4 = none' in the configuration file.  Some operating
+systems consider that allowing IPv6 sockets to accept IPv4 connections is a
+security risk and require that separate sockets are opened.  These systems will
+not show the error message.
+
+--------------------
+
+Q 3.11  Why don't I see the progress of page downloads through WWWOFFLE?
+
+In version 2.8 of WWWOFFLE there is a change to the handling of the headers that
+are sent from WWWOFFLE to the client (browser).  The Content-Length header is
+removed in all cases so that it is not possible for the client (browser) to work
+out the fraction of the file that has been downloaded.
+
+This change has been made for many reasons, but they all come down to three
+things.  The removal of temporary files for storing a page between receiving it
+and sending it to the client, this speeds up page viewing.  The use of
+compression or chunked transfer encoding on the links from WWWOFFLE to server or
+client.  The dynamic generation or modification of web pages by WWWOFFLE.
+
+The following list contains the times that it is not possible to insert a
+Content-Length header without using a temporary file:
+
+* When you are online and the server sent compressed data (WWWOFFLE will
+  uncompress it and pass it to the client).
+* When compression is used for the WWWOFFLE to client links.
+* When you are online and the server sent data using chunked encoding (this
+  requires that there is no Content-Length header).
+* When chunked encoding is used for the WWWOFFLE to client links.
+* When the page is being sent from the cache and is stored compressed.
+* When the web page is modified by the HTML modification options.
+* When the web page is being internally generated by WWWOFFLE.
+
+To maintain consistency and simplicity of the WWWOFFLE code the Content-Length
+header is removed in all cases.
+
+--------------------------------------------------------------------------------
+
+Section 4 - Applet handling
+
+--------------------
+
+Q 4.1   Why doesn't my browser start applet XYZ.
+
+[Walter Pfannenmueller <pfn@online.de> writes:]
+
+I suppose you have enabled java support.  Your browser says something like
+"Can't start Applet XYZ.class".  Check if the file has been successfully
+downloaded by WWWOFFLE.  If the file is accessible, open a java console (your
+browser should provide something like that) and get more details on the problem.
+Probably it's a security - violation.  Every browser has it's own
+SecurityManager class and you should consult the manual how you can lower these
+restrictions.  If your applet however tries to get in contact with some server
+functionality (servlets, RMI, CORBA), we are at the end of the possibilities of
+an offline reader.
+
+--------------------
+
+Q 4.2   Are Unicoded applet names supported.
+
+[Walter Pfannenmueller <pfn@online.de> writes:]
+
+I don't know.  I transform those names to UTF8 encoding and the rest depends on
+what your filesystem or the host filesystem does with it.  Java compilers do
+have problems with unicode, too, even though it should be supported.  I'd
+appreciate any information that helps enlighten the dark.  I'd like to know how
+to code Unicode to UTF8 transformation.  The implementation in javaclass.c looks
+somehow awkward.
+
+--------------------
+
+Q 4.3   Why does my Netscape browser throw the trustProxy security exception?
+
+[Walter Pfannenmueller <pfn@online.de> writes:]
+
+The error message should be
+
+Could not resolve IP for host ... See the trustProxy property.
+
+The Netscape browser tries to verify the applets source host IP address.
+While offline this is not possible. Therefore you have to persuade
+the browser to trust the proxy. To do this you have to find the preferences
+file preferences.js on UNIX or prefs.js on Windows. Edit the file,
+even though it says "don't edit" and insert the line
+
+user_pref("security.lower_java_network_security_by_trusting_proxies", true);
+
+somewhere. be sure to have closed all browser windows, because the
+preferences file will be overwritten on closing. This should work for
+all Netscape 4.0x and 4.5.
+For more information have a look at
+http://developer.netscape.com/docs/technote/security/sectn3.html
+
+--------------------------------------------------------------------------------
+
+Section 5 - How to make most use of WWWOFFLE features
+
+--------------------
+
+Q 5.1   How can I see what monitored pages were downloaded last time online?
+
+The easiest way to do this is to go the the monitored web pages index and sort
+the pages by "Access Time" (http://localhost:8080/index/monitor/?atime). Each
+page is accessed when it is monitored so the most recently monitored ones are
+the ones at the top of this listing.
+
+--------------------
+
+Q 5.2   How can I do a recursive fetch on a regular interval?
+
+This is a combination of the recursive fetch option and the monitor option.  If
+you select the page that you want in the recursive fetch index
+(http://localhost:8080/refresh-options/) with the options that you want and
+press the button you will be presented with a page telling you that the request
+has been recorded.  There is a link on here to allow you to monitor this
+request, which takes you to the normal monitor page
+(http://localhost:8080/monitor-options) but with the URL already filled in.
+
+--------------------
+
+Q 5.3   How can I stop users from accessing the index?
+
+Access to the indexes can be denied to users by using the configuration file
+DontGet section.
+
+DontGet
+{
+ http://localhost:8080/index*
+}
+
+You must make sure that the hostname that you give is the first one in the
+LocalHost section since this is what will be checked.
+
+--------------------
+
+Q 5.4   How can I use JunkBuster or Privoxy with WWWOFFLE?
+
+The Internet JunkBuster is a program that can filter out many of the junk
+adverts and other features of web-pages.  Privoxy is an alternative program
+based on the Internet JunkBuster but adding many more features.
+
+The most recent versions of WWWOFFLE add in many of the features of the
+JunkBuster and Privoxy programs but not all of them.  If you look at the options
+that WWWOFFLE has you may decide that it can replace JunkBuster, but probably
+not Privoxy.
+
+If you decide that you do want to use WWWOFFLE with either of these programs
+then there are two options:
+
+1) Browser <-> WWWOFFLE <-> JunkBuster/Privoxy <-> Internet
+
+Any pages that the user requests that JunkBuster/Privoxy blocks will have the
+JunkBuster/Privoxy error message stored in the WWWOFFLE cache.  Any recursive
+fetching or images that WWWOFFLE gets in the background are passed through
+JunkBuster/Privoxy and the error messages are cached.  In this case you need to
+set your WWWOFFLE proxy configuration to point to Junkbuster/Privoxy.
+
+2) Browser <-> JunkBuster/Privoxy <-> WWWOFFLE <-> Internet
+
+Any pages that the user requests that JunkBuster/Privoxy blocks will not be
+stored in the WWWOFFLE cache.  Any recursive fetching or images that WWWOFFLE
+gets in the background are not passed through JunkBuster/Privoxy and they will
+be stored in the WWWOFFLE cache but blocked when the browser tries to view them.
+
+
+If you decide that WWWOFFLE will be doing lots of fetching because you are using
+it to browse offline then the 1st method is best.  If you decide that you will
+be only using it while online and not requesting pages when offline then the 2nd
+method is best.
+
+If reducing bandwidth is the most important feature of JunkBuster/Privoxy then
+the 1st option is the best since it will stop WWWOFFLE fetching the junk pages.
+
+--------------------
+
+Q 5.5   How can I improve performance of WWWOFFLE.
+
+Depending on what you are trying to improve with WWWOFFLE there are a number of
+changes that can be made that will improve the performance.
+
+1) If you want WWWOFFLE to serve the cached web-pages faster.
+
+The WWWOFFLE programs need to store the web-pages that are cached on disk.  This
+is the major point that can be exploited to improve the performance and make it
+run faster.
+
+The first thing to try is to increase the performance of the physical disk that
+you are using for the cache.  This could mean any one of a number of things: a
+faster disk, using a partition on a separate disk from other heavily used
+partitions or putting the disk on an IDE controller that is not shared with
+other disks.
+
+Next you can try improving the performance of the operating system hardware
+interface.  This can either be by selecting the correct driver for the hardware
+or by tuning the disk driver parameters (e.g. by using hdparm on Linux).
+
+Another thing to check is the filesystem that is used.  Some operating systems
+allow a choice of filesystems to use for any disk-partition.  On Linux for
+example using reiserfs instead of ext2fs should improve the performance of
+WWWOFFLE due to the more efficient handling of large directories.  There may
+also be options that can be used when the disk is mounted that will improve the
+performance.
+
+In Linux for example it is possible to change the size of the kernel buffers
+that are used for disk caching by performing the following:
+
+echo 25 30 75 > /proc/sys/vm/buffermem
+echo 10 10 65 > /proc/sys/vm/pagecache
+
+This increases the amount of memory that is reserved for file caching and the
+maximum that is allowed for file caching.
+
+The other change that can be made is to optimise the configuration file.  There
+are lots of things that can be done here, all have disadvantages of one type or
+another.  Reduce the number of entries in the DontGet section, this will reduce
+the amount of time that needs to be spent searching for the URL that was
+requested, use wildcards where possible.  Disable the modification of HTML and
+animated GIFs (the ModifyHTML section).  Reduce the maximum age in the Purge
+section to give a smaller cache.
+
+
+2) If you want WWWOFFLE to reduce network bandwidth.
+
+One feature of WWWOFFLE that appeals to many users is the ability to reduce the
+network bandwidth.  This can be done in a number of ways, decreasing the
+frequency at which 'static' pages are requested, keeping more pages in the
+cache, blocking adverts or ignoring server requests to keep reloading the same
+page.
+
+The static pages that can usefully be cached for a long time are images.  These
+might be the icons that appear all over pages on the same server.  These can be
+preserved in the WWWOFFLE cache for a long time and only requested infrequently
+since they change rarely.  The following example shows the changes that could be
+made to reduce the bandwidth to one particular set of static images (these URL
+specific options need to go before the generic options in the section).
+
+OnlineOptions
+{
+ <http://images*.slashdot.org> request-changed = 4w
+ <http://*slashdot.org> request-changed-once = yes
+}
+
+Purge
+{
+ <http://images*.slashdot.org> age = 6w
+ <http://*slashdot.org> age = 4w
+}
+
+More pages can be kept in the cache by increasing the 'age' options in the Purge
+section of the configuration file.  This can be applied to all pages or
+selectively to those sites that are visited often.
+
+The DontGet section of the configuration file has great advantages for reducing
+the bandwidth on the network by blocking items that you don't want to see.
+These can be banner adverts or web-hit counters for example.
+
+Another feature that some web-servers find useful is to force the browser to
+keep reloading the same page.  This can be done in a number of ways and there
+are many ways in WWWOFFLE to ignore these requests.  Using the 'request-changed'
+or 'request-changed-once' options in the OnlineOptions section will mean that
+WWWOFFLE will not make another request for a cached page until it has reached a
+certain age.  The 'request-expired' and 'request-no-cache' options can be set to
+'no' so that even pages that the server says have expired are not requested
+again.
+
+
+--------------------------------------------------------------------------------
+
+Section 6 - More information about WWWOFFLE
+
+--------------------
+
+Q 6.1   Who wrote WWWOFFLE, When and Why?
+
+The WWWOFFLE program was written by Andrew M. Bishop <amb@gedanken.demon.co.uk>
+in 1996,97,98,99,2000,01,02,03,04,05,06.
+
+There is a WWWOFFLE home-page on the World Wide Web, available via the author's
+home-page at http://www.gedanken.demon.co.uk/ .  This is kept updated with news
+about the program, as new versions become available.
+
+An earlier program by the same author written in perl had been used for a while
+but it was realised that the functionality of that version was insufficient
+except for a small amount of use.  Work on the WWWOFFLE program itself started
+in the Christmas holiday in 1996, initially as a hack to improve the perl
+version.
+
+After the release of the Beta version 0.9 at the beginning of January 1997 there
+was a lot of interest generated which led to the release of version 1.0 later
+that same month.  More versions followed until December that year when version
+2.0 was released.  This contained several large new features (like FTP) and
+included a re-write of a large proportion of the code to make it easier to
+maintain and build on, this included changing completely the cache format.
+Version 2.1 was released in March 1998 with some more new features, version 2.2
+in June 1998 with more features and version 2.3 in August 1998 with even more
+features.  Version 2.4 had more features when it was released in December 1998
+and version 2.5 had more again in September 1999.  Version 2.6 released in
+November 2000 contained the ability to have different configuration options for
+different URLs.  Version 2.7 released in February 2002 includes the zlib
+compression and IPv6 options that were added in the version 2.6 development
+cycle.  It also changes the source tree layout, adds a configure script for
+configuration and adds --help and --version options to the programs.  The main
+new program features are the new configuration editing pages and the automatic
+selection of translated messages based on browser settings.  Version 2.8
+released in September 2003 includes the ability to use HTTP/1.1 chunked encoding
+and better support for compression.  The internally generated HTML pages are now
+HTML 4.01 compliant and include a stylesheet for easier customisation.  Version
+2.9 has a re-write of large parts of the internal code.  Also included is the
+option to compile with the gnutls library and allow caching of SSL connections.
+
+The Win32 version of the program was made possible by version beta-20 of the
+Cygwin development kit at the end of October 1998 when version 2.3e of WWWOFFLE
+was released.  Versions 2.4b and 2.5a of WWWOFFLE were also released for Win32
+although none of them work totally on most platforms due to incompatibilities.
+With version 1.1.7 of the cygwin DLL version 2.6a of WWWOFFLE is much more
+successful.
+
+The WWWOFFLE program can be freely distributed according to the terms of the GNU
+General Public License (see the file `COPYING').
+
+--------------------
+
+Q 6.2   What WWWOFFLE mailing lists are available?
+
+There are three mailing lists available for WWWOFFLE.  They can be subscribed to
+in two different ways - on the WWWOFFLE users web-page and via e-mail.
+
+wwwoffle-announce       For announcements of new versions of WWWOFFLE.
+
+wwwoffle-users          For discussion of WWWOFFLE features, excluding operating
+                        system specific features.
+
+wwwoffle-win32          For discussion of WWWOFFLE on the Win32 system.
+
+The first one is only for announcements from the author of WWWOFFLE, there is no
+discussion allowed on them.  The latter two are open for posting from members of
+the list and others who are not subscribed.
+
+All the mailing lists are run from a computer with dial-up access only.  This
+will mean that there will be a delay for messages sent to them.
+
+To subscribe by e-mail send a message to
+<wwwoffle-announce-request@gedanken.demon.co.uk>,
+<wwwoffle-users-request@gedanken.demon.co.uk>, or
+<wwwoffle-win32-request@gedanken.demon.co.uk> with the subject 'subscribe'.
+
+--------------------
+
+Q 6.3   How do I report bugs in WWWOFFLE?
+
+By e-mail, send them to me at <amb@gedanken.demon.co.uk> and put WWWOFFLE
+somewhere in the subject line.  You can also report bugs or provide comments via
+the feedback form on the WWWOFFLE home-page on the World Wide Web accessible via
+http://www.gedanken.demon.co.uk/ .
+
+Before doing this, you should check the FAQ and the WWWOFFLE web-page to see if
+the answer is there.  If it is not and you want to report it to me then it helps
+if you can reproduce the error, in particular you probably need to start
+wwwoffled with debugging enabled.
+
+If you use sh/bash as your shell then run
+
+wwwoffled -d 5 -c wwwoffle.conf > wwwoffled.log 2>&1
+
+If you use csh/tcsh as your shell then run
+
+wwwoffled -d 5 -c wwwoffle.conf >& wwwoffled.log
+
+If you want even more debugging information then use '-d 6' instead of '-d 5'.
+
+
+--------------------------------------------------------------------------------

@@ -1,0 +1,292 @@
+<!--
+
+    This is default template file for mnoGoSearch 3.1
+    (C) 1999-2000, mnoGoSearch developers team <devel@mnogosearch.org>
+
+    Please rename to search.htm and edit as desired. 
+    See doc/README.templates for detailed information.
+    You may want to keep the original file for future reference.
+    
+    WARNING: Please keep the file chmod 600 to protect your passwords!
+    
+-->
+<!--variables
+# Database parameters are to be used with SQL backend
+# and do not matter for built-in text files support
+# Format: <DBType>:[//[DBUser[:DBPass]@]DBHost[:DBPort]]/DBName/
+
+#DBAddr	pgsql://wwwoffle@localhost/mnogosearch/
+DBAddr	mysql://wwwoffle@localhost/mnogosearch/
+
+# Choose storage mode (see explanation in indexer.conf-dist):
+#DBMode  single
+#DBMode  multi
+#DBMode  crc
+DBMode  crc-multi
+
+# Uncomment this line to enable query tracking facility
+#TrackQuery yes
+
+# Uncomment this line to enable search result cache
+#Cache yes
+
+#  Uncomment this line if you do not want to detect and show clones
+#Clones	no
+# Local charset, use proper one:
+#LocalCharset	iso-8859-1
+LocalCharset	iso-8859-2
+#LocalCharset	iso-8859-4
+#LocalCharset	iso-8859-5
+#LocalCharset	iso-8859-7
+#LocalCharset	iso-8859-8
+#LocalCharset	iso-8859-9
+#LocalCharset	iso-8859-13
+#LocalCharset	koi8-r
+#LocalCharset	windows-1250
+#LocalCharset	windows-1251
+#LocalCharset	windows-1253
+#LocalCharset	windows-1254
+#LocalCharset	windows-1255
+#LocalCharset	windows-1256
+#LocalCharset	windows-1257
+#LocalCharset	cp866
+
+#IspellUsePrefixes yes/no
+# If enabled, indexer will use ispell prefixes, not only suffixes
+# Default: no
+#   Load ispell data from database:
+#IspellMode db
+#   or load ispell data from files:
+#Affix en /usr/dict/en.aff
+#Affix ru /usr/dict/ru.aff
+#Spell en /usr/dict/en.dict
+#Spell ru /usr/dict/ru.dict
+
+# Uncomment if index was built with phrase support
+#Phrase yes
+
+# Load stopwords from file
+#StopwordFile stopwords.txt
+
+# Load stopwords from SQL table
+StopwordTable stopword
+
+# Word lengths
+MinWordLength 1
+MaxWordLength 32
+
+# Hilight found word syntax. 
+# HLBeg is prepended before the word. Default is <b>
+# HLEnd is appended after the word. Default is </b>
+#HLBeg <font color="#905050">
+#HLEnd </font>
+
+-->
+
+<!--top-->
+<HTML>
+<HEAD>
+ <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+ <TITLE>WWWOFFLE mnoGoSearch</TITLE>
+</HEAD>
+
+
+<body BGCOLOR="#FFFFFF" LINK="#0050A0" VLINK="#0050A0" ALINK="#0050A0">
+<center>
+
+<H1>WWWOFFLE mnoGoSearch: $Q</H1>
+
+<FORM METHOD="GET" ACTION="$A">
+<table bgcolor="#eeeee0" width="100%">
+<tr><td>
+<BR>
+Odszukaj: <INPUT TYPE="text" NAME="q" SIZE=50 VALUE="$Q">
+<INPUT TYPE="submit" VALUE="Szukaj!"><BR>
+
+Wyników na stronê:
+<SELECT NAME="ps">
+<OPTION VALUE="10" SELECTED="$ps">10
+<OPTION VALUE="20" SELECTED="$ps">20
+<OPTION VALUE="50" SELECTED="$ps">50
+</SELECT>
+
+Format wyj¶ciowy:
+<SELECT NAME="o">
+<OPTION VALUE="0" SELECTED="$o">D³ugi
+<OPTION VALUE="1" SELECTED="$o">Krótki
+<OPTION VALUE="2" SELECTED="$o">URL
+</SELECT>
+
+
+Dopasuj:
+<SELECT NAME="m">
+<OPTION VALUE="all"    SELECTED="$m">Wszystkie
+<OPTION VALUE="any"    SELECTED="$m">Którekolwiek
+<OPTION VALUE="bool"   SELECTED="$m">Logicznie
+<OPTION VALUE="phrase" SELECTED="$m">Pe³ne wyra¿enie
+</SELECT>
+
+
+Wyszukaj:
+<SELECT NAME="wm">
+<OPTION VALUE="wrd" SELECTED="$wm">Ca³ego s³owa
+<OPTION VALUE="beg" SELECTED="$wm">Pocz±tku
+<OPTION VALUE="end" SELECTED="$wm">Koñca
+<OPTION VALUE="sub" SELECTED="$wm">Czê¶ci wyra¿enia
+</SELECT>
+
+<!-- Use this to limit URL match -->
+
+<input type="HIDDEN" NAME="ul" VALUE="">
+
+<!-- Uncomment this to limit database subsection by language -->
+<!-- Language:
+<SELECT NAME="g">
+<OPTION VALUE="" SELECTED="$L">Any
+<OPTION VALUE="en" SELECTED="$L">English
+<OPTION VALUE="fr" SELECTED="$L">French
+<OPTION VALUE="ru" SELECTED="$L">Russian
+</SELECT> -->
+
+
+</td></tr>
+</table>
+</form>
+</center>
+<!--/top-->
+
+
+
+<!--restop-->
+Wynik wyszukiwania: ($SearchTime sek)
+<small>$W</small><HR>
+Wy¶wietlanie $f-$l dokumentów ze <B>$t</B> wszystkich znalezionych.
+<!--/restop-->
+<!--res-->
+<DL><DT>
+<b>$DN.</b> <a href="$DU" TARGET="_blank"><b>$DT</b></a> [<b>$DR</b>]<DD>
+$DX...<BR>
+<UL>
+<li><A HREF="$DU" TARGET="_blank">$DU</A> ($DC) $DM, $DS bajtów
+$CL
+</UL>
+</DL>
+<!--/res-->
+<!--resbot-->
+<HR>
+<CENTER>
+$V
+</CENTER>
+<!--/resbot-->
+
+
+
+
+
+<!--restop-->
+Search results:
+<small>$W</small><HR>                                                                            
+Displaying documents $f-$l of total <B>$t</B> found.
+<!--/restop-->
+<!--res-->
+<DL><DT>
+<b>$DN.</b> <a href="$DU" TARGET="_blank"><b>&nbsp; $DT</b></a> [<b>$DR</b>]<DD>
+</DL>
+<!--/res-->
+<!--resbot-->
+<HR>
+<CENTER>
+$V
+</CENTER>
+<!--/resbot-->
+
+
+
+<!--restop-->
+Search results:
+<small>$W</small><HR>
+Displaying documents $f-$l of total <B>$t</B> found.
+<!--/restop-->
+<!--res-->
+<DL><DT>
+<b>$DN.</b> <a href="$DU" TARGET="_blank"><b>$DU</b></a> [<b>$DR</b>]<DD>
+</DL>
+<!--/res-->
+<!--resbot-->
+<HR>
+<CENTER>
+$V
+</CENTER>
+<!--/resbot-->
+
+
+
+
+<!--clone-->
+<li><A HREF="$DU" TARGET="_blank">$DU</A> ($DC) $DM
+<!--/clone-->
+
+<!--navigator-->
+<TABLE BORDER=0><TR>$NL $NB $NR</TR></TABLE>
+<!--/navigator-->
+
+<!--navleft-->
+<TD><A HREF="$NH">&lt;&lt; Prev</A></TD>
+<!--/navleft-->
+
+<!--navleft_nop-->
+<TD><FONT COLOR=gray>&lt;&lt; Prev</FONT></TD>
+<!--/navleft_nop-->
+
+<!--navbar1-->
+<TD><A HREF="$NH">$NP</A></TD>
+<!--/navbar1-->
+
+<!--navbar0-->
+<TD>$NP</TD>
+<!--/navbar0-->
+
+<!--navright-->
+<TD><A HREF="$NH">Next &gt;&gt;</TD>
+<!--/navright-->
+
+<!--navright_nop-->
+<TD><FONT COLOR=gray>Next &gt;&gt;</FONT></TD>
+<!--navright_nop-->
+
+<!--notfound-->
+Search results:
+<small>$W</small><HR>
+<CENTER>
+Sorry, but search returned no results.<P>
+<I>Try to compose less restrictive search query or check spelling.</I>
+</CENTER>
+<HR>
+<!--/notfound-->
+
+<!--noquery-->
+<CENTER>
+You haven't typed any word(s) to search for.
+</CENTER>
+<HR>
+<!--/noquery-->
+
+<!--error-->
+<CENTER>
+<FONT COLOR="#FF0000">An error occured!</FONT>
+<P><B>$E</B>
+</CENTER>
+<!--/error-->
+
+
+
+
+<!--bottom-->
+<HR>
+<center>
+<img src="/search/mnogosearch/m-search.gif">
+<font size="-1">Powered by <a href="http://mnogosearch.org/">mnoGoSearch</a></font><br>
+<p>
+</BODY>
+</HTML>
+<!--/bottom-->

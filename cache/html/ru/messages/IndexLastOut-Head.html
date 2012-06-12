@@ -1,0 +1,30 @@
+<!-- This is just the head of the index body since the contents are different for each index -->
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+number     = Which version of the page it is, lastout='', prevout='0'-'3' (='$number').
+total      = The total number of pages for this index (='$total').
+date       = The date when last fetched (='$date').
+
+-->
+
+$number?{<h2>Исходящие запросы предыдущего раза ($number)</h2>}{<h2>Исходящие запросы последнего раза</h2>}
+
+Fetch started: $date
+<p>
+
+$total?=0{<b>Нет страниц</b>}{<b>$total стр.</b>}
+
+<p>
+
+$delete?{$totaldelete=$total}{$totaldelete=0}
+$totaldelete?=0{}
+{
+<form action="/control/delete-multiple/url" method=post>
+}
+
+<ul>
+
+<!-- This is just the head of the index body since the contents are different for each index -->

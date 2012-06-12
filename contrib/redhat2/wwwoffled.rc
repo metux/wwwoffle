@@ -1,0 +1,87 @@
+#!/bin/sh
+# chkconfig: 2345 85 20
+# description: WWW proxy allowing offline view of cached pages 
+# =============================================================================
+#
+# Description:
+#	This shell script takes care of starting and stopping wwwoffled.
+#
+# Author[s]:
+#	Gianpaolo Macario	gianpi@geocities.com
+#	Peter Stamfest		Peter.Stamfest@vws.or.at
+#	Andrea Borgia		borgia@students.cs.unibo.it
+#       Werner Bosse            wbosse@snafu.de
+#
+# Revision History:
+#       29-NOV-2000     wbosse  Direct wwwoffle log to separate file
+#	21-OCT-1999	gianpi	Make start/stop msgs like other RH60 daemons
+#	05-OCT-1999	Andrea	Fixed subsys locking (was missing altogether)
+#	31-JUL-1999	Andrea	Fixed paths (packages do not live in /usr/local!)
+#	11-NOV-1998	peter	Added chkconfig support, restart and status 
+#				options, changed usage message (stripped the
+#				".init")
+#	21-JUL-1997	gianpi	Configured for wwwoffle-1.2c
+#	10-MAR-1997	gianpi	Initial writing
+# =============================================================================
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ ${NETWORKING} = "no" ] && exit 0
+
+[ -f /usr/sbin/wwwoffled ] || exit 0
+
+# The configuration file
+CONFIG=/etc/wwwoffle/wwwoffle.conf
+
+start()
+{
+    # Start daemons.
+    echo -n "Starting wwwoffled: "
+    /usr/sbin/wwwoffled -c $CONFIG -d >>/var/log/wwwoffled 2>&1 &
+    touch /var/lock/subsys/wwwoffled
+    success "Starting wwwoffled: "
+    echo
+}
+
+stop()
+{
+    # Stop daemons.
+    echo -n "Shutting down wwwoffled: "
+    killproc wwwoffled
+    rm -f /var/lock/subsys/wwwoffled
+    echo "done"
+}
+
+# See how we were called.
+case "$1" in
+  start)
+	start
+        ;;
+  stop)
+	stop
+        ;;
+  restart)
+	stop
+	start
+	;;
+  reload)
+        echo -n "Reloading wwwoffled configuration: "
+	killproc wwwoffled -HUP
+	echo
+        ;;
+  status)
+	status wwwoffled
+        ;;
+  *)
+        echo "Usage: wwwoffle {start|stop|restart|relload|status}"
+        exit 1
+esac
+
+exit 0
+
+# === End of File ===

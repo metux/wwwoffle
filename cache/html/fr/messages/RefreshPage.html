@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+WWWOFFLE : Variables disponibles (mettre le prefixe '$').
+
+localurl  = Le URL du serveur sur lequel wwwoffled tourne (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = L'URL demande (ou rien) (='$url').
+
+La section FetchOptions du fichier de configuration:
+    stylesheets (='$stylesheets').
+    images      (='$images').
+    frames      (='$frames').
+    scripts     (='$scripts').
+    objects     (='$objects').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Formulaire d'Actualisation</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE - Formulaire d'Actualisation</H1>
+
+Vous pouvez utiliser ce formulaire pour capturer ou actualiser des URL : soit un seul, soit plusieurs en suivant r&eacute;cursivement les liens. 
+
+<p>
+<form action="/refresh-request/" method=post>
+Capturer
+<select name="depth">
+<option value="0" selected>cet URL seulement
+<option value="1"         >r&eacute;cursivement au niveau 1
+<option value="2"         >r&eacute;cursivement au niveau 2
+<option value="3"         >r&eacute;cursivement au niveau 3
+<option value="4"         >r&eacute;cursivement au niveau 4
+<option value="5"         >r&eacute;cursivement au niveau 5
+</select>
+<select name="method">
+<option value="none" selected>cet URL seulement
+<option value="dir"          >dans le m&ecirc;me r&eacute;pertoire
+<option value="host"         >sur le m&ecirc;me h&ocirc;te
+<option value="proto"        >avec le m&ecirc;me protocole
+<option value="any"          >partout (!)
+</select>
+
+<br>
+<input type="text" name="url" value="$url" size=60>
+
+<br>
+<input name="stylesheets" type="checkbox" value="Y" $stylesheets?{checked}{}>
+Capturer les feuilles de style
+
+<br>
+<input name="images" type="checkbox" value="Y" $images?{checked}{}>
+Capturer les images
+
+<br>
+<input name="frames" type="checkbox" value="Y" $frames?{checked}{}>
+Capturer les cadres
+
+<br>
+<input name="scripts" type="checkbox" value="Y" $scripts?{checked}{}>
+Capturer les scripts
+
+<br>
+<input name="objects" type="checkbox" value="Y" $objects?{checked}{}>
+Capturer les objets
+
+<br>
+<input name="force" type="checkbox" value="Y">
+Forcer l'actualisation m&ecirc;me si le fichier a d&eacute;j&agrave; &eacute;t&eacute; captur&eacute;
+
+<br>
+<input type="submit" value="Envoyer la requ&ecirc;te">
+
+</form>
+
+<p>
+
+NB :
+<ol>
+  <li>S'il n'est pas sp&eacute;cifi&eacute;, le protocole HTTP sera utilis&eacute; par d&eacute;faut.
+  <li>Pour obtenir le contenu d'un r&eacute;pertoire par FTP, assurez-vous que l'URL se termine par un '/'.
+  <li>Pour faire un "finger" sur utilisateur@la.bas vous devez entrer l'URL finger://la.bas/utilisateur.
+</ol>
+
+<div class="wwwoffle-nav" align="center">
+[<a href="/index/outgoing/?sort=alpha">Voir la liste des pages &agrave; t&eacute;l&eacute;charger</a>]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Page d'accueil</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,50 @@
+<!-- Ceci n'est que le pied de l'index, le contenu est different pour chaque index -->
+
+</ul>
+
+<!--
+
+WWWOFFLE : Variables disponibles (mettre le prefixe '$').
+
+indexed    = Le nombre de pages indexees(='$indexed').
+notindexed = Le nombre de pages non indexees (='$notindexed').
+
+-->
+
+$notindexed?=0{$anynotindexed=0}{$anynotindexed=$total}
+$anynotindexed?=0{}{<a href="/index/$type$subtype?sort=$sort$delete$refresh$monitor;all$config$info"><i>$notindexed pages non index&eacute;es</i></a>}
+<p>
+
+$delete?{$indexeddelete=$indexed}{$indexeddelete=0}
+$indexeddelete?=0{}
+{
+<script type="text/javascript" src="$localurl/wwwoffle.js">
+</script>
+<script type="text/javascript">
+<!--//
+document.write("<INPUT onclick=form_make_url_unchecked(this.form) type='button' value='Unselect all'>")
+document.write("<INPUT onclick=form_toggle_url_checked(this.form) type='button' value='Toggle'>")
+document.write("<INPUT onclick=form_make_url_checked(this.form)   type='button' value='Select all'>")
+//-->
+</script>
+<noscript>
+<input type="reset" value="Unselect all">
+</noscript>
+
+<p>
+<input type="submit" value="Supprimer les pages s&eacute;lectionn&eacute;es">
+}
+$totaldelete?=0{}
+{
+</form>
+<form action="/control/delete/mon-all" method=post>
+<input type="submit" value="Supprimer toutes les pages suivies">
+</form>
+}
+
+<hr class="wwwoffle-index-buttons-bottom" width="50%">
+<div class="wwwoffle-index-buttons-bottom" align="center">
+<a href="/monitor-options/">[Entrer une page &agrave; suivre]</a>
+</div>
+
+<!-- Ceci n'est que le pied de l'index, le contenu est different pour chaque index -->

@@ -1,0 +1,145 @@
+# $Header: /home/amb/wwwoffle/RCS/Makefile 2.30 1998/05/30 14:27:44 amb Exp amb $
+#
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.8.
+#
+# Test Programs Makefile.
+#
+# Written by Andrew M. Bishop
+#
+# This file Copyright 1998,99,2000,01,02,03 Andrew M. Bishop
+# It may be distributed under the GNU Public License, version 2, or
+# any higher version.  See section COPYING of the GNU Public license
+# for conditions under which this file may be redistributed.
+#
+
+######## DEFINITIONS ########
+
+# Make things
+
+SHELL=/bin/sh
+
+########
+
+CC=@CC@
+CFLAGS=@CFLAGS@
+
+LD=@CC@
+LDFLAGS=@LDFLAGS@
+
+########
+
+INCLUDE=@ZLIB_INC@ @GNUTLS_INC@
+LIBRARY=@LIBS@ @ZLIB_LIB@ @GNUTLS_LIB@ @ETR_SOCKET_LIBS@
+
+COMPILE=$(CC) -c $(CFLAGS)
+
+LINK=$(LD) $(LDFLAGS)
+
+######## COMPILATION ########
+
+compile : test-doc \
+	  test-msg \
+	  test-modify \
+	  test-gif \
+	  test-io
+
+######## INSTALLATION ########
+
+install : compile
+
+######## CLEAN UP ########
+
+clean :
+	-rm -f test-doc test-msg test-modify test-gif test-io
+	-rm -f core *.o *~
+
+########
+
+distclean : clean
+	-rm -f Makefile
+
+######## PROGRAMS ########
+
+TEST_DOC_OBJ=test-doc.o \
+	     ../http.o ../https.o ../ftp.o ../finger.o ../ssl.o \
+	     ../document.o ../html.o ../css.o ../xml.o ../vrml.o ../javaclass.o \
+	     ../messages.o ../local.o ../cgi.o \
+	     ../parse.o ../spool.o \
+	     ../configrdwr.o ../configmisc.o ../configdata.o ../configfunc.o \
+	     ../io.o ../iopriv.o ../iozlib.o ../iognutls.o ../iochunk.o \
+	     ../errors.o ../miscurl.o ../miscencdec.o ../headbody.o ../proto.o ../sockets.o ../certificates.o ../md5.o
+
+test-doc : $(TEST_DOC_OBJ)
+	$(LINK) $(TEST_DOC_OBJ) -o $@ $(LIBRARY)
+
+####
+
+TEST_MSG_OBJ=test-msg.o \
+	     ../http.o ../https.o ../ftp.o ../finger.o ../ssl.o \
+	     ../messages.o ../local.o ../cgi.o \
+	     ../parse.o ../spool.o \
+	     ../configrdwr.o ../configmisc.o ../configdata.o ../configfunc.o \
+	     ../io.o ../iopriv.o ../iozlib.o ../iognutls.o ../iochunk.o \
+	     ../errors.o ../miscurl.o ../miscencdec.o ../headbody.o ../proto.o ../sockets.o ../certificates.o ../md5.o
+
+test-msg : $(TEST_MSG_OBJ)
+	$(LINK) $(TEST_MSG_OBJ) -o $@ $(LIBRARY)
+
+####
+
+TEST_MODIFY_OBJ=test-modify.o \
+	        ../http.o ../https.o ../ftp.o ../finger.o ../ssl.o \
+	        ../htmlmodify.o \
+	        ../messages.o ../local.o ../cgi.o \
+	        ../parse.o ../spool.o \
+	        ../configrdwr.o ../configmisc.o ../configdata.o ../configfunc.o \
+	        ../io.o ../iopriv.o ../iozlib.o ../iognutls.o ../iochunk.o \
+	        ../errors.o ../miscurl.o ../miscencdec.o ../headbody.o ../proto.o ../sockets.o ../certificates.o ../md5.o
+
+test-modify : $(TEST_MODIFY_OBJ)
+	$(LINK) $(TEST_MODIFY_OBJ) -o $@ $(LIBRARY)
+
+####
+
+TEST_GIF_OBJ=test-gif.o \
+	     ../http.o ../https.o ../ftp.o ../finger.o ../ssl.o \
+	     ../gifmodify.o \
+	     ../messages.o ../local.o ../cgi.o \
+	     ../parse.o ../spool.o \
+	     ../configrdwr.o ../configmisc.o ../configdata.o ../configfunc.o \
+	     ../io.o ../iopriv.o ../iozlib.o ../iognutls.o ../iochunk.o \
+	     ../errors.o ../miscurl.o ../miscencdec.o ../headbody.o ../proto.o ../sockets.o ../certificates.o ../md5.o
+
+test-gif : $(TEST_GIF_OBJ)
+	$(LINK) $(TEST_GIF_OBJ) -o $@ $(LIBRARY)
+
+####
+
+TEST_IO_OBJ=test-io.o \
+	    ../http.o ../https.o ../ftp.o ../finger.o ../ssl.o \
+	    ../messages.o ../local.o ../cgi.o \
+	    ../parse.o ../spool.o \
+	    ../configrdwr.o ../configmisc.o ../configdata.o ../configfunc.o \
+	    ../io.o ../iopriv.o ../iozlib.o ../iognutls.o ../iochunk.o \
+	    ../errors.o ../miscurl.o ../miscencdec.o ../headbody.o ../proto.o ../sockets.o ../certificates.o ../md5.o
+
+test-io : $(TEST_IO_OBJ)
+	$(LINK) $(TEST_IO_OBJ) -o $@ $(LIBRARY)
+
+######## OBJECT FILES ########
+
+.SUFFIXES:
+.SUFFIXES: .c .o
+
+.c.o:
+	$(COMPILE) $< -o $@ $(INCLUDE) -I..
+
+#             #               ../wwwoffle.h ../io.h ../misc.h ../errors.h ../config.h ../sockets.h ../proto.h ../document.h
+
+test-doc.o    : test-doc.c                  ../io.h ../misc.h ../errors.h ../config.h                         ../document.h
+test-io.o     : test-io.c                   ../io.h           ../errors.h                                                  
+test-modify.o : test-modify.c               ../io.h ../misc.h ../errors.h ../config.h                         ../document.h
+test-gif.o    : test-gif.c                  ../io.h           ../errors.h                                     ../document.h
+test-msg.o    : test-msg.c    ../wwwoffle.h         ../misc.h                                                              
+
+########

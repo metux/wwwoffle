@@ -1,0 +1,220 @@
+             WWWOFFLE - Installation Instructions - Version 2.9
+             ==================================================
+
+
+There are only 10 steps required to install WWWOFFLE from the source code to a
+fully working and tested program.  If you are using a binary release (Win32)
+then you should skip over the first 3 steps.
+
+Compilation
+-----------
+
+1) Run the configure script
+
+        ./configure
+
+   You can use the following options:
+
+        --prefix=<dir>                  - Set the installation location
+                                          (default is /usr/local/*).
+
+        --with-ipv6, --without-ipv6     - Enable or disable IPv6 support
+                                          (default is enabled if IPv6 capable).
+
+        --with-zlib, --without-zlib     - Enable or disable compression support
+                                          (default is enabled if zlib is found).
+
+        --with-gnutls, --without-gnutls - Enable or disable SSL/https support
+                                          (default is disabled).  Requires
+                                          version 1.2.2 of libgcrypt and version
+                                          1.2.8 of libgnutls.
+
+        --with-default-language=<lang>  - Set the default language for the
+                                          installation (default is en).
+
+        --with-server=<host:port:port:port>  - Set the localhost name, HTTP port
+                                          number, WWWOFFLE port number and HTTPS
+                                          port number for the programs and
+                                          search scripts
+                                          (default localhost:8080:8081:8443).
+
+        --with-spooldir=<directory>     - Set the compiled-in default value for
+                                          the spool directory (can be overridden
+                                          in the configuration file) (default
+                                          /var/spool/wwwoffle).
+
+        --with-confdir=<directory>      - Set the compiled-in default value for
+                                          the configuration file directory, (can
+                                          be overridden on the command line)
+                                          (default /etc/wwwoffle).
+
+        **** Important ****
+   To compile WWWOFFLE you will require a C compiler (e.g. gcc) a version of lex
+   (e.g. GNU flex) and the appropriate development libraries and include files.
+   This is all checked when the configure script is run.
+        **** Important ****
+
+2) Compile the programs
+     make
+
+3) Install the programs and create the spool directory
+     make install
+
+        **** Important ****
+   If you already use WWWOFFLE then you should stop the existing version running
+   before doing the installation of the new version.
+        **** Important ****
+
+        **** Important ****
+   The files that are installed by this step should be owned by the user that
+   will be running WWWOFFLE (either the user that starts it or the user specified
+   in the run-uid and run-gid options in the configuration file.)
+        **** Important ****
+
+   You should look out for any output from make that is prefixed with
+   'WWWOFFLE:' this is important information and indicates that the installation
+   process has found something that requires your action during the install.
+
+   If you want to install the files under a different root directory you can use
+   'make install DESTDIR=/some/directory/' to install into '/some/directory'.
+
+
+Configuration
+-------------
+
+4) Edit the configuration file
+   wwwoffle.conf
+
+        **** Important * If you must use an external HTTP proxy ****
+   You will need to add the name of the proxy and the port number to the Proxy
+   section of the configuration file wwwoffle.conf, read it for instructions.
+        **** Important * If you must use an external HTTP proxy ****
+
+        **** Important * If you currently use version 2.x ****
+    The configuration file wwwoffle.conf has changed, the file CHANGES.CONF
+    explains the differences and upgrade-config.pl can fix them.
+        **** Important * If you currently use version 2.x ****
+
+5) Start the WWWOFFLE demon running.
+   wwwoffled -c wwwoffle.conf
+
+   This may require the full path to the wwwoffled program (usually
+   /usr/local/sbin/wwwoffled) and the full path to the configuration file
+   (usually /etc/wwwoffle/wwwoffle.conf) if not using the defaules, for example:
+   /usr/local/sbin/wwwoffled -c /etc/wwwoffle/wwwoffle.conf
+
+6) Start your web browser and set up localhost:8080 as the proxy.
+   Disable caching between sessions within the browser.
+
+   Select the URL http://localhost:8080/ in the browser to test that WWWOFFLE is
+   working.
+
+Testing
+-------
+
+7) a) Connect to the internet
+   b) Tell the WWWOFFLE demon that you are online
+        wwwoffle -online
+   c) Start browsing
+   d) Tell the WWWOFFLE demon that you are offline
+        wwwoffle -offline
+   e) Disconnect from the internet
+
+8) Go back and browse the pages again while not connected, follow some different
+   links this time (you will see a WWWOFFLE server message in the browser).
+
+9) a) Connect to the internet
+   b) Tell the WWWOFFLE demon that you are online
+        wwwoffle -online
+   c) Tell the WWWOFFLE demon to fetch the new pages
+        wwwoffle -fetch
+   d) Tell the WWWOFFLE demon that you are offline
+        wwwoffle -offline
+   e) Disconnect from the internet
+
+10)a) Go to http://localhost:8080/index/ and find the newly downloaded pages.
+   b) Browse the new pages that have just been fetched.
+
+
+Making WWWOFFLE Run Automatically
+---------------------------------
+
+WWWOFFLE is designed to be easy to automate so that it is always running after
+the computer is booted and is always in the correct mode for being connected to
+the internet or not.
+
+The contrib/README file contains pointers to various methods of starting
+WWWOFFLE automatically and making sure that it is in the correct mode when
+online.
+
+
+
+Compile Time Options
+--------------------
+
+In the file autoconfig.h there are a number of extra compile time options that
+you may want to change.  This file is automatically created from autoconfig.h.in
+when the configure script is run.
+
+
+The first five are the compiled in defaults for the options in the StartUp
+section of the wwwoffle.conf file.  They are also used as the compiled in
+defaults for the wwwoffle program.
+
+/*+ The default localhost name to use for the wwwoffle program. +*/
+#define DEF_LOCALHOST "localhost"
+
+/*+ The default port number to use for the http proxy demon. +*/
+#define DEF_HTTP_PORT 8080
+
+/*+ The default port number to use for the https proxy demon. +*/
+#define DEF_HTTPS_PORT 8443
+
+/*+ The default port number to use for the WWWOFFLE control. +*/
+#define DEF_WWWOFFLE_PORT 8081
+
+/*+ The default spool directory. +*/
+#define DEF_SPOOLDIR "/var/spool/wwwoffle"
+
+/*+ The default configuration file directory. +*/
+#define DEF_CONFDIR "/etc/wwwoffle"
+
+
+The next four limit the number of connections that wwwoffled will accept at a
+time and the number of servers that it will fork in response to this.  A total
+of MAX_SERVERS, including up to MAX_FETCH_SERVERS when 'wwwoffle -fetch' is run.
+These are options in wwwoffle.conf, but the absolute maximum values can be
+changed here as well as the default values.
+
+/*+ The absolute maximum number of servers to fork in total. +*/
+#define MAX_SERVERS 64
+/*+ The default total number of servers to fork. +*/
+#define DEF_MAX_SERVERS 8
+
+/*+ The absolute maximum number of servers to fork for fetching previously
+    requested pages. +*/
+#define MAX_FETCH_SERVERS 48
+/*+ The default number of servers to fork for fetching pages. +*/
+#define DEF_MAX_FETCH_SERVERS 4
+
+
+The next one is the number of prevtime directories that are created to allow a
+history back beyond the latest time online.  If this number is changed then the
+files /var/spool/wwwoffle/html/*/messages/IndexLastTime-Tail.html and
+IndexLastOut-Tail.html must be edited for the links to these to be visible.
+
+/*+ The number of pretime directories to create (lasttime history). +*/
+#define NUM_PREVTIME_DIR 7
+
+
+The next two give the permissions that are used for the creation of directories
+and files in the cache (Don't forget the leading '0' for octal).
+
+/*+ The default permission for creating directories. +*/
+#define DEF_DIR_PERM  0755
+/*+ The default permission for creating files. +*/
+#define DEF_FILE_PERM 0644
+
+
+The rest of the options in the autoconfig.h file are set by the configure script
+automatically.

@@ -1,0 +1,42 @@
+#!/bin/sh
+
+#### THE SPOOL DIR IS "SPOOLDIR" IN THE LINE BELOW ####
+
+wwwoffle_spool=SPOOLDIR
+
+####
+
+cd $wwwoffle_spool
+
+# Set the path to include the indexer executable
+
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:/usr/local/sbin
+export PATH
+
+# Set up a log file.
+
+echo > search/mnogosearch/wwwoffle-mnogosearch.log
+
+# Create the list of lasttime URLs.
+
+( cd $wwwoffle_spool && wwwoffle-ls lasttime | awk '{print $6}' > search/mnogosearch/wwwoffle-lasttime.log )
+
+# Do the indexing
+
+indexer -S search/mnogosearch/conf/indexer-incr.conf \
+    >> search/mnogosearch/wwwoffle-mnogosearch.log 2>&1
+
+indexer -a -f search/mnogosearch/wwwoffle-lasttime.log \
+    search/mnogosearch/conf/indexer-incr.conf \
+    >> search/mnogosearch/wwwoffle-mnogosearch.log 2>&1
+
+indexer -S search/mnogosearch/conf/indexer-incr.conf \
+    >> search/mnogosearch/wwwoffle-mnogosearch.log 2>&1
+
+indexer -i -f search/mnogosearch/wwwoffle-lasttime.log \
+    search/mnogosearch/conf/indexer-incr.conf \
+    >> search/mnogosearch/wwwoffle-mnogosearch.log 2>&1
+
+indexer -S search/mnogosearch/conf/indexer-incr.conf \
+    >> search/mnogosearch/wwwoffle-mnogosearch.log 2>&1

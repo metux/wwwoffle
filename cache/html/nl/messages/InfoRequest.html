@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that the request was for (='$url').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE Aanvraag Link</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Aanvraag Link</H1>
+
+<div class="wwwoffle-message" align="center">
+Alle aanvragen die u maakt vanaf deze pagina voor URLs die door WWWOFFLE gecachet zijn
+laten niet de URL zien die aangevraagd werd, maar zal de headers tonen die door de browser
+aan WWWOFFLE gestuurd waren.
+<p class="wwwoffle-url">
+<b><tt><a href="%html[url]">%decode[url]</a></tt></b>
+</p>
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Help</h2>
+
+<div class="wwwoffle-inline-help">
+Indien de browser de door zichzelf gecachtete versie van de pagina toont,
+dan zal u niet de headers zien die aan WWWOFFLE gestuurd waren.
+Dit komt doordat de browser geen aanvraag doet, maar gewoon de pagina laat
+zien die hijzelf al gecachet heeft.
+het is moelijk om een browser te forceren om deze URL opnieuw van WWWOFFLE op te vragen,
+het is puur een aangelegenheid van de browser zelf.
+<p>
+Indien u dit probleem heeft, dan is de enige oplossing om de browser te
+forceren de URL opnieuw te laden wanneer deze link gevolgd wordt.
+Dit kan gedaan worden door de browser te forceren zijn cache te legen.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html" title="Een introductie tot WWWOFFLE">Welkomst Pagina</a>| \
+<a href="$localurl/FAQ.html" title="Frequent Aangekaarte Questies over WWWOFFLE">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

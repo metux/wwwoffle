@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that was asked for (='$url').
+hash      = A hash value used as a one time password to allow cancellation of the page (='$hash').
+
+$decurl=%decode[url]
+$encurl=%encode[url]
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Will Get $decurl</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+$hash?
+{<H1 align="center">WWWOFFLE Request Recorded</H1>}
+{<H1 align="center">WWWOFFLE Request Already Recorded</H1>}
+
+<div class="wwwoffle-message" align="center">
+Your request for URL
+<p class="wwwoffle-url">
+<b><tt>$decurl</tt></b>
+</p>
+$hash?
+{has been recorded for download.}
+{has already been recorded for download.}
+</div>
+
+<div class="wwwoffle-nav" align="center">
+[ \
+Refresh: \
+<a href="$localurl/refresh-options/?$encurl">Options</a>| \
+<a href="$localurl/monitor-options/?$encurl">Monitor</a>| \
+$hash?
+{<a href="$localurl/control/delete/req?url=$encurl;hash=%encode[hash]">Delete</a>|}
+{<a href="$localurl/control/delete/req?url=$encurl">Delete</a>|} \
+<a href="$localurl/index/url?$encurl">Index</a>| \
+<a href="$localurl/configuration/url?$encurl">Configure</a> \
+]
+</div>
+
+<script type="text/javascript">
+<!--//
+document.write("<p align='center'>");
+document.write("[<a href='javascript:history.go(-1)'>Go back one page<\/a>]");
+document.write("<\/p>");
+//-->
+</script>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html" title="An introduction to WWWOFFLE">Welcome Page</a>| \
+<a href="$localurl/FAQ.html" title="Frequently Asked Questions about WWWOFFLE">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,280 @@
+#!/bin/sh
+# chkconfig: - 95 25
+# pidfile: /var/run/wwwoffled.pid
+# config: /var/spool/wwwoffle/wwwoffle.conf
+# description: WWW proxy allowing offline view of cached pages 
+# ====================================================================
+#
+# Description:
+#	This shell script takes care of almost everything of wwwoffled.
+#
+# Author[s]:
+#	Gianpaolo Macario	gianpi@geocities.com
+#	Peter Stamfest		Peter.Stamfest@vws.or.at
+#	Vikram Goyal		viki@bol.net.in	contactviki@netscape.net
+#	Richard Zidlicky	rz@linux-m68k.org
+#
+# Revision History:
+#       17-May-2003     amb     Changed to use /etc/wwwoffle/wwwoffle.conf
+#	30-OCT-2002	Marc	Fixed the missing "-c $CONFIG" from the
+#				command-line when calling $WWWOFFLED and
+#				$EXECWWWOFFLE
+#       18-AUG-2002     rz      Updated to latest defaults.
+#	05-OCT-2001	viki	Added online, offline, fetch, purge and did
+#                               some optimisation.
+#	18-AUG-2001	viki	Added all functions,pidfile etc. major changes
+#	11-NOV-1998	peter	Added chkconfig support, restart and status 
+#				options, changed usage message (stripped the
+#				".init")
+#	21-JUL-1997	gianpi	Configured for wwwoffle-1.2c
+#	10-MAR-1997	gianpi	Initial writing
+# ====================================================================
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ ${NETWORKING} = "no" ] && exit 0
+
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin
+[ -f /etc/wwwoffle/wwwoffle.conf ] && CONFIG='/etc/wwwoffle/wwwoffle.conf'
+[ -f /etc/wwwoffle.conf ] && CONFIG='/etc/wwwoffle.conf'
+[ -z "$CONFIG" ] && CONFIG='/var/spool/wwwoffle/wwwoffle.conf'
+RETVAL=0
+EXECWWWOFFLE=`which wwwoffle`
+PROG=wwwoffled
+WWWOFFLED=`which $PROG`
+[ -n "$WWWOFFLED" ] || exit 1
+
+start() {
+	# Start daemons, create pid files etc.
+	echo -n "Starting $PROG: "
+
+	# /misc is automounted by default..
+	#if [ -d /misc/wwwoffle ]; then
+	#	chown $PROG.$PROG /misc/wwwoffle
+	#fi
+	###
+
+	if [ -n "`echo $WWWOFFLED|grep "[' 'rl]*/s[bin/]*$PROG"`" ]; then
+		# ^^^ Will discourage to start the daemon from other than
+		# /sbin, /usr/sbin or /usr/local/sbin
+		daemon $WWWOFFLED -c $CONFIG #&> /dev/null
+		get_retval
+	 else
+	 	RETVAL=1
+	fi
+
+	if [ $RETVAL -eq 0 ]; then
+			echo_success
+	 else
+			echo_failure
+	fi
+
+	echo
+return $RETVAL
+}
+
+stop() {
+	# Stop daemons.
+	echo -n "Shutting down $PROG: "
+	killproc $PROG
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/$PROG /var/run/$PROG.pid
+	echo
+return $RETVAL
+}
+
+restart() {
+	stop
+	start
+}
+
+reload() {
+	# Reload configuration file.
+	echo -n "Reloading $PROG configuration file: "
+	# Command below does not return proper status of config read and
+	# neither does option -config.
+	# killproc $PROG -HUP
+	# So I do this >>>>>>
+	if [ -n "`$EXECWWWOFFLE -config -c $CONFIG|grep "Read Configuration"`" ]; then 
+		RETVAL=0
+	 else
+	 	RETVAL=1
+	fi	
+
+	if [ $RETVAL -eq 0 ]; then
+			echo_success
+	 else
+			echo_failure
+	fi
+	echo
+return $RETVAL
+}		
+
+get_retval() {
+	# create pid and /var/lock/subsys/ files.
+	local l=, TMP
+	RETVAL=1
+	TMP=`status $PROG|cut -d ' ' -f2-|cut -d '(' -f2|cut -d ')' -f-1|cut -d ' ' -f 2-`
+	for l in $TMP ; do
+		if [ -n "`ps -p $l -h|grep "[' 'rl][/s]*[bin/]*$PROG -c "`" ]; then
+			echo $l > /var/run/$PROG.pid
+			touch /var/lock/subsys/$PROG
+			RETVAL=0
+			return $RETVAL
+		fi
+	done
+return $RETVAL
+}
+
+online() {
+	echo -n "Putting $PROG to Online Mode: "
+	status $PROG &> /dev/null
+	STATUS=`echo $?`
+
+	if [ $STATUS -eq 0 ]; then
+		$EXECWWWOFFLE -online -c $CONFIG &> /dev/null
+	 else
+	 	start &> /dev/null
+		status $PROG &> /dev/null
+		STATUS=`echo $?`
+	
+		if [ $STATUS -eq 0 ]; then
+			$EXECWWWOFFLE -online -c $CONFIG &> /dev/null
+		 else
+		 	RETVAL=1
+		fi
+	fi
+
+	if [ $RETVAL -eq 0 ]; then
+			echo_success
+	 else
+			echo_failure
+	fi
+	echo
+return $RETVAL
+}
+
+offline() {
+	echo -n "Putting $PROG to Offline Mode: "
+	status $PROG &> /dev/null
+	STATUS=`echo $?`
+
+	if [ $STATUS -eq 0 ]; then
+		$EXECWWWOFFLE -offline -c $CONFIG &> /dev/null
+	 else
+		RETVAL=1
+	fi
+
+	if [ $RETVAL -eq 0 ]; then
+			echo_success
+	 else
+			echo_failure
+	fi
+	echo
+return $RETVAL
+}
+
+purge() {
+	echo -n "Purging $PROG cache: "
+	status $PROG &> /dev/null
+	STATUS=`echo $?`
+
+	if [ $STATUS -eq 0 ]; then
+		# First reload to sync any changes in the config.
+  		reload &>/dev/null && $EXECWWWOFFLE -purge -c $CONFIG &> /dev/null
+		RETVAL=$?
+	 else
+		RETVAL=1
+	fi
+
+	if [ $RETVAL -eq 0 ]; then
+			echo_success
+	 else
+			echo_failure
+	fi
+	echo
+return $RETVAL
+}
+
+fetch() {
+	# Sending the proc to background because it holds up till finished
+	# if put in fetch mode. Not a desirable feature if executed from
+	# /etc/ppp/ip-up.local .
+	status $PROG &> /dev/null
+	STATUS=`echo $?`
+
+	if [ $STATUS -eq 0 ]; then
+		if [ -n "`$EXECWWWOFFLE -online -c $CONFIG|grep "Already Online"$`" ]; then
+			nohup $EXECWWWOFFLE -fetch -c $CONFIG &> /dev/null &
+		 else
+			$EXECWWWOFFLE -online -c $CONFIG &> /dev/null
+			nohup $EXECWWWOFFLE -fetch -c $CONFIG &> /dev/null &
+		fi
+	 else
+	 	start
+		status $PROG &> /dev/null
+		STATUS=`echo $?`
+	
+		if [ $STATUS -eq 0 ]; then
+			$EXECWWWOFFLE -online -c $CONFIG &> /dev/null
+			nohup $EXECWWWOFFLE -fetch -c $CONFIG &> /dev/null &
+		 else
+		 	RETVAL=1
+		fi
+	fi
+return $RETVAL
+}
+
+# See how we are called.
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	condrestart)
+		[ -f /var/lock/subsys/$PROG ] && stop && start && :
+		;;
+	restart)
+		restart
+		;;
+	reload)
+  		reload
+		;;
+	status)
+		status $PROG
+		;;
+	online)
+		# Will put the offline browser online. If not running then
+		# wwwoffled will be started and put online.
+		online
+		;;
+	offline)
+		offline
+		;;
+	purge)
+		# It will first reload the config for any changes for ex. to
+		# 'DontCache' etc. directives and then start purging.
+		purge
+		;;
+	fetch)
+		# Will put the offline browser in fetch mode. If not running
+		# then wwwoffled will be started and put online and then in
+		# fetch mode.
+		fetch
+		;;
+  *)
+        echo "Usage: $PROG {start|stop|condrestart|restart|reload|status|online|offline|purge|fetch}"
+        exit 1
+esac
+
+exit $?
+
+# === End of File ===
+

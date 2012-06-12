@@ -1,0 +1,38 @@
+
+<!-- The following section added by WWWOFFLE -->
+$unit?=m{$unitstr=min}{}
+$unit?=h{$unitstr=hour}{}
+$unit?=d{$unitstr=day}{}
+$unit?=w{$unitstr=week}{}
+$unit?=M{$unitstr=month}{}
+$time?=1{}{$s=s $unitstr=$unitstr$s}
+
+<center>
+<table border=0 cellspacing=0 width=350 height=30 cellpadding=1 bgcolor="#ffffef">
+<tr><td align=center>
+<font face="verdana, arial, helvetica" size=2 color="#0055ff">WWWOFFLE</font>
+<font face="verdana, arial, helvetica" size=2 color="#000000">Cached $date ($time $unitstr ago)
+<br> [
+<a href="http://$localhost/index/url/?$url">
+<font face="verdana, arial, helvetica" size=2 color="#006699">View Host</font></a>
+ |
+<a href="http://$localhost/control/delete-url-all/?$url">
+<font face="verdana, arial, helvetica" size=2 color="#ff6600">Delete Host</font></a>
+ |
+<a href="http://$localhost/control/delete-url/?$url">
+<font face="verdana, arial, helvetica" size=2 color="#ff2200">Delete</font></a>
+ ] : [
+<a href="http://$localhost/refresh/?$url">
+<font face="verdana, arial, helvetica" size=2 color="#5555ff">Refresh</font></a>
+ |
+<a href="http://$localhost/refresh-options/?$url">
+<font face="verdana, arial, helvetica" size=2 color="#00aa55">Options</font></a>
+ |
+<a href="http://$localhost/monitor-options/?$url">
+<font face="verdana, arial, helvetica" size=2 color="#339999">Monitor</font></a>
+ ]
+</font>
+</td></tr>
+</table>
+</center>
+<!-- The previous section added by WWWOFFLE -->

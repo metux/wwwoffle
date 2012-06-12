@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+section   = The section of the configuration file (= '$section').
+item      = The item in the section of the configuration file (= '$item').
+action    = The action that was requested (= '$action').
+oldentry  = The previous value of the entry that was to be edited (= '$oldentry').
+newentry  = The new value of the entry that is to be edited (= '$newentry').
+errmsg    = The error message from making the change.
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Interactieve Configuratie Pagina - $section / $item</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Interactieve Configuratie Wijziging</H1>
+
+<H2>Section: $section</H2>
+
+<H3>Item: $item?{$item}{<i>no-name</i>}</H3>
+
+$action?=insert{
+De gevraagde wijziging was om de waarde:
+<p>
+<tt>%html[newentry]</tt>
+}{}
+
+$action?=before{
+De gevraagde wijziging was om de waarde:
+<p>
+<tt>%html[newentry]</tt>
+<p>
+toe te voegen voor de waarde
+<p>
+<tt>%html[oldentry]</tt>
+}{}
+
+$action?=after{
+De gevraagde wijziging was om de waarde:
+<p>
+<tt>%html[newentry]</tt>
+<p>
+toe te voegen na de waarde
+<p>
+<tt>%html[oldentry]</tt>
+}{}
+
+$action?=replace{
+De gevraagde wijziging was om de waarde:
+<p>
+<tt>%html[oldentry]</tt>
+<p>
+te vervangen door:
+<p>
+<tt>%html[newentry]</tt>
+}{}
+
+$action?=delete{
+De gevraagde wijziging was om de waarde:
+<p>
+<tt>%html[oldentry]</tt>
+te verwijderen.
+}{}
+
+<p>
+
+$errmsg?{
+Deze wijziging is mislukt en wel met de volgende foutmelding:
+<p>
+<tt>%html[errmsg]</tt>
+}{
+Deze wijziging is geslaagd.
+<p>
+
+<form action="$localurl/control/config" method=post>
+<input type="hidden" name=action value="config">
+<input type="submit" value="Configuratie opnieuw inlezen">
+U moet <tt>wwwoffled</tt> opdracht geven om de configuratie opnieuw in te lezen om deze wijziging ook te gebruiken.
+</form>
+}
+
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html" title="Een introductie tot WWWOFFLE">Welkomst Pagina</a>| \
+<a href="$localurl/README.CONF.html" title="beschrijving van de WWWOFFLE configuratie bestand opties">README.CONF</a>| \
+<a href="$localurl/FAQ.html" title="Frequent Aangekaarte Questies over WWWOFFLE">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

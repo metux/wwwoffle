@@ -1,0 +1,435 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>WWWOFFLE Version 2.6d - Proxy-Start-Seite</TITLE>
+<LINK href="/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY>
+<p align=center>
+[Top]
+[<a href="#description">Beschreibung</a>]
+[<a href="#indexes">Cache&nbsp;Indizes</a>]
+[<a href="#request">Seite&nbsp;bestellen</a>]
+[<a href="#monitor">Seite&nbsp;abonnieren</a>]
+[<a href="#control">Konfiguration</a>]
+[<a href="#search">Suche&nbsp;im&nbsp;Cache</a>]
+[<a href="#links">Internet&nbsp;Links</a>]
+[<a href="#mail">E-Mail</a>]
+</p>
+<hr>
+
+<H1><a name="top">WWWOFFLE Proxy Startseite</a></H1>
+
+<p>Das WWWOFFLE-Programm vereinfacht den Zugriff auf das World Wide Web von
+Computern die nicht kontinuierlich mit dem Internet verbunden sind
+(Anwahl-Verbindung).</p>
+
+<h2><a name="description">Beschreibung</a></h2>
+
+<p>Das wwwoffled-Program ist ein einfacher Proxy-Server mit speziellen
+Funktionen zur Benutzung mit Einwahl-Verbindungen zum Internet. Das
+bedeutet, da&szlig; es m&ouml;glich ist, Webseiten zu durchst&ouml;bern und zu lesen ohne
+die Notwendigkeit, dabei mit dem Netz verbunden zu bleiben.  </p>
+
+<h3>Grundfunktionen</h3>
+
+<ul>
+  <li>Speichert HTTP, FTP, und Finger Abfragen
+  <li>Unterst&uuml;tzt GET, HEAD, POST, PUT HTTP-Kommandos
+  <li>Unterst&uuml;tzt interaktive oder kommandozeilenbasierte Kontrolle des Modus
+  (online, offline, autodial).
+  <a href="/control/">[URL]</a>
+  <li>Sehr konfigurierbar
+  <a href="README.CONF.html">[CONF]</a>
+  <li>Wenig Wartungsaufwand, alle Aspekte k&ouml;nnen automatisiert werden
+</ul>
+
+
+<h3>W&auml;hrend einer Online-Verbindung</h3>
+
+<ul>
+  <li>Speicherung von betrachteten Seiten zur sp&auml;teren Wiederaufruf
+  <li>Bedingter Abruf, um nur solche Seiten abzurufen, die sich gegen&uuml;ber einer gespeicherten Seite ver&auml;ndert haben.
+  <a href="README.CONF.html#OnlineOptions">[CONF]</a>
+  <a href="/configuration/OnlineOptions">[EDIT]</a>
+  <ul>
+    <li>Abh&auml;ngig vom Ablaufdatum der Seite, Zeit des letzten Abrufs oder einmal pro Online-Sitzung:
+    <a href="README.CONF.html#OnlineOptions_request-changed">[CONF]</a>
+    <a href="/configuration/OnlineOptions/request-changed">[EDIT]</a>
+  </ul>
+  <li>Unterst&uuml;tzung von SSL (Secure Socket Layer) SSL (https) ohne solche Seiten zu speichern.
+  <a href="README.CONF.html#Options_ssl-allow-port">[CONF]</a>
+  <a href="/configuration/Options/ssl-allow-port">[EDIT]</a>
+  <li>Unterst&uuml;tzung von einem oder mehreren externen Proxies (basierend auf
+  	Zieladdresse).
+  <a href="README.CONF.html#Proxy">[CONF]</a>
+  <a href="/configuration/Proxy">[EDIT]</a>
+  <li>Blockierung von bestimmten Addressen.
+  <a href="README.CONF.html#DontGet">[CONF]</a>
+  <a href="/configuration/DontGet">[EDIT]</a>
+  <ul>
+    <li>Erlaubt das Ersetzen von blockierten Seiten durch andere (http://www.goatse.cx/ --&gt; http://www.harmlos.de/)
+    <a href="README.CONF.html#DontGet_replacement">[CONF]</a>
+    <a href="/configuration/DontGet/replacement">[EDIT]</a>
+  </ul>
+  <li>Kontrolle dar&uuml;ber, welche Seiten zwischengespeichert werden d&uuml;rfen.
+  <a href="README.CONF.html#DontCache">[CONF]</a>
+  <a href="/configuration/DontCache">[EDIT]</a>
+  <li>Anfordern von komprimierten HTML-Seiten
+  <a href="README.CONF.html#OnlineOptions_request-compressed-data">[CONF]</a>
+  <a href="/configuration/OnlineOptions/request-compressed-data">[EDIT]</a>
+</ul>
+
+
+<h3>Ohne Online-Verbindung (Offline)</h3>
+
+<ul>
+  <li>Unterst&uuml;tzt 'dial-on-demand' Konfigurationen
+  <li>Bietet die M&ouml;glichkeit, Links zu verfolgen und andere Seiten zu bestellen
+  <ul>
+    <li>per Browser
+    <li>per Kommandozeilenschnittstelle
+  </ul>
+  <li>Im Offline-Modus abrufbare Seiten sind konfigurierbar
+  <a href="README.CONF.html#OfflineOptions">[CONF]</a>
+  <a href="/configuration/OfflineOptions">[EDIT]</a>
+  <li>Unterst&uuml;tzt Intranet Konfigurationen (Ausschlu&szlig; von Addressen aus dem Cache)
+  <a href="README.CONF.html#LocalNet">[CONF]</a>
+  <a href="/configuration/LocalNet">[EDIT]</a>
+</ul>
+
+
+<h3>Automatisierter Abruf</h3>
+
+<ul>
+  <li>Herunterladen angegebener Seiten ohne Zutun des Benutzers
+  <a href="README.CONF.html#FetchOptions">[CONF]</a>
+  <a href="/configuration/FetchOptions">[EDIT]</a>
+  <li>L&auml;dt optional Grafiken, Scripts, Objekte usw. der angeforderten Seite mit herunter
+  <a href="README.CONF.html#FetchOptions">[CONF]</a>
+  <a href="/configuration/FetchOptions">[EDIT]</a>
+  <ul>
+    <li>Unterst&uuml;tzt HTML 4.0, Java-Klassen, XML/VMRL (teilweise)
+  </ul>
+  <li>Blockiert optional 'web bugs' (1-pixel Bilder)
+  <a href="README.CONF.html#FetchOptions_webbug-images">[CONF]</a>
+  <a href="/configuration/FetchOptions/webbug-images">[EDIT]</a>
+  <li>Folgt automatisch Links f&uuml;r Seiten, deren Position ver&auml;dert wurde
+  <li>Kann Seiten <b>abonnieren</b> (regelm&auml;&szlig;ig abrufen),
+  <a href="/monitor-options/">[URL]</a> 
+  <li>dies auch rekursiv
+  <a href="/refresh-options/">[URL]</a>
+  <ul>
+    <li>bis zu einer bestimmten Tiefe,
+    <li>innerhalb eines Verzeichnisses,
+    <li>auf eine Adresse beschr&auml;nkt,
+    <li>auf einen Typ von Dokument beschr&auml;nkt
+  </ul>
+  <li>Fertigt Kopien der gespeicherten Seiten an, soda&szlig; Server-Fehler sie nicht &uuml;berschreiben.
+</ul>
+
+
+<h3>WWWOFFLE-Komfort</h3>
+
+<ul>
+  <li>Optionale Infozeile an jedem Dokument mit zus&auml;tzlichen Informationen und Optionen
+  <a href="README.CONF.html#ModifyHTML_add-cache-info">[CONF]</a>
+  <a href="/configuration/ModifyHTML/add-cache-info">[EDIT]</a>
+  <li>M&ouml;glichkeit, heruntergeladene Seiten zu ver&auml;ndern
+  <a href="README.CONF.html#ModifyHTML">[CONF]</a>
+  <a href="/configuration/ModifyHTML">[EDIT]</a>
+  <ul>
+    <li>Sciprts, Java Applets, Stylesheets entfernen 
+    <a href="README.CONF.html#ModifyHTML_disable-script">[CONF]</a>
+    <a href="/configuration/ModifyHTML/disable-script">[EDIT]</a>
+    <li>Bereits gespeicherte Links in Webseiten hervorheben 
+    <a href="README.CONF.html#ModifyHTML_anchor-cached-begin">[CONF]</a>
+    <a href="/configuration/ModifyHTML/anchor-cached-begin">[EDIT]</a>
+    <li>das &lt;BLINK&gt;-Tag entfernen 
+    <a href="README.CONF.html#ModifyHTML_disable-blink">[CONF]</a>
+    <a href="/configuration/ModifyHTML/disable-blink">[EDIT]</a>
+    <li>Refresh-Tags entfernen 
+    <a href="README.CONF.html#ModifyHTML_disable-meta-refresh">[CONF]</a>
+    <a href="/configuration/ModifyHTML/disable-meta-refresh">[EDIT]</a>
+    <li>Links zu Adressen im <code>DontGet</code> Abschnitt entfernen
+    <a href="README.CONF.html#ModifyHTML_disable-dontget-links">[CONF]</a>
+    <a href="/configuration/ModifyHTML/disable-dontget-links">[EDIT]</a>
+    <li>Ersetzen von Grafiken im <code>DontGet</code> Abschnitt
+    <a href="README.CONF.html#ModifyHTML_replace-dontget-images">[CONF]</a>
+    <a href="/configuration/ModifyHTML/replace-dontget-images">[EDIT]</a>
+    <li>Ersetzen von 'web bugs'
+    <a href="README.CONF.html#ModifyHTML_replace-webbug-images">[CONF]</a>
+    <a href="/configuration/ModifyHTML/replace-webbug-images">[EDIT]</a>
+    <li><b>Reparieren von kaputten Microsoft-HTML Konstrukten</b> 
+    <a href="README.CONF.html#ModifyHTML_demoronise-ms-chars">[CONF]</a>
+    <a href="/configuration/ModifyHTML/demoronise-ms-chars">[EDIT]</a>
+    <li>Animation in GIF-Grafiken abschalten 
+    <a href="README.CONF.html#ModifyHTML_disable-animated-gif">[CONF]</a>
+    <a href="/configuration/ModifyHTML/disable-animated-gif">[EDIT]</a>
+  </ul>
+  <li>Automatische Proxy-Konfiguration f&uuml;r Netscape
+  <a href="/wwwoffle.pac">[URL]</a>
+  <li>Durchsuchbarer Cache durch Zusatzprogramm ht://Dig oder UDMSearch
+  <a href="/search/htdig/">[URL]</a>
+  <a href="/search/udmsearch/">[URL]</a>
+  <li>Eingebauter Webserver f&uuml;r lokale Seiten 
+  <a href="/local/">[URL]</a>
+  <li>Verhinderung von Verklemmungen im Netzwerk
+  <a href="README.CONF.html#Options">[CONF]</a>
+  <a href="/configuration/Options">[EDIT]</a>
+  <ul>
+    <li>DNS Aufl&ouml;sungen 
+    <a href="README.CONF.html#Options_dns-timeout">[CONF]</a>
+    <a href="/configuration/Options/dns-timeout">[EDIT]</a>
+    <li>Server-Verbindungen
+    <a href="README.CONF.html#Options_connect-timeout">[CONF]</a>
+    <a href="/configuration/Options/connect-timeout">[EDIT]</a>
+    <li>Daten&uuml;bertragung
+    <a href="README.CONF.html#Options_socket-timeout">[CONF]</a>
+    <a href="/configuration/Options/socket-timeout">[EDIT]</a>
+  </ul>
+  <li>F&uuml;hrt optional abgebrochene &Uuml;bertragungen automatisch fort 
+  <a href="README.CONF.html#OnlineOptions">[CONF]</a>
+  <a href="/configuration/OnlineOptions">[EDIT]</a>
+  <ul>
+    <li>... basierend auf Dateigr&ouml;&szlig;e oder bereits heruntergeladenem Anteil 
+    <a href="README.CONF.html#OnlineOptions_intr-download-size">[CONF]</a>
+    <a href="/configuration/OnlineOptions/intr-download-size">[EDIT]</a>
+  </ul>
+  <li>Entfernen (purge) von Dateien aus dem Cache
+  <a href="README.CONF.html#Purge">[CONF]</a>
+  <a href="/configuration/Purge">[EDIT]</a>
+  <ul>
+    <li>... nach URL 
+    <a href="README.CONF.html#Purge_use-url">[CONF]</a>
+    <a href="/configuration/Purge/use-url">[EDIT]</a>
+    <li>... nach maximaler Gesamtgr&ouml;&szlig;e 
+    <a href="README.CONF.html#Purge_max-size">[CONF]</a>
+    <a href="/configuration/Purge/max-size">[EDIT]</a>
+    <li>... nach minimalem freien Festplattenplatz 
+    <a href="README.CONF.html#Purge_min-free">[CONF]</a>
+    <a href="/configuration/Purge/min-free">[EDIT]</a>
+    <li>... nach Kommandozeilenparametern 
+    <li>Kompression des Caches basierend auf Alter
+    <a href="README.CONF.html#Purge_compress-age">[CONF]</a>
+    <a href="/configuration/Purge/compress-age">[EDIT]</a>
+  </ul>
+  <li>Sendet optional komprimiertes HTML zum Browser (falls aktiviert und vom Browser unterst&uuml;tzt) 
+  <a href="README.CONF.html#Options_reply-compressed-data">[CONF]</a>
+  <a href="/configuration/Options/reply-compressed-data">[EDIT]</a>
+</ul>
+
+
+<h3>Indizes</h3>
+
+<ul>
+  <li>Mehrere Indizes der zwischengespeicherten Seiten 
+<a href="#indexes">[READ]</a>
+  	<ul><li>... nach Protokoll
+	<li>... nach Server
+	<li>... bestellte Seiten
+	<li>... w&auml;hrend der letzten Online-Sitzung geholte Seiten
+	<li>... seit der letzten Online-Sitzung bestellte Seiten
+	<li>... abonnierte Seiten
+	</ul>
+  <li>Die Indizes sind Konfigurierbar:
+  	<ul><li>Sortierbar nach Name, Datum, Domainname, Dateityp
+	<li>Optionen zum L&ouml;schen, Aktualisieren oder Abonnieren
+	<li>Optionen zum Ignorieren bestimmter uninteressanter Seiten im Index 
+<a href="README.CONF.html#IndexOptions">[CONF]</a>
+<a href="/configuration/IndexOptions">[EDIT]</a>
+	</ul>
+</ul>
+
+
+<h3>Sicherheit</h3>
+
+<ul>
+  <li>Unterst&uuml;tzt kennwortgesch&uuml;tzte Seiten
+  <li>Automatisiert externe Proxy-Anmeldung (falls n&ouml;tig) 
+<a href="README.CONF.html#Proxy_auth-username">[CONF]</a>
+<a href="/configuration/Proxy/auth-username">[EDIT]</a>
+  <li>Zugriff zum Proxy ist kontrollierbar
+	<ul><li>Standard: nur <code>localhost</code> hat Zugriff
+<a href="README.CONF.html#LocalHost">[CONF]</a>
+<a href="/configuration/LocalHost">[EDIT]</a>
+	<li>Zugriff nach Rechnername oder IP-Adressen konfigurierbar 
+<a href="README.CONF.html#AllowedConnectHosts">[CONF]</a>
+<a href="/configuration/AllowedConnectHosts">[EDIT]</a>
+	<li>Optionale Proxy-Authentifikation (Benutzer/Kennwort) 
+<a href="README.CONF.html#AllowedConnectUsers">[CONF]</a>
+<a href="/configuration/AllowedConnectUsers">[EDIT]</a>
+	<li>Optionales Kennwort f&uuml;r die Konfiguration des Proxies
+<a href="README.CONF.html#StartUp_password">[CONF]</a>
+<a href="/configuration/StartUp/password">[EDIT]</a> 
+	</ul>
+  <li>Optionale Zensur von HTTP-Headern f&uuml;r die Privatsph&auml;re 
+<a href="README.CONF.html#CensorHeader">[CONF]</a>
+<a href="/configuration/CensorHeader">[EDIT]</a>
+</ul>
+
+
+<h3>Konfiguration</h3>
+
+<ul>
+  <li>Alle Optionen werden &uuml;ber eine Konfigurationsdatei gesteuert 
+<a href="README.CONF.html">[CONF]</a>
+  <li>Die Konfigurationsdatei ist &uuml;ber eine Web-Oberfl&auml;che editierbar 
+<a href="/control/edit">[EDIT]</a>
+  <li>S&auml;mtliche Meldungen vom WWWOFFLE sind vom Benutzer/Administrator editierbar 
+</ul>
+
+
+
+<h2><a name="indexes">WWWOFFLE Cache-Indizes</a></h2>
+
+<p>Der Index aller im WWWOFFLE-Cache gespeicherten Seiten ist in eine Anzahl
+verschiedener Formate verf&uuml;gbar.</p>
+
+<p>Die Indizes sind nach Hostnamen organisiert mit einer seperaten Liste
+f&uuml;r jeden Host. Der Basis-Index is /index/, aber dies kann wie folgt
+durch Angabe eines Pfades ver&auml;dert werden.</p>
+
+<dl>
+  <dt><a href="/index/">/index/</a>
+  <dd>Der Haupt-Index mit Links zu allen anderen Indizes.
+  <dt><a href="/index/http/?sort=alpha">/index/<i>http</i>/</a>
+  <dd>Eine Liste aller HTTP-Seiten, die gespeichert sind (oder eines anderen Protokolls).
+  <dt><a href="/index/http/www.gedanken.demon.co.uk/?sort=alpha">/index/<i>http</i>/<i>www.gedanken.demon.co.uk</i>/</a>
+  <dd>Eine Liste der HTTP-Seiten die vom Host <i>www.gedanken.demon.co.uk</i> (oder irgend eines anderen Hosts oder Protokolls) gespeichert sind.
+  <dt><a href="/index/outgoing/?sort=none">/index/outgoing/</a>
+  <dd>Die Liste der Bestellungen, die in der n&auml;chsten Online-Sitzung heruntergeladen werden.
+  <dt><a href="/index/monitor/?sort=none">/index/monitor/</a>
+  <dd>Die Liste der Seiten die abonniert wurden (d.h. regelm&auml;&szlig;ig geholt werden).
+  <dt><a href="/index/lasttime/?sort=mtime">/index/lasttime/</a>
+  <dd>Die Liste der Seiten, auf die w&auml;hrend der letzten Online-Sitzung zugegriffen wurde. Dies stellt auch Links zu den vorhergehenden drei Online-Sitzungen zur Verf&uuml;gung.
+  <dt><a href="/index/latest/?sort=dated">/index/latest/</a>
+  <dd>Ein Index aller Dateien die in den letzten Tagen ver&auml;ndert wurden.
+</dl>
+
+
+
+<h2>Automatischer Abruf von URLs</h2>
+
+<h3><a name="request">Bestellung (einzeln oder rekursiv)</a></h3>
+
+<p>Seiten die gew&uuml;nscht werden, k&ouml;nnen durch Eingabe in den Browser angefordert
+werden, oder alternativ durch Benutzung der Kommandozeilen-Schnittstelle oder
+durch das Web-Interface.</p>
+
+<dl>
+  <dt><a href="/refresh-options/">/refresh-options/</a>
+  <dd>Eine interaktive Seite zur Angabe rekursiv abzurufender Seiten
+</dl>
+
+
+<h3><a name="monitor">Abonnement</a></h3>
+
+<p>Seiten die regelm&auml;&szlig;ig angefordert werden sollen k&ouml;nnen durch ein
+WWWOFFLE-Webseiten-Formular angegeben werden.</p>
+
+<dl>
+  <dt><a href="/monitor-options/">/monitor-options/</a>
+  <dd>Eine interaktive Seite zum regelm&auml;&szlig;igen Abruf von URLs
+</dl>
+
+<h2><a name="control">Konfiguration / Kontrolle</a></h2>
+
+Der WWWOFFLE-Proxy kann entweder durch eine Kommandozeilen-Schnittstelle
+oder durch eine interaktive Web-Seite gesteuert werden.
+<dl>
+  <dt><a href="/control/">/control/</a>
+  <dd>Eine interaktive Seite zur Steuerung des Proxy-Programms
+      [ben&ouml;tigt ein Passwort aus der Konfigurations-Datei, wenn dies so 
+eingestellt ist, kann aber mit jedem Usernamen aufgerufen werden.]
+</dl>
+
+<h2><a name="search">Cache-Suche</a></h2>
+
+Durch die Installation eines der Programme <a
+href="http://www.htdig.org/">ht://Dig</a>  oder <a
+href="http://search.mnogo.ru/">UdmSearch</a> ist es m&ouml;glich, die im
+WWWOFFLE-Cache gespeicherten Seiten zu durchsuchen.
+
+<dl>
+  <dt><a href="/search/htdig/search.html">/search/htdig/search.html</a>
+  <dd>Das ht://Dig search Formular
+  <dt><a href="/search/htdig/search.html">/search/udmsearch/search.html</a>
+  <dd>Das UdmSearch search Formular
+</dl>
+
+
+
+<h2><a name="links">Internet Links</a></h2>
+
+<p>Das <a href="FAQ.html">WWWOFFLE FAQ</a> wird nun mit dem Programm zur
+Verf&uuml;gun gestellt und es gibt ebenso eine Online-Version unter <a
+href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/FAQ.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/FAQ.html</a></p>
+
+<p> Die WWWOFFLE-Homepage ist im Internet erreichbar unter <a
+href="http://www.gedanken.demon.co.uk/wwwoffle/">http://www.gedanken.demon.co.uk/wwwoffle/</a>
+und beinhaltet die neuesten Informationen &uuml;ber das Programm im Allgemeinen.</p>
+
+<p> Die neuesten Informationen &uuml;ber die Benutzung dieser WWWOFFLE-Version
+befindet sich auf der WWWOFFLE-Version 2.6 Users Page unter <a
+href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/user.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/user.html</a></p>
+
+<p>&Uuml;ber eventuelle Kompatibilit&auml;tsprobleme mit bestimmten Browsern wird auf der
+Browser-Seite bei <a
+href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/browser.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/browser.html</a>
+berichtet.</p>
+
+<p>Und eine Tips&amp;Tricks Seite f&uuml;r WWWOFFLE gibt es auch, bei <a
+href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/hints-tips.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/hints-tips.html</a>
+
+
+
+<h2><a name="mail">E-Mail</a></h2>
+
+F&uuml;r bug-reports sollten Sie sich direkt per e-mail an den Autoren
+wenden unter <a href="mailto:amb@gedanken.demon.co.uk">amb@gedanken.demon.co.uk</a>,
+<i>es n&uuml;tzt wenn Sie dabei wwwoffle in die Betreffzeile schreiben</i>.
+<br><b>Anmerkung d. &Uuml;bersetzers: Der Autor lebt in Gro&szlig;britannien
+- schreiben Sie ihm daher auch in Englisch.</b>
+<p>
+
+Es gibt drei Mailing-Lists, zu denen WWWOFFLE-Benutzer eingeladen sind:
+<dl>
+  <dt>wwwoffle-announce
+  <dd>A mailing list for announcements about new versions of WWWOFFLE and bug
+      fixes.
+  <dt>wwwoffle-users
+  <dd>A mailing list for users of wwwoffle to discuss the program and for people
+      having problems configuring or running the program to ask questions.  This
+      does not include operating system specific topics.
+  <dt>wwwoffle-win32
+  <dd>A mailing list for users of wwwoffle on win32 systems to discuss the
+      program and for people having problems configuring or running the program
+      to ask questions.
+</dl>
+
+To join one of these mailing lists send an e-mail to
+<a href="mailto:majordomo@gedanken.demon.co.uk">majordomo@gedanken.demon.co.uk</a>
+with the phrase <tt>subscribe wwwoffle-announce</tt> or <tt>subscribe
+wwwoffle-users</tt> or <tt>subscribe wwwoffle-win32</tt> in the message body.
+
+(Anmerkung: Die Sprache in diesen Mailing-Lists ist Englisch, ich habe daher
+auch die Beschreibung nicht &uuml;bersetzt.)
+
+
+<hr>
+<p align=center>
+[<a href="#description">Beschreibung</a>]
+[<a href="#indexes">Cache&nbsp;Indizes</a>]
+[<a href="#request">Seite&nbsp;bestellen</a>]
+[<a href="#monitor">Seite&nbsp;abonnieren</a>]
+[<a href="#control">Konfiguration</a>]
+[<a href="#search">Suche&nbsp;im&nbsp;Cache</a>]
+[<a href="#links">Internet&nbsp;Links</a>]
+[<a href="#mail">E-Mail</a>]
+</p>
+</BODY>
+
+</HTML>

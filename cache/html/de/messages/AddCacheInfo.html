@@ -1,0 +1,32 @@
+
+<!-- The following section added by WWWOFFLE -->
+
+<STYLE type="text/css">
+<!-- @import "$localurl/wwwoffle.css"; -->
+</STYLE>
+
+$timeunit=$time$unit
+$unit?=m{$unitstr=Minuten}{} $timeunit?=1m{$unitstr=Minute}{}
+$unit?=h{$unitstr=Stunden}{} $timeunit?=1h{$unitstr=Stunde}{}
+$unit?=d{$unitstr=Tage}{}    $timeunit?=1d{$unitstr=Tag}{}
+$unit?=w{$unitstr=Wochen}{}  $timeunit?=1w{$unitstr=Woche}{}
+$unit?=M{$unitstr=Monate}{}  $timeunit?=1M{$unitstr=Monat}{}
+
+$encurl=%encode[url]
+
+<hr class="wwwoffle-addinfo" />
+<div class="wwwoffle-addinfo" align="center">
+WWWOFFLE -  Alter: $time $unitstr - [\
+  <a href="$localurl/index/url?$encurl">Index</a>| \
+  <a href="$localurl/refresh/?$encurl">Aktual.</a>: \
+  <a href="$localurl/refresh-options/?$encurl">Optionen</a>| \
+  <a href="$localurl/monitor-options/?$encurl">Abonnieren</a>| \
+  <a href="$localurl/control/delete/url?url=$encurl">L&ouml;schen</a>| \
+  <a href="$localurl/configuration/url?$encurl">Configure</a>| \
+  <a href="$localurl/info/url?$encurl">Info</a> \
+] - WWWOFFLE
+</div>
+<hr class="wwwoffle-addinfo" />
+
+<!-- The previous section added by WWWOFFLE -->
+

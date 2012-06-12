@@ -1,0 +1,113 @@
+<!-- This is just the body of this file since the header is shared with the other indexes -->
+
+<h2>Indice Principale</h2>
+
+Questo &egrave; la pagina dell'indice principale per tutti i file nella cache di wwwoffle.
+
+L'indice dei file nalla cache &egrave; cambiato nella versione 2.0 di wwwoffle
+rispetto alle versioni precedenti.
+<br>
+Questo per una serie di motivi:
+
+<ul>
+  <li>Per consentire l'introduzione di nuovi tipi di protocolli.
+  <li>Per presentare un'interfaccia coerente per tutte le pagine di indice (la nuova
+      barra degli strumenti).
+  <li>Per migliorare l'impostazione e la formattazione.
+</ul>
+La speranza &egrave; che questo nuovo formato sia pi&ugrave; facile da usare e sia
+pi&ugrave; comprensibile della versione precedente.
+
+<h3>Indice di Primo Livello</h3>
+
+Questa pagine &egrave; l'indice di primo livello, &egrave; richiamabile dal primo
+pulsante nella barra degli strumenti.
+
+<h3>Indici di Secondo Livello</h3>
+
+Al di sotto della pagina principale ci sono svariati indici di secondo livello,
+mostrati dalla seconda barra degli strumenti.
+<br>
+Questi indici sono:
+<dl>
+  <dt>In Uscita
+  <dd>L'indice delle richieste fatte mentre si era offline e che
+      sono in in attesa di essere scaricate.
+  <dt>Controllate
+  <dd>L'indice delle pagine che sono controllate automaticamente
+      a intervalli regolari.
+  <dt>Ultima Volta
+  <dd>Tutte le pagine di tutti i protocolli che sono state visitate l'ultima
+      volta che wwwoffle &egrave; stato online. Questo inoltre fornisce
+	  l'accesso allo storico dei file visitati le precedenti tre volte.
+  <dt>Ultime in Uscita
+  <dd>Tutte le pagine di tutti i protocolli che erano nella directory in uscita
+      l'ultima volta che wwwoffle ha scaricato pagine. Questo fornisce inoltre
+      accesso a un elendo dei file richiesti offline le ultime cinque volte.
+  <dt>Protocolli (http,ftp ecc.)
+  <dd>Ognuno dei protocolli supportati da wwwoffle ha un indice che riporta
+      la lista degli host da cui si sono memorizzate delle pagine.
+</dl>
+
+<h3>Indici di Terzo Livello</h3>
+
+Al di sotto degli indici dei protocolli ci sono gli indici di terzo livello
+(non mostrati nelle barre degli strumenti).
+<br>
+Questi indici sono la lista delle pagine da un particolare host che usano un particolare protocollo.
+
+<h2>Ordinamento</h2>
+
+Tutti gli indici di secondo e terzo livello possono essere ordinati
+secondo vari metodi usando la terza barra degli strumenti.
+<br>
+Questi metodi sono:
+<dl>
+  <dt>Non ordinate
+  <dd>Nessun ordinamento applicato, si usa l'ordine di default della directoryr.
+  <dt>Ora modifica
+  <dd>L'ora dell'ultima modifica delle pagine (le pi&ugrave; recenti prima),
+      potrebbe essere sia quella di scaricamento che di aggiornamento.
+  <dt>Ora accesso
+  <dd>L'ora dell'ultimo accesso alla pagina (le pi&ugrave; recenti prima), ovvero
+      l'ora dell'ultima visualizzazione (se pi&ugrave; recente dell'ora di modifica).
+  <dt>Data modifica
+  <dd>Lo stesso di "Ora modifica", ma con separatori per ogni giorno
+      e una linea vuota per intervalli di un ora o pi&ugrave;.
+  <dt>Alfabetico
+  <dd>Le pagine sono ordinate alfabeticamente.
+  <dt>Nome dominio
+  <dd>Le pagine sono ordinate in base al nome del dominio dell'host.
+  <dt>Tipo file
+  <dd>Le pagine sono ordinate alfabeticamente in base all'estensione del file.
+  <dt>Random
+  <dd>The Pages are displayed in a random (but reproducible) order, so successively
+      fetched pages don't appear next to each other.
+</dl>
+
+<h2>Opzioni di Visualizzazione</h2>
+
+La lista delle pagine contiene una serie di pulsanti opzionali per permettere di
+eliminarle o aggiornarle, ecc. Questi pulsanti possono essere attivati o meno
+con la quarta barra degli strumenti.
+<br>
+Queste opzioni sono:
+<dl>
+  <dt>Opzioni di Eliminazione
+  <dd>Un pulsante per permettere di eliminare la pagina dalla cache. C'&egrave; anche
+      un modo per selezionare pi&ugrave; di una pagina con un pulsante per eliminare le
+	  pagine selezionate. Alcune delle pagine di indice permettono inoltre di eliminare
+	  tutte la pagine nella cache in un'unica volta.
+  <dt>Opzioni di Aggiornamento
+  <dd>Due pulsanti, uno per forzare l'aggiornamento di una pagina, e un altro per selezionare
+      le opzioni di aggiornamento per lo scaricamento ricorsivo.
+  <dt>Opzioni di Controllo
+  <dd>Un pulsante per aggiungere una pagina alla lista delle URL che sono controllate
+      a intervalli regolari.
+</dl>
+
+<p>
+C'&egrave; anche l'opzione per aggirare la sezione <tt>DontIndex</tt> del file di
+configurazione e visualizzare le URL che sarebbero normalmente nascoste.
+
+<!-- This is just the body of this file since the footer is shared with the other indexes -->

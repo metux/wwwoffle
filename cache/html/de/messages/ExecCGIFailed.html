@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that was asked for (='$url').
+
+$decurl=%decode[url]
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - CGI-Programm-Ausf&uuml;hrung fehlgeschlagen</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE CGI-Programm-Ausf&uuml;hrung fehlgeschlagen</H1>
+
+<div class="wwwoffle-message" align="center">
+Ihre Anfrage nach der URL
+<p class="wwwoffle-url">
+<b><tt>$decurl</tt></b>
+</p>
+konnte nicht durch den WWWOFFLE-Server erf&uuml;llt werden.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Hilfe</h2>
+
+<div class="wwwoffle-inline-help">
+Die URL, die Sie angegeben haben, ist f&uuml;r ein lokales CGI-Programm auf dem
+WWWOFFLE-Server. Daf&uuml;r kann es verschiedene Gr&uuml;nde geben - darunter:
+<p>
+<ul>
+  <li>Die Datei, die das CGI-Programm enth&auml;lt, hat nicht die n&ouml;tigen Ausf&uuml;hrungs-Rechte 
+  <li>Das CGI-Programm ist auf einen Fehler gesto&szlig;en und wurde abnormal beendet.
+  <li>Der Server l&auml;uft mit root-Privilegien und wurde so konfiguriert, in diesem Fall keine CGI-Programme zu starten.
+  <li>Dem Server standen w&auml;hrend der Ausf&uuml;hrung des CGI-Programms nicht gen&uuml;gend System-Resourcen zur Verf&uuml;gung.
+</ul>
+<p>
+Pr&uuml;fen sie die System-Log-Dateien um weiter Informationen zu erhalten.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Willkommensseite</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

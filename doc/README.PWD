@@ -1,0 +1,103 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.6
+          ========================================================
+
+
+This is the logic that the WWWOFFLE program follows when handling requests for
+URLs that have a password in the header or in the URL itself.
+
+
+Background Information
+----------------------
+
+1) When a browser first requests a page that is password protected a normal
+   request is sent without a password in it.  This is obvious since there is no
+   way to decide in advance which pages have passwords.
+
+2) When a server receives a request for page that requires authentication, but
+   for which there is none in the request, it sends back a '401 Unauthorized'
+   response.  This contains a "realm" which defines the range of pages over
+   which this username/password pair is valid.  A realm is not a well defined
+   range, it can be any set of pages on the same server, there is no requirement
+   for them to be related, although they normally are.
+
+3) When a browser receives a '401' reply it will prompt the user for a username
+   and password if it does not already have one for the specified realm.  If one
+   is already known then there is no need to prompt the user again.
+
+4) The request that the browser sends back this time includes in the header the
+   username and password pair, but otherwise the same request as in (1).
+
+5) The server now sends back the requested page.
+
+6) Some browsers follow steps (1)-(5) for all pages on the server.  Others try
+   to guess the range of pages that are covered by a realm, they then send the
+   username/password pair for all pages in the same directory for example.  This
+   means that they follow steps (3)-(5) and miss out steps (1) and (2) for these
+   pages.
+
+
+WWWOFFLE Implementation
+-----------------------
+
+1) If a password is specified in the request then it is handled as if it were in
+   the URL itself.  This means that the spool file name is hashed in the same
+   way as normal, but it contains the username/password.
+
+2) A page is always placed in the cache without a username/password for every
+   page that has a username/password.  This ensures that when the page is later
+   requested while offline the version without the password can be sent to
+   prompt the browser.  This is to solve the problem of browsers sending
+   username/password pairs for all pages, when the browser is closed and
+   restarted, a request for one of the pages (bookmarked perhaps) will not work
+   since the page without the username/password is not present so will be
+   requested for later fetching.
+
+3) The mode of operation of the WWWOFFLE server is as follows:
+
+URL   = URL without password
+URLpw = URL with password
+
+WWWOFFLES mode - See README
+
+
+WWWOFFLES | Password  |   URL   |  URLpw  | Action to take
+   mode   | provided? | cached? | cached? |
+----------+-----------+---------+---------+-------------------------------------
+  Spool   |    No     |   No    |   n/a   | Request URL (->F)
+  Spool   |    No     |   Yes   |   n/a   | Spool URL
+  Spool   |    Yes    |   No    |   No    | Request URLpw (->F)
+  Spool   |    Yes    |   No    |   Yes   | Spool URLpw, Request URL (->F)
+  Spool   |    Yes    |   Yes   |   No    | if(!401) Spool URL
+  Spool   |    Yes    |   Yes   |   No    | if(401)  Request URLpw (->F)
+  Spool   |    Yes    |   Yes   |   Yes   | if(!401) Spool URL
+  Spool   |    Yes    |   Yes   |   Yes   | if(401)  Spool URLpw
+----------+-----------+---------+---------+-------------------------------------
+  Fetch   |    No     |   n/a   |   n/a   | Get URL
+  Fetch   |    Yes    |   No    |   n/a   | Get URL, if(401) GET URLpw
+  Fetch   |    Yes    |   Yes   |   n/a   | if(!401) Get URL
+  Fetch   |    Yes    |   Yes   |   n/a   | if(401)  Get URLpw
+----------+-----------+---------+---------+-------------------------------------
+  Real    |    No     |   n/a   |   n/a   | Get URL
+  Real    |    Yes    |   No    |   n/a   | Get URL, if(401) Get URLpw
+  Real    |    Yes    |   Yes   |   n/a   | if(!401) Get URL
+  Real    |    Yes    |   Yes   |   n/a   | if(401)  Get URLpw
+----------+-----------+---------+---------+-------------------------------------
+
+The other minor modes (SpoolOrReal, RealPragma etc.) act like the one that they
+are based on.
+
+4) When fetching recursively, a supplied username/password is used only on the
+   same server, but for all requests (fetch mode sorts out which need it).
+
+5) When a username is supplied but no password (e.g. a FTP URL with the username
+   in the URL) then always return a page prompting for a password
+
+6) When the configuration option try-without-password is false (it defaults to
+   true) this behaviour is modified.  If a URL is requested with a password then
+   the existence or not of the same URL without a password is ignored.  This
+   means that the behaviour is the same as a request for a page that does not
+   have a password, it is only based on the requested page itself.
+
+
+Andrew M. Bishop
+17th September 2000

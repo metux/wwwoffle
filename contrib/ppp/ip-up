@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Copyright Andrew M. Bishop 1997
+#
+
+# To have wwwoffled go online and start fetching when a PPP link is connected
+# add this to the file /etc/ppp/ip-up (you may need to change the paths).
+
+# Set the WWWOFFLE HTTP proxy server online.
+if [ -x /usr/local/bin/wwwoffle ]; then
+   /usr/local/bin/wwwoffle -online -c /etc/wwwoffle/wwwoffle.conf
+fi
+
+# Get the WWWOFFLE HTTP proxy server to fetch requested URLs.
+if [ -x /usr/local/bin/wwwoffle ]; then
+   /usr/local/bin/wwwoffle -fetch -c /etc/wwwoffle/wwwoffle.conf &
+fi

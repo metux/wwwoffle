@@ -1,0 +1,917 @@
+2006-04-02  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	Version 2.9 of WWWOFFLE released.
+
+2006-04-02  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/version.h, doc/NEWS: Update to version 2.9.
+
+	* src/certificates.c: Replace C++ style comments with C style ones.
+
+	* src/certificates.c: Fix to allow compilation with Cygwin.
+
+2006-02-28  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c, src/certificates.h, src/certinfo.c:
+	Verify certificates when displaying the certificate info.
+
+2006-02-27  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c: Code tidy up, no functional changes.
+
+	* src/certificates.c:
+	Fix race condition with creating keys and certificates.
+
+2006-02-20  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	Use a level of 'Inform' not 'Warning' for the "Cannot write to client;
+	disconnected?" message.
+
+2006-02-15  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/html.l:
+	Handle icon link tags labelled as "icon" as well as "shortcut icon".
+
+2006-02-12  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/wwwoffle.man: Some clarifications.
+
+2006-02-11  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffle.h, src/wwwoffles.c, doc/CHANGES.CONF,
+	doc/README.CONF, src/config.h, src/configdata.c, src/parse.c:
+	Added the cookies-force-refresh option to the OnlineOptions section.
+
+2006-02-10  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/miscurl.c:
+	For links that consist of just an anchor name return just the current URL.
+
+2006-02-09  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/htmlmodify.l:
+	Shuffle the enumerated types for tags and attributes.
+
+	* src/html.l: Detect background images in <td> tags.
+	Shuffle the enumerated types for tags and attributes.
+
+2006-02-07  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c:
+	Fix potential crash if error when creating root certificate.
+
+2006-02-06  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certinfo.c:
+	More error checking when printing certificate information.
+
+	* src/certificates.c:
+	Ignore trusted certificates whose activation and expiration dates do not cover now.
+
+2006-02-02  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c:
+	Make sure that loading the root credentials is performed first.
+
+2006-02-01  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* audit-usage.pl: Fix so that it works with syslog output.
+
+	* src/certificates.c:
+	Simplify hostname to filename translation (s/:/!/g).
+
+	* src/certinfo.c:
+	Add filename to hostname translation (s/!/:/g) for Cygwin.
+	Simplify hostname to filename translation (s/:/!/g).
+
+2006-01-31  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/Makefile.in, src/Makefile.in: Formatting fix.
+
+	* src/htmlmodify.l: Fix script removal tag attribute confusion.
+
+2006-01-30  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	Version 2.9-beta-ssl released.
+
+2006-01-30  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/version.h, doc/NEWS: Updated to version 2.9-beta-ssl.
+
+	* src/certificates.c:
+	Add a message that creating a private key may take a long time.
+
+2006-01-29  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c:
+	Fix bug with creation of certificates/root directory and files in it.
+
+	* src/messages.l:
+	Change the configure_io_*() functions so that there is a separate one for each type
+	of configuration (timeout, zlib, chunked) and not one for each direction (read, write).
+
+	* src/wwwoffles.c: Remove compilation warning without gnutls.
+
+	* src/certificates.c, src/certinfo.c:
+	Replace ':' in filename for cygwin.
+
+2006-01-26  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README: Add information about caching of HTTPS.
+
+2006-01-23  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certinfo.c: Display chain of certificates for real server.
+
+	* src/certificates.c, src/certificates.h:
+	Add function to load multiple certificates from a file.
+	Split function to save multiple certificates to a file.
+
+2006-01-22  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c: Fix memory leak.
+
+	* src/iognutls.c: Handle gnutls errors better when reading/writing.
+
+2006-01-21  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c:
+	Don't change directory.  Make the error messages common between functions.
+
+	* src/certinfo.c: Fix bug with finding correct certificate file.
+
+	* src/info.c: Add link to certificate info for https pages.
+
+2006-01-20  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/https.c, src/io.c, src/io.h, src/iognutls.c, src/iopriv.h, src/wwwoffles.c:
+	Change the io_init_gnutls() and configure_io_gnutls() functions to pass the
+	hostname when making a client connection.
+
+	* src/certificates.h, src/certificates.c:
+	Store the server's certificate chain for offline checking.
+
+	* src/iopriv.c, src/iognutls.c:
+	If there is no timeout then don't split large writes into small chunks.
+
+2006-01-17  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c:
+	Handle race conditions when creating certificate and key file.
+
+2006-01-16  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	Abort if the secure connection to the client cannot be started.
+
+2006-01-15  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c, src/certificates.h, src/Makefile.in,
+	src/wwwoffle.h, src/wwwoffles.c:
+	Add hooks to the functions in certinfo.c to display certificate information.
+
+	* src/certinfo.c: New file.
+
+	* src/info.c:
+	Change HTMLMessage() to HTMLMessageHead() and HTMLMessageBody().
+
+	* src/miscencdec.c:
+	Allow four dates to be returned without overwriting each other.
+
+2006-01-14  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c:
+	Make the certificate files world readable when creating them.
+
+2006-01-13  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* conf/upgrade-config.pl, conf/wwwoffle.conf.template:
+	Add MIME-Type for .pem certificate files.
+
+2006-01-11  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/htmlmodify.l:
+	Fix bug that caused corruption of link and style tags if disable-script=yes.
+
+2006-01-10  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	Fix error with mode checking of tunnel or cache selection.
+
+	* src/ssl.c: Fix error with proxy configuration item lookup.
+
+	* src/https.c: Add support for proxying cached https connections.
+
+2006-01-09  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/configfunc.c:
+	Fix problem with allowing SSL caching of hosts using port 443.
+
+2006-01-08  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/config.h, src/configfunc.c, src/wwwoffles.c:
+	Rename IsSSLAllowedPort() to IsSSLAllowed().
+
+	* src/miscencdec.c, src/https.c, src/misc.h, src/miscurl.c,
+	src/parse.c, src/purge.c, src/ssl.c, src/wwwoffle-tools.c,
+	src/wwwoffle.c, src/wwwoffles.c, doc/README.URL, src/configfunc.c,
+	src/finger.c, src/ftp.c, src/http.c:
+	Don't parse the "parameters" part of a URL separately from the path
+	(See README.URL for details).
+
+2006-01-07  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.https:
+	Added information about what GNUTLS adds to WWWOFFLE.
+
+	* doc/FAQ: Add information about security implications of SSL caching.
+
+	* audit-usage.pl: Handle new format log file message line.
+
+	* src/wwwoffles.c:
+	Check if tunnelling or caching is allowed for each SSL URL when handling it.
+
+	* doc/README.CONF, conf/wwwoffle.conf.template,
+	conf/upgrade-config.pl, doc/wwwoffle.conf.man.template,
+	doc/CHANGES.CONF, src/config.h, src/configdata.c,
+	src/configfunc.c:
+	Added a new SSLOptions section with options for enable-caching and
+	(allow|disallow)-(tunnel|cache), removed the ssl-allow-port option.
+
+	* src/configmisc.c, src/configpriv.h, src/configrdwr.c:
+	Allow a HostAndPortWild type of configuration value.
+
+2006-01-04  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	Handle SSL URLs after checking for proxy authentication.
+
+2005-12-15  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c, src/certificates.h, src/iognutls.c, src/iopriv.h:
+	Change the type name from gnutls v1.0 format to v1.2 format (append '_t').
+
+2005-12-14  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/https.c: New file.
+
+	* src/proto.c, src/proto.h, src/wwwoffles.c, src/Makefile.in:
+	Added caching of https protocol.
+
+2005-12-13  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/io.c, src/io.h, src/iognutls.c, src/iopriv.h:
+	Allow using a fake certificate for the server.
+
+2005-12-12  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/certificates.c, src/certificates.h, src/iognutls.c:
+	Add in client side secure connection support.
+
+2005-12-11  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/parse.c, src/purge.c, src/ssl.c, src/wwwoffle-tools.c,
+	src/wwwoffled.c, src/wwwoffles.c, src/control.c, src/finger.c,
+	src/ftp.c, src/http.c, src/info.c, src/io.c, src/io.h:
+	Change the configure_io_*() functions so that there is a separate one for each type
+	of configuration (timeout, zlib, chunked) and not one for each direction (read, write).
+
+	* src/ssl.c, src/finger.c, src/ftp.c, src/http.c:
+	Use the DefaultPort() function instead of hard-coded port numbers.
+
+2005-12-10  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/spool.c, src/wwwoffle.h, src/wwwoffles.c, src/monitor.c, src/refresh.c:
+	When fetching a POST request use the hash calculated when it was requested.
+
+2005-12-03  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/iognutls.c:
+	Use size_t variables instead of int where appropriate.
+
+	* src/iopriv.h, src/wwwoffles.c, src/io.c, src/io.h, configure.in:
+	Merge gnutls branch back in with changes after beta release.
+
+2005-11-28  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/miscurl.c: Don't get confused with links like javascript:*.
+
+2005-11-20  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/io.c: Fix error found by compiling with -pedantic option.
+
+	* src/htmlmodify.l: Block more javascript from appearing.
+
+2005-11-19  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* configure.in:
+	Call AC_INIT() properly and include sys/params.h when testing for sys/mount.h.
+
+	* src/miscencdec.c:
+	Cast constants from int to size_t where appropriate.
+
+	* src/htmlmodify.l:
+	Remove any 'onerror' attributes from HTML tags when removing Javascript.
+
+2005-11-10  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/iochunk.c, src/iozlib.c, src/misc.h:
+	Use size_t variables instead of int where appropriate.
+
+	* src/configmisc.c: Fix error found by compiling with -pedantic option.
+
+	* src/wwwoffle.h, src/wwwoffles.c:
+	Make the wwwoffles_read,write_data() functions have types more like read,write_data().
+
+	* src/ftp.c, src/http.c, src/proto.h, src/finger.c:
+	Make the *_ReadBody() functions have types more like read_data().
+
+2005-11-09  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/index.c, src/io.c, src/io.h, src/iochunk.c, src/misc.h, src/miscencdec.c:
+	More changes to remove lots of compilation warnings on a system where
+	sizeof(long)!=sizeof(int) (size_t!=int, time_t!=long).
+
+2005-11-06  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	Version 2.9-beta released.
+
+2005-11-06  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/NEWS: Remove gnutls for version 2.9-beta.
+	Update to version 2.9-beta.
+
+	* src/version.h: Update to version 2.9-beta.
+
+	* src/document.c: Ignore links that start with '#'.
+
+	* doc/README.1st: Remove gnutls for version 2.9-beta.
+
+2005-11-05  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c, src/wwwoffled.c, src/iopriv.h, src/io.h,
+	src/io.c, src/connect.c, src/configfunc.c, src/configdata.c,
+	src/config.h:
+	Remove gnutls for version 2.9-beta.
+
+2005-11-03  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/NEWS: Almost ready for version 2.9-beta.
+
+2005-11-02  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README: Remove gnutls for version 2.9-beta.
+
+	* doc/README: Added description of HTTPS support for internal pages.
+
+	* doc/README: Rename the Cancel button on internal web pages to Delete.
+
+	* audit-usage.pl: Remove gnutls for version 2.9-beta.
+
+	* audit-usage.pl: Handle HTTP and HTTPS connections.
+
+	* conf/wwwoffle.conf.template: Remove gnutls for version 2.9-beta.
+
+	* conf/wwwoffle.conf.template:
+	Add the https-port option, change some comments.
+
+	* src/certificates.c:
+	Changes to comments (added a FIXME, removed unused code).
+
+	* src/Makefile.in, src/autoconfig.h.in.in, conf/upgrade-config.pl,
+	doc/README.CONF, doc/CHANGES.CONF, doc/INSTALL, configure.in:
+	Remove gnutls for version 2.9-beta.
+
+2005-11-01  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* conf/upgrade-config.pl: Fix comment to refer to version 2.8.
+
+	* doc/INSTALL:
+	Specify the minimum versions of the libgnutls and libgcrypt libraries.
+
+2005-10-22  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/configfunc.c: Handle http and https ports for IsLocalHost().
+
+2005-10-15  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/sockets6.c, src/certificates.c, src/configfunc.c,
+	src/iochunk.c, src/iozlib.c, src/parse.c, src/sockets4.c:
+	Fix gcc-4.0 signed/unsigned pointer warnings.
+
+2005-10-12  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/wwwoffle.conf.man.template, doc/wwwoffle.man, doc/wwwoffled.man:
+	Spelling corrections, WWWOFFLE version update.
+
+	* doc/README.CONF:
+	Clarify description of 'age=0' option in Purge section.
+
+	* doc/README.hyperestraier:
+	Update note about version of hyperestraier program to use.
+
+	* src/configrdwr.c: Perform some more error checking.
+
+	* src/purge.c: Fix bug with PrintMessage() format string.
+
+2005-10-11  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/sockets6.c:
+	Make sure that sprintf() with short arguments have enough memory allocated.
+
+	* src/io.c, src/errors.c:
+	Make sure when creating a string that enough memory is allocated.
+
+	* src/wwwoffles.c, src/configfunc.c, src/configmisc.c,
+	src/configrdwr.c, src/ftp.c, src/htmlmodify.l, src/index.c,
+	src/messages.l, src/misc.h, src/purge.c, src/refresh.c,
+	src/spool.c, src/cgi.c, src/configdata.c, src/configedit.c:
+	Make sure that sprintf() with integer arguments have enough memory allocated.
+
+2005-10-08  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/purge.c:
+	Improve the purge output, print more information about what is happening.
+
+	* src/purge.c:
+	Purge files from the lasttime and prevtime directories if the URLs were deleted
+	from the main cache.
+
+2005-09-21  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/document.c, src/htmlmodify.l, src/miscurl.c, src/wwwoffle-tools.c, src/wwwoffle.c:
+	Chop '#' from the end of URLs in only one place, SplitURL().
+
+2005-09-19  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/iognutls.c, src/iopriv.c:
+	Fix bug when asked to write huge amounts of data on slow connection with timeout.
+
+	* src/control.c: Fix bug with deleteing all pages for a host.
+
+2005-09-18  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/purge.c:
+	When purging to get a fixed cache size or disk free scale ages on a percentage basis.
+
+2005-09-17  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/purge.c:
+	Reorganised the code, added some more comments, functionally the same.
+
+2005-09-11  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/spool.c:
+	Don't create directory when trying to read non-existent cached page.
+
+	* doc/README.https: New file.
+
+2005-09-10  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/miscurl.c:
+	Move the URL canonicalisation functions from SplitURL to CreateURL function.
+	Undo any URL-encoding of the hostname.
+
+2005-09-07  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.1st, doc/README.htdig, doc/README.mnogosearch,
+	doc/README.namazu, doc/README:
+	Updated all documentation for cache indexing and searching programs.
+
+	* doc/README.hyperestraier: New file.
+
+2005-09-04  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/search.c: Add the ability to search using Hyper Estraier.
+
+2005-09-02  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffled.c:
+	Swap around the loading of CA certs and creating of own certs.
+
+	* src/iognutls.c: Unconditionally free the credentials when finished.
+
+	* src/certificates.c: Added lots of error checking that was missing.
+	Initialise the dh_params only once at startup.
+	Don't use rsa_params for key exchange, too slow to generate.
+
+2005-08-30  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/iognutls.c:
+	Move the certificate handling to iognutls.c from io.c.
+	Retry handshake if a retryable error status.
+
+	* src/wwwoffles.c, src/io.c, src/io.h, src/iopriv.h:
+	Move the certificate handling to iognutls.c from io.c.
+
+2005-08-23  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/configrdwr.c, src/configpriv.h, src/configdata.c, src/configfunc.c:
+	Read the configuration file twice the first time, once for StartUp and once for
+	the rest.
+
+2005-08-19  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/iognutls.c, src/certificates.h, src/certificates.c: New file.
+
+	* src/io.c, src/io.h, src/iopriv.h:
+	Integrate io_gnutls functions into io library.
+
+	* src/connect.c: Close https sockets when forking child.
+
+	* src/wwwoffles.c: Use SSL/TLS if connection is from https socket.
+
+	* src/wwwoffled.c: Open the https listening socket if requested.
+
+	* src/config.h, src/configdata.c, src/configfunc.c:
+	Add the HTTPS_Port configuration option.
+
+	* src/autoconfig.h.in.in, src/Makefile.in:
+	Added the configuration changes if configured to compile with gnutls.
+
+	* conf/upgrade-config.pl: New file.
+
+	* doc/CHANGES.CONF, doc/README.CONF:
+	Added the https-port option to the configuration file.
+
+	* doc/INSTALL, configure.in:
+	Added the option to select compiling with gnutls.
+
+2005-08-14  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/configedit.c, src/configfunc.c, src/control.c,
+	src/htmlmodify.l, src/index.c, src/local.c, src/messages.l,
+	src/miscurl.c, src/proto.c, src/wwwoffle.c, src/cgi.c,
+	src/config.h:
+	Replace the function GetLocalHost(int) with three new functions;
+	GetLocalHost(), GetLocalHostPort() and GetLocalURL().
+	Replace $localhost in HTML messages with $localurl.
+
+2005-07-24  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* conf/upgrade-config-2.5-2.6.pl, conf/upgrade-config-2.6-2.7.pl,
+	conf/upgrade-config-2.7-2.8.pl:
+	Rename upgrade-config-2.x-2.5.pl to upgrade-config-2.0-2.5.pl.
+
+	* src/io.c, src/iochunk.c, src/iopriv.h, src/iozlib.c:
+	Move extern declaration of io_errno and io_strerror into iopriv.h.
+
+	* src/index.c: Removed the URL counter from HTML indexes.
+
+	* src/control.c:
+	Changed the delete URLs, added a delete-multiple url-all option for protocol indexes.
+	Removed the URL counter from HTML indexes.
+
+2005-07-22  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/iopriv.h, src/iozlib.c, src/io.c:
+	Remove all traces of zlib functions and structures when compiling without zlib.
+
+2005-07-18  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/INSTALL, configure.in: Default to using IPv6 if it is available.
+
+2005-07-17  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/proto.h, src/ssl.c, src/wwwoffle.h, src/finger.c, src/ftp.c,
+	src/http.c, src/misc.h:
+	Make some changes found from using splint, add some more annotations.
+
+	* src/io.c:
+	Stop the io_tell() function crashing if no line reading was performed.
+
+	* src/config.h, src/configfunc.c, src/wwwoffles.c:
+	Remove unused 'host' argument from function IsSSLAllowedPort().
+
+2005-07-14  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	Fix potential crash on NULL pointer in error message.
+
+	* src/wwwoffle-tools.c: Fix missing comment.
+
+2005-07-13  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/cgi.c, src/purge.c, src/spool.c, src/wwwoffle.h:
+	Don't create any temporary files, don't need to purge them either.
+
+2005-07-12  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/iozlib.c, src/misc.h, src/miscencdec.c, src/miscurl.c,
+	src/parse.c, src/proto.c, src/proto.h, src/spool.c,
+	src/wwwoffle.h, src/wwwoffles.c, src/config.h, src/configfunc.c,
+	src/configmisc.c, src/configpriv.h, src/configrdwr.c,
+	src/document.c, src/errors.c, src/headbody.c, src/html.l,
+	src/htmlmodify.l, src/index.c, src/iochunk.c:
+	Use 'const' for fixed, non-writeable arrays and function parameters in low-level
+	functions.
+
+2005-06-22  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/htmlmodify.l, src/wwwoffle-tools.c, src/wwwoffle.c:
+	Be more consistent with chopping '#' from the end of URLs.
+
+2005-06-17  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffle-tools.c, src/spool.c:
+	Allocate the size of string needed when reading the U* files.
+
+2005-06-15  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/configedit.c:
+	Add headers to make sure that page expires from browser cache.
+
+2005-06-14  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/messages.l:
+	Print out the internal page headers when in ExtraDebug mode.
+
+2005-06-07  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/Makefile.in, src/wwwoffle-tools.c, doc/README:
+	Removed the uncompress-cache and convert-cache programs.
+	Merged the functionality of these programs into wwwoffle-tools.
+
+2005-05-27  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* doc/README.1st: Remove the file called CONVERT.
+	Tidy up the list of other files.
+
+	* doc/INSTALL, doc/Makefile.in:
+	Remove the file called CONVERT and all references to converting old cache
+	format.
+
+2005-05-20  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffled.c:
+	Make 'wwwoffle -fetch' in autodial mode work as expected.
+
+2005-04-22  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/monitor.c:
+	Give a warning message if the timestamp of the monitored file cannot be changed.
+
+2005-04-21  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/spool.c:
+	Fix problem with URLToFileName() incorrect length allocation.
+
+2005-04-17  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/configfunc.c:
+	When a POST/PUT request has an alias then remove WWWOFFLE's fake URL arguments.
+
+	* src/parse.c: Fix SSL tunnelling to port 443 again.
+
+2005-03-28  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/spool.c: Bug fix, remove double free of memory.
+
+2005-03-24  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/proto.c: Add a missing comment.
+
+	* src/parse.c: Bug fix for non-http protocols.
+
+	* src/wwwoffle-tools.c, src/wwwoffle.h, src/convert-cache.c,
+	src/index.c, src/misc.h, src/miscurl.c, src/monitor.c,
+	src/purge.c, src/search.c, src/spool.c:
+	Make Url->dir private data.
+	Add in private data for the hashed filename.
+	Add functions to return these two pieces of private data.
+	Make the FileNameToURL() function return a URL* not string.
+
+2005-03-15  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/index.c:
+	Move common code to new functions for special directory indexes.
+
+2005-03-14  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/miscurl.c, src/search.c, src/errors.c:
+	Bug fixes for compilation with CYGWIN.
+
+2005-03-13  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffled.c, src/wwwoffles.c, src/monitor.c, src/parse.c,
+	src/purge.c, src/refresh.c, src/search.c, src/sockets4.c,
+	src/sockets6.c, src/spool.c, src/ssl.c, src/wwwoffle-tools.c,
+	src/wwwoffle.c, src/info.c, src/io.c, src/io.h, src/iochunk.c,
+	src/iopriv.c, src/iopriv.h, src/iozlib.c, src/javaclass.c,
+	src/local.c, src/misc.h, src/miscencdec.c, src/miscurl.c,
+	src/connect.c, src/control.c, src/controledit.c, src/document.c,
+	src/errors.c, src/ftp.c, src/gifmodify.c, src/headbody.c,
+	src/html.l, src/htmlmodify.l, src/index.c, src/cgi.c,
+	src/configedit.c, src/configfunc.c, src/configmisc.c,
+	src/configrdwr.c:
+	Make lots of small changes to remove lots of compilation warnings on
+	a system where sizeof(long)!=sizeof(int) (size_t!=int, time_t!=long).
+
+	* src/configfunc.c:
+	Make the ssl-allow-port config file option work for port 80.
+
+	* src/parse.c, src/refresh.c, src/wwwoffle.h, src/wwwoffles.c:
+	Make the ParseRequest() and RefreshPage() functions return URL*.
+
+2005-03-12  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c:
+	A POST/PUT request is not fetched if confirm-requests is enabled.
+
+	* src/miscurl.c: Fixed bug with hosts having a port number.
+
+	* src/spool.c: Move common code to new functions (chdir/mkdir).
+
+2005-03-09  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/miscurl.c, src/proto.c, src/proto.h, src/wwwoffles.c, src/index.c, src/misc.h:
+	Don't use URL->link directly, create only if needed in new function
+	CreateProxyableLink().
+
+2005-03-07  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/configdata.c, src/configmisc.c, src/configpriv.h, src/configrdwr.c:
+	Add a new configuration file data type 'UrlWild' for wildcard Urls.
+
+	* src/sockets6.c, src/wwwoffled.c:
+	Make the sockets6.c functions handle IP addresses in '[...]'.
+
+2005-03-06  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/configrdwr.c:
+	Add a new configuration file data type 'HostWild' for wildcard hosts.
+	Check and simplify the parsing of Host, HostAndPort types, add HostWild.
+
+	* src/configdata.c, src/configmisc.c, src/configpriv.h:
+	Add a new configuration file data type 'HostWild' for wildcard hosts.
+
+	* src/cgi.c, src/misc.h, src/miscurl.c, src/wwwoffled.c:
+	CanonicaliseHost() always returns an allocated string.
+
+2005-03-05  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffle.c, src/configrdwr.c, src/misc.h, src/miscurl.c:
+	Remove the SplitHostPort() and RejoinHostPort() functions.
+
+2005-03-04  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/misc.h, src/miscurl.c:
+	Remove the Protocol item from the URL data structure.
+
+	* src/proto.c, src/proto.h:
+	Add helper functions now that Url->Protocol does not work.
+
+	* src/wwwoffles.c, src/configrdwr.c, src/htmlmodify.l,
+	src/refresh.c, src/wwwoffle.c:
+	Don't use Url->Protocol, use the helper functions.
+
+	* src/Makefile.in: Update the dependencies.
+
+2005-03-02  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/finger.c, src/ftp.c, src/http.c, src/ssl.c:
+	Hard-code the port number into the function instead of using Protocol structure.
+
+2005-03-01  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/Makefile.in: Remove '-L' from FLEXFLAGS.
+
+	* src/parse.c, src/refresh.c, src/wwwoffle.h, src/wwwoffles.c:
+	The RequestURL() and RecurseFetchRelocation() functions take a
+	URL* argument instead of char*.
+
+	* src/miscurl.c, src/misc.h:
+	Remove the local item from the URL data structure.
+
+	* src/info.c, src/refresh.c, src/wwwoffles.c:
+	Don't use Url->local, use IsLocalHost(Url).
+
+	* src/config.h, src/configfunc.c:
+	Change the argument to the IsLocalHost() function to take URL*.
+	Check all of the proto, host and port in most efficient order.
+
+2005-02-28  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/configedit.c: Replace READ_BUFFER_SIZE with REWIND_STEP.
+
+	* src/io.h, src/iochunk.c, src/local.c, src/parse.c, src/purge.c,
+	src/ssl.c, src/uncompress-cache.c, src/wwwoffle-tools.c,
+	src/wwwoffle.c, src/wwwoffles.c, src/cgi.c, src/gifmodify.c,
+	src/info.c, src/io.c:
+	Replace READ_BUFFER_SIZE with IO_BUFFER_SIZE.
+
+	* src/wwwoffles.c:
+	Relabelled some log messages with 'hostport' instead of 'host'.
+
+	* src/miscurl.c: Bug fix for AddPasswordURL() breakage.
+
+2005-02-27  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffles.c, src/messages.l:
+	Use the buffered write because the written data blocks are likely to be small.
+
+	* src/iopriv.h:
+	Change to using an io_buffer instead of char*,int for chunk data buffer.
+	Change to using an io_buffer instead of char*,int for read line data.
+	Add a new io_buffer for the buffered write.
+
+	* src/iochunk.c:
+	Change to using an io_buffer instead of char*,int for chunk data buffer.
+
+	* src/io.h: Add a new function that buffers before writing.
+
+	* src/io.c: Add a new function that buffers before writing.
+	Change to using an io_buffer instead of char*,int for read line data.
+	Increase the read line buffer length.
+
+2005-02-27  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/wwwoffle.h: MovedLocation() now returns URL*.
+
+	* src/refresh.c, src/wwwoffle.c, src/info.c, src/html.l, src/document.h, src/document.c:
+	GetReferences() now returns URL** instead of char**.
+	GetReference() now handles base URL and meta refresh URL.
+
+	* src/css.l: Don't call SetBaseURL().
+
+	* src/htmlmodify.l: LinkURL() now returns URL*.
+
+	* src/control.c: Renamed AddURLPassword() to AddPasswordURL().
+
+	* src/wwwoffles.c: Renamed AddURLPassword() to AddPasswordURL().
+	MovedLocation() now returns URL*.
+
+	* src/parse.c: Renamed AddURLPassword() to AddPasswordURL().
+	LinkURL() now returns URL*.
+	MovedLocation() now returns URL*.
+
+	* src/misc.h, src/miscurl.c:
+	Rename AddURLPassword() to AddPasswordURL() and make it use CreateURL().
+	The LinkURL() function now returns URL* by calling SplitURL().
+
+	* src/configfunc.c, src/configmisc.c, src/configpriv.h:
+	Added new macros for accessing UrlSpec data.
+
+2005-02-26  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/control.c, src/search.c:
+	Don't use Url->Protocol where it can be avoided.
+
+	* src/finger.c, src/ftp.c, src/http.c, src/parse.c, src/ssl.c, src/wwwoffle.h:
+	Proxy information is stored as URL instead of hostport string.
+	MakeRequestProxyAuthorised() updated to take URL instead of hostport.
+
+	* src/config.h, src/configfunc.c, src/miscurl.c:
+	IsLocalHost() function now takes host and port instead of hostport.
+
+	* src/configfunc.c, src/wwwoffle-tools.c, src/wwwoffle.c, src/wwwoffles.c:
+	Use the CreateURL() function where previously URL strings were formed from their
+	constituent parts and SplitURL() was called on them.
+
+	* src/parse.c, src/purge.c:
+	Use the CreateURL() function where previously URLs were faked.
+
+	* src/misc.h, src/miscurl.c:
+	Split up the SplitURL() function into SplitURL() and CreateURL() (the former
+	calls the latter to maintain compatibility).
+
+	* src/index.c: Bug fix with URL encoding.
+
+2005-02-25  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/purge.c:
+	Replace function arguments called host with ones called hostport to reflect
+	their true meaning.
+
+	* src/config.h, src/configfunc.c, src/finger.c, src/ftp.c,
+	src/htmlmodify.l, src/http.c, src/miscurl.c, src/purge.c,
+	src/ssl.c, src/wwwoffles.c:
+	Changed the IsSSLAllowedPort(), IsLocalHost(), IsLocalNetHost() and
+	IsAllowedConnectHost() functions to replace hostport argument by separate host
+	and port or change to just host.
+
+2005-02-24  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/configedit.c, src/configfunc.c, src/configmisc.c, src/configpriv.h:
+	Modify MatchUrlSpecification() function to take separate host and port arguments.
+
+2005-02-22  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/refresh.c, src/ssl.c, src/wwwoffle-tools.c, src/wwwoffle.c,
+	src/wwwoffles.c, src/cgi.c, src/configedit.c, src/configfunc.c,
+	src/finger.c, src/ftp.c, src/htmlmodify.l, src/http.c,
+	src/index.c, src/misc.h, src/miscurl.c, src/parse.c, src/purge.c:
+	Change the URL data structure; rename host to hostport, add separate host and port.
+
+2005-02-20  Andrew M. Bishop  <amb@gedanken.demon.co.uk>
+
+	* src/gifmodify.c, src/misc.h: Added some extra splint annotations.
+
+	* src/uncompress-cache.c, src/wwwoffle-tools.c, src/wwwoffle.c,
+	src/autoconfig.h.in.in, src/cgi.c, src/configdata.c,
+	src/configfunc.c, src/configrdwr.c, src/controledit.c,
+	src/convert-cache.c, src/errors.c, src/errors.h, src/local.c,
+	src/messages.l, src/monitor.c, src/purge.c, src/refresh.c,
+	src/search.c, src/spool.c:
+	Tidy up some comments, move some minor code around, no functional changes.

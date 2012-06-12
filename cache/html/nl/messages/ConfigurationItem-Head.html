@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl    = The root URL of the server running wwwoffled (='$localurl').
+version     = The version of the WWWOFFLE server (='$version').
+section     = The section of the configuration file (= '$section').
+item        = The item in the section of the configuration file (= '$item').
+nextitem    = The next item of the configuration file (= '$nextitem').
+previtem    = The previous item of the configuration file (= '$previtem').
+template    = The template for the item.
+description = The description of the item.
+
+url_type    = Set to yes if the item can take a URL-SPECIFICATION (= '$url_type').
+key_type    = Set to the type of the left side of the equals sign (= '$key_type').
+val_type    = Set to the type of the right side of the equals sign (= '$val_type').
+
+def_key     = Set to the key for this item when constant (= '$def_key').
+def_val     = Set to the default value for this item (= '$def_val').
+
+url         = Set to the URL-SPECIFICATION (= '$url').
+key         = Set to the value on the left side of the equals sign (= '$key').
+val         = Set to the value of the right side of the equals sign (= '$val').
+
+entry       = The entry that was selected the last time in the list (= '$entry').
+
+nentries    = The number of entries that are currently set (= '$nentries').
+nallowed    = The number of entries that are allowed (1 or any) (= '$nallowed').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Interactieve Configuratie Pagina - $section / $item</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<p align="center">
+<a href="$localurl/configuration/$section$url?{?%encode[url]}{}">^^^ $section ^^^</a>
+<br>
+<a href="$previtem?{$previtem}{no-name}$url?{?%encode[url]}{}">&lt;&lt;&lt; $previtem?{$previtem}{<i>no-name</i>} &lt;&lt;&lt;</a>
+&nbsp;&nbsp;&nbsp; $item?{$item}{<i>no-name</i>} &nbsp;&nbsp;&nbsp;
+<a href="$nextitem?{$nextitem}{no-name}$url?{?%encode[url]}{}">&gt;&gt;&gt; $nextitem?{$nextitem}{<i>no-name</i>} &gt;&gt;&gt;</a>
+</p>
+
+<hr width="50%">
+
+<H1 align="center">WWWOFFLE Interactieve Configuratie</H1>
+
+<h2><a href="../$section$url?{?%encode[url]}{}">Section: $section</a></h2>
+
+<H3>Item: $item?{$item}{<i>no-name</i>}</H3>
+
+$template?{<tt>%html[template]</tt>}{<i>No template</i>}
+
+<p>
+
+$description?{$description}{<i>No description</i>}
+
+<p>
+<form action="$item?{$item}{no-name}" method="POST">
+
+$url?{
+$_url=%html[url]
+}{
+$_url=
+}
+$key?{
+$_key=%html[key]
+$_val=%html[val]
+}{
+$_key=%html[def_key]
+$_val=%html[def_val]
+}
+
+$url_type?{
+<font size="+2">&lt;</font><input type="text" value="$_url" size="60" name="url"><font size="+2">&gt;</font>
+}{}
+
+$key_type?=Fixed{
+<input type="text" value="$_key" size="20" name="key" readonly>
+}{}
+$key_type?=String{
+<input type="text" value="$_key" size="30" name="key">
+}{}
+$key_type?=FileExt{
+<input type="text" value="$_key" size="8" name="key">
+}{}
+$key_type?=Host{
+<input type="text" value="$_key" size="20" name="key">
+}{}
+$key_type?=UserPass{
+<input type="text" value="$_key" size="20" name="key">
+}{}
+$key_type?=UrlSpecification{
+<input type="text" value="$_key" size="30" name="key">
+}{}
+
+$_val?=yes{$boolno="" $boolyes=checked}{$boolyes="" $boolno=checked}
+
+$val_type?=None{}{&nbsp;=&nbsp;}
+
+$val_type?=CfgMaxServers{
+<input type="text" value="$_val" size="3" name="val">
+}{}
+$val_type?=CfgMaxFetchServers{
+<input type="text" value="$_val" size="3" name="val">
+}{}
+$val_type?=CfgLogLevel{
+<input type="text" value="$_val" size="8" name="val">
+}{}
+$val_type?=Boolean{
+<input type="radio" value="yes" size="4" name="val" $boolyes>Ja / <input type="radio" value="no" size="4" name="val" $boolno>Nee
+}{}
+$val_type?=PortNumber{
+<input type="text" value="$_val" size="5" name="val"> (1-65535)
+}{}
+$val_type?=AgeDays{
+<input type="text" value="$_val" size="4" name="val">
+}{}
+$val_type?=TimeSecs{
+<input type="text" value="$_val" size="4" name="val">
+}{}
+$val_type?=CacheSize{
+<input type="text" value="$_val" size="5" name="val"> MB
+}{}
+$val_type?=FileSize{
+<input type="text" value="$_val" size="4" name="val"> kB
+}{}
+$val_type?=Percentage{
+<input type="text" value="$_val" size="3" name="val"> %
+}{}
+$val_type?=UserId{
+<input type="text" value="$_val" size="10" name="val">
+}{}
+$val_type?=GroupId{
+<input type="text" value="$_val" size="10" name="val">
+}{}
+$val_type?=String{
+<input type="text" value="$_val" size="30" name="val">
+}{}
+$val_type?=PathName{
+<input type="text" value="$_val" size="30" name="val">
+}{}
+$val_type?=FileExt{
+<input type="text" value="$_val" size="8" name="val">
+}{}
+$val_type?=FileMode{
+<input type="text" value="$_val" size="4" name="val">
+}{}
+$val_type?=MIMEType{
+<input type="text" value="$_val" size="20" name="val">
+}{}
+$val_type?=Host{
+<input type="text" value="$_val" size="20" name="val">
+}{}
+$val_type?=HostOrNone{
+<input type="text" value="$_val" size="20" name="val">
+}{}
+$val_type?=HostAndPort{
+<input type="text" value="$_val" size="20" name="val">
+}{}
+$val_type?=HostAndPortOrNone{
+<input type="text" value="$_val" size="20" name="val">
+}{}
+$val_type?=HostWild{
+<input type="text" value="$_val" size="20" name="val">
+}{}
+$val_type?=HostAndPortWild{
+<input type="text" value="$_val" size="20" name="val">
+}{}
+$val_type?=UserPass{
+<input type="text" value="$_val" size="20" name="val">
+}{}
+$val_type?=Url{
+<input type="text" value="$_val" size="30" name="val">
+}{}
+$val_type?=UrlWild{
+<input type="text" value="$_val" size="30" name="val">
+}{}
+$val_type?=UrlSpecification{
+<input type="text" value="$_val" size="30" name="val">
+}{}
+
+<p>
+$nentries?=0{$_nentries=0}{$_nentries=1}
+$nentriesallowed=$_nentries$nallowed
+
+$nentriesallowed?=01{
+<input type="radio" name="action" value="replace" checked><b>Zet</b> deze item op de waarde hierboven<br>
+}{}
+
+$nentriesallowed?=11{
+<input type="radio" name="action" value="replace" checked><b>Verander</b> deze item naar de waarde hierboven<br>
+}{}
+
+$nentriesallowed?=0any{
+<input type="radio" name="action" value="replace" checked>deze item <b>toevoegen</b> met de waarde hierboven<br>
+}{}
+
+$entry?{$checked_replace=checked}{$checked_before=checked}
+$nentriesallowed?=1any{
+<input type="radio" name="action" value="before" $checked_before>de waarde hierboven <b>invoegen</b> <i>voor</i> de hieronder geselecteerde waarde<br>
+<input type="radio" name="action" value="replace" $checked_replace>de waarde hierboven <b>invoegen</b> <i>in plaats van</i> de hieronder geselecteerde waarde<br>
+<input type="radio" name="action" value="after">de waarde hierboven <b>invoegen</b> <i>na</i>de hieronder geselecteerde waarde<br>
+}{}
+
+$nentries?=0{}{
+<input type="radio" name="action" value="edit">de hieronder geselecteerde waarde <b>editen</b><br>
+<input type="radio" name="action" value="delete">de hieronder geselecteerde waarde <b>verwijderen</b><br>
+}
+
+<input type="submit" value="Wijziging Toepassen">
+
+<p align="center">
+
+$select=
+$nallowed?=1{$size=1}{$size=32}

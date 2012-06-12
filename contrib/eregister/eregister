@@ -1,0 +1,292 @@
+#!/usr/bin/ruby
+# eregister
+#   usage: read program and adjust global constants to your liking.
+#          can be safely interrupted by SIGINT.
+#   This script will index a wwwoffle cache and handle incremental
+#   updates examining only changed directories and files.
+#
+#   (C) Richard Zidlicky, GPL
+#
+#   Content type is determined by looking at cache file headers, this
+#   is more exact and faster (avoids some disk access) than guessing 
+#   from URL
+#   This method also allows excluding http redirects or http/wwwoffle
+#   errors from index.
+#
+#   Tested on ruby 1.6.8 which has issues with threading, thus some stuff
+#   commented out.
+#
+# TODO:
+#   - remove from index documents that vanished from cache
+#   - ensure all estcmd errors are detected and acted upon
+#   - write commandline parsing etc
+#   - easier configurable mime type handling
+#   - maybe there are more HTTP response types that could 
+#     ignored etc
+
+# casket + xdata go into EDIR, by default /var/spool/wwwoffle/hyperestraier
+# EDIR/casket-xdata dir is used to store timestamps of domain dirs and data
+# files 
+# mime-type is additionally stored for data files, atm this is not needed
+# for this program but might be used for other tools and will be usefull
+# for removing stale documents
+
+
+## which domains are to be indexed
+
+#WHITELIST="*linux* *kernel* ajp*.org *journals* *endotext* *physiology* *.aps:org *psychiatry* *annals* *oxfordjourn* *.ama-assn.org *.asm.org *jnls.org *publications.org *reviews.org *billstclair* *wiki* *heise* *sourceforge* *q40* *q60* *.gov *.edu *ruby* *ocaml* *gnu.org *eff.org *bbc* *nature* *zmed.org *medicine* *squeak* *mozilla* *firefox* *freshmeat* *mozdev.org"
+
+WHITELIST="*"
+
+# ignore/recompute time stamps if set to true
+$force=nil
+
+$Casketname="casket-wwwoffle"
+SPD="/var/spool/wwwoffle"
+EDIR=File.join(SPD,"hyperestraier")
+
+$Csfullname=File.join(EDIR,$Casketname)
+DDIR=File.join(EDIR,$Casketname+"-xdata")
+
+ECMD="estcmd gather -sd -cl -cm -fm -cs 25 -px @uri #{$Csfullname} -"
+
+### end of user serviceable part ###
+
+Dir.mkdir(EDIR) unless FileTest.directory?(EDIR)
+Dir.mkdir(DDIR) unless FileTest.directory?(DDIR)
+
+
+# fork/exec/background *cmd, connect pipes for communication
+# returns [fdin,fdout,fderr,childpid]
+def popen4(*cmd)
+  pw = IO::pipe   # pipe[0] for read, pipe[1] for write
+  pr = IO::pipe
+  pe = IO::pipe
+  
+  fork{ 
+    fork{
+      # grandchild
+      trap("HUP","SIG_IGN")
+      trap("ABRT","SIG_IGN")
+      Process.setsid
+      #print "forked process, ppid=#{Process.ppid}\n"
+      #print "    pid=#{Process.pid}\n"
+      pw[1].close
+      STDIN.reopen(pw[0])
+      pw[0].close
+      
+      pr[0].close
+      STDOUT.reopen(pr[1])
+      pr[1].close
+
+      pe[0].close
+      STDERR.reopen(pe[1])
+      pe[1].close
+
+      STDOUT.print "#{Process.pid}\n"
+      exec(*cmd)
+    }
+    exit!
+  }
+
+  pw[0].close
+  pr[1].close
+  pe[1].close
+
+  pid=pr[0].gets.to_i
+  #print "pid=#{pid}\n"
+  pi = [pw[1], pr[0], pe[0], pid]
+  pw[1].sync = true
+
+  if defined? yield
+    begin
+      return yield(*pi)
+    ensure
+      pi.each{|p| p.close unless p.closed?}
+    end
+  end
+  pi
+end
+
+
+$pid=0
+$finish=nil
+
+trap("INT"){
+  #Process.kill "INT",$pid
+  $finish=true
+}
+
+# Matching Shell Globs as Regular Expressions
+## UNUSED
+def glob2pat(globstr)
+    patmap = {
+        '*' => '.*',
+        '?' => '.',
+        '[' => '[',
+        ']' => ']',
+    }
+    globstr.gsub!(/(.)/) { |c| patmap[c] || Regexp::escape(c) }
+    '^' + globstr + '$'
+end
+
+# find out http errors, http content type
+# look at headers for filetype, do not look into body (no meta etc..)
+def get_type(file)
+  #print "get_type #{file}\n"
+  File.open(file){|fl|
+    l1=fl.gets
+    case l1
+    when /^HTTP\/\d.\d.*30\d.*Moved Permanently/i then return "redirect"
+    when /^HTTP\/\d.\d.*404/i then return "error"
+    when /^HTTP\/\d.\d 50\d WWWOFFLE/i then "werror"
+    end
+    fl.each{|line|
+      #print "get_type: #{line}\n"
+      case line
+      when /^Content-Type: (\w+\/\w+)/i
+	#print "matched #{$1} #{$2}\n"
+	return $1
+      when /^$/ then return ""
+      end
+    }
+  }
+  return ""
+end
+
+# return true if file should not be indexed
+def ignore(type)
+  case type
+  when /text.(html|plain)/
+    return nil
+  when /(audio|image|video|redirect|error|javascript|text.css)/
+    return true
+  default
+    return nil
+  end
+  ##when /plain\/text/   # some weirdo sites return this ;)
+end
+
+def get_times(name)
+  times=nil
+  begin
+    File.open(DDIR+"/"+name,"r"){|df|
+      times=Marshal.load df 
+      #print "times = ";p times;print "\n"
+    }
+  rescue  => detail
+    #print "get_times #{name}: rescue #{detail}\n"
+    times=Hash.new
+  end  
+  return times
+end
+def save_times(name,times)
+  begin
+    File.open(DDIR+"/"+name,"w"){|df|
+      Marshal.dump times,df
+    }
+  rescue => detail
+    #print "save_times #{name}: rescue #{detail}\n"
+  end
+end
+
+dirtimes=get_times "dirtimes"
+newdirtimes=dirtimes.dup
+domains_done=Array.new
+$unclean=nil
+
+register=""
+mftimes=[]
+
+Dir.chdir SPD
+
+estin, estout, esterr, estpid = popen4(ECMD)
+$pid=estpid
+
+Thread.new{
+  lastdomain=nil
+  estout.each{|line| 
+    domain=nil
+    #print line
+    case line
+    when /^estcmd: INFO:.* \(http:\/\/([^\/]*)\/.*: registered$/ 
+      domain=$1
+    when /^estcmd: INFO:.*\/http\/([^\/]*)\/D.*: passed$/ 
+      domain=$1
+    when /^estcmd: INFO:.*signal.* catched$/
+      $unclean=true
+    when /^estcmd: INFO: finished successfully/
+      $unclean=nil
+    else
+      print "  STDOUT<< #{line}\n"
+    end
+    if domain!=lastdomain then
+      ## does block with ruby 1.6.8 :(
+      #domains_done.push lastdomain if lastdomain
+      print "done #{lastdomain}, doing #{domain}\n"
+      lastdomain=domain
+    end
+  }
+}
+Thread.new{
+  esterr.each{|line| print "  ERR<< #{line}\n"}
+}
+
+
+Dir.chdir "http"
+Dir.glob(WHITELIST).each{ |domain|
+  #print "domain #{domain}, dtime=#{File.stat(domain).mtime}, last_update=#{dirtimes[domain]}\n"
+  break if $finish
+  next if !$force && File.stat(domain).mtime == dirtimes[domain]
+  newdirtimes[domain] = File.stat(domain).mtime
+  Dir.chdir domain
+  ftimes=get_times "domain_"+domain
+  Dir.glob("D*"){|fle|
+    t=ftimes[fle]
+    next if !$force && t && t[0] == File.stat(fle).mtime
+    # something changed, recheck type
+    type=get_type fle
+    #print "type #{type}\n"
+    ftimes[fle] = [File.stat(fle).mtime,type]
+    next if ignore(type)
+
+    # rescue necessary if some3d party program left cache inconsistent..
+    begin
+      url=File.open("U"+fle[1..-1]).gets
+      estin.puts SPD+"/http/"+domain+"/"+fle+"\t"+url+"\n"
+    rescue
+    end
+  }
+  mftimes=mftimes.push [ftimes,domain]
+  Dir.chdir ".."
+}
+
+Dir.chdir ".."
+
+# thats all, send eof to estcmd
+estin.close
+
+# wait for all threads to finish
+Thread.list.each{|thr| thr.join unless thr==Thread.current}
+
+estout.close
+esterr.close
+
+
+# /usr/include/bits/waitstatus.h
+#define __W_EXITCODE(ret, sig)  ((ret) << 8 | (sig))
+
+#err=Process.waitpid2($pid)
+# err[1] is error code - doesnt work atm
+
+if !$unclean then
+  print "returned ok, updating timestamps\n"
+  mftimes.each{|ftimes,domain| 
+    save_times "domain_"+domain, ftimes}
+  save_times "dirtimes", newdirtimes
+else
+  print "unclean return? not updating tstamps\n"
+  # selectively update where sure..
+  domains_done.each{|dom| dirtimes[dom]=newdirtimes[dom]}
+  save_times "dirtimes", dirtimes
+end

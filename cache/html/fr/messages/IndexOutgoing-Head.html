@@ -1,0 +1,26 @@
+<!-- Ceci n'est que l'en-tete de l'index, le contenu est different pour chaque index -->
+
+<!--
+
+WWWOFFLE : Variables disponibles (mettre le prefixe '$').
+
+total      = Le nombre total de pages pour cet index (='$total').
+sort       = La methode de tri utilisee (='$sort').
+
+-->
+
+<h2>Requ&ecirc;tes en Attente</h2>
+
+$total?=0{<b>Aucune Requ&ecirc;te</b>}{<b>$total Requ&ecirc;tes</b>}
+
+<p>
+
+$delete?{$totaldelete=$total}{$totaldelete=0}
+$totaldelete?=0{}
+{
+<form action="/control/delete-multiple/req" method=post>
+}
+
+<ul>
+
+<!-- Ceci n'est que l'en-tete de l'index, le contenu est different pour chaque index -->

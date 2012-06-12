@@ -1,0 +1,451 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+<TITLE>WWWOFFLE Wersja 2.7 - Strona Powitalna Proxy</TITLE>
+<LINK href="/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY>
+<p align=center>
+<small>
+[Góra]
+[<a href="#description">Opis</a>]
+[<a href="#indexes">Indeksy&nbsp;bufora</a>]
+[<a href="#request">Strony&nbsp;do&nbsp;pobrania</a>]
+[<a href="#monitor">Strony&nbsp;monitorowane</a>]
+[<a href="#control">Kontrola&nbsp;programu</a>]
+[<a href="#configuration">Edycja&nbsp;konfiguracji</a>]
+[<a href="#search">Przeszukiwanie&nbsp;bufora</a>]
+[<a href="#links">Odnośniki&nbsp;internetowe</a>]
+[<a href="#mail">Adres&nbsp;e-mail</a>]
+</small>
+</p>
+<hr>
+
+<H1 align=center><a name="top">Strona Powitalna WWWOFFLE Proxy</a></H1>
+
+Programy WWWOFFLE upraszczają przeglądanie sieci World Wide Web z komputerów,
+które nie są na stałe podłączone do Internetu (np. dial-up).
+
+<h2><a name="description">Opis</a></h2>
+
+Program wwwoffled jest prostym serwerem proxy posiadającym specjalne własności
+przydatne w przypadku łączenia się z Internetem poprzez telefonowanie. Oznacza
+to, że możliwe jest przeglądanie stron web i czytanie ich bez konieczności
+utrzymywania połączenia.
+<p>
+Odnośniki z tej listy odnoszą się do opcji pliku konfiguracji <i>[KONF]</i>, do
+stron, które pozwalają edytować opcje <i>[EDYC]</i> (mogą wymagać hasła), do
+dodatkowych informacji w tym dokumencie <i>[CZYT]</i> lub do innego URL'a
+<i>[URL]</i>.
+<p>
+
+Podstawowe własności
+<ul>
+  <li>Buforowanie protokołów HTTP, FTP i finger.
+  <li>Zezwolenie na metody 'GET', 'HEAD', 'POST' i 'PUT' dla HTTP.
+  <li>Interaktywna kontrola stanu online/offline/autodial lub z poziomu wiersza poleceń.
+      <a href="/control/">[URL]</a>
+  <li>Wysoka konfigurowalność.
+      <a href="README.CONF.html">[KONF]</a>
+  <li>Niskie utrzymanie, Stany start/stop i online/offline mogą być zautomatyzowane.
+</ul>
+
+Podczas połączenia
+<ul>
+  <li>Buforowanie wyświetlanych stron do późniejszego przeglądania.
+  <li>Przesyłanie warunkowe do pobierania tylko stron zmienionych.
+      <a href="README.CONF.html#OnlineOptions">[KONF]</a>
+      <a href="/configuration/OnlineOptions">[EDYC]</a>
+      <ul>
+        <li>Oparte na dacie wygaśnięcia, czasu od ostatniego przesłania lub jednorazowo na sesję.
+            <a href="README.CONF.html#OnlineOptions_request-changed">[KONF]</a>
+            <a href="/configuration/OnlineOptions/request-changed">[EDYC]</a>
+      </ul>
+  <li>Brak buforowania wspierające obsługę SSL (Secure Socket Layer tj. https).
+      <a href="README.CONF.html#Options_ssl-allow-port">[KONF]</a>
+      <a href="/configuration/Options/ssl-allow-port">[EDYC]</a>
+  <li>Możliwość użycia z zewnętrznymi serwerami proxy opartym na stronie web.
+      <a href="README.CONF.html#Proxy">[KONF]</a>
+      <a href="/configuration/Proxy">[EDYC]</a>
+  <li>Kontrola stron do których nie ma dostępu.
+      <a href="README.CONF.html#DontGet">[KONF]</a>
+      <a href="/configuration/DontGet">[EDYC]</a>
+      <ul>
+        <li>Pozwala na zamianę blokowane strony.
+            <a href="README.CONF.html#DontGet_replacement">[KONF]</a>
+            <a href="/configuration/DontGet/replacement">[EDYC]</a>
+      </ul>
+  <li>Kontrola stron nieprzechowywanych w buforze.
+      <a href="README.CONF.html#DontCache">[KONF]</a>
+      <a href="/configuration/DontCache">[EDYC]</a>
+  <li>Żądanie kompresowania stron z serwerów web (opcja w czasie kompilacji).
+      <a href="README.CONF.html#OnlineOptions_request-compressed-data">[KONF]</a>
+      <a href="/configuration/OnlineOptions/request-compressed-data">[EDYC]</a>
+</ul>
+
+Podczas braku połączenia
+<ul>
+  <li>Może być skonfigurowany do nawiązania połączenia na żądanie dla stron, które nie znajdują się w buforze.
+  <li>Wybór stron do pobrania przy następnym połączeniu
+      <ul>
+        <li>Poprzez kliknięcie na odnośniku w przeglądarce.
+        <li>Interfejst wiersza poleceń do określania stron do pobrania.
+      </ul>
+  <li>Kontrola stron, które mogą być oznaczone do pobrania przy następnym połączeniu.
+      <a href="README.CONF.html#OfflineOptions">[KONF]</a>
+      <a href="/configuration/OfflineOptions">[EDYC]</a>
+  <li>Dostarcza niebuforowanego dostępu do serwerów intranetowych.
+      <a href="README.CONF.html#LocalNet">[KONF]</a>
+      <a href="/configuration/LocalNet">[EDYC]</a>
+</ul>
+
+Zautomatyzowane pobieranie
+<ul>
+  <li>Pobieranie określonych stron nieinteraktywnie.
+      <a href="README.CONF.html#FetchOptions">[KONF]</a>
+      <a href="/configuration/FetchOptions">[EDYC]</a>
+  <li>Opcje do automatycznego pobierania obiektów w żądanych stronach
+      <a href="README.CONF.html#FetchOptions">[KONF]</a>
+      <a href="/configuration/FetchOptions">[EDYC]</a>
+      <ul>
+        <li>Zrozumienie różnych typów stron
+            <ul>
+              <li>HTML 4.0, klasy Java, VRML (częściowo), XML (częściowo).
+            </ul>
+        <li>Opcje do pobierania różnych klas obiektów
+            <a href="README.CONF.html#FetchOptions">[KONF]</a>
+            <a href="/configuration/FetchOptions">[EDYC]</a>
+            <ul>
+              <li>Obrazki, szablony stylów, ranki, skrypty, obiekty Java lub inne.
+            </ul>
+        <li>Opcja kontrolująca niepobieranie obrazków typu webbug (obrazki o rozmiarze 1-go piksela).
+            <a href="README.CONF.html#FetchOptions_webbug-images">[KONF]</a>
+            <a href="/configuration/FetchOptions/webbug-images">[EDYC]</a>
+      </ul>
+  <li>Automatyczne podążanie za odnośnikami dla stron, które zostały przeniesione.
+  <li>Możliwość monitorowania stron okresowo z zadanym interwałem czasu i pobieranie ich jeśli zostały zmienione.
+      <a href="/monitor-options/">[URL]</a>
+  <li>Pobieranie rekursywne
+      <a href="/refresh-options/">[URL]</a>
+      <ul>
+        <li>Do określonej głębokości.
+        <li>Możliwość ograniczenia do tej samej witryny, serwera lub katalogu.
+        <li>Wybrane z poziomu wiersza poleceń lub z przeglądarki.
+        <li>Kontrola odnośników pobieranych rekursywnie.
+      </ul>
+</ul>
+
+Udogodnienia
+<ul>
+  <li>Opcjonalna stopka informacyjna na stronach HTML pokazująca datę buforowania i opcje.
+      <a href="README.CONF.html#ModifyHTML_add-cache-info">[KONF]</a>
+      <a href="/configuration/ModifyHTML/add-cache-info">[EDYC]</a>
+  <li>Opcje do modyfikowania stron HTML
+      <a href="README.CONF.html#ModifyHTML">[KONF]</a>
+      <a href="/configuration/ModifyHTML">[EDYC]</a>
+      <ul>
+        <li>Usuwanie skryptów.
+            <a href="README.CONF.html#ModifyHTML_disable-script">[KONF]</a>
+            <a href="/configuration/ModifyHTML/disable-script">[EDYC]</a>
+        <li>Usuwanie apletów Java.
+            <a href="README.CONF.html#ModifyHTML_disable-applet">[KONF]</a>
+            <a href="/configuration/ModifyHTML/disable-applet">[EDYC]</a>
+        <li>Usuwanie szablonów stylów.
+            <a href="README.CONF.html#ModifyHTML_disable-style">[KONF]</a>
+            <a href="/configuration/ModifyHTML/disable-style">[EDYC]</a>
+        <li>Usuwanie animacji shockwave flash.
+            <a href="README.CONF.html#ModifyHTML_disable-flash">[KONF]</a>
+            <a href="/configuration/ModifyHTML/disable-flash">[EDYC]</a>
+        <li>Wskazywanie odnośników zbuforowanych i niezbuforowanych.
+            <a href="README.CONF.html#ModifyHTML_anchor-cached-begin">[KONF]</a>
+            <a href="/configuration/ModifyHTML/anchor-cached-begin">[EDYC]</a>
+        <li>Usuwanie znaczników migania.
+            <a href="README.CONF.html#ModifyHTML_disable-blink">[KONF]</a>
+            <a href="/configuration/ModifyHTML/disable-blink">[EDYC]</a>
+        <li>Usuwanie znaczników odświeżania.
+            <a href="README.CONF.html#ModifyHTML_disable-meta-refresh">[KONF]</a>
+            <a href="/configuration/ModifyHTML/disable-meta-refresh">[EDYC]</a>
+        <li>Usuwanie odnośników do stron, które znajdują się na liście niepobieranych (DontGet).
+            <a href="README.CONF.html#ModifyHTML_disable-dontget-links">[KONF]</a>
+            <a href="/configuration/ModifyHTML/disable-dontget-links">[EDYC]</a>
+        <li>Usuwanie ramek wewnętrznych (iframes), które znajdują się na liście niepobieranych (DontGet).
+            <a href="README.CONF.html#ModifyHTML_disable-dontget-iframes">[KONF]</a>
+            <a href="/configuration/ModifyHTML/disable-dontget-iframes">[EDYC]</a>
+        <li>Zamienianie obrazków, które znajdują się na liście niepobieranych (DontGet).
+            <a href="README.CONF.html#ModifyHTML_replace-dontget-images">[KONF]</a>
+            <a href="/configuration/ModifyHTML/replace-dontget-images">[EDYC]</a>
+        <li>Zamienianie obrazków typu webbug (brazki o rozmiarze 1-go piksela).
+            <a href="README.CONF.html#ModifyHTML_replace-webbug-images">[KONF]</a>
+            <a href="/configuration/ModifyHTML/replace-webbug-images">[EDYC]</a>
+        <li>Demoronizacja zestawu znaków HTML.
+            <a href="README.CONF.html#ModifyHTML_demoronise-ms-chars">[KONF]</a>
+            <a href="/configuration/ModifyHTML/demoronise-ms-chars">[EDYC]</a>
+        <li>Zatrzymywanie animowanych GIF'ów.
+            <a href="README.CONF.html#ModifyHTML_disable-animated-gif">[KONF]</a>
+            <a href="/configuration/ModifyHTML/disable-animated-gif">[EDYC]</a>
+      </ul>
+  <li>Automatyczna konfiguracja proxy dla Netscape.
+      <a href="/wwwoffle.pac">[URL]</a>
+  <li>Przeszukiwalny bufor za pomocą dodatkowych programów ht://Dig, mnoGoSearch (UdmSearch), Namazu, Hyper Estraier.
+      <a href="/search/htdig/">[URL]</a>
+      <a href="/search/udmsearch/">[URL]</a>
+      <a href="/search/namazu/">[URL]</a>
+      <a href="/search/hyperestraier/">[URL]</a>
+  <li>Wbudowany prosty web-serwer dla stron lokalnych.
+      <a href="/local/">[URL]</a>
+  <li>Limity czasowe powstrzymujące blokowanie proxy
+      <a href="README.CONF.html#Options">[KONF]</a>
+      <a href="/configuration/Options">[EDYC]</a>
+      <ul>
+        <li>Wyszukiwania nazw DNS.
+            <a href="README.CONF.html#Options_dns-timeout">[KONF]</a>
+            <a href="/configuration/Options/dns-timeout">[EDYC]</a>
+        <li>Połączenia z odległym serwerem.
+            <a href="README.CONF.html#Options_connect-timeout">[KONF]</a>
+            <a href="/configuration/Options/connect-timeout">[EDYC]</a>
+        <li>Transferu danych.
+            <a href="README.CONF.html#Options_socket-timeout">[KONF]</a>
+            <a href="/configuration/Options/socket-timeout">[EDYC]</a>
+      </ul>
+  <li>Kontynuacja lub zatrzymanie pobierań przerwanych przez klienta.
+      <a href="README.CONF.html#OnlineOptions">[KONF]</a>
+      <a href="/configuration/OnlineOptions">[EDYC]</a>
+      <ul>
+        <li>Oparta na rozmiarze częściowo pobranego pliku.
+            <a href="README.CONF.html#OnlineOptions_intr-download-size">[KONF]</a>
+            <a href="/configuration/OnlineOptions/intr-download-size">[EDYC]</a>
+      </ul>
+  <li>Czyszczenie stron w buforze
+      <a href="README.CONF.html#Purge">[KONF]</a>
+      <a href="/configuration/Purge">[EDYC]</a>
+      <ul>
+        <li>Oparte na dopasowaniu URL'i.
+            <a href="README.CONF.html#Purge_use-url">[KONF]</a>
+            <a href="/configuration/Purge/use-url">[EDYC]</a>
+        <li>Do utrzymaniu rozmiaru bufora poniżej określonego limitu.
+            <a href="README.CONF.html#Purge_max-size">[KONF]</a>
+            <a href="/configuration/Purge/max-size">[EDYC]</a>
+        <li>Do utrzymania ilości wolnej przestrzeni dyskowej powyżej określonego limitu.
+            <a href="README.CONF.html#Purge_min-free">[KONF]</a>
+            <a href="/configuration/Purge/min-free">[EDYC]</a>
+        <li>Kontrola interaktywna lub z poziomu wiersza poleceń.
+        <li>Kompresja buforowanych stron oparta na wieku.
+            <a href="README.CONF.html#Purge_compress-age">[KONF]</a>
+            <a href="/configuration/Purge/compress-age">[EDYC]</a>
+      </ul>
+  <li>Dostarczanie skompresowanych stron do przeglądarki web (opcja w czasie kompilacji).
+      <a href="README.CONF.html#Options_reply-compressed-data">[KONF]</a>
+      <a href="/configuration/Options/reply-compressed-data">[EDYC]</a>
+</ul>
+
+Indeksy
+<ul>
+  <li>Wiele indeksów dla stron przechowywanych w buforze
+      <a href="#indexes">[CZYT]</a>
+      <ul>
+        <li>Serwery dla każdego protokołu (http, ftp, ...).
+        <li>Strony na każdym serwerze.
+        <li>Strony oczekujące na pobranie.
+        <li>Strony pobrane podczas ostatniego połączenia.
+        <li>Strony oznaczone do pobrania ostatnim razem.
+        <li>Strony regularnie monitorowane.
+      </ul>
+  <li>Konfigurowalne indeksy
+      <ul>
+        <li>Sortowane według nazwy, daty, nazwy domeny serwera, typu pliku.
+        <li>Opcje do usuwania, odświeżania lub monitorowania stron.
+        <li>Wybór kompletnej listy stron lub schowanie nieinteresujących stron.
+            <a href="README.CONF.html#IndexOptions">[KONF]</a>
+            <a href="/configuration/IndexOptions">[EDYC]</a>
+      </ul>
+</ul>
+
+Bezpieczeństwo
+<ul>
+  <li>Praca ze stronami, które wymagają podstawowego poświadczenia użytkownik/hasło.
+  <li>Automatyczne poświadczenie proxy dla zewnętrznych serwerów proxy, które tego wymagają.
+      <a href="README.CONF.html#Proxy_auth-username">[KONF]</a>
+      <a href="/configuration/Proxy/auth-username">[EDYC]</a>
+  <li>Kontrola całkowitego dostępu do proxy
+      <ul>
+        <li>Domyślny dostęp tylko dla serwera lokalnego.
+            <a href="README.CONF.html#LocalHost">[KONF]</a>
+            <a href="/configuration/LocalHost">[EDYC]</a>
+        <li>Konfigurowalny dostęp do witryny poprzez nazwę lub adres IP.
+            <a href="README.CONF.html#AllowedConnectHosts">[KONF]</a>
+            <a href="/configuration/AllowedConnectHosts">[EDYC]</a>
+        <li>Opcjonalne poświadczenie proxy dla kontroli dostępu z poziomu użytkownika.
+            <a href="README.CONF.html#AllowedConnectUsers">[KONF]</a>
+            <a href="/configuration/AllowedConnectUsers">[EDYC]</a>
+      </ul>
+  <li>Opcjonalne hasło kontrolne do funkcji zarządzania proxy.
+      <a href="README.CONF.html#StartUp_password">[KONF]</a>
+      <a href="/configuration/StartUp/password">[EDYC]</a>
+  <li>Możliwość cenzurowania przychodzących i wychodzących nagłówków HTTP w celu utrzymania prywatności użytkownika.
+      <a href="README.CONF.html#CensorHeader">[KONF]</a>
+      <a href="/configuration/CensorHeader">[EDYC]</a>
+</ul>
+
+Konfiguracja
+<ul>
+  <li>Wszystkie opcje kontrolowane są przy użyciu pliku konfiguracji.
+      <a href="README.CONF.html">[KONF]</a>
+  <li>Interaktywna strona web pozwalająca na edycję pliku konfiguracji.
+      <a href="/configuration/">[EDYC]</a>
+  <li>Użytkownik może dostosować strony błędów i informacji.
+</ul>
+
+<h2><a name="indexes">WWWOFFLE - Indeksy bufora</a></h2>
+
+Indeks wszystkich stron przechowywanych w buforze WWWOFFLE dostępny jest w wielu
+formatach.
+<br>
+Indeksy są zorganizowane według nazw witryn z oddzielną listą dla każdej
+witryny. Podstawowym URL'em jest /index/, ale może być on zmodyfikowany ścieżką
+jak poniżej.
+<dl>
+  <dt><a href="/index/">/index/</a>
+  <dd>Indeks główny, który posiada odnośniki do wszystkich pozostałych indeksów.
+  <dt><a href="/index/http/?sort=alpha">/index/<i>http</i>/</a>
+  <dd>Lista stron http, które zostały zbuforowane (lub dowolny inny protokół).
+  <dt><a href="/index/http/www.gedanken.demon.co.uk/?sort=alpha">/index/<i>http</i>/<i>www.gedanken.demon.co.uk</i>/</a>
+  <dd>Lista stron http, które zostały zbuforowane z witryny www.gedanken.demon.co.uk (lub dowolny inny protokół i witryna).
+  <dt><a href="/index/outgoing/?sort=none">/index/outgoing/</a>
+  <dd>Lista stron oczekujących na pobranie.
+  <dt><a href="/index/monitor/?sort=none">/index/monitor/</a>
+  <dd>Lista stron, które są okresowo monitorowane.
+  <dt><a href="/index/lasttime/?sort=mtime">/index/lasttime/</a>
+  <dd>Lista stron, które zostały odwiedzone podczas ostatniego połączenia.
+      Dostarcza ona również dostępu do historii stron odwiedzonych podczas ostatnich pięciu połączeń.
+  <dt><a href="/index/lastout/?sort=mtime">/index/lastout/</a>
+  <dd>Lista stron które oczekiwały na pobranie i zostały pobrane podczas ostatniego połączenia.
+      Dostarcza ona również dostępu do historii stron, które oczekiwały na pobranie przed ostatnimi pięcioma połączeniami.
+</dl>
+
+<h2><a name="request">WWWOFFLE - Prośba pobrania stron pojedynczych lub rekursywnie</a></h2>
+
+Strony, które są chciane mogą być pobrane poprzez wprowadzenie ich do pola adresu
+w przeglądarce, lub alternatywnie poprzez użycie interfejsu wuersza poleceń lub
+interaktywnie ze strony formularza WWWOFFLE.
+<dl>
+  <dt><a href="/refresh-options/">/refresh-options/</a>
+  <dd>Interaktywna strona do określenia rekursywnego pobierania stron.
+</dl>
+
+<h2><a name="monitor">WWWOFFLE - Prośba monitorowania strony</a></h2>
+
+Strony, które są chciane systematycznie mogą być pobrane poprzez wprowadzenie
+ich do strony formularza WWWOFFLE.
+<dl>
+  <dt><a href="/monitor-options/">/monitor-options/</a>
+  <dd>Interaktywna strona do określenia okresowego pobierania stron.
+</dl>
+
+<h2><a name="control">WWWOFFLE - Interaktywna kontrola</a></h2>
+
+WWWOFFLE proxy może być kontrolowane zarówno poprzez interfejst wiersza poleceń,
+jak i interaktywnie ze strony web.
+<dl>
+  <dt><a href="/control/">/control/</a>
+  <dd>Interaktywna strona kontroli programu proxy.
+      [Wymaga hasła z pliku konfiguracji jeśli jest ustawione, z dowolną nazwą użytkownika.]
+</dl>
+
+<h2><a name="configuration">WWWOFFLE - Interaktywna edycja konfiguracji</a></h2>
+
+Plik konfiguracji WWWOFFLE proxy może być edytowany zarówno jako zwykły plik
+tekstowy jak i interaktywnie ze strony web.
+<dl>
+  <dt><a href="/configuration/">/configuration/</a>
+  <dd>Interaktywna strona do edycji pliku konfiguracji.
+      [Wymaga hasła z pliku konfiguracji jeśli jest ustawione, z dowolną nazwą użytkownika.]
+</dl>
+
+<h2><a name="search">WWWOFFLE - Przeszukiwanie bufora</a></h2>
+
+Po zainstalowaniu któregoś z programów
+<a href="http://www.htdig.org/">ht://Dig</a> lub
+<a href="http://mnogosearch.org/">mnoGoSearch (UdmSearch)</a> lub
+<a href="http://www.namazu.org/">Namazu</a>
+<a href="http://hyperestraier.sourceforge.net/">Hyper Estraier</a>
+możliwe jest przeszukiwanie stron znajdujących się w buforze WWWOFFLE.
+<dl>
+  <dt><a href="/search/htdig/search.html">/search/htdig/search.html</a>
+  <dd>Formularz wyszukiwania ht://Dig.
+  <dt><a href="/search/mnogosearch/search.html">/search/mnogosearch/search.html</a>
+  <dd>Formularz wyszukiwania mnoGoSearch (UdmSearch).
+  <dt><a href="/search/namazu/search.html">/search/namazu/search.html</a>
+  <dd>Formularz wyszukiwania Namazu.
+  <dt><a href="/search/hyperestraier/search.html">/search/hyperestraier/search.html</a>
+  <dd>Formularz wyszukiwania Hyper Estraier.
+</dl>
+
+
+<h2><a name="links">WWWOFFLE - Odnośniki internetnetowe</a></h2>
+
+Razem z programem dostarczone jest <a href="FAQ.html">WWWOFFLE FAQ</a>, które
+znajduje się również w Internecie pod adresem
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/FAQ.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/FAQ.html</a>
+<p>
+Strona domowa WWWOFFLE w Internecie dostępna jest pod adresem
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/">http://www.gedanken.demon.co.uk/wwwoffle/</a>
+i zawiera najnowsze informacje o programie w ogólności.
+<p>
+Najnowsze informacje o używaniu tej wersji WWWOFFLE znajdują się na Stronie Użytkowników WWWOFFLE Wersji 2.6 pod adresem
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/user.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/user.html</a>
+<p>
+Opis kompatybilności WWWOFFLE z różnymi przeglądarkami dostępny jest pod adresem
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/browser.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/browser.html</a>
+<p>
+Strona zawierająca użyteczne informacje i rady o tym jak używać WWWOFFLE dostępna jest pod adresem
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/hints-tips.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/hints-tips.html</a>
+
+<h2><a name="mail">WWWOFFLE - E-Mail</a></h2>
+
+Raporty o błędach powinieneś wysyłać bezpośrednio na e-mail autora
+<a href="mailto:amb@gedanken.demon.co.uk">amb@gedanken.demon.co.uk</a>,
+<i>pomocne będzie jeśli umieścisz WWWOFFLE w linii tematu wiadomości</i>.
+
+<p>
+
+Istnieją trzy listy dyskusyjne na które użytkownicy WWWOFFLE są zaproszeni:
+
+<dl>
+  <dt>wwwoffle-announce
+  <dd>Lista dyskusyjna do ogłaszania nowych wersji WWWOFFLE i poprawkach błędów.
+  <dt>wwwoffle-users
+  <dd>Lista dyskusyjna dla użytkowników WWWOFFLE do dyskutowania nad programem i
+      dla ludzi mających problemy w konfiguracji i uruchomieniu programu. Nie
+      uwzględnia ona zagadnień dotyczących systemu operacyjnego.
+  <dt>wwwoffle-win32
+  <dd>Lista dyskusyjna dla użytkowników WWWOFFLE pracujących na systemach win32
+      do dyskutowania nad programem i dla ludzi mających problemy w konfiguracji
+      i uruchomieniu programu.
+</dl>
+
+Aby przyłączyć się do tych list dyskusyjnych wyślij wiadomość e-mail do
+<a href="mailto:majordomo@gedanken.demon.co.uk">majordomo@gedanken.demon.co.uk</a>
+z treścią wiadomości <tt>subscribe wwwoffle-announce</tt> lub <tt>subscribe
+wwwoffle-users</tt> lub <tt>subscribe wwwoffle-win32</tt>.
+
+<hr>
+<p align=center>
+<small>
+[<a href="#top">Góra</a>]
+[<a href="#description">Opis</a>]
+[<a href="#indexes">Indeksy&nbsp;bufora</a>]
+[<a href="#request">Strony&nbsp;do&nbsp;pobrania</a>]
+[<a href="#monitor">Strony&nbsp;monitorowane</a>]
+[<a href="#control">Kontrola&nbsp;programu</a>]
+[<a href="#configuration">Edycja&nbsp;konfiguracji</a>]
+[<a href="#search">Przeszukiwanie&nbsp;bufora</a>]
+[<a href="#links">Odnośniki&nbsp;internetowe</a>]
+[<a href="#mail">Adres&nbsp;e-mail</a>]
+</small>
+</p>
+</BODY>
+
+</HTML>

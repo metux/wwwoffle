@@ -1,0 +1,399 @@
+#
+# An example of the DontGet section for wwwoffle version 2.7.
+#
+# Note: This purely a list of sites that have content that some users may find
+#       they can live without.  It is not a judgement on the content of the
+#       sites and the web-pages or images that they contain.
+#
+
+##
+## Adverts, Banners and Sponsors
+##
+
+# Hosts (and all pages on them)
+
+ *://*.247media.*/*
+ *://*.aaddzz.*/*
+ *://*.ad-x.*/*
+ *://*.ad.*/*
+ *://*.adbanners.*/*
+ *://*.adbureau.*/*
+ *://*.adhomeworld.*/*
+ *://*.admaster.*/*
+ *://*.ads.*/*
+ *://*.adservant.*/*
+ *://*.adtech.*/*
+ *://*.advertising.*/*
+ *://*.ap-adcenter.*/*
+ *://*.atwola.com/*
+ *://*.bannerbrokers.*/*
+ *://*.bannermania.*/*
+ *://*.bannersolutions.*/*
+ *://*.bannerswap.*/*
+ *://*.click2net.*/*
+ *://*.clicktrade.*/*
+ *://*.discountclick.*/*
+ *://*.doubleclick.*/*
+ *://*.eads.com/*
+ *://*.ecoupons.*/*
+ *://*.eshop.*/*
+ *://*.flycast.*/*
+ *://*.focalink.*/*
+ *://*.gammacash.*/*
+ *://*.globalserve.*/*
+ *://*.globaltrack.*/*
+ *://*.humanclick.*/*
+ *://*.iadnet.com/*
+ *://*.idsales.*/*
+ *://*.imageserv.imgis.com/*
+ *://*.link4link.*/*
+ *://*.linkexchange.*/*
+ *://*.linkpool.*/*
+ *://*.linksynergy.*/*
+ *://*.media.preferences.com/*
+ *://*.mediaplex.com/*
+ *://*.nedstatbasic.net/*
+ *://*.net-on.net/*
+ *://*.ngadcenter.net/*
+ *://*.oneandonlynetwork.com/*
+ *://*.orbitcycle.com/*
+ *://*.preferences.com/*
+ *://*.prolinks.de/*
+ *://*.smartclicks.*/*
+ *://*.smartlinks.*/*
+ *://*.ukbanner.*/*
+ *://*.valueclick.*/*
+ *://*.webconnect.*/*
+ *://*.yimg.com/*
+ *://*eurosponsor.de/*
+ *://ad.*.*/*
+ *://ad.*/*
+ *://ad1.*/*
+ *://adforce.*/*
+ *://adfu.*/*
+ *://admcity.com/*
+ *://ads*.*.com/*
+ *://ads.*.*/*
+ *://ads.*/*
+ *://adserv.*.*/*
+ *://adserv.*/*
+ *://adserver.*/*
+ *://advert.*/*
+ *://affiliate.domaindirect.net/*
+ *://banner.*/*
+ *://banners.*/*
+ *://bannervip.webjump.com/*
+ *://clickthru.net/*
+ *://directads.*/*
+ *://etad.telegraph.co.uk/*
+ *://hb.lycos.com/header
+ *://lgads.osdn.com/*
+ *://lnads.osdn.com/*
+ *://media.trueimpact.com/*
+ *://netadsrv.iworld.com/*
+ *://nsads.hotwired.com/*
+ *://phoenix-adrunner.mycomputer.com/*
+ *://qksrv.net/*
+ *://sam.songline.com/*
+ *://sfads.osdn.com/*
+ *://sponsors.*/*
+ *://usads.imdb.com/*
+ *://view.atdmt.com/*
+ *://view.avenuea.com/*
+ *://websponsors.*/*
+ *://www.ads.*/*
+ *://www.qksrv.net/*
+ *://www.sponsornetz.de/*
+ *://www.sponsorweb.de/*
+ *://www.vibrantmedia.com/*
+ *://zdads.e-media.com/*
+
+# IP addresses (and all paths on them)
+
+ *://194.134.107.197/*
+ *://198.186.202.133/*
+ *://204.123.2.101/*
+ *://204.94.67.40/*
+ *://205.181.112.36/*
+ *://206.161.225.52/*
+ *://206.25.90.16/*
+ *://207.136.66.80/*
+ *://208.231.7.153/*
+ *://209.185.164.199/*
+ *://209.207.224.220/*
+ *://209.207.224.245/*
+ *://209.207.224.246/*
+ *://209.207.224.251/*
+ *://209.210.181.2/*
+ *://209.54.9.3/*
+ *://209.68.54.220/*
+ *://209.68.63.201/*
+ *://209.81.8.12/*
+ *://209.90.128.55/*
+ *://216.87.208.127/*
+
+# Paths (on all hosts)
+
+ *://*/*/AdServer.exe/*
+ *://*/*/Ads/*
+ *://*/*/Banners/*
+ *://*/*/adframe.php
+ *://*/*/ads.pl*
+ *://*/*/adserver.exe/*
+ *://*/*/adserver/*
+ *://*/*/advertisment*
+ *://*/*/affiliates/*
+ *://*/*/banners-buttons/*
+ *://*/*/banners/*
+ *://*/*/becky/*
+ *://*/*/cgi-bin/click.cgi
+ *://*/*/graphics/ads/*
+ *://*/.img/werbung*
+ *://*/ADSAdClient31.dll
+ *://*/Ads/*
+ *://*/BannerAds/*
+ *://*/Banners/*
+ *://*/Images/Banner/*
+ *://*/Images/Banners/*
+ *://*/Images/Sponsors/*
+ *://*/RealMedia/ads/*
+ *://*/SmartBanner/*
+ *://*/ad/*
+ *://*/ad_container/*
+ *://*/ad_dec.gif
+ *://*/adbanners/*
+ *://*/adgifs/*
+ *://*/admanager/*
+ *://*/admin/banner.php
+ *://*/ads.pl/*
+ *://*/ads/*
+ *://*/adserve.image/*
+ *://*/adserver.exe/*
+ *://*/adserver.phtml
+ *://*/adv/*
+ *://*/advert/*
+ *://*/advertising/*
+ *://*/adverts/*
+ *://*/affiliates/banners/*
+ *://*/avenuea/*
+ *://*/bann/*
+ *://*/banner.html
+ *://*/banner/*
+ *://*/banner_request/*
+ *://*/banners/*
+ *://*/bannery/*
+ *://*/cgi-bin/Banner*
+ *://*/cgi-bin/ad
+ *://*/cgi-bin/ad.cgi
+ *://*/cgi-bin/ad.click
+ *://*/cgi-bin/ad/*
+ *://*/cgi-bin/ad_default.pl
+ *://*/cgi-bin/adjuggler*
+ *://*/cgi-bin/adlog.pl
+ *://*/cgi-bin/ads
+ *://*/cgi-bin/ads.cgi
+ *://*/cgi-bin/ads.pl
+ *://*/cgi-bin/ads/*
+ *://*/cgi-bin/advertpro/*
+ *://*/cgi-bin/automat/getimage.cgi
+ *://*/cgi-bin/banner*
+ *://*/cgi-bin/getimage.cgi
+ *://*/cgi-bin/spin/sp/*
+ *://*/comer/*
+ *://*/elements/images/ads/*
+ *://*/f.ad
+ *://*/getad.cgi
+ *://*/gif/banner/*
+ *://*/gifs/ads/*
+ *://*/i.ad
+ *://*/i.click
+ *://*/image.ng/*
+ *://*/images-affiliates/*
+ *://*/images/ads/*
+ *://*/images/advert/*
+ *://*/images/adverts/*
+ *://*/images/banner/*
+ *://*/images/banners/*
+ *://*/images/sponsor/*
+ *://*/images/sponsors/*
+ *://*/images/werb*
+ *://*/img/ads/*
+ *://*/include/ads
+ *://*/include/ads/*
+ *://*/nowa/reklamy/*
+ *://*/phpAdsNew/*
+ *://*/phpads/*
+ *://*/phpadsnew/*
+ *://*/pics/sponsor/*
+ *://*/pictures/sponsor/*
+ *://*/promotions/*
+ *://*/reklama/*
+ *://*/sh/sponsors/*
+ *://*/sponsor/*
+ *://*/sponsors/*
+ *://*/src/ads/*
+ *://*/viewbanner*
+ *://*/werbung/*
+ *://*/www/banners/*
+
+# Hosts and Paths
+
+ *://*.amazon.com/exec/varzea/tipbox/*
+ *://*.zdnet.*/graphics/houseads/msgplus/advertisement.gif
+ *://*cis.com.pl/banner-skrypty/*
+ *://*geocities.com/cgi-bin-local/GeoAD*
+ *://*polbox.pl/lupus/reklgif/*
+ *://*sonik.net/nowa/lista/glosuj*
+ *://*stat.webmedia.pl/cgi-bin/*
+ *://*webmedia.pl/cgi-bin/stat*
+ *://a.r.tv.com/cnet.12h/Ads/Media/Images/SponsorWindows/*
+ *://adbot.serversystems.net/cgi-bin*
+ *://images.go2net.com/go2net/ads/*
+ *://ns.valueclick.ne.jp/cgi-bin*
+ *://www.bannerexchange2.com/*
+ *://www.inetcash.de/img/*
+ *://www.markengrabbing.de/graphics/logo*
+ *://www.netpromote.de/cgi-bin*
+ *://www.newsbytes.com/images/ad_bigbox.gif
+ *://www.pennyweb.com/shellpenny-cgi*
+ *://www.toptip.com/web-sponsor/*
+ *://www.traffictraders.com/graphics/*
+
+##
+## Counters
+##
+
+# Hosts (and all pages on them)
+
+ *://*.*count.com/*
+ *://*.*counted.com/*
+ *://*.*counter.com/*
+ *://*.1acounter.com/*
+ *://*.digits.com/*
+ *://*.extreme-dm.com/*
+ *://*.freestats.com/*
+ *://*.fxweb.com/*
+ *://*.hitbox.com/*
+ *://*.hitmeter.com/*
+ *://*.icount.com/*
+ *://*.ipstat.com/*
+ *://*.javelink.com/*
+ *://*.lpage.com/*
+ *://*.nedstat.*/*
+ *://*.pagecount.com/*
+ *://*.site-stats.com/*
+ *://*.siteflow.com/*
+ *://*.sitemeter.com/*
+ *://*.spylog.com/*
+ *://*.stats.net/*
+ *://*.superstats.com/*
+ *://*.thecounter.com/*
+ *://*.webhits.*/*
+ *://*.xscount.com/*
+ *://*counter.*.com/*
+ *://count.*/*
+ *://escati*.linkopp.net/*
+ *://sitestatz.com/*
+ *://www.addfreestats.com/*
+ *://www.hit.stats4all.com/*
+ *://www.trafficcount.com/*
+ *://www.ultimatecounter.com/*
+
+ !*://counter.li.org/*
+ *://counter.*/*
+ *://*counter.*/*
+ *://counter*.*/*
+
+ !*://stats.distributed.net/*
+ *://stats.*/*
+
+# Note: There are some negated entries above here:
+#       URLs matching *://counter.*/* are blocked except *://counter.li.org/*
+#       URLs matching *://stats.*/*   are blocked except *://stats.distributed.org/*
+#       the order of the entries is important here.
+
+# Paths (on all hosts)
+
+ *://*/Count
+ *://*/Count.cgi
+ *://*/c.cgi
+ *://*/cgi-bin/Count*
+ *://*/cgi-bin/Count.cgi
+ *://*/cgi-bin/cnt
+ *://*/cgi-bin/cnt.cgi
+ *://*/cgi-bin/count*
+ *://*/cgi-bin/count.cgi
+ *://*/cgi-bin/nph-count
+ *://*/cnt
+ *://*/cnt.cgi
+ *://*/count
+ *://*/count.cgi
+ *://*/count/count.cgi
+ *://*/counter.cgi
+ *://*/*/fpcount.exe
+ *://*/scripts/rcounter.dll
+ *://*/stat
+
+##
+## Cookies
+##
+
+# Hosts (and all pages on them)
+
+ *://cookie.*/*
+ *://cookies.*/*
+
+##
+## Web tracking and invisible images (webbugs)
+##
+
+# Hosts (and all pages on them)
+
+ *://*.*track.com/*
+ *://*.*tracker.com/*
+ *://*.bluestreak.com/*
+ *://*.fastclick.net/*
+ *://*.icdirect.com/*
+ *://*.usertracking.com/*
+ *://bcs.zdnet.com/*
+ *://gserv*.zdnet.*/*
+ *://tracker.*/*
+ *://visit.geocities.com/*
+ *://www.eshopxml.msn.com/*
+ *://xtracker.xaphon.com/*
+
+# Paths (on all hosts)
+
+ *://*/clear/*.gif
+ *://*/pagelog/clearpixel.*
+
+# Hosts and Paths
+
+ *://*.osdn.com/Slashdot/pc.gif?*
+ *://*.slashdot.org/Slashdot/pc.gif?*
+ *://*.slashdot.org/pagecount.gif?*
+ *://geo.yahoo.com/serv?*
+ *://service.bfast.com/bfast/serve*
+
+
+##
+## ICQ
+##
+
+ *://online.mirabilis.com/scripts/online.dll
+ *://*.icq.com/*
+
+##
+## Other options
+##
+
+# The replacement for pages that are not got
+
+ <*://*/*.js>    replacement = /local/dontget/replacement.js
+ <*://*/js.ng/*> replacement = /local/dontget/replacement.js
+
+ replacement = /local/dontget/replacement.gif
+
+# Avoid redirection to pages that are not got.
+
+ location-error = no

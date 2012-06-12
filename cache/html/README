@@ -1,0 +1,59 @@
+                How WWWOFFLE finds files in the html directory
+                ==============================================
+
+All directory paths listed here are local to the WWWOFFLE cache directory which
+is usually /var/spool/wwwoffle, but should in any case be one directory back
+from the directory that contains this file.
+
+The language that is selected is the one that is requested by the browser in the
+'Accept-Language' header that it sent with the request.  This is shown in the
+following examples as $LANG, this will be a two letter code.
+
+
+When a browser requests the URL '/xyz' (note there cannot be any '/' in 'xyz')
+then WWWOFFLE will use the first of the following files that it finds:
+
+1)      html/$LANG/xyz
+2)      html/default/xyz
+3)      html/en/xyz
+4)      An internally generated error message
+
+
+When a browser requests the URL '/search/$search/xyz' then WWWOFFLE will use the
+first of the following files that it finds:
+
+1)      html/$LANG/search/$search/xyz
+2)      html/default/search/$search/xyz
+3)      html/en/search/$search/xyz
+4)      An internally generated error message
+
+
+When a browser requests the URL '/local/x/y/z' then WWWOFFLE will use the first
+of the following files that it finds:
+
+1)      local/x/y/z
+2)      html/$LANG/local/x/y/z
+3)      html/default/local/x/y/z
+4)      html/en/local/x/y/z
+5)      An internally generated error message
+
+Note: The '/local/' URL is a special case compared to the others in that the
+      directory called 'local' is searched before any of the sub-directories in
+      the 'html' directory.  There are no files installed by WWWOFFLE in the
+      'local' directory and WWWOFFLE will not modify the contents of this
+      directory when a new version is installed.
+
+
+The purpose of the three-way search ($LANG, 'default' and 'en') is so that the
+browser setting has the highest priority, the person who installs WWWOFFLE can
+set a default language and finally the English pages are used since they are a
+complete set of pages.
+
+When WWWOFFLE is installed the 'default' directory is a symbolic link to the
+directory specified when running configure, this can be changed to point to any
+other directory if required.
+
+
+Note: The search scripts and configuration files have been moved out of the
+      'html' directory so that the contents of the 'html' directory should not
+      need to be modified by the user after installation.

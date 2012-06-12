@@ -1,0 +1,233 @@
+            WWWOFFLE - World Wide Web Offline Explorer - Version 2.9
+            ========================================================
+
+
+This is the logic that WWWOFFLE applies when it is parsing URLs.  This is
+complicated by a number of rules that appear in various standards documents and
+the many different places in the program where URLs are processed.  Also
+described is the handling of WWWOFFLE command URLs, using arguments or form
+data.
+
+
+A lot of extra effort has been taken in version 2.6 of WWWOFFLE to ensure that
+URL handling is much cleaner and less error prone.  Places where changes have
+been made compared to previous versions of the program are noted.
+
+
+Relevant Standards
+------------------
+
+The RFCs and other relevant documents to this README are:
+
+RFC 1738 - Uniform Resource Locators (URL)
+           Section 2.2 specifies how URL-encoding is performed and why.
+
+RFC 1808 - Relative Uniform Resource Locators
+           This describes how relative URLs are to be handled.
+
+RFC 2396 - Uniform Resource Identifiers (URI): Generic Syntax
+           This describes URLs in more detail and updates RFC 1808 where the
+           "parameters" part of a URL path is concerned.
+
+HTML 4   - The HTML 4.0 specification from the World Wide Web Consortium.
+           Section 17.13.3 specifies how URLs for HTML form data are created.
+
+
+URL Format in WWWOFFLE
+----------------------
+
+In WWWOFFLE all URLs are held in a type named URL which is a typedef for a
+structure that contains the information, the type is defined in misc.h.  All
+manipulation of URL information is performed using this URL type, the conversion
+from string to URL is almost the first thing that is done on incoming requests.
+
+The general structure for a URL in WWWOFFLE is the following:
+
+<protocol>://[<username>:<password>@]<hostname>[:<port>]/<pathname>[?<arguments>]
+
+
+Because of the issues about methods by which URLs may be encoded it is possible
+for more than one string to refer to the same URL object.
+
+The most common example is URL-encoding where characters can be replaced by by
+their hexadecimal form following a '%' character.  For example ':' is equivalent
+to '%3a'.  The process of URL-decoding is un-ambiguous, any URL-encoded string
+can be decoded to give a usable representation.  The process of URL-encoding is
+ambiguous because different sets of characters need to be URL-encoded for
+different parts of the URL.  In addition data that results from a POSTed form or
+the arguments to a URL uses a modified version of URL-encoding where the space
+character is replaced by a plus sign.
+
+The nature of URL encoding and decoding means that it must be performed at the
+correct times on the correct data.  If URL encoding is performed twice on the
+same data then errors occur since the '%' characters inserted by the first
+encoding will themselves be encoded the second time.  Similar arguments apply to
+decoding multiple times.
+
+
+
+String to URL Conversion
+------------------------
+
+A string that consists of an unparsed URL is converted to the URL type by
+calling the SplitURL() function.  This will parse the string into a URL datatype
+and return it.  One part of the URL datatype is a canonical form of the URL that
+is used often in the subsequent processing.
+
+The rules that apply to this process are the following (all parsing is done with
+heuristics to handle malformed URLs):
+
+protocol
+- - - -
+
+1) If there is no protocol part then an protocol=http.
+
+2) In other cases a protocol is extracted from the string.
+
+   a) The protocol is not case sensitive and to avoid confusion it is converted
+      to lower case.
+
+
+username & password
+- - - - - - - - - -
+
+1) If there is no username and password part then username=NULL, password=NULL.
+
+2) In other cases a username and/or password is extracted from the string.
+
+   a) In RFC1738 Section 3.1 it is specified that the characters '@' and ':' and
+      '/' in the username or password must be URL-encoded.
+
+   b) The strings for the username and password are converted using
+      URLDecodeGeneric().
+
+   c) The strings for the username and password are converted using
+      URLEncodePassword() before being put back into the canonical URL string.
+
+
+hostname
+- - - -
+
+1) If the first character is '/' then it is a local URL hostname=LocalHost
+   (entry in wwwoffle.conf).
+
+2) In other cases a hostname is extracted from the string.
+
+   a) The hostname is not case sensitive and to avoid confusion it is converted
+      to lower case.
+
+
+port
+- -
+
+It should be noted that the port number is not considered as a separate entity,
+but is part of the hostname in the decoded URL.
+
+1) If no port is specified then nothing is done.
+
+2) If the default port for the protocol is specified (e.g. 80 of http) then the
+   port is removed.
+
+3) In other cases the port number in the string is kept.
+
+
+pathname
+- - - -
+
+1) If no path part is given then pathname='/'.
+
+2) In other cases a pathname is extracted from the string.
+
+   a) The pathname may have been URL-encoded in different ways by different user
+      agents.  A canonical format is required in WWWOFFLE since it is used to
+      form the cache filename.
+
+   b) The pathname is converted using URLDecodeGeneric().
+
+   c) The pathname is converted using URLEncodePath().
+
+
+parameters
+- - - - -
+
+| The handling of the "parameters" part of a URL (as described in RFC 1808 and
+| RFC 2369) is changed in version 2.9, they are now considered part of the path.
+| Between version 2.6 and version 2.8 the "parameters" part of the path were
+| handled as separate from the path itself and only one "parameter" was allowed.
+| In RFC 2396 it is made clear that although the parameters are separate from
+| the path they are handled in exactly the same way as the path component that
+| they are attached to.
+
+
+arguments
+- - - - -
+
+The name arguments is what I use, the same thing is called 'query' in the RFCs.
+
+1) If no arguments are given then arguments=NULL.
+
+2) In other cases the arguments are extracted from the string.
+
+   a) The arguments may have been URL encoded in different ways by different
+      user agents.  A canonical format is required in WWWOFFLE since it is used
+      to form the cache filename.
+
+   b) The arguments are converted to canonical form using URLRecodeFormArgs().
+
+   c) The arguments may have used '&amp;' in place of '&' since the former is
+      valid HTML for an href and the latter is not.  A replacement is performed
+      to replace '&amp;' with '&'.
+
+
+| This is a change since version 2.5, previously no decoding/encoding of the
+| arguments was performed.  This lead to the problem where the same URL could
+| be refered to by different names due to URL encoding differences.
+
+| This is a change since version 2.8, previously no replacement of '&amp;'
+| with '&' was performed.
+
+
+
+URL to String Conversion
+------------------------
+
+In most places in the program explicit URL to string conversion is not required
+since the String to URL conversion will have created a canonical string version
+of the current URL.  In places that a new URL needs to be created from nothing
+care is taken to ensure that it is valid, either by inspection or by performing
+string to URL conversion and using the string contained in the result.
+
+
+
+Using URL Arguments or POSTed Form Data
+---------------------------------------
+
+Many of the indexes and other sub-pages that are generated by WWWOFFLE contain
+information that is encoded in the arguments to the URL or returned using the
+POST method in a form.
+
+The format of the argument to a URL or from data is as follows (where '&' and
+';' are interchangeable):
+
+<key1>=<data1>&<key2>=<data2>&<key3>=<data3>&...
+
+Each of the keys and the data may be URL encoded (since the arguments as a whole
+are URL encoded except for the characters '&', ';' and '=').  This means that
+they must be URL decoded before they can be used.
+
+A function called SplitFormArgs() is used to split up the string into a list of
+the separate <key>=<data> strings.  No URL-encoding/decoding is performed in
+this function since it is assumed that arguments will already have been recoded
+(see above) and that form data can be recoded using URLRecodeFormArgs() before
+it is used.
+
+When a URL is passed to a WWWOFFLE function in the arguments of a URL or in a
+form then it will have been URL-encoded.  It must therefore be decoded before it
+is used.  Care needs to be taken to ensure that this is performed correctly or
+URLs will be corrupted.
+
+
+
+----------------
+Andrew M. Bishop
+13 March 2001

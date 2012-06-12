@@ -1,0 +1,111 @@
+        WWWOFFLE - World Wide Web Offline Explorer - Versión 2.6
+        ========================================================
+
+
+Hay varios ficheros de ayuda, este es un fichero índice que le apuntará 
+al correcto.
+
+
+Si quiere saber que es WWWOFFLE y que hace:
+
+README
+
+
+Si no ha usado WWWOFFLE antes:
+
+README
+INSTALL
+README.lang             [versiones no inglesas]
+README.CONF
+README.htdig
+README.udmsearch
+README.win32            [Usuarios de Win32]
+
+
+Si ha usado WWWOFFLE antes:
+
+NEWS
+CHANGES.CONF
+README.CONF
+README.htdig
+README.udmsearch
+
+Si ha usado WWWOFFLE antes y está actualizando desde la versión 2.5:
+
+CONVERT
+
+
+Si quiere saber como instalar el programa o cambiar opciones de compilación:
+
+INSTALL
+README.lang             [versiones no inglesas]
+README.htdig
+README.udmsearch
+README.win32            [Usuarios de Win32]
+
+
+Si quiere saber como usar los programas cuando estén instalados:
+
+wwwoffle(1)             [Usuarios de UNIX]
+wwwoffled(8)            [Usuarios de UNIX]
+README
+README.htdig
+README.udmsearch
+
+Si quiere saber como configurar el programa:
+
+wwwoffle.conf           [Usuarios de UNIX]
+wwwoffle.conf(5)        [Usuarios de UNIX]
+README.CONF
+CHANGES.CONF
+README.htdig
+README.udmsearch
+
+
+Si quiere personalizar los mensajes de error y otras páginas:
+
+html/messages/README
+
+
+Si quiere automatizar WWWOFFLE:
+
+contrib/README          [Usuarios de UNIX]
+contrib-win32/README    [Usuarios de Win32]
+
+
+El propósito de cada fuente de información es el siguiente:
+
+NEWS             Una lista de los cambios en funcionalidad desde versiones 
+                 anteriores.
+
+README           El fichero README principal con información sobre el programa.
+README.1st       Este fichero - un meta-índice.
+README.CONF      Ayuda sobre el formato del fichero de configuración.
+README.PWD       Información sobre cómo se guardan las páginas protegidas
+                 con  contraseña.
+README.win32     Información sobre la versión Win32 de WWWOFFLE.
+README.htdig     Una descripción de la instalación ht://Dig para buscar en 
+                 la caché.
+README.udmsearch Una descripción de la instalación de UdmSearch para
+                 buscar en la caché.
+README.lang      Una descripción de las versiones de los lenguajes no
+                 ingleses.
+INSTALL          Ayuda sobre la instalación del programa y sus opciones 
+                 de compilación.
+CONVERT          Ayuda sobre la conversión de la caché desde las versiones
+                 anteriores.
+CHANGES.CONF     Una lista de los cambios al fichero de configuración desde 
+                 la versión 1.3 hasta ahora.
+
+wwwoffle(1)      La página del manual UNIX de la interfaz de usuario de 
+                 wwwoffle.
+wwwoffle.conf(5) La página de manual UNIX del fichero de configuración 
+                 wwwoffle.conf.
+wwwoffled(8)     La página de manual UNIX del demonio servidor wwwoffled.
+
+html/messages/README
+                 Información sobre la personalización de los mensajes de 
+                 error etc.
+
+contrib/README          Algunos guiones para usar con WWWOFFLE
+contrib-win32/README    Algunos guiones para usar con WWWOFFLE.

@@ -1,0 +1,178 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9
+          ========================================================
+
+
+The progam ht://Dig is a free (GPL) internet indexing and search program.  The
+ht://Dig documentation describes itself as follows:
+
+        The ht://Dig system is a complete world wide web indexing and
+        searching system for a small domain or intranet. This system
+        is *not* meant to replace the need for powerful internet-wide
+        search systems like Lycos, Infoseek, Webcrawler and AltaVista.
+        Instead it is meant to cover the search needs for a single
+        company, campus, or even a particular sub section of a web site.
+
+        As opposed to some WAIS-based or web-server based search
+        engines, ht://Dig can span several web servers at a site.  The
+        type of these different web servers doesn't matter as long as
+        they understand the HTTP 1.0 protocol.
+
+        ht://Dig was developed at San Diego State University as a way
+        to search the various web servers on the campus network.
+
+
+I have written WWWOFFLE so that ht://Dig can be used with it to allow the
+entire cache of pages can be indexed.  There are three stages to using the
+program that are described in this document; installation, digging and
+searching.
+
+
+Getting ht://Dig
+----------------
+
+ht://Dig is available from the web site
+
+        http://www.htdig.org/
+
+You need to have version 3.1.0b4 or later of htdig.
+
+No special compile-time configuration of htdig is required to be able to use it
+with WWWOFFLE.
+
+
+I tested with version 3.1.6 using the official Debian package.
+
+
+Configure ht://Dig to run with WWWOFFLE
+---------------------------------------
+
+If you have already got ht://Dig installed on your system, for example as part
+of a Linux distribution, then you may need to make some changes to the
+configuration files.  The problem is that ht://Dig sets some of the parameters
+at compile time in the HTML templates that is uses.  This makes it impossible to
+use the same "common files" with more than one search path on the same system.
+
+Using WWWOFFLE to run ht://Dig will mean that the base URL for the htsearch form
+and all images is '/search/htdig/'.  If the configuration file has a different
+compiled in variable (often '/htdig/') then the images will not be found.  The
+changes that you need to make are the following:
+
+In htsearch.conf (in /var/spool/wwwoffle/search/htdig/conf) you need to add the
+following lines (I have already done it in the default config file):
+
+allow_in_form: image_url_prefix
+image_url_prefix: /search/htdig
+
+The HTML template files that htsearch uses are called footer.html, header.html,
+nomatch.html, syntax.html and wrapper.html.  They will be installed in different
+places depending where your version of ht://Dig came from (for Debian GNU/Linux
+they are in /etc/htdig) you need to replace image references like:
+
+<img src="/htdig/htdig.gif" ...>
+
+with
+
+<img src="$(IMAGE_URL_PREFIX)/htdig.gif" ...>
+
+Unfortunately making this change will mean that the template files will no
+longer work with any other ht://Dig database that uses them.  You could make a
+copy of the template files somewhere else and modify the config file to
+reference them.
+
+Obviously if you are going to make this change then you may as well just edit
+the files and not bother with the $(IMAGE_URL_PREFIX) variable but use
+'/search/htdig' instead.
+
+
+Configure WWWOFFLE to run with ht://Dig
+---------------------------------------
+
+The configuration files for the ht://Dig programs as used with WWWOFFLE will
+have been installed in /var/spool/wwwoffle/search/htdig/conf when WWWOFFLE was
+installed.  The scripts used to run the htdig programs will have been installed
+in /var/spool/wwwoffle/search/htdig/scripts when WWWOFFLE was installed.  In
+both these cases the directory /var/spool/wwwoffle can be changed at compile
+time with options to the configure script.
+
+These files should be correct if the information at the time of running
+configure was set correctly.  Check them, they should have the spool directory
+and the proxy hostname and port set correctly.
+
+Also they should be checked to ensure that the ht://Dig programs are on the path
+(you can edit the PATH variable here if they are not in /usr/local/bin).  The
+merging process can use a lot of disk space when the sort program is run, you
+can change the location of the temporary directory used for this with the TMPDIR
+variable.
+
+
+The Fuzzy Database
+------------------
+
+The ht://Dig programs use a database of fuzzy word endings and synonyms.  This
+needs to be created just once, there is a script provided with WWWOFFLE that
+does this.
+
+        /var/spool/wwwoffle/search/htdig/scripts/wwwoffle-htfuzzy
+
+If you have an existing ht://Dig installation then this step will probably have
+already been performed and is not required again.
+
+Note: When you do this it will take a *long* time since it produces two
+      databases that htsearch uses to help in matching words.
+
+
+Digging and Merging
+-------------------
+
+Digging is the name that is given to the process of searching through the
+web-pages to make the list of words.  Merging is the process of converting the
+raw list of words into a database that can be searched.
+
+The ht://Dig installation will include a script called 'rundig' that
+demonstrates how digging and merging is supposed to work.  To work with WWWOFFLE
+I have produced my own scripts that should be used instead.
+
+        /var/spool/wwwoffle/search/htdig/scripts/wwwoffle-htdig-full
+        /var/spool/wwwoffle/search/htdig/scripts/wwwoffle-htdig-incr
+        /var/spool/wwwoffle/search/htdig/scripts/wwwoffle-htdig-lasttime
+
+The first of these scripts will do a full search and index all of the URLs in
+the cache.  The second one will do an incremental search and will only index
+those that have changed since the last full search was done.  The third will add
+in the files in the lasttime index into the database.
+
+Unfortunately due to the way that the htmerge program works, it will take almost
+as long to do an incremental search or a lasttime search as to do a full search.
+The only differnce is that for the incremental search and lasttime search the
+WWWOFFLE cache is only accessed for the files that have changed.
+
+If you cannot get htdig version 3.1.6 or 3.2.0 to index any pages then try
+removing the line in the file /var/spool/wwwoffle/html/en/robots.txt that says
+'Disallow: /index' since it triggers a bug in htdig that stops it searching
+properly.
+
+
+Searching
+---------
+
+The search page for ht://Dig is located at http://localhost:8080/search/htdig/
+and is linked to from the "Welcome Page".  The word or words that you want to
+search for should be entered here.
+
+This form actually calls the script
+
+        /var/spool/wwwoffle/search/htdig/scripts/wwwoffle-htsearch
+
+to do the searching so it is possible to edit this to modify it if required.
+
+
+Thanks to
+---------
+
+I would like to thank the htdig maintainer (Geoffrey.R.Hutchison@williams.edu)
+for the help that he has provided to get me started with htdig and the patches
+and comments that he has accepted from me into the htdig program.
+
+
+Andrew M. Bishop
+6th Aug 2001

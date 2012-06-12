@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+body      = The body of the request (='$body').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Fehler bei der Aktualisierung</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">Fehler bei der Aktualisierung</H1>
+
+<div class="wwwoffle-message" align="center">
+$body?
+{
+Die Formulardaten von Ihrem Browser f&uuml;r das Formular
+<p class="wwwoffle-url">
+<b><tt>$body</tt></b>
+</p>
+enthielten einen Fehler und konnten nicht verarbeitet werden.
+}
+{
+Die Formulardaten von Ihrem Browser f&uuml;r das Formular
+enthielten keine Daten.
+}
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Hilfe</h2>
+
+<div class="wwwoffle-inline-help">
+Ihr Browser hat eine ung&uuml;ltige Antwort auf das Aktualisierungs-Formular
+gesendet. Entweder hat der Browser eine leere Antwort gesendet (das kann
+an Netzwerkproblemen oder &Uuml;bertragungsfehlern liegen) oder die Daten waren
+ung&uuml;ltig. Versuchen Sie es bitte noch einmal.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<div class="wwwoffle-nav" align="center">
+[<a href="$localurl/refresh-options/">Zur&uuml;ck zur Aktualisierungs-Seite</a>]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+[<a href="$localurl/Welcome.html">Willkommensseite</a>|<a href="$localurl/FAQ.html">FAQ</a>]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

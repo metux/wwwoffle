@@ -1,0 +1,115 @@
+.\" $Header: /home/amb/wwwoffle/doc/RCS/wwwoffled.man 2.15 2005/10/12 18:18:58 amb Exp $
+.\"
+.\"  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+.\"
+.\"  Manual page for wwwoffled
+.\"
+.\"  Written by Andrew M. Bishop
+.\"
+.\"  This file Copyright 1997,98,99,2000,01,02,03,04,05 Andrew M. Bishop
+.\"  It may be distributed under the GNU Public License, version 2, or
+.\"  any higher version.  See section COPYING of the GNU Public license
+.\"  for conditions under which this file may be redistributed.
+.\"
+.TH wwwoffled 8 "October 12, 2005"
+
+.SH NAME
+
+wwwoffled \- A proxy server for the World Wide Web Offline Explorer.
+
+.SH SYNOPSIS
+
+.B wwwoffled
+.B [\-h|\-\-help]
+.B [\-\-version]
+.B [\-c <config-file>]
+.B [\-d [<log-level>]]
+.B [\-l <log-file>]
+.B [\-f]
+.B [\-p]
+
+.SH DESCRIPTION
+
+.I wwwoffled
+is a proxy HTTP server for the
+.I
+World Wide Web Offline Explorer program.  Using a standard web browser with the
+HTTP proxy set to the wwwoffled server, web pages can be requested while not
+connected to the internet.
+.LP
+When the computer is connected to the internet, the server will fetch the web
+pages requested by the browser and also store them in the cache.  When the
+computer is not connected, browsing of the pages in the cache is still possible,
+and links can be followed.  This causes the request for the page to be stored by
+the proxy server until a later time when the computer is connected and the pages
+are fetched non-interactively.
+.LP
+Pages that are requested from a server on the same host (localhost) are not
+cached, and are always fetched fresh from the server.
+.LP
+There is a welcome page at the URL http://localhost:8080/ that contains some
+information about the program and links to the cache index, interactive refresh
+page, interactive control page and WWWOFFLE internet home page.
+.LP
+The pages that are stored in the cache can be indexed by using the URL
+http://localhost:8080/index/ to get a list of the hosts that have cached pages.
+The index allows sorting of the pages into time or alphabetical order, by
+following links from this page.  There is also indexes available showing the
+pages that have been modified in the last week, those fetched last time online
+and those requests that are waiting to be fetched next time online.
+.LP
+The functions available from the wwwoffle(1) program for fetching URLs are also
+available in the interactive refresh page at http://localhost:8080/refresh/.
+.LP
+The functions available from the wwwoffle(1) program for controlling the
+wwwoffled program are also available in the interactive control page at
+http://localhost:8080/control/.
+
+.SH OPTIONS
+
+.TP
+.B \-h | \-\-help
+A help message is printed giving a brief description of the usage of the
+program.
+.TP
+.B \-\-version
+The version number of the program is printed.
+.TP
+.B \-c <config-file>
+The configuration for the program is stored in a configuration file
+wwwoffle.conf(5).  This argument specifies to the program the name of that file.
+Sending a HUP signal to the daemon will cause this config file to be re-read.
+.TP
+.B \-d [<log-level>]
+Do not detach from the terminal when starting and report error messages on
+standard error.  The log-level is a number from 0 (for no output on stderr) to 6
+(for full debugging output on stderr).  If this is not specified then the
+log-level in the config file is used.
+.TP
+.B \-l <log-file>
+Detach from the terminal but write to a log file what would have been written to
+stderr if the \fB-d\fR option had been used.  Defaults to using a log level of
+4, but using the \fB-d\fR option can change this (but it will still detach).
+Sending a HUP signal to the daemon will cause this log file to be closed and
+re-opened.
+.TP
+.B \-f
+Start the daemon in debugging mode (implies \fB-d\fR and overrides \fB-l\fR) and
+when the first HTTP request comes in handle it without creating a child process
+and then exit.
+.TP
+.B \-p
+Print the pid of the daemon process on stdout. This option is ignored if the
+\fB-d\fR or \fB-f\fR options are used.
+
+.SH FILES
+
+/etc/wwwoffle/wwwoffle.conf The wwwoffle.conf(5) configuration file.
+
+.SH SEE ALSO
+
+wwwoffle(1), wwwoffle.conf(5)
+
+.SH AUTHOR
+
+Andrew M. Bishop 1996,97,98,99,2000,01,02,03,04,05 (amb@gedanken.demon.co.uk)

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Steuerung von WWWOFFLE</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">Steuerung von WWWOFFLE</H1>
+
+Das <tt>wwwoffled</tt> demon-Programm kann von hier aus gesteuert werden.
+
+<h2>Kommandozeilenbefehle</h2>
+
+Alle &uuml;ber die Kommandozeile m&ouml;glichen Aktionen finden Sie auch hier.
+
+
+<p>
+<form action="$localurl/control/online" method=post>
+<input type="hidden" name=action value="online">
+<input type="submit" value="Online"> <tt>wwwoffled</tt> in den Online-Modus versetzen.
+</form>
+
+<p>
+<form action="$localurl/control/autodial" method=post>
+<input type="hidden" name=action value="autodial">
+<input type="submit" value="Autodial"> <tt>wwwoffled</tt> in den Autodial-Modus versetzen.
+</form>
+
+<p>
+<form action="$localurl/control/offline" method=post>
+<input type="hidden" name=action value="offline">
+<input type="submit" value="Offline"> <tt>wwwoffled</tt> in den Offline-Modus versetzen.
+</form>
+
+<p>
+<form action="$localurl/control/fetch" method=post>
+<input type="hidden" name=action value="fetch">
+<input type="submit" value="Fetch"> <tt>wwwoffled</tt> Bestellungen abholen lassen (fetch).
+</form>
+
+<p>
+<form action="$localurl/control/purge" method=post>
+<input type="hidden" name=action value="purge">
+<input type="submit" value="Purge"> <tt>wwwoffled</tt> den Cache aufr&auml;umen lassen (purge).
+</form>
+
+<p>
+<form action="$localurl/control/status" method=post>
+<input type="hidden" name=action value="status">
+<input type="submit" value="Status"> Status des <tt>wwwoffled</tt>-Server anzeigen.
+</form>
+
+
+<h2>Konfiguration von WWWOFFLE</h2>
+
+Die Konfiguration von WWWOFFLE bearbeiten.
+
+<p>
+<a href="$localurl/control/edit/">Traditionell</a>: Eine Webseite mit allen Abschnitten, die jeweils individuell ge&auml;ndert werden k&ouml;nnen.
+<br>
+<a href="$localurl/configuration/">Modern</a>: Einfach zu benutzende Liste der Abschnitte und Optionen, mit der M&ouml;glichkeit
+jede Option einzeln zu ver&auml;ndern.
+<p>
+
+<form action="$localurl/control/config" method=post>
+<input type="hidden" name=action value="config">
+<input type="submit" value="Config"> Neueinlesen der Konfigurationsdatei erzwingen (erforderlich nach einer &Auml;nderung).
+</form>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+[<a href="$localurl/Welcome.html">Willkommensseite</a>|<a href="$localurl/FAQ.html">FAQ</a>]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

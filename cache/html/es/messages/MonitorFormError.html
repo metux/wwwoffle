@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+body      = The body of the request (='$body').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Formulario Interactivo de Error de Monitorización</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Formulario Interactivo de Error de Monitorización</H1>
+
+<div class="wwwoffle-message" align="center">
+$body?
+{
+La respuesta al formulario que envió su navegador
+<p class="wwwoffle-url">
+<b><tt>$body</tt></b>
+</p>
+contenía un error que no pudo ser analizado.
+}
+{
+La respuesta al formulario que su navegador envió no contenía información
+alguna.
+}
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Ayuda</h2>
+
+<div class="wwwoffle-inline-help">
+El navegador ha enviado una respuesta inválida al formulario en la página de
+Peticiones de Monitorización.  O bien su navegador envió un respuesta vacía
+en vez de los datos del formulario, hubo errores en la red al enviar los
+datos o los datos que fueron enviados eran erróneos.  Debería intentar
+rellenar el formulario de nuevo y reenviar la información.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<div class="wwwoffle-nav" align="center">
+[<a href="$localurl/monitor-options/">Volver a la página de Monitorización</a>]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Página de Bienvenida</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

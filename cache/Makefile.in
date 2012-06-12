@@ -1,0 +1,135 @@
+# $Header: /home/amb/wwwoffle/cache/RCS/Makefile.in 1.9 2002/03/31 13:57:04 amb Exp $
+#
+# WWWOFFLE - World Wide Web Offline Explorer - Version 2.7b.
+#
+# Cache Makefile.
+#
+# Written by Andrew M. Bishop
+#
+# This file Copyright 1996,97,98,99,2000,01,02 Andrew M. Bishop
+# It may be distributed under the GNU Public License, version 2, or
+# any higher version.  See section COPYING of the GNU Public license
+# for conditions under which this file may be redistributed.
+#
+
+######## DEFINITIONS ########
+
+# Make things
+
+SHELL=/bin/sh
+
+# The installation locations
+
+prefix=@prefix@
+
+SPOOLDIR=$(DESTDIR)@SPOOLDIR@
+REAL_SPOOLDIR=@SPOOLDIR@
+
+# The installation program.
+
+TAR=@TAR@
+INSTALL=@INSTALL@
+
+# Default server and ports.
+
+LOCALHOST=@LOCALHOST@
+HTTP_PORT=@HTTP_PORT@
+
+# The translations
+
+LANGUAGES=@LANGUAGES@
+DEFLANG=@DEFLANG@
+
+######## COMPILATION ########
+
+compile :
+
+######## INSTALLATION ########
+
+install : compile install-unix @install_win32@
+
+install-unix : install-mkdir install-html install-outgoing install-search
+
+install-win32 : install-html-win32 install-search-win32
+
+######## CLEAN UP ########
+
+clean :
+	-rm -f core *~
+
+########
+
+distclean : clean
+	-rm -f Makefile
+	-rm -f html/default
+
+######## PROPER INSTALLATION ########
+
+install-mkdir :
+	@[ ! -d $(SPOOLDIR) ] || [ ! -d $(SPOOLDIR)/outgoing ] || [ -d $(SPOOLDIR)/prevtime1 ] || \
+	 (echo "WWWOFFLE: " ;\
+	  echo "WWWOFFLE: Your existing cache looks earlier than version 2.2, cannot continue." ;\
+	  echo "WWWOFFLE: Read the file NEWS for details." ;\
+	  echo "WWWOFFLE: " ;\
+	  exit 1 )
+	[ -x $(SPOOLDIR) ]           || $(INSTALL) -d -m 750 $(SPOOLDIR)
+	[ -x $(SPOOLDIR)/http ]      || $(INSTALL) -d -m 750 $(SPOOLDIR)/http
+	[ -x $(SPOOLDIR)/outgoing ]  || $(INSTALL) -d -m 750 $(SPOOLDIR)/outgoing
+	[ -x $(SPOOLDIR)/monitor ]   || $(INSTALL) -d -m 750 $(SPOOLDIR)/monitor
+	[ -x $(SPOOLDIR)/lasttime ]  || $(INSTALL) -d -m 750 $(SPOOLDIR)/lasttime
+	[ -x $(SPOOLDIR)/prevtime1 ] || $(INSTALL) -d -m 750 $(SPOOLDIR)/prevtime1
+	[ -x $(SPOOLDIR)/lastout ]   || $(INSTALL) -d -m 750 $(SPOOLDIR)/lastout
+	[ -x $(SPOOLDIR)/local ]     || $(INSTALL) -d -m 750 $(SPOOLDIR)/local
+
+install-outgoing : install-mkdir
+	for file in outgoing/* ; do \
+	  $(INSTALL) -c -m 644 $$file $(SPOOLDIR)/outgoing ;\
+	done
+
+install-html : install-mkdir
+	@[ ! -x $(SPOOLDIR)/html.old ] || \
+	 (echo "WWWOFFLE: " ;\
+	  echo "WWWOFFLE: There is already a directory $(SPOOLDIR)/html.old." ;\
+	  echo "WWWOFFLE: Remove it and re-run make." ;\
+	  echo "WWWOFFLE: " ;\
+	  exit 1 )
+	[ ! -x $(SPOOLDIR)/html ] || mv $(SPOOLDIR)/html $(SPOOLDIR)/html.old
+	@[ ! -x $(SPOOLDIR)/html.old ] || \
+	 (echo "WWWOFFLE: " ;\
+	  echo "WWWOFFLE: The directory $(SPOOLDIR)/html from the previous" ;\
+	  echo "WWWOFFLE: installation has been renamed $(SPOOLDIR)/html.old" ;\
+	  echo "WWWOFFLE: it will not be used by WWWOFFLE and can be deleted." ;\
+	  echo "WWWOFFLE: " ;\
+	  exit 0 )
+	cd html ; rm -f default ; ln -sf $(DEFLANG) default
+	$(TAR) cf $(SPOOLDIR)/html.tar html && cd $(SPOOLDIR) && $(TAR) xpf html.tar && rm html.tar
+	cd $(SPOOLDIR)/html && ./fixup-install.sh $(LOCALHOST):$(HTTP_PORT) && rm fixup-install.sh
+# Now fix the ownerships that tar preserved, we needed to use 'tar xpf' to get round root's umask.
+# These two will fail unless you are root, that is OK because the owner is already you.
+	-chown -R 0 $(SPOOLDIR)/html > /dev/null 2>&1
+	-chgrp -R 0 $(SPOOLDIR)/html > /dev/null 2>&1
+
+install-html-win32 : install-html
+	rm -f $(SPOOLDIR)/html/index.html && ln $(SPOOLDIR)/html/Welcome.html $(SPOOLDIR)/html/index.html
+
+install-search : install-mkdir
+	@[ ! -x $(SPOOLDIR)/search.old ] || \
+	 (echo "WWWOFFLE: " ;\
+	  echo "WWWOFFLE: There is already a directory $(SPOOLDIR)/search.old." ;\
+	  echo "WWWOFFLE: Remove it and re-run make." ;\
+	  echo "WWWOFFLE: " ;\
+	  exit 1 )
+	[ ! -x $(SPOOLDIR)/search ] || mv $(SPOOLDIR)/search $(SPOOLDIR)/search.old
+	@[ ! -x $(SPOOLDIR)/search.old ] || \
+	 (echo "WWWOFFLE: " ;\
+	  echo "WWWOFFLE: The directory $(SPOOLDIR)/search from the previous" ;\
+	  echo "WWWOFFLE: installation has been renamed $(SPOOLDIR)/search.old" ;\
+	  echo "WWWOFFLE: it will not be used by WWWOFFLE and can be deleted." ;\
+	  echo "WWWOFFLE: " ;\
+	  exit 0 )
+	$(TAR) cf $(SPOOLDIR)/search.tar search && cd $(SPOOLDIR) && $(TAR) xpf search.tar && rm search.tar
+	cd $(SPOOLDIR)/search && ./fixup-install.sh $(REAL_SPOOLDIR) $(LOCALHOST):$(HTTP_PORT) && rm fixup-install.sh
+# Now fix the permissions that tar preserved, we needed to use 'tar xpf' to get round root's umask.
+# These two will fail unless you are root, that is OK because the owner is already you.
+	-chown -R 0 $(SPOOLDIR)/search > /dev/null 2>&1
+	-chgrp -R 0 $(SPOOLDIR)/search > /dev/null 2>&1

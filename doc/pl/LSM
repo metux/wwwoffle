@@ -1,0 +1,25 @@
+Begin3
+Title:          WWWOFFLE - Eksplorator Offline World Wide Web
+Version:        2.6 [5-Pa¼-00]
+Entered-date:   05NOV00
+Description:    Serwer proxy HTTP/FTP dla komputerów z dostêpem do internetu typu dial-up.
+                - Buforowanie stron przegl±danych podczas po³±czenia.
+                - Przegl±danie buforowanych stron bez potrzeby po³±czenia, z mo¿liwo¶cia
+                  pod±¿ania za ³±czami i oznaczania innych stron do pobrania.
+                - Pobieranie okre¶lonych stron nieinteraktywnie.
+                - Monitorowanie stron dla regularnego pobierania.
+                - Wiele indeksów przechowywanych w buforze stron dla ³atwego ich wyboru.
+                - Interaktywne lub z linii komend opcje wyboru stron do pobrania
+                  indywidualnie lub rekursywnie.
+                - Wszystkie opcje s± kontrolowane przy u¿yciu prostego pliku konfiguracji
+                  z mo¿liwo¶ci± edycji z poziomu strony web.
+Keywords:       WWW HTTP FTP proxy offline serwer
+Author:         amb@gedanken.demon.co.uk
+Maintained-by:  amb@gedanken.demon.co.uk
+Primary-site:   ftp.demon.co.uk /pub/unix/httpd
+                531k wwwoffle-2.6.tgz
+Alternate-site: ftp.ibiblio.org /pub/Linux/apps/www/servers
+Original-site:  
+Platforms:      UNIX
+Copying-policy: GPL
+End

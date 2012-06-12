@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that was asked for (='$url').
+
+$decurl=%decode[url]
+
+-->
+
+<HEAD>
+<TITLE>Kann Ihre POST oder PUT Anfrage nicht aktualisieren</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1>Kann Ihre POST oder PUT Anfrage nicht aktualisieren</H1>
+
+<div class="wwwoffle-message" align="center">
+Ihre erneute Anfrage nach der URL
+<p class="wwwoffle-url">
+<b><tt>$decurl</tt></b>
+</p>
+ist fehlgeschlagen, da es generell nicht m&ouml;glich ist, Antworten von POST
+oder PUT Anfragen zu aktualisieren.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h3 class="wwwoffle-inline-help">Hilfe</h3>
+
+<div  class="wwwoffle-inline-help">
+Die Information, die f&uuml;r die Anfrage der Seite ben&ouml;tigt wird, ist nicht
+mehr verf&uuml;gbar. Ihr Browser hat z.B. Eingaben eines Formulars mit der
+Anfrage mitgesendet, und diese Informationen wurden von WWWOFFLE nicht
+gespeichert.
+<p>
+Die einzige M&ouml;glichkeit zum erneuten Abrufen ist zur&uuml;ck zu dem Formular zu
+gehen und es noch einmal abzuschicken, oder (falls es kein Formular war) die
+hochgeladene Seite noch einmal hochzuladen.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Willkommensseite</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

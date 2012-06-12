@@ -1,0 +1,37 @@
+#! /bin/sh
+# wwwoffled	script to go e.g., into /etc/init.d/ scripts.
+#
+#               Modified by Joerg Wittenberger <joerg.wittenberger@pobox.com>
+#               from skeleton
+#		file by Miquel van Smoorenburg <miquels@cistron.nl>.
+#		Modified for Debian GNU/Linux
+#		by Ian Murdock <imurdock@gnu.ai.mit.edu>.
+#
+
+PATH=/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin
+NAME=wwwoffled
+DAEMON=/usr/sbin/$NAME
+
+test -f $DAEMON || exit 0
+
+set -e
+
+case "$1" in
+  start)
+    start-stop-daemon --start --verbose --pidfile /var/run/$NAME.pid --exec $DAEMON &
+    ;;
+  stop)
+    start-stop-daemon --stop --verbose --pidfile /var/run/$NAME.pid --exec $DAEMON
+    ;;
+  reload)
+    # echo "Reloading $NAME configuration files"
+    # start-stop-daemon --stop --signal 1 --quiet --pidfile /var/run/$NAME.pid --exec $DAEMON
+    ;;
+  *)
+    # echo "Usage: /etc/init.d/$NAME {start|stop|reload}"
+    echo "Usage: /etc/init.d/$NAME {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

@@ -1,0 +1,48 @@
+<!-- This is just the tail of the index body since the contents are different for each index -->
+
+</ul>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+indexed    = The number of pages that are indexed (='$indexed').
+notindexed = The number of pages that are not indexed (='$notindexed').
+
+-->
+
+$notindexed?=0{$anynotindexed=0}{$anynotindexed=$total}
+$anynotindexed?=0{}{<a href="/index/$type$subtype?sort=$sort$delete$refresh$monitor;all$config$info"><i>$notindexed paginas niet ge&iuml;ndexeerd</i></a>}
+<p>
+
+$delete?{$indexeddelete=$indexed}{$indexeddelete=0}
+$indexeddelete?=0{}
+{
+<script type="text/javascript" src="$localurl/wwwoffle.js">
+</script>
+<script type="text/javascript">
+<!--//
+document.write("<INPUT onclick=form_make_url_unchecked(this.form) type='button' value='Unselect all'>")
+document.write("<INPUT onclick=form_toggle_url_checked(this.form) type='button' value='Toggle'>")
+document.write("<INPUT onclick=form_make_url_checked(this.form)   type='button' value='Select all'>")
+//-->
+</script>
+<noscript>
+<input type="reset" value="Unselect all">
+</noscript>
+
+<p>
+<input type="submit" value="Verwijder Geselecteerde">
+}
+$totaldelete?=0{}
+{
+</form>
+<form action="/control/delete/url-all" method=post>
+<input type="hidden" name="url" value="$proto://$host/">
+<input type="submit" value="Verwijder deze Host en Alle Paginas">
+</form>
+}
+
+<hr class="wwwoffle-index-buttons-bottom" width="50%">
+
+<!-- This is just the tail of the index body since the contents are different for each index -->

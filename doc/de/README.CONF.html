@@ -1,0 +1,1020 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html><head> <title>WWWOFFLE Konfiguration</title>
+
+<style type=text/css><!--
+  p,td,li,body { font-family:sans-serif; text-align:left; }
+  h2	{ font-weight:bold; font-family:sans-serif; color:#ff0000; font-size:130%; background-color:#cccccc; margin-top:1cm; padding:2px; }
+  h3	{ font-weight:bold; font-family:sans-serif; color:#bb0000; font-size:120%; background-color:#eeeeee; margin-top:8mm; margin-bottom:-1mm; }
+  h4	{ font-weight:bold; font-family:sans-serif; color:#005500; font-size:110%; margin-bottom:-3mm;}
+  code	{ font-family:monospace; }
+
+// --></style>
+</head>
+
+<body>
+
+<H1><a name="top">WWWOFFLE Proxy</a></H1>
+
+Falls Sie bisher Version 1.x oder 2.x benutzt haben, lesen Sie bitte die
+Datei <code>CHANGES.CONF.de</code>, dort wird erklärt, welche Abschnitte
+wie an die neue Version angepaßt werden müssen; und welche neuen Optionen
+es gibt.<p>
+
+Die Datei <code>wwwoffle.conf</code> enthält alle Einstellungen für den
+Betrieb des Proxy Servers. Die Datei <code>CHANGES.CONF</code> enthält
+Änderungen der Konfiguration im Bezug zu alten Versionen.<p>
+
+Diese Datei ist in Abschnitte (Sektionen, Teile) geteilt, die jeweils die
+unten angegebenen Parameter enthalten. Die Reihenfolge der Abschnitte in
+der Konfigurationsdatei ist nicht relevant.<p>
+
+Das Format der einzelnen Abschnitte ist prinzipiell das gleiche. Kommentare
+werden durch ein <b><code>#</code></b> eingeleitet, alles was nach diesem
+Kommentarzeichen in einer Zeile steht, wird ignoriert. Leerzeilen werden
+ebenfalls als Kommentar betrachtet und ignoriert.<p>
+
+Ein Abschnitt wird durch dessen Namen, gefolgt durch eine öffnende
+geschweifte Klammer (<code>{</code>) eingeleitet, beide in einer eigenen
+Zeile. Dann folgen die Parameter für diesen Abschnitt. Abgeschlossen wird
+der Abschnitt durch eine schließende geschweifte Klammer (<code>}</code>),
+wiederum in einer eigenen Zeile. Zum Beispiel:<p>
+
+<pre>
+StartUp
+{
+    Option = Wert
+    # Dies ist ein Kommentar
+    # Option = Wert            Dies ist auch einer!
+    Option = Wert
+    ...
+}
+</pre><p>
+
+<b>Alternativ</b> kann anstatt den Anweisungen in <code>{ ... }</code> auch 
+ein Dateiname in eckige Klammern eingeschlossen werden, in dem diese
+Anweisungen stehen. Zum Beispiel:<p>
+
+<pre>
+StartUp
+[
+	startup-options.conf
+]
+</pre><p>
+
+<table border=1 bgcolor="#ffcccc"><tr><td> Um Mißverständnissen vorzubeugen:
+Der Begriff <code>INTEGER</code> gibt eine ganze, i.d.R. natürliche Zahl an.
+<p>Außerdem ist die erste Spalte in einer hier angezeigten Tabelle, die ein
+Schlüsselwort der Konfigurationsdatei angibt, <i>immer</i> in <i>einer</i>
+Zeile zu schreiben, auch wenn der Browser das umbricht.<p>
+</td></tr></table><p>
+
+Die Begriffe <b><code>URL-ANGABE, URL-SPECIFICATION, WILDCARD</code></b>
+haben eine spezielle Bedeutung, die <a href="#url">am Ende der Datei</a>
+erklärt wird. Sie erlauben es, eine Option nur für bestimmte Addressen zu
+aktivieren. Ein in <b>(Klammern)</b> eingeschlossener Begriff ist ein vom
+Benutzer festzulegender Parameter (zB. ein Kennwort). Optionale Parameter
+sind in <b>[eckigen Klammern]</b> eingeschlossen, das Pipe-Zeichen
+<code><b>|</b></code> zeigt Alternativen auf. 
+
+
+
+
+
+<h2><a name="StartUp">Abschnitt 'StartUp'</a></h2>
+
+Dieser Abschnitt bestimmt das Verhalten beim Start des Programms, er wird
+beim erneuten Einlesen der Konfigurationsdatei ignoriert.
+
+<p><a name="StartUp_bind-ipv4"></a><a name="StartUp_bind-ipv6"></a><a
+name="StartUp_http-port"></a><a name="StartUp_http-port"></a><a
+name="StartUp_wwwoffle-port"></a><a name="StartUp_spool-dir"></a><a
+name="StartUp_run-uid"></a><a name="StartUp_run-gid"></a><a
+name="StartUp_use-syslog"></a><a name="StartUp_password"></a><a
+name="StartUp_max-servers"><a name="StartUp_max-fetch-servers"></a>
+
+<table border=1 width="100%">
+<tr><td width="30%"><code>bind-ipv4 = (Rechner) | (IP) | none</code></td>
+	<td>Der Rechner oder die IP-Addresse, auf dem der WWWOFFLE-Server 'horchen'
+	soll. 'none' bedeutet keine IPV4-Addresse wird benutzt.</td></tr>
+<tr><td width="30%"><code>bind-ipv6 = (Rechner) | (IP) | none</code></td>
+	<td>Der Rechner oder die IP-Addresse, auf dem der WWWOFFLE-Server 'horchen'
+	soll. 'none' bedeutet keine IPV4-Addresse wird benutzt. Für diese Option 
+	muß WWWOFFLE mit IPv6-Support übersetzt worden sein.</td></tr>
+<tr><td width="30%"><code>http-port = PORT</code></td>
+    <td>Der Port, welchen der Proxy für Daten benutzen soll. (Standard: 8080)</td></tr>
+<tr><td><code>wwwoffle-port = PORT</code></td>
+    <td>Der Port, welchen der Proxy für Kontrollverbindungen nutzen soll. (Standard: 8081)</td></tr>
+<tr><td><code>spool-dir = VERZEICHNIS</code></td>
+    <td>Das Verzeichnis für den Cache (normalerweise
+		  <code>/var/spool/wwwoffle</code>).</td></tr>
+<tr><td><code>run-uid = BENUTZER / UID</code></td>
+    <td>Als welcher Benutzer (-name, -ID) soll der Proxy laufen?
+        (Standard: keiner, d.h. <i>WWWOFFLE</i> ändert dies nicht selbst).</td></tr>
+<tr><td><code>run-gid = GRUPPE / GID</code></td>
+    <td>In welcher Benutzergruppe soll <i>WWWOFFLE</i> laufen?
+        (Standard siehe <code>run-uid</code>).</td></tr>
+<tr><td><code>use-syslog = yes|no</code></td>
+    <td>Soll die <code>syslog</code> Funktion für Meldungen benutzt werden?
+        (Standard: ja).</td></tr>
+<tr><td><code>password = IRGENDWAS</code></td>
+    <td>Das Kennwort für die Authentizierung in der Web-Oberfläche.</td></tr>
+<tr><td><code>max-servers = INTEGER</code></td>
+    <td>Die maximale Anzahl von Serverprozessen, die gleichzeitig laufen.
+        (Standard: 8).</td></tr>
+<tr><td><code>max-fetch-servers = INTEGER</code></td>
+    <td>Die maximale Anzahl von Serverprozessen, die gleichzeitig 
+        Bestellungen herunterladen. (Standard: 8)</td></tr>
+</table><p>
+
+
+<table width="100%" border=1 bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b> 
+<ul><li>Damit die Kennwort-Authentikation funktioniert, muß die
+Konfigurationsdatei von <i>WWWOFFLE</i> natürlich so angelegt werden, daß
+nur Benutzer sie lesen können, die auch auf diese Funktionen zugreifen
+dürfen.</li>
+<li>Die <code>run-uid</code> und <code>run-gid</code> Optionen sind unter
+Windows unwirksam. Um sie überhaupt benutzen zu können, muß der Server als
+<code>root</code> gestartet werden - sonst kann er seine eigenen Rechte
+nicht ändern.</li>
+<li>Die Option <code>max-fetch-servers</code> sollte unbedingt kleiner sein
+als <code>max-servers</code> -- sonst können Sie <i>WWWOFFLE</i> nicht
+benutzen, während er Bestellungen herunterlädt!
+</ul>
+</td></tr></table>
+
+
+
+ 
+
+<h2><a name="Options">Abschnitt 'Options'</a></h2>
+
+Dieser Abschnitt deckt allgemeine Einstellungen ab.<p>
+
+<a name="Options_log-level"></a><a name="Options_socket-timeout"></a><a
+name="Options_dns-timeout"></a><a name="Options_connect-timeout"></a><a
+name="Options_connect-retry"></a><a name="Options_ssl-allow-port"></a><a
+name="Options_dir-perm"></a><a name="Options_file-perm"></a><a
+name="Options_run-online"></a><a name="Options_run-online"></a><a
+name="Options_run-offline"></a><a name="Options_run-autodial"></a><a
+name="Options_run-fetch"></a><a name="Options_lock-files"></a><a
+name="Options_reply-compressed-data"></a>
+
+<table width="100%" border=1>
+
+<tr><td><code>log-level = ANGABE</code></td>
+    <td>Nachrichten, die mindestens die angegebene Priorität haben, werden
+	    protokolliert. Mögliche Prioritätsangaben sind:
+            <code>debug, info, important, warning, fatal</code></td></tr>
+<tr><td><code>connect-timeout      = ZEIT</code></td>
+    <td>Die Zeit, die <i>WWWOFFLE</i> auf einen Verbindungsaufbau wartet, bevor es die
+        Verbindung aufgibt (Standard: 60, Angaben in Sekunden).</td></tr>
+<tr><td><code>connect-retry       = yes | no</code></td>
+    <td>Falls eine Verbindung nicht erfolgreich war, soll <i>WWWOFFLE</i>
+        automatisch nach einer kurzen Pause einen weiteren Versuch starten?
+        (Standard: no).</td></tr>
+<tr><td><code>socket-timeout      = ZEIT</code></td>
+    <td>Die Zeit, die <i>WWWOFFLE</i> auf Daten aus einer bestehenden 
+		Verbindung wartet, bevor es die Verbindung aufgibt 
+		(Standard: 120, Angaben in Sekunden).</td></tr>
+<tr><td><code>dns-timeout      = ZEIT</code></td>
+    <td>Die Zeit, die <i>WWWOFFLE</i> auf DNS-Antworten wartet, bevor es die
+        Verbindung aufgibt (Standard: 60, Angaben in Sekunden).</td></tr>
+<tr><td><code>ssl-allow-port      = INTEGER</code></td>
+    <td>Die Port-Nummer für 'Secure Socket Layer (SSL)' Verbindungen,
+        zum Beispiel 'https'.</td></tr>
+
+<tr><td><code>dir-perm = (Oktalzahl)</code></td>
+	<td>Verzeichnisrechte im Cache/Spool-Verzeichnis (Standard: 0755). Dies
+		überschreibt die 'umask' des Benutzers unter dem WWWOFFLE läuft. Die Zahl
+		muß in Oktalschreibweise (führende Null) angegeben werden.</td></tr>
+<tr><td><code>file-perm = (Oktalzahl)</code></td>
+	<td>Dateirechte im Cache/Spool-Verzeichnis (Standard: 0755). Dies
+		überschreibt die 'umask' des Benutzers unter dem WWWOFFLE läuft. Die Zahl
+		muß in Oktalschreibweise (führende Null) angegeben werden.</td></tr>
+<tr><td><code>run-online = (Dateiname)</code></td>
+	<td>Name eines Programmes, das beim Schalten in den Online-Modus ausgeführt
+		werden soll. Das Programm wird mit dem Parameter 'online'
+		gestartet.</td></tr>
+<tr><td><code>run-offline = (Dateiname)</code></td>
+	<td>Name eines Programmes, das beim Schalten in den Offline-Modus ausgeführt
+		werden soll. Das Programm wird mit dem Parameter 'offline'
+		gestartet.</td></tr>
+<tr><td><code>run-fetch = (Dateiname)</code></td>
+	<td>Name eines Programmes, das beim Start und Ende des Herunterladens von
+		Bestellungen  ausgeführt werden soll. Das Programm wird mit den zwei 
+		Parametern 'fetch start' bzw. 'fetch stop' gestartet.</td></tr>
+<tr><td><code>run-autodial = (Dateiname)</code></td>
+	<td>Name eines Programmes, das beim Schalten in den AutoDial-Modus ausgeführt
+		werden soll. Das Programm wird mit dem Parameter 'autodial'
+		gestartet.</td></tr>
+<tr><td><code>lock-files = yes|no</code></td>
+	<td>Schaltet das Dateisperren an/aus (dies verhindert, daß zwei
+		WWWOFFLE-Prozesse gleichzeitig dieselbe Datei herunterladen).</td></tr>
+<tr><td><code>reply-compressed-data = yes|no</code></td>
+	<td>Schaltet das Komprimieren von Dateien beim Weiterleiten zum Browser
+		an/aus. Diese Option erfordert die Übersetzung mit aktivierter 
+		'zlib'-Option und <b>ist sehr zu empfehlen</b>, wenn Ihr 
+		WWWOFFLE-Server auf der anderen Seite einer langsamen Verbindung 
+		steht</b> (z.B. einer Modemstrecke).</td></tr>
+
+</table>
+
+<p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b> 
+<ul><li>Die Option <code>ssl-allow-port</code> sollte für <code>https://</code>
+	Verbindungen auf <b>443</b> gestellt werden. Es können für andere
+	Verbindungen weitere SSL-Ports definiert werden.</li>
+</ul></table>
+
+
+     
+
+<h2><a name="OnlineOptions">Abschnitt 'OnlineOptions'</a></h2>
+
+Dieser Abschnitt steuert das Verhalten im Online-Modus.<p>
+
+<a name="OnlineOptions_request-changed"></a><a
+name="OnlineOptions_request-changed-once"></a><a
+name="OnlineOptions_request-expired"></a><a
+name="OnlineOptions_request-no-cache"></a><a
+name="OnlineOptions_try-without-password"></a><a
+name="OnlineOptions_intr-download-keep"></a><a
+name="OnlineOptions_intr-download-size"></a><a
+name="OnlineOptions_intr-download-percent"></a><a
+name="OnlineOptions_timeout-download-keep"></a><a
+name="OnlineOptions_request-compressed-data"></a>
+
+<table width="100%" border=1>
+<tr><td><code>[URL-ANGABE] request-changed = ZEIT</code></td>
+    <td>Wenn im <code>online</code> Modus, wird eine Datei/Seite nur erneut
+        heruntergeladen, wenn sie älter als die hier angegebene Zeit ist
+        (Standard: 600, das entspricht 10 Minuten).
+<tr><td><code>[URL-ANGABE] request-changed-once = yes | no</code></td>
+    <td>Wenn im <code>online</code> Modus, wird eine Datei/Seite nur erneut
+        heruntergeladen, wenn sie in dieser Sitzung nicht schon einmal 
+        erneuert/geholt wurde (Standard: yes).</td></tr>
+<tr><td><code>[URL-ANGABE] request-expired = yes | no</code></td>
+	<td>Wenn im <code>online</code> Modus, wird eine Seite erneut 
+		heruntergeladen, wenn sie abgelaufen ist (Standard: no).</td></tr>
+<tr><td><code>[URL-ANGABE] request-no-cache = yes | no</code></td>
+	<td>Steuert, ob Seiten erneut heruntergeladen werden, die nicht
+		zwischengespeichert werden sollen (Standard: no). Dies hat Vorrang vor
+		der <code>'request-changed-once'</code> Option.</td></tr>
+<tr><td><code>[URL-ANGABE] try-without-password = yes | no</code></td>
+	<td>Soll eine Seite, die mit Benutzernamen und Kennwort-Angaben aufgerufen
+		wird, erst versuchsweise ohne diese Angaben heruntergeladen werden? 
+		Dies erlaubt es u.U., den Browser automatisch auf die
+		kennwortgeschützte Seite weiterzuleitern.</td></tr>
+<tr><td><code>[URL-ANGABE] intr-download-keep  = yes | no</code></td>
+	<td>Wenn die Verbindung zum Browser während eines Downloads
+		unterbrochen wird, soll dann die 'halbe' Datei behalten werden?
+		Zu beachten ist, daß diese 'halbe' Datei u.U. nicht vor Ablauf der
+		'request-changed' Zeit erneut geholt wird (Standard: no).</td></tr>
+<tr><td><code>[URL-ANGABE] intr-download-size = yes | no</code></td>
+	<td>Wie groß muß eine Datei mindestens sein, damit sie trotz
+		unterbrochener Verbindung zum Browser von WWWOFFLE fertig
+		heruntergeladen wird? (Standard: 1kb)</td></tr>
+<tr><td><code>[URL-ANGABE] intr-download-percent = yes | no</code></td>
+	<td>Wieviel Prozent einer Datei müssen mindestens bereits
+		heruntergeladen worden sein, damit WWWOFFLE bei Unterbrechung der
+		Verbindung zum Browser (Benutzer hat z.B. auf 'STOP' geklickt) den
+		Download in den Cache trotzdem beendet? (Standard: 80)</td></tr>
+<tr><td><code>[URL-ANGABE] request-compressed-data = yes | no</code></td>
+	<td>Soll WWWOFFLE versuchen, die vom Server angeforderten Dokumente in
+		komprimierter Form zu übertragen? Dies spart erhebliche
+		Downloadzeit (bis zu Faktor 10, je nach Art der Daten) und ist
+		daher standardmäßig eingeschaltet, wird aber nicht von jedem Server
+		unterstützt.</td></tr>
+</table><p>
+
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b> 
+<ul><li>Die Option <code>request-changed</code> kann negative Werte
+	enthalten, dies bedeutet, daß lokal bereits vorhandene Seiten in
+	jedem Fall einem erneuten Herunterladen vorgezogen werden.</li>
+<li>Die Option <code>request-changed-once</code> "wiegt stärker" als die
+	Option <code>request-changed</code>. Sie sollte <b>auf no gesetzt
+	werden</b>, falls Sie eine ständige Verbindung zum Netz haben.</li>
+<li>Die Option <code>pragma-no-cache</code> sollte auf <code>no</code>
+	gesetzt werden, falls mit bestimmten Browsern sämtliche solche Seiten
+	erneut bestellt werden.</li>
+</table>
+
+
+
+<h2><a name="OfflineOptions">Abschnitt 'OfflineOptions'</a></h2>
+
+Dieser Abschnitt steuert das Verhalten im Offline-Modus.<p>
+
+<a name="OfflineOptions_pragma-no-cache"></a><a
+name="OfflineOptions_confirm-requests"></a><a
+name="OfflineOptions_dont-request"></a>
+
+<table width="100%" border=1>
+<tr><td><code>[URL-ANGABE] pragma-no-cache = yes | no</code></td>
+    <td>Verhalten bei einer Seite, die mit dem Attribut 'pragma: no-cache'
+        versehen wurde (Standard: yes, d.h. die Seite wird erneut
+        heruntergeladen).</td></tr>
+<tr><td><code>[URL-ANGABE] confirm-requests    = yes | no</code></td>
+    <td>Bestätigung bei einer Bestellung im <code>offline</code> Modus
+		fordern, anstatt die Seite sofort zu bestellen (Standard: no).</td></tr>
+<tr><td><code>[URL-ANGABE] dont-request    = yes | no</code></td>
+	<td>Keine Bestellungen für diese Adresse annehmen.</td></tr>
+</table><p>
+
+
+
+
+<h2><a name="FetchOptions">Abschnitt 'FetchOptions'</a></h2>
+
+Dieser Abschnitt steuert das Verhalten beim Herunterladen von bestellten
+Seiten.<p>
+
+<a name="FetchOptions_stylesheets"></a><a name="FetchOptions_images"></a><a
+name="FetchOptions_webbug-images"></a><a name="FetchOptions_frames"></a><a
+name="FetchOptions_scripts"></a><a name="FetchOptions_objects"></a>
+
+<table border=1 width="100%">
+<tr><td><code>stylesheets = yes | no</code></td>
+    <td>Sollen HTML Style Sheets mit heruntergeladen werden?</td></tr>
+<tr><td><code>images = yes | no</code></td>
+    <td>Sollen Bilder mit heruntergeladen werden?</td></tr>
+<tr><td><code>frames = yes | no</code></td>
+    <td>Sollen HTML Frames mit heruntergeladen werden?</td></tr>
+<tr><td><code>scripts = yes | no</code></td>
+    <td>Sollen Scripts (z.B. Javascript) mit heruntergeladen werden?</td></tr>
+<tr><td><code>objects = yes | no</code></td>
+    <td>Sollen Objekte (z.B. Java Klassendateien) mit heruntergeladen werden?</td></tr>
+<tr><td><code>webbug-images = yes | no</code></td>
+    <td>Sollen Ein-Pixel-Dateien  mit heruntergeladen werden? (Nur wenn
+	ebenfalls 'images = yes') Diese Option soll in Zusammenhang mit der
+	'replace-webbug-images' Option im <a
+	href="#modifyhtml">ModifyHTML-Abschnitt</a> benutzt werden.</td></tr>
+</table>
+
+<p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b> 
+Alle diese Optionen haben als Standardeinstellungen 'no'.
+</table>
+
+
+
+<h2><a name="IndexOptions">Abschnitt 'IndexOptions'</a></h2>
+
+<a name="IndexOptions_no-lasttime-index"></a><a
+name="IndexOptions_list-outgoing"></a><a
+name="IndexOptions_list-latest"></a><a
+name="IndexOptions_list-monitor"></a><a
+name="IndexOptions_list-host"></a><a name="IndexOptions_list-any"></a>
+
+<table width="100%" border=1>
+<tr><td><code>no-lasttime-index = yes | no</code></td>
+	<td>Schaltet die Erstellung des "Letztes Mal" Indexes aus.</td></tr>
+<tr><td><code>[URL-ANGABE] list-outgoing = yes | no</code></td>
+	<td>Soll die angegebene URL (alle, wenn keine URL angegeben) unter
+		'Bestellungen' angezeigt werden?</td></tr>
+<tr><td><code>[URL-ANGABE] list-latest = yes | no</code></td>
+	<td>Soll die angegebene URL (alle, wenn keine URL angegeben) in den
+		 'Letztes Mal' Listen angezeigt werden?</td></tr>
+<tr><td><code>[URL-ANGABE] list-monitor = yes | no</code></td>
+	<td>Soll die angegebene URL (alle, wenn keine URL angegeben) in der
+		Abonnements-Liste  angezeigt werden?</td></tr>
+<tr><td><code>[URL-ANGABE] list-host = yes | no</code></td>
+	<td>Soll die angegebene URL (alle, wenn keine URL angegeben) in der
+		Hosts-Liste angezeigt werden?</td></tr>
+<tr><td><code>[URL-ANGABE] list-any = yes | no</code></td>
+	<td>Soll die angegebene URL (alle, wenn keine URL angegeben) in
+	<b>allen</b> Listen angezeigt werden?</td></tr>
+</table><p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b> 
+Alle 'list-*' Optionen haben als Standardeinstellungen 'yes'.
+</table>
+
+
+
+
+<h2><a name="ModifyHTML">Abschnitt 'ModifyHTML'</a></h2>
+
+<a name="ModifyHTML_enable-modify-html"></a><a
+name="ModifyHTML_add-cache-info"></a><a
+name="ModifyHTML_anchor-cached-begin"></a><a
+name="ModifyHTML_anchor-cached-end"></a><a
+name="ModifyHTML_anchor-requested-begin"></a><a
+name="ModifyHTML_anchor-requested-end"></a><a
+name="ModifyHTML_anchor-not-cached-begin"></a><a
+name="ModifyHTML_anchor-not-cached-end"></a><a
+name="ModifyHTML_disable-script"></a><a
+name="ModifyHTML_disable-applet"></a><a
+name="ModifyHTML_disable-style"></a><a
+name="ModifyHTML_disable-blink"></a><a
+name="ModifyHTML_disable-meta-refresh"></a><a
+name="ModifyHTML_disable-meta-refresh-self"></a><a
+name="ModifyHTML_replace-dontget-images"></a><a
+name="ModifyHTML_replacement-dontget-image"></a><a
+name="ModifyHTML_replace-webbug-images"></a><a
+name="ModifyHTML_replacement-webbug-image"></a><a
+name="ModifyHTML_disable-animated-gif"></a><a
+name="ModifyHTML_demoronise-ms-chars"></a>
+
+Dieser Abschnitt erlaubt es, die HTML Dateien, die im Cache gespeichert
+werden, zu verändern, und zu kontrollieren auf welche Art und Weise diese
+Veränderungen geschehen.<p>
+
+<table width="100%" border=1>
+<tr><td><code>[URL-ANGABE] enable-modify-html = yes | no</code></td>
+    <td>Die Programmfunktionen für die HTML-Veränderung einschalten.
+        Diese Option ist hier enthalten, weil die alleinige Präsenz des
+        Programmteils, das diesen Abschnitt auswertet, schon (etwas)
+        Geschwindigkeit kostet -- auch wenn es gar nichts tut.
+        (Standard: yes) Falls deaktiviert, haben die nachfolgenden Optionen
+		keine Auswirkung.</td></tr>
+<tr><td><code>[URL-ANGABE] add-cache-info = yes | no</code></td>
+    <td>Soll am Ende jeder Seite eine <i>WWWOFFLE</i> Informationszeile
+        über diese Seite eingesetzt werden (enthält Alter der Seite im
+        Cache, Möglichkeiten zum Aktualisieren uvm.) (Standard: no).</td></tr>
+<tr><td><code>[URL-ANGABE] anchor-cached-begin = HTML code</code></td>
+    <td>Verweise (Links), deren Adresse im Cache vorhanden sind, werden am Anfang mit
+        dem hier angegebenen HTML Code ergänzt (Standard: keiner).
+        Hiermit lassen sich Verweise auf Seiten, die bereits heruntergeladen 
+		wurden, hervorheben; damit vermeidet man ungewollte 
+		Verbindungsaufbauten (auf einem Dial on Demand System).</td></tr>
+<tr><td><code>[URL-ANGABE] anchor-not-cached-begin = HTML code</code></td>
+    <td>Verweise (Links), deren Adresse <b>nicht</b> im Cache vorhanden sind, 
+		werden am Anfang mit dem hier angegebenen HTML Code ergänzt (Standard:
+        keiner).</td></tr>
+<tr><td><code>[URL-ANGABE] anchor-requested-begin = HTML code</code></td>
+    <td>Verweise (Links), deren Adresse bestellt wurden, werden
+        am Anfang mit dem hier angegebenen HTML Code ergänzt (Standard:
+        keiner).</td></tr>
+<tr><td><code>[URL-ANGABE] anchor-cached-end = HTML code</code></td>
+    <td>Verweise (Links), deren Adresse im Cache vorhanden sind, werden am 
+		Ende mit dem hier angegebenen HTML Code ergänzt (Standard: keiner).</td></tr>
+<tr><td><code>[URL-ANGABE] anchor-not-cached-end = HTML code </code></td>
+    <td>Verweise (Links), deren Adresse <b>nicht</b> im Cache vorhanden sind,
+		werden am Ende mit dem hier angegebenen HTML Code ergänzt (Standard:
+        keiner).</td></tr>
+<tr><td><code>[URL-ANGABE] anchor-requested-end = HTML code </code></td>
+    <td>Verweise (Links), deren Adresse bestellt wurde, werden
+        am Ende mit dem hier angegebenen HTML Code ergänzt (Standard:
+        keiner).</td></tr>
+
+<tr><td><code>[URL-ANGABE] disable-script = yes|no </code></td>
+	<td>Filtert alle Skript-Events heraus.</td></tr>
+<tr><td><code>[URL-ANGABE] disable-applet = yes|no </code></td>
+	<td>Filtert alle Applets heraus.</td></tr>
+<tr><td><code>[URL-ANGABE] disable-style = yes|no </code></td>
+	<td>Filtert alle CSS-Stylesheet-Angaben heraus.</td></tr>
+<tr><td><code>[URL-ANGABE] disable-blink = yes|no </code></td>
+	<td>Filtert das <code>&lt;BLINK&gt;</code> Tag heraus.</td></tr>
+<tr><td><code>[URL-ANGABE] disable-meta-refresh = yes|no </code></td>
+	<td>Entfernt META-Tags, die den Browser (u.U. mit Zeitverzögerung) zu 
+		einer anderen Seite weiterleiten.</td></tr>
+<tr><td><code>[URL-ANGABE] disable-meta-refresh-self = yes|no </code></td>
+	<td>Entfernt META-Tags, die den Browser (u.U. mit Zeitverzögerung) zu 
+		derselben Seite weiterleiten, d.h. die Seite erneut laden.</td></tr>
+<tr><td><code>[URL-ANGABE] disable-dontget-links = yes|no </code></td>
+	<td>Entfernt Verweise (Links) zu Seiten, die im <a href="#dontget">
+		DontGet-Abschnitt</a> erwähnt wurden.</td></tr>
+<tr><td><code>[URL-ANGABE] disable-dontget-images = yes|no </code></td>
+	<td>Ersetzt Verweise (Links) zu Grafiken, die im <a href="#dontget">
+		DontGet-Abschnitt</a> erwähnt wurden.</td></tr>
+<tr><td><code>[URL-ANGABE] replacement-dontget-image = yes|no </code></td>
+	<td>Die Ersatzgrafik für Grafiken und Bilder im <a href="#dontget">
+		DontGet-Abschnitt</a> (Standard:
+		<code>/local/dontget/replacement.gif</code>).</td</tr>
+<tr><td><code>[URL-ANGABE] replacement-webbug-images = yes|no </code></td>
+	<td>Ersetzt Grafiken, die 1 Pixel messen, mit einer statischen URL
+		(Standard: no). Diese Option soll in Zusammenhang mit der
+		'webbug-images' Option im <a
+		href="#fetchoptions">FetchOptions-Abschnitt</a> benutzt werden.</td></tr>
+<tr><td><code>[URL-ANGABE] disable-animated-gif = yes|no </code></td>
+	<td>Entfernt Animation aus GIF-Dateien (Standard: no).</td></tr>
+
+<tr><td><code>[URL-ANGABE] demoronize-ms-chars = yes|no </code></td>
+	<td>Ersetzt merkwürdige Zeichen und fehlerhaftes HTML, welches von
+		Microsoft-Anwendungen erzeugt wird (Frontpage, Word usw.) durch
+		äquivalente Zeichen(ketten), die jeder Browser versteht. Die Idee
+		für dieses Feature kam aus einem Perlskript, welches für
+		HTML-Dateien dasselbe macht.</td></tr>
+
+</table><p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b> 
+Diese Optionen funktionieren nur korrekt, wenn der angegebene HTML Code
+auch syntaktisch korrekt ist. Ist er das nicht, ist das Resultat
+undefiniert.
+</table>
+
+
+
+
+<h2><a name="LocalHost">Abschnitt 'LocalHost'</a></h2>
+
+Dieser Abschnitt enthält eine Liste von Rechner(Host-)namen
+bzw. IP-Adressen, unter denen der Rechner, auf dem <i>WWWOFFLE</i> läuft,
+anderen Rechnern bekannt ist. Hiermit wird vermieden, daß sich der Proxy
+mit sich selbst unterhalten muß, um an seine eigenen Seiten heranzukommen
+(was etwas blödsinnig wäre).<p>
+
+
+<table border=1 width="100%">
+<tr><td><code>HOSTNAME / IP</code></td>
+    <td> Ein Hostname (Rechnername) oder eine IP-Adresse, unter welcher in
+         Verbindung mit der im Abschnitt  <a href="#StartUp">StartUp</a> 
+         Portnummer der <i>WWWOFFLE</i> Server erreichbar ist.</td></tr>
+</table><p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b> 
+<ul><li>Die Namen müssen <i>exakt</i> übereinstimmen, Platzhalter/Wildcards
+    sind nicht erlaubt (<code>*, ?, </code> usw.)</li>
+<li>Alle hier angegebenen Namen/Adressen werden auch behandelt wie die im
+    Abschnitt <a href="#LocalNet">LocalNet</a> und 
+    <a href="#AllowedConnects">AllowedConnects</a> angegebenen
+    Namen/Adressen.</li>
+<li>Der erste hier angegebene Name wird als der Proxy-Server Name benutzt,
+    der Proxy-Server <b>muß</b> daher unter diesem Namen netzwerkweit
+    erreichbar sein (insofern ist <code>localhost</code> unsinnig!).</li>
+<li>Keiner der Einträge hier oder im Abschnitt 
+    <a href="#LocalNet">LocalNet</a> werden durch einen Proxy geholt.</li>
+</ul></table>
+ 
+
+
+
+<h2><a name="#LocalNet">Abschnitt 'LocalNet'</a></h2>
+
+Dieser Abschnitt enthält eine Liste von Rechnernamen/IP-Adressen, die auf
+keinen Fall in den Cache gelangen, weil sie im lokalen Netzwerk liegen.
+<p>
+
+<table width="100%" border=1>
+<tr><td><code>HOSTNAME / IP</code></td>
+    <td>Ein Rechner/Hostname oder eine IP-Adresse, die als 'lokal'
+	behandelt und nicht zwischengespeichert werden soll.</td></tr>
+</table><p>
+ 
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b> 
+<ul><li>Hier werden Platzhalter/Wildcards (<code>*, ?, ..</code>)
+    unterstützt, siehe Abschnitt <a  href="#wildcards">Wildcards</a>.</li>
+<li>Alle hier angegebenen Rechner werden als 'auch im <code>offline</code>
+    Modus erreichbar' angesehen.</li>
+<li>Alle Rechner im Abschnitt <a href="#localhost">LocalHost</a> werden
+    ebenfalls nicht zwischengespeichert.</li>
+<li>Keine der hier oder in LocalHost angegebenen Rechner werden durch einen
+    Proxy angesprochen.</li>
+</ul></table>
+
+
+
+
+<h2><a name="AllowedConnectHosts">Abschnitt 'AllowedConnectHosts'</a></h2>
+
+Dieser Abschnitt gibt eine Liste von Rechnern an, mit denen <i>WWWOFFLE</i>
+kommunizieren, i.e. Verbindungen aufbauen/annehmen, darf.<p>
+
+<table border=1 width="100%">
+<tr><td><code>HOST(s)</code></td>
+    <td>Rechner/Hostname oder IP Adresse.</td></tr>
+</table><p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b> 
+<ul><li>Hier werden Platzhalter/Wildcards (<code>*, ?, ..</code>)
+    unterstützt, siehe Abschnitt <a  href="#wildcards">Wildcards</a>.</li>
+<li>Allen Rechnern im Abschnitt <a href="#localhost">LocalHost</a> wird
+    ebenfalls eine Verbindung gewährt.</li>
+</ul></table>
+
+
+
+
+<h2><a name="AllowedConnectUsers">Abschnitt 'AllowedConnectUsers'</a></h2>
+
+Dieser Abschnitt enthält eine Liste von Benutzen (mit Kennwörtern), die zum
+<i>WWWOFFLE</i> Proxy Verbindung aufnehmen dürfen.<p>
+
+
+<table border=1 width="100%">
+<tr><td><code>BENUTZER:KENNWORT</code></td>
+    <td>Benutzername und Kennwort, getrennt durch einen Doppelpunkt (ohne
+         Leerzeichen dazwischen!).</td></tr>
+</table><p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b> <ul>
+<li>Sowohl Benutzername als auch Kennwort werden im Klartext
+    gespeichert.</li>
+<li>Diese Funktion erfordert die Benutzung eines Browsers, der die 
+    HTTP/1.1 Erweiterungen versteht.</li>
+</ul></table>
+
+
+
+
+
+
+<h2><a name="DontCache">Abschnitt 'DontCache'</a></h2>
+
+Dieser Abschnitt enthält eine Liste von URLs/Adressen, die nicht lokal von
+<i>WWWOFFLE</i> gespeichert werden sollen.
+
+<p><table border=1 width="100%"><tr><td>
+<code>URL-ANGABE</code></td><td>Diese URL/Adresse nicht lokal speichern.
+</td></tr></table><p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b><p>
+Die Seiten werden jedoch heruntergeladen, wenn sie bestellt oder abonniert
+wurden. Eine Erklärung des Begriffes <code>URL-ANGABE</code> gibt es am
+Ende dieses Textes.</td></tr></table>
+
+
+
+
+<h2><a name="DontGet">Abschnitt 'DontGet'</a></h2>
+
+<a name="DontGet_replacement"></a><a name="DontGet_get-recursive"></a><a
+name="DontGet_location-error"></a>
+
+Dieser Abschnitt enthält eine Liste von URLs/Adressen, die gar nicht erst
+heruntergeladen werden sollen. Dies ist sehr praktisch für Banner-Werbung
+oder ähnlichem.
+
+<p><table border=1 width="100%"><tr><td>
+<code>URL-ANGABE</code></td><td>Diese URL/Adresse nicht herunterladen.</td></tr>
+<tr><td><code>[URL-ANGABE] replacement = (URL-ANGABE)</code></td>
+    <td>(Optional) anstatt der angegebenen URL-ANGABE diese Seite anzeigen
+	(sie könnte z.B. eine spezielle Fehlermeldung anzeigen oder 
+	ähnliches) (Standard: keine).</td></tr>
+<tr><td><code>[URL-ANGABE] get-recursive = yes|no</code></td>
+	<td>Sollen auf diese URL-ANGABE passende Adressen auch bei einer
+	Bestellung heruntergeladen werden? (Standard: yes).</td></tr>
+<tr><td><code>[URL-ANGABE] location-error = yes|no</code></td>
+	<td>Wenn als Antwort vom Server ein 'Location:' Header zurückkommt (der
+	den Browser umleitet) und das Umleitungsziel in diesem Abschnitt
+	steht, soll die Antwort zu einer Fehlermeldung werden? Dies verhindert,
+	daß Provider-Proxies transparent Werbung einblenden, wenn die
+	Werbe-URLs hier genannt werden.</td></tr>
+</table><p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b><p>
+Der Begriff <code>URL-ANGABE</code> wird am Ende des Textes erklärt. Für
+Bilder, die nicht heruntergeladen werden sollen, ist ein passender Ersatz
+ein 1x1 Pixel großes .GIF Bild, welches unter
+<code>/local/dontget/replacement.gif</code> bei <i>WWWOFFLE</i> mitgeliefert
+wird.</td></tr></table>
+
+
+<h2><a name="DontCompress">Abschnitt 'DontCompress'</a></h2>
+
+<a name="DontCompress_mime-type"><a name="DontCompress_file-ext"></a>
+
+Dieser Abschnitt kontrolliert, welche MIME-Typen / Dateien nicht
+komprimiert werden sollen (z.B. weil sie schon komprimiert sind, oder nicht
+gut komprimierbar sind). Dieser Abschnitt erfordert, daß die 'zlib' Option
+bei der Übersetzung benutzt wurde.
+
+<p><table border=1 width="100%">
+<p><table border=1 width="100%">
+<tr><td><code>mime-type = (MIME-Typ)/(MIME-Subtyp)</code></td>
+	<td>Keine Kompression für diesen MIME-Typen benutzen (weder im Cache
+	noch auf dem Weg zum Browser).</td></tr>
+<tr><td><code>file-ext = .(Dateierweiterung)</code></td>
+	<td>Keine Kompression für diese Dateien benutzen (weder im Cache
+	noch auf dem Weg zum Browser).</td></tr>
+</table><p>
+
+
+
+<h2><a name="CensorHeader">Abschnitt 'CensorHeader'</a></h2>
+
+<a name="CensorHeader_referer-self"></a><a
+name="CensorHeader_referer-self-dir"></a>
+
+Dieser Abschnitt enthält eine Liste von HTTP Kopf (Header-) Zeilen, die
+geändert oder herausgefiltert werden sollen.
+
+<p><table border=1 width="100%">
+<tr><td><code>[URL-ANGABE] (Header) = (Text) | no | yes</code></td>
+    <td>Ein HTTP Header-Feld (z.B. <code>From, Cookie, User-Agent, ..</code>)
+        und der Text, der stattdessen gesendet werden soll. 'no' bedeutet,
+		daß der Header nicht verändert wird, 'yes' (oder gar nichts) bedeutet,
+		daß er komplett entfernt wird. </td></tr>
+<tr><td><code>[URL-ANGABE] referer-self = yes | no</code></td>
+    <td>Den HTTP-Header <code>referer</code> auf die URL setzen, die gerade
+        geladen wird (und nicht die letzte). Standard: nein.</td></tr>
+<tr><td><code>[URL-ANGABE] referer-self-dir = yes | no</code></td>
+    <td>Den HTTP-Header <code>referer</code> auf den Verzeichnisnamen der
+        angeforderten URL setzen. Standard: nein.</td></tr>
+</table><p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b>
+<ul><li>Die Header-Zeilen unterscheiden Groß/Kleinschreibung und werden
+    <em>nicht</em> durch einen Doppelpunkt abgeschlossen.</li>
+<li>Es kann der Wert <code>'none'</code> angegeben werden, um den Header
+    ganz zu entfernen, oder der Rest der ZEile nach dem Gleichzeichen einfach
+    leergelassen werden.</li>
+<li>Es werden nur gefundene Headerzeilen ersetzt, es werden keine hinzugefügt!
+    </li>
+<li>Die Option <code>'referer-self-dir'</code> "wiegt stärker" als <code>
+    'referer-self'</code>.</li>
+</ul></td></tr></table>
+
+
+
+<h2><a name="FTPOptions">Abschnitt 'FTPOptions'</a></h2>
+
+<a name="FTPOptions_anon-username"></a><a
+name="FTPOptions_anon-password"></a><a
+name="FTPOptions_auth-username"></a><a name="FTPOptions_auth-password"></a>
+
+Dieser Abschnitt beschreibt Optionen, die für die Benutzung von FTP (File
+Transfer Protocol) relevant sind.
+
+<p><table border=1 width="100%">
+<tr><td><code>anon-username = TEXT</code></td>
+    <td>Der Benutzername, der für anonymen FTP-Zugang benutzt werden soll
+        (Standard: 'anonymous').</td></tr>
+<tr><td><code>anon-password = TEXT</code></td>
+    <td>Das Kennwort, welches für anonymen FTP-Zugang benutzt werden soll
+        (Standard: Ihre zur Laufzeit ermittelte eMail-Adresse).</td></tr>
+<tr><td><code>[URL-ANGABE] auth-username = TEXT</code></td>
+    <td>Benutze für die Addresse URL-ANGABE diesen Benutzernamen, ...</td></tr>
+<tr><td><code>[URL-ANGABE] auth-password = TEXT</code></td>
+    <td>... und dieses Kennwort.</td></tr>
+</table><p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b>
+<ul><li>Das 'anonymous'-Kennwort sollte mit Bedacht gewählt werden, besonders
+    wenn Sie hinter einem Firewall sitzen.</li>
+<li>Die Option <code>'auth-hostname'</code> muß exakt stimmen, es dürfen keine
+    Wildcards wie <code>'*', '?'</code> etc. benutzt werden.</li>
+</ul></table>
+
+
+
+
+
+<h2><a name="MIMETypes">Abschnitt 'MimeTypes'</a></h2>
+
+<a name="MIMETypes_default"></a>
+
+Dieser Abschnitt enthält eine Liste von MIME-Typen, die benutzt werden
+sollen, falls eine Dateiq direkt übertragen wird (nicht via HTTP), um den
+richtigen Dateitypen zu erkennen.
+
+<p><table border=1 width="100%">
+<tr><td><code>default = mimetype/subtype</code></td>
+    <td>Der Standard-MIME Typ (Standard: <code>'text/plain'</code>).</td></tr>
+<tr><td><code>.EXT = mime-type/subtype</code></td>
+    <td>Der MIME Typ, der bei der Datei mit der angegebenen EXTension benutzt
+        werden soll.</td></tr>
+</table><p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b>
+<ul><li>Sie müssen den Punkt bei der Dateierweiterung mit angeben.</li>
+<li>Falls mehrere Erweiterungen auf eine Datei passen, wird die längste
+    benutzt.</li></ul></table>
+
+
+
+
+<h2><a name="Proxy">Abschnitt 'Proxy'</a></h2>
+
+<a name="Proxy_proxy"></a><a name="Proxy_auth-username"></a><a
+name="Proxy_auth-password"></a><a name="Proxy_ssl"></a>
+
+Dieser Abschnitt bestimmt die externen Proxies (z.B. Ihres Providers), die
+<i>WWWOFFLE</i> selber benutzen soll.
+
+<p><table border=1 width="100%">
+<tr><td><code>[URL-ANGABE] proxy = PROXYADDRESSE[:PORT]</code></td>
+    <td>Eine Proxy-Adresse, die für bestimmte URLs/Adressen benutzt werden
+        soll.</td></tr>
+<tr><td><code>[URL-ANGABE] auth-username = TEXT</code></td>
+    <td>Der Benutzername für die Authentikation. URL-ANGABE ist die
+	Addresse des betreffenden Proxies.</td></tr>
+<tr><td><code>[URL-ANGABE] auth-password = TEXT</code></td>
+    <td>Das Kennwort für die Authentifikation. URL-ANGABE ist die Addresse
+	des betreffenden Proxies.</td></tr>
+<tr><td><code>[URL-ANGABE] ssl = RECHNER[:PORT]</code></td>
+    <td>Ein Proxy, welcher für SSL (Secure Socket Layer) Verbindungen
+        genutzt werden soll (z.B. <code>'https'</code>). Die URL-ANGABE
+		wird hier nur auf den Rechnernamen geprüft; Protokoll, Port usw.
+		müssen '*' Wildcards sein.</td></tr>
+</table><p>
+
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b>
+<ul><li>Der Begriff <code>'URL-ANGABE'</code> wird am am Ende des Textes
+    erklärt.</li>
+<li>Eine Adresse, der auf mehrere URL-ANGABEn paßt, wird über den am
+    genauesten angegebenen Proxy angefordert. Beispiel: Wenn 
+    <code>'*.de'</code> über Proxy 1 geholt werden soll und 
+    <code>'*.linux.de'</code> über Proxy 2, dann wird die URL
+    <code>'www.linux.de'</code> über Proxy 2 angefordert.</li>
+<li>Die Angabe <code>'none'</code> <em>verhindert</em> die Benutzung von 
+    einem Proxy für ein bestimmtes Protokoll oder eine URL.</li>
+<li>Keiner der Adressen in <a href="#localhost">LocalHost</a> oder
+    <a href="#localnet">LocalNet</a> werden durch einen dieser Proxies
+    angesprochen.</li>
+</ul></table>
+
+
+
+
+
+<h2><a name="Alias">Abschnitt 'Alias'</a></h2>
+
+Dieser Abschnitt beschreibt eine Liste von Alias-Namen, die den
+<i>WWWOFFLE</i> Server dazu bringen, bestimmte URLs (d.h. Adressen)
+umzuleiten.
+
+<p><table border=1 width="100%">
+<tr><td><code>URL-ANGABE = URL-ANGABE</code></td>
+    <td>Alle Anfragen für die erste URL-ANGABE werden mit der zweiten
+        URL-ANGABE beantwortet, d.h. der Inhalt der zweiten URL-ANGABE
+	wird gesendet.</td></tr>
+</table>
+<p>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b>
+<ul><li>Der Begriff 'URL-ANGABE' wird am Ende dieses Textes erklärt.</li>
+<li>Symbolische Links im Spool-Verzeichnis funktionieren, aber werden nur
+    geprüft, wenn <i>WWWOFFLE</i> gestartet wird, oder mit der Option
+    <code>wwwoffle -config</code> die Konfiguration neu eingelesen
+    wird.</li>
+<li>Die 'URL-ANGABE' darf keine Platzhalter/Wildcards wie <code>'*'</code>
+    etc enthalten.</li>
+</ul></table>
+
+
+
+
+
+<h2><a name="Purge">Abschnitt 'Purge'</a></h2>
+
+<a name="Purge_use-mtime"></a><a name="Purge_max-size"></a><a
+name="Purge_min-free"></a><a name="Purge_use-url"></a><a
+name="Purge_del-dontget"></a><a name="Purge_del-dontcache"></a><a
+name="Purge_age"></a><a name="Purge_compress-age"></a>
+
+Dieser Abschnitt beschreibt, welche Seiten, wann, aus dem Cache entfernt
+werden sollen ('entfernen' =~ 'purge'). Eine Maximalgröße für den Cache
+kann auch bestimmt werden.
+
+
+<p><table border=1 width="100%">
+<tr><td><code>use-mtime  = yes|no</code></td>
+    <td>Welche Dateiattribute sollen für die Bestimmung des Alters benutzt
+        werden: <code>atime</code> (letzter Zugriff) oder <code>mtime</code>
+        (letzte Änderung)? (Standard: no, also atime).</td></tr>
+<tr><td><code>max-size = GROESSE</code></td>
+    <td>Maximalgröße des Caches in Megabytes.</td></tr>
+<tr><td><code>min-free = GROESSE</code></td>
+	<td>Der minimale Plattenplatz, der nach dem Entfernen von alten Dateien
+		wieder frei geworden sein muß. '0' heißt es gibt keine
+		Beschränkung. Diese Option berechnet URLs in die Cache-Größe mit ein, 
+		die niemals gelöscht werden; löscht sie aber auch niemals. Falls
+		die nötige Cache-Größe für den hier angegebenen Wert kleiner ist
+		als 'max-size', bekommt dieser Wert Vorrang.</td></tr>
+<tr><td><code>use-url = yes|no</code></td>
+    <td>Sollen zusätzlich URL-spezifische Einstellungen geprüft werden?
+        (Standard: nein, d.h. nur protokoll/host-weise Einstellungen
+		prüfen)</td></tr>
+<tr><td><code>del-dontget = yes|no</code></td>
+    <td>Sollen Inhalte von Rechnern/Hosts, die aus dem <a href="#DontGet">
+        DontGet</a> Abschnitt kommen, gelöscht werden? (Standard:
+		nein).</td></tr>
+<tr><td><code>del-dontcache = yes|no</code></td>
+    <td>Sollen Inhalte von Rechnern/Hosts, die aus dem <a href="#DontCache">
+        DontCache</a> Abschnitt kommen, gelöscht werden? (Standard: 
+        nein).</td></tr>
+<tr><td><code>[URL-ANGABE] age = ALTER</code></td>
+    <td>Maximalalter für Seiten aus URL-ANGABE in Tagen (Standard: 14). 
+		Es können Einheiten benutzt werden (z.B. 2w=14, 1m=31, 1y=365).
+		</td></tr>
+<tr><td><code>[URL-ANGABE] compress-age = ALTER</code></td>
+	<td>Das maximale Alter für unkomprimiert gespeicherte Seiten, die auf
+		URL-ANGABE passen. (Benötigt zlib.) Siehe auch 'age'
+		Option.</td></tr>
+</table>
+
+<table border=1 width="100%" bgcolor="#ffcccc"><tr><td> <b>Wichtig:</b>
+<ul><li>Der Begriff 'URL-ANGABE' wird am Ende dieses Textes erklärt.</li>
+<li>Wird ein Rechner/Host mehrmals angegeben, wird das am genauesten
+    angegebene Alter genommen. Siehe dazu auch die Bemerkungen im Abschnitt
+    <a href="#Proxy">Proxy</a>.</li>
+<li>Ein Alter von '0' (Null) heißt, sofort löschen (bzw. gar nicht erst
+    speichern). Ein negatives Alter heißt, gar nicht löschen.</li>
+<li>Eine Maximalgröße von '0' für den Cache bedeutet, es gibt keine
+    Begrenzung.</li>
+<li>Die Größe des Caches wird aus den gespeicherten URLs bestimmt, die
+    <i>keine</i> negative Altersangabe besitzen.</li>
+<li>Die 'URL-ANGABE' wird nur auf Protokoll und Rechner/Hostname geprüft,
+    außer <code>use-url</code> ist aktiviert (dies drückt allerdings die
+    Geschwindigkeit etwas).</li>
+</ul></table>
+
+
+
+<hr>
+
+
+
+<h2><a name="Wildcards">Wildcards / Platzhalter</a></h2>
+
+Ein Platzhalter/'Wildcard' ist z.B. das Zeichen <code>'*'</code>, welches
+für eine beliebige Anzahl von beliebigen Zeichen steht.<p>
+
+Im Prinzip ist dies das gleiche, was in einer Shell (oder unter DOS) auch
+gilt, mit der Ausnahme, daß hier der Stern auch für einen Pfadtrenner
+(<code>'/'</code>) oder einen Punkt stehen kann.<p>
+
+Beispiele:
+
+<p><table border=1 width="100%">
+<tr><td><code>*.gif</code></td><td>paßt auf</td>
+    <td><code>foo.gif</code> und <code>bar.gif</code></td></tr>
+<tr><td><code>*.foo.comf</code></td><td>paßt auf</td>
+    <td><code>www.foo.com</code> und <code>ftp.foo.com</code>
+<tr><td><code>/foo/*</code></td><td>paßt auf</td>
+    <td><code>/foo/bar.html</code> und <code>/foo/bar/foobar.html</code>
+</table>
+
+
+
+
+
+<h2><a name="url">URL-ANGABE</a></h2>
+
+Wenn Sie einen Rechner/Host oder eine URL angeben, besteht diese Angabe
+meistens aus mehreren Informationen, die <i>WWWOFFLE</i> auf eine bestimmte
+Weise auswertet.<p>
+
+Eine URL besteht normalerweise aus vier Teilen:
+
+<p><table border=1 width="100%">
+<tr><td><code>proto</code></td><td>Das Protokoll, welches benutzt wird, 
+	zum Beispiel <code>HTTP</code> oder <code>FTP</code>.</td></tr>
+<tr><td><code>host</code></td><td>Der Rechner-/Hostname, der angesprochen
+	werden soll, z.B. <code>www.gedanken.demon.co.uk</code>.</td></tr>
+<tr><td><code>port</code></td><td>Der Port des Rechners, der angesprochen
+	werden soll, z.B. 80 für HTTP oder 21 für FTP.</td></tr>
+<tr><td><code>path</code></td><td>Der Pfad des Verzeichnisses/der Datei,
+	die angesprochen werden soll, z.B. <code>/foo/</code>.</td></tr>
+<tr><td><code>args</code></td><td>Optionale Parameter, die an ein Dokument
+	übergeben werden (z.B. wenn es ein Skript ist), z.B. <code>blubb=25b</code>.</td></tr>
+</table><p>
+
+Dies wird normalerweise so zusammengeknüpft:<p>
+<center><code>PROTO://HOST[:PORT]/PATH[?ARGS]</code></center><p>
+
+Eckige Klammern (<code>[]</code>) bedeuten, daß man die entsprechende
+Angabe auch weglassen kann (bei HTTP ist der Port fast immer 80 und
+Parameter werden nicht immer benutzt).<p>
+
+Normalerweise wird in dieser Konfiguration folgende Syntax benutzt:
+
+<p><table border=1 width="100%">
+<tr><td><code>*://*</code></td>
+    <td>Protokoll, Rechner, Port, Pfad beliebig (dies ist der Standard).
+<tr><td><code>*://*/PFAD</code></td>
+    <td>Protokoll, Rechner, Port beliebig, PFAD angegeben.
+<tr><td><code>*://*/*.EXT</code></td> 
+    <td>Protokoll, Rechner, Port beliebig, Datei-Erweiterung/-typ
+        angegeben.
+<tr><td><code>*://HOST</code></td> 
+    <td>Protokoll/Port/Pfad beliebig, Rechner/HOST angegeben.
+<tr><td><code>PROTO://</code></td> 
+    <td>Protokoll angegeben, Rest beliebig.
+<tr><td><code>PROTO://HOST</code></td> 
+    <td>Protokoll und Rechner/Host angegeben, Rest beliebig.
+<tr><td><code>PROTO://HOST:</code></td> 
+    <td>Protokoll und Rechner angegeben, Standard-Port (je nach Protokoll),
+        Pfad beliebig.
+<tr><td><code>PROTO://HOST:PORT</code></td> 
+    <td>Protokoll, Rechner und Port angegeben, Pfad beliebig.
+</table>
+<p>
+
+Die Pfade und Hostnamen werden mit denselben Wildcards behandelt und
+interpretiert, wie sie oben beschrieben werden.
+
+The matching of the host and the path use the wildcard matching that is
+described above.
+
+<p>
+<hr>
+
+Die Übersetzung dieses Dokumentes wurde von <a
+href="mailto:wwwoffle@jensbenecke.de">Jens Benecke</a> erstellt. Es gelten
+die gleichen Lizenzbestimmungen wie für das gesamte WWWOFFLE Paket, ich
+betrachte die von mir übersetzte Dokumentation als Teil der Software.
+Jeder, der dieses Dokument liest, sollte sich moralisch verpflichtet
+fühlen, mir Fehler oder Unstimmigkeiten sofort per eMail mitzuteilen ;-)
+<hr> </body> </html>
+
+
+<!-- vim:set ts=4 tw=75 nowrap: -->

@@ -1,0 +1,471 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.8
+          ========================================================
+
+These are miscellaneous files/scripts that can be used with WWWOFFLE.
+
+Contents:
+
+        Debian Startup (I)
+        Debian Startup (II)
+        Redhat Startup
+        Slackware Startup (or other BSD style system)
+        S.u.S.E. Startup
+        PPPD Start and Stop
+        Post WWWOFFLE Script
+        WWWOFFLE Usage monitoring
+        ISP Configuration
+        Log File PID Search
+        KPPP Scripts
+        Mark URLs not to be purged
+        Alternative Cache-Info HTML
+        Netscape Javascript Bookmarks
+        Netscape Javascript Bookmarks + Alternative Cache-Info HTML
+        DontGet list converter
+        Example entries for the DontGet section
+        Invoke wwwoffle from emacs to request URLs
+        Dan Jacobson's WWWOFFLE tools
+        An example CGI script, useful for testing CGI interfaces
+        An example spec file for creating RPMs
+        Redhat spec files and startup files
+        A spec file for creating RPMs for Redhat 9
+        Wildcard wwwoffle-ls
+        Checking Duplicated Monitored Files
+        WWWOFFLE Book - Creating a purge.conf from browser bookmarks
+        Alternative Hyper Estraier indexing script
+
+Note: I did not write or check all of these scripts, they were supplied to me by
+      the authors named below.
+
+
+Debian Startup (I)
+------------------
+
+Filename:    debian1/wwwoffle
+Contributed: Joerg Wittenberger <Joerg.Wittenberger@inf.tu-dresden.de>
+
+> [The script is] Usually called like the system those belong to, e.g., 'bind',
+> 'nfs', 'apache'; `wwwoffle' would be a good choice.
+>
+> Those script go into the `init.d' directory. It's usually either
+> '/etc/init.d' because it comprises the system configuration or under
+> '/sbin/init.d', or '/usr/sbin/init.d' because to be exact only
+> symlinks within the rc<runlevel>.d are the actual config data.
+
+
+Debian Startup (II)
+-------------------
+
+Filename:    debian2/wwwoffle
+Contributed: Remo Petritoli <petritoli@iol.it>
+
+This is a modified version of the one above with some extra features.
+
+
+Redhat Startup
+--------------
+
+Filenames:   redhat1/wwwoffled
+             redhat1/ip-up.local redhat1/ip-down.local
+Contributed: Vikram Goyal <viki@bol.net.in>
+
+This is a modified version of the file above.
+
+> 1) wwwoffled :
+> 
+> This is for dir /etc/rc.d/init.d/. If put there and command 
+> chkconfig -add wwwoffled is executed, then the program will integrate with
+> starting and stopping of the o.s. i.e it will become like rest of the services
+> provided in the distro. The script will start the program and create a pidfile
+> in /var/run also put a file 'wwwwoffled' in /var/lock/subsys. All this is for
+> RedHat. The script also gives other options (like reloading a new config file)
+> which you can check with command /sbin/service wwwoffled <ENTER> after doing
+> the above steps i.e making it an o.s service. Of course all this can be done 
+> without wwwoffled service script but this way wwwoffled has a neater interface
+> of usage.
+> 
+> 2) ip-up.local and ip-down.local :
+> 
+> These should be in dir /etc/ppp/.
+> They are called automatically by ip-up and ip-down respectively
+> when there is a successful ppp connection and when connection is terminated.
+> 
+> 2a) ip-up.local :
+> 
+> As you may see it will put wwwoffled in online mode if running else
+> start it and then put it in online mode after pppd is a success.
+> 
+> 2b) ip-down.local :
+> 
+> It will put wwwoffled in offline mode after the ppp connection has
+> terminated.
+> 
+> Both ip-up.local and ip-down.local use wwwoffled service script. So they
+> can be used properly only after wwwoffled has been made an o.s service.
+
+
+
+Slackware Startup (or other BSD style system)
+---------------------------------------------
+
+Filename:    bsd/rc.local
+Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+If you have a Slackware system (or other BSD style system) then you can start
+wwwoffled by putting it in the rc.local file.  The bsd/rc.local file
+should be appended to the /etc/rc.d/rc.local (or /etc/rc.local) file.
+
+It is not important that the wwwoffled demon is killed when the computer is
+shutdown.
+
+
+S.u.S.E. Startup
+----------------
+
+Filename:    suse/wwwoffle
+Contributed: Andreas Kupries <a.kupries@westend.com>
+
+> this is the file and the links I am using to start/stop wwwoffled
+> during boot/shutdown of my machine (distribution is `S.u.S.e 4.4.1`).
+> 
+> rc2.d/K18wwwoffle -> ../wwwoffle
+> rc2.d/S18wwwoffle -> ../wwwoffle
+> rc3.d/K18wwwoffle -> ../wwwoffle
+> rc3.d/S18wwwoffle -> ../wwwoffle
+
+
+PPPD Start and Stop
+-------------------
+
+Filenames:   ppp/ip-up & ppp/ip-down
+Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+If you use PPP then there will be scripts that the pppd program will run when
+the link is connected and before it is disconnected.  These can be used to set
+the wwwoffled demon online and offline automatically and to fetch the pages that
+have been requested.
+
+The file ppp/ip-up should be appended to the /etc/ppp/ip-up file and the
+ppp/ip-down file should be appended to the /etc/ppp/ip-down file.
+
+
+Post WWWOFFLE Script
+--------------------
+
+Filename:    auto/post-wwwoffle.sh
+Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+If this script is run after WWWOFFLE is taken offline it will examine the files
+that were downloaded while online and can be used to display them.
+
+
+WWWOFFLE Usage monitoring
+-------------------------
+
+Filename:    logfile/audit-usage.pl
+Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+This script can be run on the WWWOFFLE logfile created by running WWWOFFLE with
+debugging output enabled.  It will report the URLs that were requested, what
+mode the wwwoffled program is in, which host the request came from and which
+user requested them if AllowedConnectUsers section of the configuration file is
+used.
+
+Running wwwoffled as shown below gives a logfile with the information required.
+
+wwwoffled -d 4 >  wwwoffled.log 2>&1    # sh/bash Shells
+wwwoffled -d 4 >& wwwoffled.log         # csh/tcsh Shells
+
+
+ISP Configuration
+-----------------
+
+Filename:    config/wwwoffle-config.pl
+Contributed: Christian Zagrodnick <zagy@vodoo.boerde.de>
+
+# With wwwoffle-config you can have different configurations for wwwoffle
+# in one single file. 
+#
+# There are two ways of configuring now: `#//+' and `#//-'
+# With #//+ the leading `#' in the NEXT line will be removed.
+# With #//- the next line will be preceeded with a `#'
+
+
+Log File PID Search
+-------------------
+
+Filename:    logfile/log-pid.pl
+Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+A Perl script to parse the WWWOFFLE log file output and find all references to
+the specified PID for debugging purposes.
+
+Usage: log-pid.pl <pid> < wwwoffle.log
+
+
+KPPP Scripts
+------------
+
+Filename:    kppp/kppp-online, kppp/kppp-offline
+Contributed: Antonio Larrosa <antlarr@arrakis.es>
+
+> In the "Execute" tab of the account setup, the "Upon connect" application
+> should be :
+> konsole -e <path>/kppp-online
+> and the "Upon disconnect" application should be:
+> konsole -e <path>/kppp-offline
+> 
+> where kppp-online and kppp-offline are the attached scripts
+> 
+> you could also call "kppp-online" directly, but then it would be executed on the
+> background and the user wouldn't see the standard output (while fetching pages) 
+
+
+Mark URLs not to be purged
+--------------------------
+
+Filename:    purge/url2keep
+Contributed: Jörg Mensmann <joerg.mensmann@gmx.net>
+
+> Here is a new version of "url2keep" (formally known as
+> "permcache-netscape.pl"). It now not only works with Netscape's
+> bookmarks but has become more flexible.
+> 
+> Thanks to Jacques L'helgoualc'h <lhh@free.fr> for improving the script
+> so that it now works as a filter. It parses HTML code read from stdin
+> and outputs all links found there in a format which can be read by the
+> config file. See the comments in script for further documentation.
+
+
+Alternative Cache-Info HTML
+---------------------------
+
+Filename:    messages1/AddCacheInfo.html
+Contributed: Luis Miguel Ferreira <ferreira@iname.com>
+
+> I changed the AddCacheInfo.html page, I tweaked it a bit, so that now the
+> items on it have a fixed colour and background (they're inside a table), and I
+> added an option do delete the host site (delete all pages on that site).
+> (on some web pages, these links were invisible, because they were of the same
+> colour as the background, that's why I changed it)
+
+You need to replace the file /var/spool/wwwoffle/html/messages/AddCacheInfo.html
+with the file supplied here and enable the add-cache-info option in the
+ModifyHTML section of the configuration file.
+
+
+Netscape Javascript Bookmarks
+-----------------------------
+
+Filename:    bookmarklets/bookmarks.html
+Contributed: Joerg Mensmann <joerg.mensmann@gmx.de>
+
+> I always felt that using WWWOFFLE's extended features like monitor or
+> recursive fetch were to complicated to use. For using them I usually had
+> to a open a new Netscape window, there moving to the appropriate control
+> page and finally copying the URL from the original window into the
+> WWWOFFLE form.
+> 
+> The "add-cache-info"-feature is a solution for this problem, but it
+> often messes up layout, especially when frames are used.
+> 
+> The same can be accomplished using "bookmarklets" (small javascripts
+> stored in bookmarks) without those problems.
+> 
+> To use it, ... in Netscape Bookmarks do
+> File/Import. Of course, javascript has to be enabled and you might have
+> to adjust "localhost:8080" to where your WWWOFFLE is running.
+
+This will create a new bookmark folder with the extra WWWOFFLE features in it.
+These each apply to the currently viewed page.
+
+It is possible to copy the bookmarks into the "Personal Toolbar Folder" and the
+bookmarks are then available directly from the personal toolbar instead of the
+bookmark menu.
+
+I (AMB) added some other bookmarks to those provided that allows a recursive
+fetch of all pages linked to from the current page, monitoring the current page,
+information about the current page and configuration file editing for the
+current page.
+
+
+Netscape Javascript Bookmarks & Alternative Cache-Info HTML
+-----------------------------------------------------------
+
+Filenames:   messages2/bookmarks.html & messages2/AddCacheInfo.html
+Contributed: Dag Hoidahl <dag.hoidahl@fix.no>
+
+> I have made a few small bookmarklets (JavaScript snippets to put in the
+> bookmark file) that are useful with WWWOFFLE. They provide bookmarks for
+> the Delete, Refresh, Monitor, Index and Fetch commands. This way, those
+> commands are always available without having to modify the cached pages.
+> 
+> I also made a replacement AddCacheInfo.html file that stores the cache
+> info in a JavaScript variable, so it can be shown in an alertbox using a
+> bookmarklet.
+> 
+> The attached bookmarks file is for Netscape Navigator, but the
+> JavaScript is basic enough for it to work on any JavaScript-enabled
+> browser, I believe. If you use Netscape, you can just import the
+> bookmarks and put them somewhere easy to reach, for instance in the
+> Toolbar folder. Otherwise you could open the file and add the links as
+> bookmarks manually.
+
+You need to replace the file /var/spool/wwwoffle/html/messages/AddCacheInfo.html
+with the file supplied here and enable the add-cache-info option in the
+ModifyHTML section of the configuration file.
+
+
+DontGet List Converter
+----------------------
+
+Filenames:   dontget/README dontget/*
+Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+There are many other programs available that can be used to block adverts and
+other URLs.  Examples include Junkbuster and SquidGuard.  The authors or users
+of these programs publish lists of URLs and hostnames that can be used by these
+programs.
+
+The README file in the dontget directory contains a few places to get these
+lists from and the other files in the directory convert these lists to the
+format that WWWOFFLE can use.
+
+
+Example entries for the DontGet section
+---------------------------------------
+
+Filename:    dontget/DontGet.txt
+Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+This file is the latest version of the DontGet.txt file that is also available
+from http://www.gedanken.demon.co.uk/wwwoffle/version-2.7/DontGet.txt.
+
+
+Invoke wwwoffle from emacs to request URLs
+------------------------------------------
+
+Filename:    emacs/browse-wwwoffle.el
+Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+Emacs allows URLs to be selected and opened in a web browser.  If you want
+replace this function with the ability to request URLs using WWWOFFLE instead of
+browsing them then the emacs lisp will help.
+
+
+Dan Jacobson's WWWOFFLE tools
+-----------------------------
+
+Webpage:     http://jidanni.org/comp/wwwoffle/
+Contributed: Dan Jacobson <jidanni@jidanni.org>
+
+Dan Jacobson has made several tools for WWWOFFLE.  These do a number of
+different things, for example delete requests from the outgoing directory and
+cache by regexp or chop the WWWOFFLE lasttime index into parts.
+
+
+An example CGI script, useful for testing CGI interfaces
+--------------------------------------------------------
+
+Filename:    cgi/testscript.pl
+Contributed: Paul A. Rombouts <p.a.rombouts@home.nl>
+
+This script is an example Perl script that can be used for testing the WWWOFFLE
+CGI interface.
+
+
+An example spec file for creating RPMs
+--------------------------------------
+
+Filename:    redhat1/spec
+Contributed: Richard Zidlicky <rz@linux-m68k.org>
+
+This file is a spec file that can be used for building RPMs of WWWOFFLE.
+
+
+Redhat spec files and startup files
+-----------------------------------
+
+Filename:    redhat2/README (for instructions)
+Contributed: Andrew Bray <andy@chaos.org.uk>
+
+> Here is a set of files you might consider including in the standard
+> distribution. It gets a lot smaller if you chop out DontGet.txt and 
+> wwwoffle_hints-tips.txt, as the README includes instructions for 
+> recreating them.
+
+(I have included the latest version of DontGet.txt separately, see above.)
+
+
+A spec file for creating RPMs for Redhat 9
+------------------------------------------
+
+Filename:    redhat3/wwwoffle.spec
+Contributed: Davide Bolcioni <dbolcion@libero.it>
+
+A spec file for creating RPMs of WWWOFFLE version 2.8a for Redhat 9.
+
+
+Wildcard wwwoffle-ls
+--------------------
+
+Filename:    wwwoffle-ls2
+Contributed: Marc Boucher <marcb@box100.com>
+
+> Here is an alternative to wwwoffle-ls that accepts URLs with wildcards.
+> 
+> Examples:
+> 
+>   wwwoffle-ls2  http://*yahoo*/*.php
+>   wwwoffle-ls2  *://*freshmeat.net/*.php
+> 
+> The main problem was that it takes an eternity to check (read) all U* files
+> in the matched directories. My solution is to write a listing file in each
+> host's dir. This file is read instead of every U* file and is only
+> rewritten if the mdate of the directory is younger than the file.
+> For this reason the user must be root or have write access to the spool
+> directories.
+
+>  - If your spool dir is not "/var/spool/wwwoffle/" you can use '-c configfile'
+>    to read it from your configuration file.
+> See -h for more information.
+> 
+> I have also included a patch to prevent WWWOFFLE from deleting valid
+> listing files when purging the cache.
+
+
+Checking Duplicated Monitored Files
+-----------------------------------
+
+Filename:    duplicates/*
+Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+If a particular URL is monitored on a daily basis it may be seen that the same
+URL is always fetched even though there seems to be no change.  Provided are two
+scripts that can help find out why the page was re-fetched.  There is a README
+file in the duplicates directory that gives more details.
+
+
+WWWOFFLE Book - Creating a purge.conf from browser bookmarks
+------------------------------------------------------------
+
+Filename:    wwwofflebook/*
+Contributed: <wwm@gmx.ch>
+
+This is a beta version.
+
+> The wwwofflebook scripts can extract the http domains from your browser bookmark
+> file. The http domain of a bookmark is the first part of the address, beginning 
+> after the protocol prefix 'http://'. wwwofflebook passes these domains to the 
+> wwwoffle daemon with the flag to never delete them at all. The pages of this site 
+> will always be available offline, from the wwwoffle cache. 
+> This way a browser-bookmarked site will be retained until you remove the bookmarks.
+
+
+Alternative Hyper Estraier indexing script
+------------------------------------------
+
+Filename:    eregister/eregister
+Contributed: Richard Zidlicky <rz@linux-m68k.org>
+
+>   This script will index a wwwoffle cache and handle incremental
+>   updates examining only changed directories and files.

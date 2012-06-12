@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>ht://Dig WWWOFFLE Recherche locale</title>
+</head>
+<body bgcolor="#eef7ff">
+<h1>
+<a href="http://www.htdig.org"><IMG SRC="/search/htdig/htdig.gif" align=bottom alt="ht://Dig" border=0></a>
+WWWOFFLE - Recherche locale</H1>
+<hr noshade size=4>
+Ce moteur vous permet de faire une recherche sur les pages mises en cache sur
+ce serveur WWWOFFLE.
+<br>
+<p>
+<form method="get" action="/search/htdig/htsearch">
+<font size=-1>
+Contient :<select name=method>
+<option value=and>Tous les mots
+<option value=or>Au moins un mot
+</select>
+Format : <select name=format>
+<option value=builtin-long>Long
+<option value=builtin-short>Court
+</select>
+</font>
+<input type=hidden name=config value="htsearch">
+<input type=hidden name=restrict value="">
+<input type=hidden name=exclude value="">
+<br>
+Rechercher :
+<input type="text" size="30" name="words" value="">
+<input type="submit" value="Cherche !">
+</form>
+<hr noshade size=4>
+
+</body>
+</html>

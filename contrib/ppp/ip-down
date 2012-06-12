@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Copyright Andrew M. Bishop 1997
+#
+
+# To have wwwoffled go offline when a PPP link is disconnected add this to the
+# file /etc/ppp/ip-down (you may need to change the paths).
+
+# Set the WWWOFFLE HTTP proxy server offline.
+if [ -x /usr/local/bin/wwwoffle ]; then
+   /usr/local/bin/wwwoffle -offline -c /etc/wwwoffle/wwwoffle.conf
+fi

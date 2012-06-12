@@ -1,0 +1,84 @@
+                        WWWOFFLE-Meldungen - Version 2.7
+                        ================================
+
+Die HTML-Seiten, die WWWOFLE erstellt, befinden sich nun in diesem Verzeichnis.
+
+Beschreibung der Seiten
+-----------------------
+
+Die Seiten, die in diesem Verzeichnis sind, sind die Meldungen, die von WWWOFFLE selbst
+erstellt werden.
+
+Die Dateien in diesem Verzeichnis beziehen sich jeweils auf eine Meldung, au&szlig;er jene
+mit den Namen *-Head.html, *-Body.html oder *-Tail.html, bei denen es sich um Teile
+von Seiten handelt, die mit anderen zu einer Gesamtseite zusammengesetzt werden.
+
+
+Schreiben von Seiten
+--------------------
+
+Wenn Sie diese Seiten f&uuml;r Ihren Gebrauch &auml;ndern, behalten Sie bitte die folgenden
+Punkte im Auge:
+
+    Der Name wwwoffle sollte klar irgendwo auf der Seite erscheinen.
+    Das wwwoffle-URL-Interface kann sich zwischen den Versionen ver&auml;ndern.
+    Halten Sie sich an die HTML-Spezifikation (siehe http://www.w3.org).
+    Die Dateien m&uuml;ssen im UNIX-Format vorliegen, nicht im MS-DOS-Format (LF, nicht CRLF).
+
+Wenn Sie einige Seiten erstellen, die Sie in der n&auml;chsten Version gerne eingef&uuml;gt sehen w&uuml;rden, 
+teilen Sie es mir bitte mit. Tats&auml;chlich sollten Sie es mir mitteilen, bevor Sie anfangen,
+da vielleicht andere bereits mit gleicher Zielsetzung damit angefangen haben.
+Senden Sie mir keine Seiten, wenn ich Sie nicht darum gebeten habe, da sie sehr umfangreich
+sein k&ouml;nnen.
+
+Ich m&ouml;chte folgende Art von Seiten in Zukunft in wwwoffle integrieren:
+
+    Verbesserte Versionen
+	Bilder
+        Javascript
+	verbesserte Hilfe (Link zu den Hilfe-Seiten/FAQ im Falle eines Fehlers?)
+
+Ich kann diese Seiten, wenn sie erprobt sind, auf der wwwoffle-Webseite sowie
+in der n&auml;chsten Version verf&uuml;gbar machen.
+
+
+Parser-Regeln
+-------------
+
+Der Parser ist eine kleine einfache Mikro-Sprache (zu einfach f&uuml;r eine Makro-Sprache!)
+
+Die folgenen Regeln sind zu beachten:
+
+Klasse-1
+
+$foo                    - wird ersetzt durch den Inhalt der Variablen foo.
+%foo[bar]               - wird ersetzt durch das Ergebnis der Funktion foo mit dem Argument $bar.
+			  Es stehen die Funktionen encode, decode und html zur Verf&uuml;gung.
+
+Klasse-2
+
+$foo=bar                - Setze die Variable foo auf den Wert 'bar'.
+$foo="bar 1"            - Setze die Variable foo auf den Wert 'bar 1'.
+$foo='bar 2'            - Setze die Variable foo auf den Wert 'bar 2'.
+
+Klasse-3
+
+$foo?{ja}{nein}          - wird ersetzt durch 'ja', wenn $foo gesetzt ist, oder durch 'nein', wenn nicht.
+$foo?=bar{ja}{nein}      - wird ersetzt durch 'ja', wenn $foo == bar, oder 'nein', wenn nicht.
+
+
+Variablen- und Funktions-Namen unterscheiden keine Gro&szlig;-/Kleinschreibung, der Rest schon.
+
+Das Klasse-1-Konstrukt kann auf der rechten Seite eines Klasse-2-Konstrukts verwendet werden.
+Klasse-1 und Klasse-2-Konstrukte  k&ouml;nnen in Klasse-3-Konstrukten verwendet werden.
+Klasse-3-Konstrukte d&uuml;rfen nicht verschachtelt werden.
+
+Die Zeichen { und  } m&uuml;ssen als \{ und \} in Klasse-2 und Klasse-3-Konstrukten  geschrieben werden.
+Die Zeichen ' und " m&uuml;ssen gequotet werden, wenn sie in einem Klasse-2-Konstrukt verwendet werden.
+
+Auf dem obersten Niveau (au&szlig;erhalb jedes Konstrukts) werden Zwischenraum-Zeichen
+("whitespaces") vor einem '\' gefolgt von einem Zeilenende ganz gel&ouml;scht, um eine
+einzige lange Zeile zu bilden .
+
+----------
+Andrew M. Bishop, 3. November 2002 

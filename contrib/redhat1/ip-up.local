@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Vikram Goyal (viki@bol.net.in contactviki@netscape.net)
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+# Put WWW offline browser to online mode Or fetch mode. Take your pick.
+
+# Service will be started if not running.
+#/sbin/service wwwoffled online
+
+# Service will be started if not running and put online before fetching.
+/sbin/service wwwoffled fetch
+

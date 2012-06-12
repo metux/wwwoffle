@@ -1,0 +1,55 @@
+--- orig/purge.c	Sun Nov  3 10:36:02 2002
++++ purge.c	Tue Aug 12 17:08:20 2003
+@@ -615,6 +615,9 @@
+ {
+  DIR *dir;
+  struct dirent* ent;
++ char file_deleted=0;
++ char ls_file=0;
++ char UD_file=0;
+ 
+  *remain=0;
+  *deleted=0;
+@@ -665,6 +668,8 @@
+          {
+           int s;
+ 
++          UD_file=1;
++
+           *ent->d_name^='U'^'D';
+           s=stat(ent->d_name,&buf2);
+           *ent->d_name^='U'^'D';
+@@ -686,6 +691,8 @@
+           else
+              filetime=buf.st_atime;
+          }
++       else if (!strcmp(ent->d_name,"wwwoffle_ls")) {                               // Nothing should be done with this file
++         ls_file=1; purge_age=-1; compress_age=-1; buf.st_size=0; buf2.st_size=0; } // and it should not be counted
+        else
+          {
+           PrintMessage(Inform,"Cached file '%s/%s/%s' is not valid (U* or D* file); deleting it.",proto,host,ent->d_name);
+@@ -734,6 +741,8 @@
+           if(!stat(ent->d_name,&buf))
+              *deleted+=Bytes_to_Blocks(buf.st_size);
+ 
++          file_deleted=1;
++
+ #if DO_DELETE
+           if(unlink(ent->d_name))
+              PrintMessage(Warning,"Cannot unlink file '%s/%s/%s' (1) [%!s]; race condition?",proto,host,ent->d_name);
+@@ -758,6 +767,15 @@
+          }
+       }
+    }
++
++ if (ls_file && (file_deleted || UD_file==0) ) {
++#if DO_DELETE
++    if(unlink("wwwoffle_ls"))
++      PrintMessage(Warning,"Cannot unlink 'ls' file in '%s/%s/' [%!s]",proto,host);
++#else
++    PrintMessage(Debug,"unlink 'ls' in (%s/%s/).",proto,host);
++#endif
++    }
+ 
+  closedir(dir);
+  fchdir(fSpoolDir);

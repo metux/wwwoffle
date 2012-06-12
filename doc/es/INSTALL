@@ -1,0 +1,178 @@
+        WWWOFFLE - World Wide Web Offline Explorer - Versión 2.6
+        =========================================================
+
+Se necesitan solo 10 pasos para instalar WWWOFFLE desde el código fuente a
+un programa completamente funcional y probado.  Si está usando una 
+distribución binaria(Win32) entonces debe saltar los tres primeros pasos.
+
+Compilación
+-----------
+
+Los siguiente diez pasos deberían ser suficientes para mostrar WWWOFFLE en 
+ejecución.
+
+1) Edite el Makefile y ponga lo siguiente:
+        El nombre y puerto del servidor (LOCALHOST) - por defecto localhost:8080
+        El camino de instalación (INSTDIR)          - por defecto /usr/local
+        El directorio de almacenamiento (SPOOLDIR)  - por defecto /var/spool/wwwoffle
+        El camino del fichero de configuración (CONFDIR) - por defecto /var/spool/wwwoffle
+        Las opciones del compilador (CC y CFLAGS).
+   (El fichero Makefile incluye algunas opciones específicas para máquinas 
+    no-Linux que pueden necesitar ser descomentadas.)
+
+2) Compile los programas
+     make all
+
+        **** Importante ****
+    Desde esta versión de WWWOFFLE en adelante no proveeré del código C que
+    generan los ficheros de código fuente de lex (*.l). Esto significa que
+    necesitará tener instalada una versión funcional de lex o flex para
+    compilar WWWOFFLE.
+        **** Importante ****
+
+
+3) Instale los programas y cree el directorio de almacenamiento
+     make install
+
+        **** Importante ****
+    Si está usando WWOFFLE debería parar la versión actualmente instalada
+    antes de instalar esta nueva versión
+        **** Importante ****
+    
+   Debe mirar cualquier salida de make que este precedida por la palabra
+   'WWWOFFLE:' esta es información importante e indica que el proceso de 
+   instalación a encontrado algo que requiere de usted durante la
+   instalación.
+
+        **** Importante * Si actualmente usa una versión 2.0/2.1 ****
+  *DEBE* ejecutar el programa endian-cache para convertir su caché desde el 
+  formato roto de la versión 2.0/2.1 al formato de la versión 2.2.  Lea el
+  fichero CONVERT para encontrar detalles.
+        **** Importante * Si actualmente usa una versión 2.0/2.1 ****
+
+        **** Importante * Si actualmente usa una versión 1.x ****
+    *DEBE* ejecutar el programa upgrade-cache para convertir su caché desde el 
+    formato de la versión 1.x al de la versión 2.x.  Lea el fichero
+    UPGRADE para encontrar detalles.
+        **** Importante * Si actualmente usa una versión 1.x ****
+
+
+Configuración
+-------------
+
+4) Edite el fichero de configuración
+   wwwoffle.conf
+
+        **** Importante * Si debe usar un proxy HTTP externo ****
+    Necesitará añadir el nombre del proxy y el puerto al fichero de 
+      configuración wwwoffle.conf, léalo para tener más instrucciones.
+        **** Importante * Si debe usar un proxy HTTP externo ****
+
+        **** Importante * Si actualmente usa una versión 1.x ****
+    El fichero de configuración wwwoffle.conf ha cambiado, el fichero 
+    CHANGES.CONF explica las diferencias desde la versión 1.3.
+        **** Importante * Si actualmente usa una versión 1.x ****
+
+        **** Importante * Si actualmente usa una versión 2.x ****
+    El fichero de configuración wwwoffle.conf ha cambiado, el fichero 
+    CHANGES.CONF explica las diferencias y upgrade-config.pl puede arreglarlo.
+        **** Importante * Si actualmente usa una versión 2.x ****
+
+5) Arranque el demonio WWWOFFLE.
+   wwwoffled -c wwwoffle.conf
+
+6) Arranque su Navegador Web y ponga localhost:8080 como el proxy.
+   Desactive la caché entre sesiones en el navegador.
+
+
+Prueba
+------
+
+7) a) Conecte a internet
+   b) Diga al demonio WWWOFFLE que está conectado
+        wwwoffle -online
+   c) Empiece a navegar
+   d) Diga al demonio WWWOFFLE que está desconectado
+        wwwoffle -offline
+   e) Desconecte de internet
+
+8) Vuelva atrás y vea las páginas sin estar conectado, esta vez siga diferentes
+   enlaces (Verá un mensaje del servidor WWWOFFLE en el navegador).
+
+9) a) Conecte a internet
+   b) Diga al demonio WWWOFFLE que está conectado
+        wwwoffle -online
+   c) Diga al demonio WWWOFFLE que recoja nuevas páginas
+        wwwoffle -fetch
+   d) Diga al demonio WWWOFFLE que está desconectado
+        wwwoffle -offline
+   e) Desconecte de internet
+
+10)a) Vaya a http://localhost:8080/index/ y busque las páginas bajadas 
+      anteriormente.
+   b) Vea la páginas nuevas que acaba de descargar.
+
+
+
+
+Opciones de Compilación
+-----------------------
+
+En el fichero wwwoffle.h hay un número extra de opciones de compilación
+que quizás quiera cambiar.
+
+
+Las primeras tres son las opciones por defecto en la sección StartUp del 
+fichero de configuración wwwoffle.conf.  También son usadas como las opciones 
+por defecto para el programa wwwoffle.
+
+/*+ El número de puerto a usar por el demonio proxy http. +*/
+#define DEF_HTTP_PORT 8080
+
+/*+ El número de puerto a usar para el control de WWWOFFLE. +*/
+#define DEF_WWWOFFLE_PORT 8081
+
+/*+ El directorio de almacenaje por defecto. +*/
+#define DEF_SPOOL "/var/spool/wwwoffle"
+
+/*+ El directorio del fichero de configuración por defecto. +*/
+#define DEF_CONF "/var/spool/wwwoffle"
+
+
+Las siguientes cuatro limitan el número de conexiones que wwwoffled aceptará
+de una vez y el número de servidores que abrirá en respuesta a esto. Un total
+de MAX_SERVERS, incluyendo hasta MAX_FETCH_SERVERS cuando 'wwwoffle -fetch' 
+está siendo ejecutado. 
+Estas opciones están en wwwoffle.conf, pero los valores máximos absolutos 
+pueden ser cambiados aquí así como los valores por defecto.
+
+/*+ El número máximo de servidores a abrir en total. +*/
+#define MAX_SERVERS 64
+/*+ El número por defecto de servidores a abrir. +*/
+#define DEF_MAX_SERVERS 8
+
+/*+ El máximo absoluto de servidores a abrir para descargar páginas previamente
+    pedidas. +*/
+#define MAX_FETCH_SERVERS 48
+/*+ El número por defecto de servidores a abrir para descargar páginas. +*/
+#define DEF_MAX_FETCH_SERVERS 4
+
+
+El siguiente es el número de directorios "prevtime" que se crearán para permitir
+un historial de las últimas veces que se estuvo conectado.  Si este número
+es cambiado necesita también editar los ficheros
+/var/spool/wwwoffle/html/messages/IndexLastTime-Tail.html y
+IndexLastOut-Tail.html para hacer visibles los enlaces.
+
+/*+ El número de directorios "prevtime" a crear (historial de últimas veces). +*/
+#define NUM_PREVTIME_DIR 3
+
+
+El siguiente el el tamaño de la memoria intermedia que se usará para la
+creación de directorios y ficheros en la caché (No olvide el '0' a la
+izquierda para especificar base octal).
+
+/*+ Los permisos por defecto al crear directorios. +*/
+#define DEF_DIR_PERM  0755
+/*+ Los permisos por defecto al crear ficheros. +*/
+#define DEF_FILE_PERM 0644

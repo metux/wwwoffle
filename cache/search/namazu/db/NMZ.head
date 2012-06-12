@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<!-- LINK-REV-MADE -->
+<link rev=made href="mailto:foobar@namazu.org">
+<!-- LINK-REV-MADE -->
+<title>Namazu: a Full-Text Search Engine</title>
+<style type="text/css"><!--
+  strong.keyword { color: Red; }
+  p.example      { text-indent: 1em; 
+                   color: Navy;
+		   font-weight: bold;
+                   font-family: monospace; }
+  code           { color: Navy;
+                   font-family: monospace; }
+  code.example   { color: Navy;
+		   font-weight: bold;
+                   font-family: monospace; }
+  code.operator  { color: Navy;
+                   font-family: monospace; 
+		   font-weight: bold; }
+--></style>
+</head>
+<body lang="en">
+<h1>Namazu: a Full-Text Search Engine</h1>
+<p>
+This index contains <!-- FILE --> 0 <!-- FILE --> documents and
+<!-- KEY --> 0 <!-- KEY --> keywords. 
+</p>
+<p>
+<strong>Last modified: <!-- DATE --> date <!-- DATE --></strong>
+</p>
+<hr>
+<form method="GET" action="{cgi}">
+<p>
+<strong>Query:</strong> 
+<input type="text" name="query" size="40">
+<input type="submit" value="Search!">
+<!-- <input type="hidden" name="idxname" value="foobar"> -->
+<a href="{cgi}">[How to search]</a>
+</p>
+<p>
+<strong>Display:</strong>
+<select name="max">
+<option value="10">10
+<option selected value="20">20
+<option value="30">30
+<option value="50">50
+<option value="100">100
+</select>
+<strong>Description:</strong>
+<select name="result">
+<option selected value="normal">normal
+<option value="short">short
+</select>
+<strong>Sort:</strong>
+<select name="sort">
+<option selected value="score">by score
+<option value="date:late">by date in late order
+<option value="date:early">by date in early order
+<option value="field:subject:ascending">by title in ascending order
+<option value="field:subject:descending">by title in descending order
+<option value="field:from:ascending">by author in ascending order
+<option value="field:from:descending">by author in descending order
+<option value="field:size:ascending">by size in ascending order
+<option value="field:size:descending">by size in descending order
+<option value="field:uri:ascending">by URI in ascending order
+<option value="field:uri:descending">by URI in descending order
+</select>
+</p>
+<!--
+<p>
+<strong>Target:</strong>
+<ul>
+<li><input type="checkbox" name="idxname" value="foo" checked>foo 
+<li><input type="checkbox" name="idxname" value="bar">bar
+<li><input type="checkbox" name="idxname" value="baz">baz
+</ul>
+</p>
+-->
+</form>

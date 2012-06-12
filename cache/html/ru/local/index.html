@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<TITLE>WWWOFFLE Встроенный Веб-Сервер</TITLE>
+<LINK href="/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+<H1 align="center">WWWOFFLE Встроенный Веб-Сервер</H1>
+
+Все URL к WWWOFFLE (порт 8080), которые ссылаются на каталог '/local/'
+берутся из файлов в подкаталоге 'local' каталога spool.
+Тем самым предоставляется доступ к простым веб-страницам не имея
+отдельного веб-сервера. CGI сценарии и список каталога не поддерживаются.
+Для этих файлов используется MIME тип, заданный в конфигурационном файле.
+
+<p>
+<dl>
+  <dt><b>Внимание</b>
+  <dd>Локальный веб-сервер будет переходить по символьным ссылкам, но
+      доступ разрешен тоьлко для файлов с правами чтения для всех. По проблемам
+      безопасности смотрите <a href="/FAQ.html">Вопросы-и-Ответы</a>.
+</dl>
+
+</BODY>
+</HTML>

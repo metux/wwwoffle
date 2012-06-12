@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+WWWOFFLE : Variables disponibles (mettre le prefixe '$').
+
+localurl  = Le URL du serveur sur lequel wwwoffled tourne (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = L'URL demande (='$url').
+
+$decurl=%decode[url]
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Fichier Verouill&eacute;</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE - Fichier Verrouill&eacute;</H1>
+
+<div class="wwwoffle-message" align="center">
+L'URL
+<p class="wwwoffle-url">
+<b><tt>$decurl</tt></b>
+</p>
+est actuellement utilis&eacute; par un autre processus de WWWOFFLE.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Help</h2>
+
+<div class="wwwoffle-inline-help">
+La page que vous avez demand&eacute; est actuellement modifi&eacute;e par un autre
+processus ; le rechargement de cette page ne s'effectuera que lorsque l'autre processus
+aura ferm&eacute; le fichier.
+<p>
+Pour s'assurer qu'il n'y a qu'un seul processus &agrave; pouvoir
+modifier au m&ecirc;me moment un fichier du cache, WWWOFFLE utilise des
+fichiers verrous (lock files). Lorsqu'un processus modifie un fichier du
+cache, il cr&eacute;e un fichier verrou pour informer les autres processus. Le
+fichier ne pourra donc &ecirc;tre acc&eacute;d&eacute; par un autre processus que lorsque
+le premier aura fini son travail.
+<p>
+Si vous rencontrez ce message d'erreur &agrave; chaque fois (m&ecirc;me
+hors-ligne) que vous voulez consulter un fichier, il est possible
+qu'un fichier verrou existe mais qu'il ne soit associ&eacute; &agrave; aucun
+processus. Cela ne peut arriver que lorsque celui qui modifie la
+page se termine anormalement. Il est donc important que vous laissiez
+le temps &agrave; tous les processus WWWOFFLE de se terminer avant de les
+interrompre ou d'arr&ecirc;ter la machine. Pour supprimer un fichier verrou,
+il est n&eacute;cessaire de purger le cache de WWWOFFLE.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Page d'accueil</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

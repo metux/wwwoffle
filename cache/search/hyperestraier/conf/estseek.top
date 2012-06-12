@@ -1,0 +1,80 @@
+<div class="logo">
+<h1 class="title">Hyper Estraier</h1>
+<div class="caption">a full-text search system for communities</div>
+</div>
+<div class="help">
+<h2>What is This?</h2>
+<p>This is a full-text search system.  You can search for documents including some specified words.</p>
+<h2>How to Use</h2>
+<p>Input search phrase into the field at the top of the page.  For example, if you search for documents including "computer", input the following.</p>
+<pre>computer
+</pre>
+<p>If you search for documents including both of "network" and "socket", input the following.</p>
+<pre>network socket
+</pre>
+<p>It is the same as the following.</p>
+<pre>network &amp; socket
+</pre>
+<p>If you search for documents including "network" followed by "socket", input the following.</p>
+<pre>"network socket"
+</pre>
+<p>If you search for documents including one or both of "network" and "socket", input the following.</p>
+<pre>network | socket
+</pre>
+<p>If you search for documents including "network" but without "socket", input the following.</p>
+<pre>network ! socket
+</pre>
+<p>Note that the priority of "<kbd>|</kbd>" is higher than that of space, "<kbd>&amp;</kbd>", and "<kbd>!</kbd>".  So, the following is to search for documents including one of "F1", "F-1", "Formula One", and including one of "champion" and "victory".</p>
+<pre>F1 | F-1 | "Formula One" &amp; champion | victory
+</pre>
+<h2>Search with an Attribute</h2>
+<p>If you search for documents whose title includes "introduction", input the following into "with [...]" field.</p>
+<pre>@title STRINC introduction
+</pre>
+<p>If you want to ignore case, input the following.</p>
+<pre>@title ISTRINC introduction
+</pre>
+<p>If you search for documents whose size is less than 10000 bytes, input the following.</p>
+<pre>@size NUMLT 10000
+</pre>
+<p>The following attributes are supported.</p>
+<ul>
+<li>@uri : the URI (URL)</li>
+<li>@title : the title, as with "Subject" of mail</li>
+<li>@author : the name of the author, as with "From" of mail</li>
+<li>@cdate : the creation date, as with "Date" of mail</li>
+<li>@mdate : the modification date, as with "Date" of mail</li>
+<li>@size : the size (file size)</li>
+</ul>
+<p>The following operators for attributes are supported.</p>
+<ul>
+<li>STREQ : is equal to the string</li>
+<li>STRNE : is not equal to the string</li>
+<li>STRINC : includes the string</li>
+<li>STRBW : begins with the string</li>
+<li>STREW : ends with the string</li>
+<li>NUMEQ : is equal to the number</li>
+<li>NUMNE : is not equal to the number</li>
+<li>NUMLT : is less than the number</li>
+<li>NUMLE : is less than or equal to the number or date</li>
+<li>NUMGT : is greater than the number</li>
+<li>NUMGE : is greater than or equal to the number or date</li>
+</ul>
+<p>If an operator is leaded by "!", the meaning is inverted.  If an operator is leaded by "I", case of the value is ignored.</p>
+<h2>Order of the Result</h2>
+<p>By default, the order of the result is descending by score.  If you want ascending order of title, input the following into the "order by [...]" field.</p>
+<pre>@title STRA
+</pre>
+<p>If you want descending order of the size, input the following.</p>
+<pre>@size NUMD
+</pre>
+<p>The following operators for order are supported.</p>
+<ul>
+<li>STRA : ascending by string</li>
+<li>STRD : descending by string</li>
+<li>NUMA : ascending by number or date</li>
+<li>NUMD : descending by number or date</li>
+</ul>
+<h2>Information</h2>
+<p>See <a href="http://hyperestraier.sourceforge.net/">the project site</a> for more detail.</p>
+</div>

@@ -1,0 +1,243 @@
+            WWWOFFLE - World Wide Web Offline Explorer - Versión 2.6
+            ========================================================
+
+
+Esta es la lógica que sigue WWWOFFLE cuando está analizando la sintaxis de
+las URLs.  Esto es complicado debido a las diferentes reglas que aparecen en
+varios RFSs y los muchos lugares en el programa en el que se procesan las
+URLs.  También se describe el manejo de las URLs de comandos de WWWOFFLE
+usando argumentos o datos de un formulario.
+
+
+Se ha puesto mucho esfuerzo en la versión 2.6 de WWWOFFLE para asegurar que
+el manejo de URLs es mucho más limpio y menos propenso a errores.  Los
+lugares en los que se han hecho cambios comparados con las versiones
+anteriores son notables.
+
+
+RFCs importantes
+----------------
+
+Los RFCs que son importantes para este README son:
+
+RFC1738 - Uniform Resource Locators (URL)
+RFC1808 - Relative Uniform Resource Locators
+RFC1866 - Lenguaje de Marcas de Hipertexto - 2.0
+RFC1945 - Protocolo de Transferencia de Hipertexto -- HTTP/1.0
+RFC2616 - Protocolo de Transferencia de Hipertexto -- HTTP/1.1
+
+
+
+Formato de URLs en WWWOFFLE
+---------------------------
+
+en WWWOFFLE todas las URLS son gestionadas desde un tipo llamado URL que es
+una definición de tipo para una estructura que contiene la información. El
+tipo está definido en misc.h.  Toda la manipulación de la información de las
+URLs se realiza usando este tipo URL. La conversión desde cadenas de texto
+al tipo URL es casi la primera acción que se realiza en las peticiones
+entrantes.
+
+La estructura general para una URL en WWWOFFLE es la siguiente:
+
+<protocolo>://[<useario>:<contraseña>@]<sevidor>[:<puerto>]/<ruta>[?<argumentos>]
+
+
+Dados los diferentes métodos en los cuales una URLs puede codificarse es posible
+que más de una cadena se refiera al mismo objeto URL.
+
+
+El ejemplo más común es el codificado URL donde los caracteres pueden ser 
+reemplazados por su forma hexadecimal precedida por el carácter '%'. Por
+ejemplo ':' es equivalente a '%3a'.  El proceso de decodificar es
+no-ambiguo. Cualquier cadena codificada como URL puede ser decodificada para
+dar una representación usable.  El proceso de codificado URL es ambiguo
+porque diferentes conjuntos de caracteres necesitan ser codificados en
+diferentes partes de la URL.  También, los datos resultantes de un
+formulario que use el método POST o los argumentos de una URL usan una forma
+modificada de la codificación URL donde el carácter espacio es reemplazado
+por un signo más (+).
+
+La naturaleza de la codificación y decodificación URL es tal que debe ser 
+realizada en el momento adecuado con los datos adecuados.  Si el codificado
+URL se realiza dos veces sobre los mismos datos se pueden producir errores
+ya que los caracteres '%' insertados en la primera codificación será
+codificados la segunda vez.  Argumentos parecidos se aplican a la
+decodificación múltiple.
+
+
+
+Conversión de Cadena de texto a URL
+-----------------------------------
+
+Una cadena que contiene una URL no analizada es convertida al tipo URL
+llamando a la función SplitURL().  Esta analizará la cadena en un tipo de
+datos URL y lo devolverá.  Una parte del tipo de datos URL es la forma
+canónica de la URL que será usada en los siguientes procesos.
+
+Las reglas que se aplican a este proceso son las siguientes( El analizado 
+se realiza mediante heurística para manejar URLs erróneas):
+
+protocolo
+- - - - -
+
+1) Si no existe la parte de protocolo entonces protocolo=http
+
+2) En otro caso el protocolo se extrae de la cadena.
+
+   a) El protocolo no es sensible a mayúsculas o minúsculas. Para evitar 
+      confusión se convierte a minúsculas.
+
+
+nombre de usuario y contraseña
+- - - - - - - - - - - - - - - -
+
+1) Si no hay nombre de usuario ni contraseña. username=NULL, password=NULL.
+
+2) En otro caso el usuario y/o la contraseña se extraerá de la cadena.
+
+   a) En la sección 3.1 del RFC1738 se especifica que los caracteres '@',
+      ':' y '/' en el nombre de usuario o contraseña deben estar en
+      codificación URL.
+
+   b) Las cadenas de texto de usuario y contraseña se convierten usando
+      URLDecodeGeneric().
+
+   c) Las cadenas de texto de usuario y contraseña se convierten usando
+      URLEncodePassword() antes de volverlas a poner en la cadena de texto
+      URL canónica.
+
+
+Servidor
+- - - - -
+
+1) Si el primer carácter es '/' es una URL local donde servidor=LocalHost
+   (entrada de wwwoffle.conf).
+
+2) En otros casos el nombre de servidor se extrae de la cadena de texto.
+
+   a) El nombre de servidor no es sensible a mayúsculas y minúscula y para 
+      evitar confusión se convierte a minúsculas.
+
+
+puerto
+- - - -
+
+se debe notar que en la URL decodificada el número de puerto no se puede 
+considerar como una entidad separada, sino parte del nombre del servidor.
+
+1) Si no se especifica puerto no se hace nada.
+
+2) Si se especifica el puerto por defecto del protocol (p.e el 80 de http)
+   el puerto se quita.
+
+3) En otro caso el número de puerto de la cadena se deja.
+
+
+ruta
+- - -
+
+1) Si no existe la parte de la ruta entonces pathname='/'.
+
+2) En otro caso la ruta se extrae de la cadena de texto.
+
+   a) La ruta puede haber sido URL-codificada (vea RFC1738) de diferentes
+      formas por diferentes clientes.  WWWOFFLE requiere un formato
+      canónico ya que es el que usa para formar el nombre de fichero
+      en la caché.
+
+   b) La ruta se convierte usando la función URLDecodeGeneric().
+
+   c) La ruta se convierte usando la función URLEncodePath().
+
+
+parámetros
+- - - - - -
+
+1) Si no se dan argumentos entonces arguments=NULL.
+
+2) En otro caso los argumentos se extraen de la cadena de texto.
+
+   a) Los parámetros pueden haber sido URL-codificados (vea RFC1738) de
+      diferentes formas por diferentes clientes.  WWWOFFLE requiere un
+      formato canónico ya que es el que usa para formar el nombre de
+      fichero de la caché
+
+   b) Los argumentos se convierten a una forma canónica usando
+      URLRecodeFormArgs().
+
+
+| Esto es un cambio desde la versión 2.5, ya que anteriormente los 
+| parámetros eran manejados como parte de la ruta.
+
+
+
+argumentos
+- - - - - -
+
+El nombre argumentos es el que yo uso. En los RFCs son llamados 'pregunta' 
+(query)
+
+1) Si no se dan argumentos entonces arguments=NULL.
+
+2) En otro caso los argumentos se extraen de la cadena de texto.
+
+   a) Los argumentos pueden haber sido URL-codificados (vea RFC1866) de diferentes
+      formas por diferentes clientes. WWWOFFLE requiere un formato canónico
+      ya que es el que usa para formar el nombre de fichero de la caché.
+
+   b) Los argumentos se convierten a una forma canónica usando
+      URLRecodeFormArgs().
+
+
+| Esto es un cambio desde la versión 2.5, ya que anteriormente no se hacía
+| codificación/decodificación de los argumentos. Esto conllevaba el problema
+| de que la misma URL podía referirse desde diferentes nombres debido a
+| diferencias en la codificación URL.
+
+
+
+Conversión de URL a Cadena de texto
+-----------------------------------
+
+En la mayor parte de los casos no se necesita una conversión de URL a cadena
+ya que la conversión de Cadena a URL habrá creado una versión canónica de la
+cadena para la URL actual.  En los lugares en los que se necesita crear una
+URL desde cero se tiene cuidado de asegurarse que el válida, ya sea por
+inspección o realizando conversión de Cadena a URL y usando la cadena
+contenida en el resultado.
+
+
+
+Usando argumentos URL o datos de un formulario con el método POST
+-----------------------------------------------------------------
+
+Muchos de los índices y otra sub-páginas que genera WWWOFFLE contienen
+información que está codificada en los argumentos de la URL o devuelta
+usando el método POST en un formulario.
+
+El formato de los argumentos de una URL o dato de formulario son los
+siguientes ( '&' y ';' se pueden intercambiar):
+
+<nombre1>=<dato1>&<nombre2>=<dato2>&<nombre3>=<dato3>&...
+
+Cada uno de los nombres y los datos puede estar URL-codificado (ya que los
+argumentos en conjunto están URL-codificados excepto los caracteres '&', ';'
+y '=').  Esto significa que deben ser URL-decodificados antes de ser usados.
+
+Se usa la función SplitFormArgs() para separar la cadena en una lista de
+funciones que separen las cadenas <nombre>=<dato>. No se realiza
+URL-codificación/decodificación ya que se asume que los argumentos ya han
+sido reconvertidos (vea más arriba) y que los datos del formulario pueden
+ser reconvertidos usando URLRecodeFormArgs() antes de ser usados.
+
+Cuando se le pasa una URL a una función de WWWOFFLE en los argumentos de la
+URL o formulario esta debe ser URL-codificada.  Por lo tanto debe ser
+decodificada antes de ser usada.  Se tiene que tener cuidado para asegurase
+de que se hace correctamente o las URLs estarán corruptas.
+
+
+
+----------------
+Andrew M. Bishop
+21 de Agosto de 2000

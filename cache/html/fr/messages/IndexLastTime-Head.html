@@ -1,0 +1,31 @@
+<!-- Ceci n'est que l'en-tete de l'index, le contenu est different pour chaque index -->
+
+<!--
+
+WWWOFFLE : Variables disponibles (mettre le prefixe '$').
+
+number     = La version des pages, lasttime='', prevtime='0'-'3' (='$number').
+total      = Le nombre total de pages pour cet index (='$total').
+date       = La date de la derniere connexion (='$date').
+
+-->
+
+$number?{<h2>Pages Captur&eacute;es pendant l'Avant-Derni&egrave;re Connexion ($number)</h2>}{<h2>Pages captur&eacute;es pendant la Derni&egrave;re Connexion</h2>}
+
+Date de l'index : $date
+<p>
+
+$total?=0{<b>Aucune page</b>}{<b>$total pages</b>}
+
+<p>
+
+$delete?{$totaldelete=$total}{$totaldelete=0}
+$totaldelete?=0{}
+{
+<form action="/control/delete-multiple/url" method=post>
+}
+
+<ul>
+
+<!-- Ceci n'est que l'en-tete de l'index, le contenu est different pour chaque index -->
+

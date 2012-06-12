@@ -1,0 +1,165 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Versión 2.6
+          ========================================================
+
+
+El programa ht://Dig es un programa de indexado y búsqueda de Internet 
+libre (GPL). La documentación de ht://Dig lo describe como sigue:
+
+        El sistema ht://Dig es un completo sistema indexador y de búsqueda
+        de la red mundial de páginas web para dominios pequeños o redes
+        locales.  Este sistema no está concebido para reemplazar la
+        a los servidores de búsqueda de Internet como Lycos, Infoseek,
+        Webcrawler y Altavista.  Está diseñado para cubrir las necesidades
+        de búsqueda de una compañía, campus o hasta una subsección
+        particular de un sitio web.
+
+        En contraposición a algunos motores de búsqueda basados en WAIS
+        o en servidor web, ht://Dig puede trabajar con varios servidores
+        web en un mismo sitio.  El tipo de esto servidores web no importa
+        mientras entiendan el protocolo HTTP 1.0.
+
+        ht://Dig fue desarrollado en la universidad del estado de San
+        Diego para buscar en los diferentes servidores web de la red
+        del campus.
+
+
+He escrito WWWOFFLE de manera que ht://Dig pueda indexar todas las páginas 
+de la caché. Hay tres pasos a seguir al usar el programa como se describe 
+en este documento; Instalación, Recopilación, y Búsqueda.
+
+
+Cómo Instalar ht://Dig
+----------------------
+
+Nota: Si ya tiene la versión 3.1.0b4 o superior de htdig instalada y 
+      funcionando puede saltarse esta sección.
+
+Para poder usar este programa lo debe instalar. Las instrucciones de abajo 
+son una guía paso por paso de este proceso asumiendo que usa la versión
+3.1.0b4 de ht://Dig. Las versiones posteriores también deberían funcionar.
+
+1) Coja el código fuente de ht://Dig 
+
+Baje el código fuente de los programa ht://Dig de
+
+        http://www.htdig.org/files/ 
+
+
+2) Desempaquete el código fuente
+
+Use
+
+        tar -xvzf htdig-3.1.0b4.tar.gz
+
+para crear el directorio htdig-3.1.0b4 con el código fuente del programa.
+
+
+3) Configure el programa ht://Dig
+
+Muévase al directorio htdig-3.1.0b4 y ejecute el programa de configuración
+
+        cd htdig-3.1.0b4
+        ./configure
+
+4) Compile ht://Dig
+
+Ejecute make y compile htdig
+
+        make
+        make install
+
+Esto lo compilará e instalará.  Cualquier problema en este paso requiere de la
+lectura de la documentación de ht://Dig.
+
+
+Cómo Configurar WWWOFFLE para trabajar con ht://Dig
+---------------------------------------------------
+
+Los ficheros de configuración de los programas ht://Dig que usa WWWOFFLE se 
+habrán instalado en el directorio /var/spool/wwwoffle/html/search/htdig/conf 
+cuando instaló WWWOFFLE.  Los guiones usados para ejecutar los programas 
+htdig se habrán instalado en /var/spool/wwwoffle/html/search/htdig/scripts 
+cuando se instaló WWWOFFLE.
+
+Estos ficheros son correctos si la información en el 'Makefile' de 
+WWWOFFLE (LOCALHOST y SPOOLDIR) se puso adecuadamente. Compruébelo, debe
+tener el directorio almacén y el nombre del servidor proxy y el puerto
+especificados correctamente.
+
+También debe comprobar que los programas de ht://Dig están en la variable PATH
+(puede editar la variable PATH si no están en /usr/local/bin).  El proceso de
+mezcla puede usar mucho espacio en el disco duro cuando se ejecute el programa
+de ordenación, puede cambiar el directorio temporal con la variable TMPDIR.
+
+
+La Base de Datos Difusa
+-----------------------
+
+Los programas ht://Dig usan una base de datos difusa con terminaciones de 
+palabra y sinónimos. Esta se necesita crear una sola vez. Hay un fichero que
+viene con WWWOFFLE que hace esto mismo.
+
+        /var/spool/wwwoffle/html/search/htdig/scripts/wwwoffle-htfuzzy
+
+Si ya ha instalado y ejecutado ht://Dig anteriormente seguramente ya haya hecho
+este paso y no se requiere hacerlo más.
+
+Nota: Cuando haga esto tardará *mucho* tiempo ya que produce dos bases de
+      datos que htsearch usa para ayudar en el emparejamiento de palabras.
+
+Recopilación y Unión
+--------------------
+
+Recopilación es el nombre que se le da al proceso de búsqueda a través de
+las páginas web para hacer una lista de palabras.  Unión es el proceso de
+convertir la lista de palabras sin formato en una mase de datos en la que se
+puede buscar.
+
+La instalación de ht://Dig incluye un guión llamado 'rundig' que demuestra
+como tiene que funcionar la recopilación y la unión.  Para que funcione con 
+WWWOFFLE he realizado mis propios guiones que se deben usar en vez de los 
+otros.
+
+        /var/spool/wwwoffle/html/search/htdig/scripts/wwwoffle-htdig-full
+        /var/spool/wwwoffle/html/search/htdig/scripts/wwwoffle-htdig-incr
+        /var/spool/wwwoffle/html/search/htdig/scripts/wwwoffle-htdig-lasttime
+
+El primero de los guiones realizará una búsqueda e indexado completos
+de todas las URLs en el caché.  El segundo hará una búsqueda incremental 
+y solo indexará aquellas palabras que hayan cambiado desde que se hizo la 
+última búsqueda completa.  El tercero añadirá los ficheros del índice 
+"Última Vez" a la base de datos.
+
+Desafortunadamente debido a la forma en la que el programa htmerge funciona,
+tardará prácticamente lo mismo la búsqueda incremental o la de "Última Vez" 
+que la completa. La única diferencia es que la búsqueda incremental solo 
+accede a los ficheros de la caché de WWWOFFLE que han cambiado.
+
+
+Búsqueda
+--------
+
+La página de búsqueda de ht://Dig se encuentra en 
+http://localhost:8080/search/htdig/ y está enlazada desde la 
+"Página de Bienvenida". La palabra o palabras que desee buscar deben ser 
+introducidas aquí.
+
+Este formulario llama al guión
+
+        /var/spool/wwwoffle/html/search/htdig/scripts/wwwoffle-htsearch
+
+para que haga una búsqueda por lo que lo puede editar y modificar si lo cree
+conveniente.
+
+
+Gracias a
+---------
+
+Quiero dar las gracias al mantenedor de htdig 
+(Geoffrey.R.Hutchison@williams.edu)
+por la ayuda prestada con htdig y por aceptar la inclusión de mis parches 
+y comentarios en el programa htdig.
+
+
+Andrew Bishop
+10 de Enero de 1999

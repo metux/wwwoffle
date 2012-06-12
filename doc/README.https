@@ -1,0 +1,185 @@
+            WWWOFFLE - World Wide Web Offline Explorer - Version 2.9
+            ========================================================
+
+
+This README describes how HTTPS connections work, the relationship of HTTPS to
+SSL/TLS and how certificates work.  More detail can be found in lots of places
+on the internet.
+
+The HTTPS protocol is a secure version of the HTTP protocol that is used for
+transmitting web pages from the server to the browser.  To allow the server to
+distinguish between them a different port number is used.  By default HTTP will
+use port 80 and HTTPS will use port 443.  WWWOFFLE will use port 8080 by default
+for HTTP connections and when compiled with the GNUTLS library it will use port
+8443 by default for HTTPS connections.
+
+An HTTPS connection is just an HTTP connection but using SSL (Secure Socket
+Layer) or TLS (Transport Layer Security) to encrypt and authenticate the data
+between the server and the client.  To be able to make a secure connection
+there are various things that must be performed and options that can be used on
+top of this for extra security.
+
+
+Essential Security
+------------------
+
+The essential feature of a secure connection is that the server and client can
+exchange data without anybody else being able to find out what the data is.
+This means that even though the data that it transmitted goes through an
+insecure network it has been encrypted so that nobody else can decode it.  The
+link must also be protected against an attacker being able to modify the data,
+either be replacing the real data, adding more data or deleting data.
+
+To establish a secure link the steps that are taken by the server and the client
+are the following:
+
+    Agree on an encryption algorithm that both understand.
+    Exchange a secret key to use with the encryption.
+
+The exchange of the encryption key must be performed so that anybody that has
+visibility of the data being transmitted cannot determine the key.  There are
+several methods for doing this, Diffie-Hellman key exchange is one, RSA
+public/private key encryption is another.
+
+After these steps the data on the link can be encrypted with the chosen
+algorithm and the chosen secret key.
+
+
+Server Authentication
+---------------------
+
+An optional feature that is generally used for HTTPS is to have the server
+authenticate itself to the client so that the client can be sure that the server
+is the one it claims to be.  This uses certificates and public/private key
+cryptography to allow certificates to be signed by trusted certificate
+authorities.  If the browser trusts the certificate authority then it can also
+trust any certificate that has been signed by that certificate authority.
+
+
+Optional Client Authentication
+------------------------------
+
+As a further check on the link the server can require that the client
+authenticates itself.  This is supported in most browsers although it is rarely
+used.  Generally only bank or government HTTPS servers require this type of
+authentication.  A certificate must be loaded into the browser to identify the
+user when connected to the server.  The authentication is performed in the same
+way that the server authenticates itself as described above.
+
+
+
+Certificates
+------------
+
+With SSL and TLS the certificates that are used are defined as X509 objects.
+This X509 object contains information about who the certificate represents (the
+name, and location of the entity), the validity of the certificate (start date
+and end date), a version number and serial number and what the certificate is
+for.
+
+For each certificate there is also a public and private key that is created at
+the same time.  The public key is included in the certificate and the
+certificate contains information that can only be created by somebody with
+knowledge of the private key.  Using the public key it is possible to verify
+that the certificate really does belong to the person that knows the private
+key.
+
+The certificate will also be signed by a certificate authority to make it
+useful.  When a certificate has been signed by a certificate authority the
+contents cannot be changed.  If the certificate was changed then this would
+invalidate the certificate authority's signature.  The certificate authority's
+signature can be checked by using the certificate authority's public key.  All
+that an unsigned certificate proves is that the person that created it knows the
+private key.  It does not prove that the person that created it is who they say
+they are.
+
+
+Creating Certificates
+---------------------
+
+A certificate authority will create a master certificate whose usage is
+certificate signing and will then sign that certificate themselves.  This self
+signed certificate is important since it is the root of the chain of trust that
+ends in the browser.  The certificate authority must make sure that this
+certificate is made publicly available, and in particular that it is included
+with all browsers.
+
+The operator of a server who wants to be trusted by its users will create their
+own certificate with the information about themselves and set the usage of the
+certificate to be encryption.  This certificate will be submitted to a
+certificate authority who will sign it with their private key that belongs to
+the master certificate.  This signed certificate is then returned to the server
+operator for use.
+
+
+Trust
+-----
+
+The server can use this signed certificate during HTTPS connections.  The browser
+will be able to use the certificate authority's public key contained in the
+certificate authority's certificate to verify the identity of the server.  This
+process relies on the browser trusting the certificate authority and the
+certificate authority trusting the server operator.
+
+To see the list of certificate authorities that are included in Firefox (version
+1.0x was current at the time of writing this) select from the menu Edit ->
+Preferences (or Tools -> Options on MS Windows).  In the dialog box select the
+"Advanced" tab and go down to "Certificates" and select "Manage Certificates".
+In the certificate manager dialog box select "Authorities".  There will be a
+long list of certificates, many of these are certificate authorities for signing
+other server certificates.
+
+When you make a connection to a server that has a certificate signed by any of
+these certificate authorities then your browser will not give you a warning.  If
+the server that you visit has a certificate that is signed by a different
+certificate authority then the browser will warn you.  This warning only means
+that you cannot be sure who is operating the server that you have connected to.
+The data that is transmitted between you and the server will be encrypted even
+if the certificate is not trusted.
+
+If there are any certificate authorities that are listed in your browser that
+you do not trust then there is the risk of sending data to the wrong server.
+When a server sends you a certificate during an HTTPS connection it will be
+accepted by the browser if it validates with any of the loaded certificate
+authorities.  If you do not trust this certificate authority then the server may
+not be who it says it is.
+
+If any website ever asks you to load in a trusted certificate then be very
+careful that it is not a certificate authority certificate.  (You can identify a
+certificate authority certificate because it will have a usage for certificate
+signing.)  If it is then you must trust the person giving it to you because this
+certificate could be used to sign any other certificate and circumvent the normal
+trust mechanism.
+
+
+WWWOFFLE
+--------
+
+If you have enabled GNUTLS in WWWOFFLE then you have enabled some HTTPS
+capability.
+
+The WWWOFFLE server will create its own certificate authority certificate and a
+certificate for each server name that the server can be accessed by.  These can
+be identified by the name information in the certificate that will contain the
+word "WWWOFFLE" very clearly.
+
+You can either load the certificate authority certificate from WWWOFFLE into
+your browser (see the warning above about loading in new certificate authority
+certificates) or you can accept the server certificate when your browser warns
+you about it.
+
+It is possible to use URLs like https://localhost:8443/ instead of
+http://localhost:8080/ for access to the WWWOFFLE internal pages.
+
+If you decide to allow it then you can cache HTTPS connections by abusing the
+trust relationship between the browser and the certificate authority.  When
+accessing HTTPS servers through WWWOFFLE and caching the results WWWOFFLE will
+re-encrypt the data from the server and send it to the browser using a fake
+certificate.  If you configure your browser to trust WWWOFFLE as a certificate
+authority then the fake certificate from WWWOFFLE will be trusted just like it
+was the real one from the original server.
+
+
+
+Andrew M. Bishop
+7th Jan 2006

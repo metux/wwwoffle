@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>WWWOFFLE Version 2.6 - Pagina di Benvenuto al Proxy</TITLE>
+<LINK href="/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY>
+<p align=center>
+[Torna su]
+[<a href="#description">Descrizione</a>]
+[<a href="#indexes">Indici&nbsp;Caches</a>]
+[<a href="#request">Pagine&nbsp;Richieste</a>]
+[<a href="#monitor">Pagine&nbsp;Controllate</a>]
+[<a href="#control">Programma&nbsp;di&nbsp;Controllo</a>]
+[<a href="#search">Ricerca&nbsp;nella&nbsp;Cache</a>]
+[<a href="#links">Collegamenti&nbsp;Internet</a>]
+[<a href="#mail">E-Mail</a>]
+</p>
+<hr>
+
+<H1 align=center><a name="top">WWWOFFLE Pagina di Benvenuto al Proxy</a></H1>
+
+Il programma WWWOFFLE semplifica la navigazione nel World Wide Web da computer
+che usano una connessione intermittente (dial-up) ad internet.
+
+<h2><a name="description">Descrizione</a></h2>
+
+Il programma wwwoffled &egrave; un semplice proxy server con alcune caratteristiche speciali
+da usare con collegamenti ad interntet in dial-up. Questo significa che &egrave; possibile
+navigare le pagine web e leggerle senza dover rimanere connessi.
+
+<p>
+
+Caratteristiche di Base
+<ul>
+  <li>Caching dei protocolli HTTP, FTP e finger.
+  <li>Permette i metodi HTTP 'GET', 'HEAD', 'POST' e 'PUT'.
+  <li>Controllo interattivo o da riga di comando dello stato di online/offline/auto-collegamento.
+  <li>Altamente configurabile.
+  <li>Scarsa manutenzione, gli stati di avvio/arresto e online/offline possono essere resi automatici.
+</ul>
+
+Mentre si &egrave; Online
+<ul>
+  <li>Caching delle pagine che sono visitate per una successiva riconsultazione.
+  <li>Scaricamento condizionale per avere solo le pagine che sono cambiate.
+      <ul>
+        <li>Basato sulla data di scadenza, l'ora dell'ultimo accesso o una volta per sessione.
+      </ul>
+  <li>Supporto senza cache per SSL (Secure Socket Layer, https).
+  <li>Pu&ograve; essere usato con uno o pi&ugrave; proxy esterni in base alle pagine web.
+  <li>Controllo su quali pagine non &egrave; possibile accedere.
+      <ul>
+        <li>Permette la sostituzione delle pagine bloccate.
+      </ul>
+  <li>Controllo su quali pagine non devono essere conservate nella cache.
+</ul>
+
+Mentre si &egrave; Offline
+<ul>
+  <li>Pu&ograve; essere configurato per richiedere una connessione per le pagine che non sono nella cache.
+  <li>Selezione delle pagine da scaricare alla prossima connessione
+      <ul>
+        <li>Usando il normale browser per seguire i collegamenti.
+        <li>Interfaccia a linea di comando per selezionare le pagine da scaricare.
+      </ul>
+  <li>Controllo su quali pagine possono essere richieste quando si &egrave; offline.
+  <li>Fornisce accesso senza cache ai server di una intranet.
+</ul>
+
+Scaricamento Automatico
+<ul>
+  <li>Scaricamento di pagine specificate non interattivamente.
+  <li>Opzioni per scaricare automaticamente gli oggetti presenti nelle pagine richieste.
+      <ul>
+        <li>Riconosce vari tipi di pagine
+            <ul>
+              <li>HTML 4.0, classi Java, VRML (partialmente), XML (partialmente).
+            </ul>
+        <li>Opzioni per scaricare diversi gruppi di oggetti
+            <ul>
+              <li>Images, Stylesheets, Frames, Scripts, Java o altri oggetti.
+            </ul>
+      </ul>
+  <li>Segue automaticamente i collegamenti per le pagine che sono state spostate.
+  <li>Pu&ograve; controllare le pagine a intervalli regolari per scaricare quelle che sono cambiate.
+  <li>Scaricamento ricorsivo
+      <ul>
+        <li>Fino a una profondit&agrave; specificata.
+        <li>Su qualsiasi host o limitata allo stesso server o directory.
+        <li>Scelta dalla riga di comando o dal browser.
+        <li>Controllo su quali collegamenti devono essere scaricati ricorsivamente.
+      </ul>
+</ul>
+
+Convenienza
+<ul>
+  <li>Informaziooni opzionali in coda alla pagina HTML indicanti data di inserimento in cache e opzioni.
+  <li>Opzioni per modificare le pagine HTML
+      <ul>
+        <li>Rimozione Javascript.
+        <li>Blocco GIF animate.
+        <li>Indicazione dei collegamenti in cache e non.
+        <li>Rimozione del tag blink.
+      </ul>
+  <li>Configurazione automatica del proxy in Netscape.
+  <li>Ricerche nella cache con il programma ht://Dig.
+  <li>Semplice web-server incorporato per le pagine locali.
+  <li>Impostazione di timeout per connessione ai server e trasferimento di dati per evitare il blocco del server.
+  <li>Possibilit&agrave; di riprendere o annullare uno scaricamento interrotto dal client o server.
+  <li>Svuotamento delle pagine dalla cache
+      <ul>
+        <li>In base alla corrispondenza con l'URL.
+        <li>Per mantenere la dimensione della cache al di sotto di un limite specificato.
+        <li>Per mantenere lo spazio libero sul disco al di sopra di un limite specificato.
+        <li>Controllo interattivo o da riga di comando.
+      </ul>
+</ul>
+
+Indici
+<ul>
+  <li>Indici multipli delle pagine memorizzate nella cache
+      <ul>
+        <li>Server per ogni protocollo (http, ftp ...).
+        <li>Pagine su ogni server.
+        <li>Pagine in attesa di scaricamento.
+        <li>Pagine scaricate l'ultima volta online.
+        <li>Pagine controllate a intervalli regolari.
+      </ul>
+  <li>Indici configurabili
+      <ul>
+        <li>Ordinamento per nome, data, nome di dominio, tipo di file.
+        <li>Opzioni per cancellare, aggiornare o controllare le pagine.
+        <li>Scelta tra la lista completa delle pagine o solo quelle pi&ugrave; interessanti.
+      </ul>
+</ul>
+
+Sicurezza
+<ul>
+  <li>Funziona con pagine che richiedono l'autenticazione di base nome utente/password.
+  <li>Automatizza l'autenticazione verso i proxy esterni che la richiedono.
+  <li>Controllo sull'accesso al proxy
+      <ul>
+        <li>Il default &egrave; l'accesso al solo host locale.
+        <li>Accesso ad altri host configurabile in base al nome o all'indirizzo IP.
+        <li>Autenticazione opzionale al proxy per il controllo a livello di utente.
+      </ul>
+  <li>Controllo opzionale con password delle opzioni di gestione del proxy.
+  <li>Possibilit&agrave; di mascherare le intestazioni HTTP in entrata/uscita per mantenere la privacy dell'utente.
+</ul>
+
+Configurazione
+<ul>
+  <li>Tutte le opzioni controllate usando un solo file di configurazione.
+  <li>Pagine web interattive per consentire la modifica del file di configurazione.
+  <li>Pagine di errore e informazioni personalizzabili dall'utente.
+</ul>
+
+<h2><a name="indexes">WWWOFFLE Indici della Cache </a></h2>
+
+L'indice di tutte le pagine conservate nella cache di WWWOFFLE &egrave; disponibile
+in vari formati.
+<br>
+Gli indici sono organizzati per nome dell'host, con una lista separata per ogni host.
+L'URL di base &egrave; /index/, ma pu&ograve; essere modificata con uno dei path seguenti.
+<dl>
+  <dt><a href="/index/">/index/</a>
+  <dd>L'indice principale che ha i collegamenti verso tutti gli altri indici.
+  <dt><a href="/index/http/?sort=alpha">/index/<i>http</i>/</a>
+  <dd>Una lista di delle pagine http che sono nella cache (o un altro qualsiasi protocollo).
+  <dt><a href="/index/http/www.gedanken.demon.co.uk/?sort=alpha">/index/<i>http</i>/<i>www.gedanken.demon.co.uk</i>/</a>
+  <dd>Una lista di delle pagine http che sono nella cache dall'host www.gedanken.demon.co.uk
+  (o un altro qualsiasi protocollo o host).
+  <dt><a href="/index/outgoing/?sort=none">/index/outgoing/</a>
+  <dd>La lista delle pagine richieste in attesa di essere scaricate.
+  <dt><a href="/index/monitor/?sort=none">/index/monitor/</a>
+  <dd>La lista delle pagine richieste che sono controllate a intervalli regolari.
+  <dt><a href="/index/lasttime/?sort=mtime">/index/lasttime/</a>
+  <dd>La lista delle pagine visitate l'ultima volta che il programma &egrave; stato online.
+      Questo fornisce anche l'accesso all'elenco delle pagine visitate le precedenti cinque volte online.
+  <dt><a href="/index/lastout/?sort=mtime">/index/lastout/</a>
+  <dd>>La lista delle pagine visitate l'ultima volta che il programma &egrave; stato offline.
+      Questo fornisce anche l'accesso all'elenco delle pagine visitate le precedenti cinque volte offline.
+</dl>
+
+<h2><a name="request">WWWOFFLE Richieste di Pagine Singole e Ricorsive</a></h2>
+
+Le pagine desiderate possono essere scaricate inserendole nell'apposito
+selettore del browser. O alternativamente usando l'interfaccia a riga di
+comando o interattivamente da un modulo in una pagina web di WWWOFFLE.
+<dl>
+  <dt><a href="/refresh-options/">/refresh-options/</a>
+  <dd>Una pagina interattiva per specificare le pagine da scaricare ricorsivamente.
+</dl>
+
+<h2><a name="monitor">WWWOFFLE Richieste di Pagine Controllate</a></h2>
+
+Le pagine che si vogliono avere a disposizione a intervalli regolari possono
+essere recuperate inserendole in un modulo in una pagina web di WWWOFFLE.
+<dl>
+  <dt><a href="/monitor-options/">/monitor-options/</a>
+  <dd>Una pagina interattiva per specificare le pagine da scaricare a intervalli regolari.
+</dl>
+
+<h2><a name="control">WWWOFFLE Configurazione Interattiva</a></h2>
+
+Il proxy WWWOFFLE pu&ograve; essere configurato sia dall'interfaccia
+a riga di comando, sia interattivamente da una pagina web.
+<dl>
+  <dt><a href="/control/">/control/</a>
+  <dd>Una pagina interattiva per impostare il programma proxy.
+      [Richiede la password per il file di configurazione se impostata, ma qualunque nome utente.]
+</dl>
+
+<h2><a name="search">WWWOFFLE Ricerca nella Cache</a></h2>
+
+Con l'installazione del programma <a href="http://www.htdig.org/">ht://Dig</a> o
+<a href="http://search.mnogo.ru/">UdmSearch</a>
+&egrave; possibile fare ricerche nella cache di WWWOFFLE.
+<dl>
+  <dt><a href="/search/htdig/search.html">/search/htdig/search.html</a>
+  <dd>Il modulo di ricerca di ht://Dig.
+  <dt><a href="/search/udmsearch/search.html">/search/udmsearch/search.html</a>
+  <dd>Il modulo di ricerca di UdmSearch.
+</dl>
+
+
+<h2><a name="links">WWWOFFLE Collegamenti Internet</a></h2>
+
+La <a href="FAQ.html">WWWOFFLE FAQ</a> &egrave; ora fornita col programma e c'&egrave; anche una versione online a
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/FAQ.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.5/FAQ.html</a>
+<p>
+L'Homepage di WWWOFFLE su internet &egrave;disponibile a
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/">http://www.gedanken.demon.co.uk/wwwoffle/</a>
+e contiene le ultime informazioni sul programma in generale.
+<p>
+Le ultime informazioni sull'uso di questa versione di WWWOFFLE sono nella WWWOFFLE Version 2.5 Users Page a
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/user.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.5/user.html</a>
+e contiene altre notizie sull'uso di questa versione del programma.
+
+<h2><a name="mail">WWWOFFLE E-Mail</a></h2>
+
+Per segnalare bug devresti mandare un'e-mail direttamente all'autore a
+<a href="mailto:amb@gedanken.demon.co.uk">amb@gedanken.demon.co.uk</a>,
+<i>&egrave; gradito inserire WWWOFFLE nella riga del subject</i>.
+
+<p>
+
+Ci sono tre mailing list cui gli utenti di WWWOFFLE sono invitati a partecipare:
+
+<dl>
+  <dt>wwwoffle-announce
+  <dd>Una mailing list per gli annunci sulle nuove versioni di WWWOFFLE e le soluzioni ai bug.
+  <dt>wwwoffle-users
+  <dd>Una mailing list per gli utenti di WWWOFFLE per discutere del programma
+      e per porre domande su problemi di configurazione o di uso. Questo non
+	  include argomenti inerenti specifici sistemi operativi.
+  <dt>wwwoffle-win32
+  <dd>Una mailing list per gli utenti di WWWOFFLE su sistemi win32 per discutere
+      del programma e per porre domande su problemi di configurazione o di uso.
+</dl>
+
+Per unirti a una di queste mailing list invia un'e-mail a
+<a href="mailto:majordomo@gedanken.demon.co.uk">majordomo@gedanken.demon.co.uk</a>
+con la frase <tt>subscribe wwwoffle-announce</tt> o <tt>subscribe
+wwwoffle-users</tt> o <tt>subscribe wwwoffle-win32</tt> nel corpo del messaggio.
+
+<hr>
+<p align=center>
+[<a href="#top">Torna su</a>]
+[<a href="#description">Descrizione</a>]
+[<a href="#indexes">Indici&nbsp;Caches</a>]
+[<a href="#request">Pagine&nbsp;Richieste</a>]
+[<a href="#monitor">Pagine&nbsp;Controllate</a>]
+[<a href="#control">Programma&nbsp;di&nbsp;Controllo</a>]
+[<a href="#search">Ricerca&nbsp;nella&nbsp;Cache</a>]
+[<a href="#links">Collegamenti&nbsp;Internet</a>]
+[<a href="#mail">E-Mail</a>]
+</p>
+</BODY>
+
+</HTML>

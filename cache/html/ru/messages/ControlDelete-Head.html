@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = Set if we requested to delete URLs. (='$url').
+mon       = Set if we requested to delete monitored URLs (='$mon').
+req       = Set if we requested to delete outgoing URLs (='$req').
+path      = Set to the path that this request form is. (='$path').
+hash      = Set to the hash that this request included. (='$hash').
+
+-->
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=koi8-r">
+$url?{<TITLE>WWWOFFLE - Страница удаления URL</TITLE>}{}
+$mon?{<TITLE>WWWOFFLE - Страница удаления наблюдаемых URL</TITLE>}{}
+$req?{<TITLE>WWWOFFLE - Страница удаления исходящих запросов URL</TITLE>}{}
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+$url?{<H1 align="center">WWWOFFLE Страница удаления URL</H1>}{}
+$mon?{<H1 align="center">WWWOFFLE Страница удаления наблюдаемых URL</H1>}{}
+$req?{<H1 align="center">WWWOFFLE Страница удаления исходящих запросов URL</H1>}{}
+
+<div class="wwwoffle-message" align="center">
+$url?{
+
+Ваш запрос удаления кешированных URL выполнен с результатом:
+
+}{}
+$mon?{
+
+Ваш запрос удаления наблюдаемых URL выполнен с результатом:
+
+}{}
+$req?{
+
+Ваш запрос удаления исходящих запросов URL выполнен с результатом:
+
+}{}
+</div>
+
+<p>
+<form action="$path" method="post">
+$hash?{<input type="hidden" name="hash" value="%encode[hash]">}{}
+
+<dl>
+
+<!-- This is just the head of this page since the body is generated separately -->
+

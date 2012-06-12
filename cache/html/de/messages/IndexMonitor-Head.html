@@ -1,0 +1,27 @@
+<!-- This is just the head of the index body since the contents are different for each index -->
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+total      = The total number of pages for this index (='$total').
+
+-->
+
+<h2>Abonnierte Seiten</h2>
+
+$total?=0{<b>Keine Seiten</b>}{<b>$total Seiten</b>}
+
+$total?=0{}{<br><i>L=Letzte, N=N&auml;chste; in Tagen:Stunden</i>}
+
+<p>
+
+$delete?{$totaldelete=$total}{$totaldelete=0}
+$totaldelete?=0{}
+{
+<form action="/control/delete-multiple/mon" method=post>
+}
+
+<ul>
+
+<!-- This is just the head of the index body since the contents are different for each index -->

@@ -1,0 +1,34 @@
+$select?{
+</select>
+}{}
+</p>
+This configuration item contains $nentries $nentries?=1{entry}{entries}.
+$nallowed?=1{(Only a single entry is allowed for this item.)}{}
+</form>
+
+<hr width="50%">
+
+<p align="center">
+<a href="$localurl/configuration/$section$url?{?%encode[url]}{}" title="Show all the items for this section">^^^ $section ^^^</a>
+<br>
+<a href="$previtem?{$previtem}{no-name}$url?{?%encode[url]}{}" title="Go to the previous item in this section">&lt;&lt;&lt; $previtem?{$previtem}{<i>no-name</i>} &lt;&lt;&lt;</a>
+&nbsp;&nbsp;&nbsp; $item?{$item}{<i>no-name</i>} &nbsp;&nbsp;&nbsp;
+<a href="$nextitem?{$nextitem}{no-name}$url?{?%encode[url]}{}" title="Go to the next item in this section">&gt;&gt;&gt; $nextitem?{$nextitem}{<i>no-name</i>} &gt;&gt;&gt;</a>
+</p>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html" title="An introduction to WWWOFFLE">Welcome Page</a>| \
+<a href="$localurl/README.CONF.html" title="A description of the WWWOFFLE configuration file options">README.CONF</a>| \
+<a href="$localurl/FAQ.html" title="Frequently Asked Questions about WWWOFFLE">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

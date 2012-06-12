@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+location  = The URL that the browser is to be redirected to (='$location').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Web Pagina Redirect</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+<META http-equiv="refresh" content="1 ; URL=$location">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Web Pagina Redirect</H1>
+
+<div class="wwwoffle-message" align="center">
+WWWOFFLE probeert uw browser door te sturen naar de URL hieronder,
+u zou dit niet kunnen zien in uw browser tenzij iets fout gegaan is.
+<p class="wwwoffle-url">
+<b><tt><a href="$location">$location</a></tt></b>
+</p>
+Kies de link hierboven om door te gaan, maar wellicht wilt u dit rapporteren
+als een fout in WWWOFFLE of in uw browser.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html" title="Een introductie tot WWWOFFLE">Welkomst Pagina</a>| \
+<a href="$localurl/FAQ.html" title="Frequent Aangekaarte Questies over WWWOFFLE">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

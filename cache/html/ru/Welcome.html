@@ -1,0 +1,417 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<TITLE>WWWOFFLE Версия 2.6 - Посредник. Добро пожаловать</TITLE>
+<LINK href="/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY>
+<p align=center>
+[Наверх]
+[<a href="#description">Описание</a>]
+[<a href="#indexes">Кеш&nbsp;указатель</a>]
+[<a href="#request">Страница&nbsp;запросов</a>]
+[<a href="#monitor">Страница&nbsp;наблюдения</a>]
+[<a href="#control">Страница&nbsp;управления</a>]
+[<a href="#search">Страница&nbsp;поиска</a>]
+[<a href="#links">Интернет&nbsp;ссылки</a>]
+[<a href="#mail">Почта</a>]
+</p>
+<hr>
+
+<H1 align=center><a name="top">WWWOFFLE Посредник. Добро пожаловать</a></H1>
+
+Программа WWWOFFLE упрощает просмотр Всемирной Веб Паутины с компьютеров, которые используют
+коммутируемые соединения с интернет.
+
+<h2><a name="description">Описание</a></h2>
+
+Программа wwwoffled - это простой прокси сервер со специальной функцией для использования
+с коммутируемой линией связи с интернет. Это означает, что он делает возможным просмотр веб страниц
+и чтение их без установленного соединения.
+<p>
+Ссылки в списке возможностетей указывают либо на Конфигурационный файл параметров
+<i>[CONF]</i>, либо на страницу редактирования параметров <i>[EDIT]</i>
+(может потреботься пароль), либо на дополнительную информацию в этом документе
+<i>[READ]</i>, либо на другую URL <i>[URL]</i>.
+<p>
+
+
+Базовые возможности
+<ul>
+  <li>Кеширование HTTP, FTP и finger протоколов.
+  <li>Допустимы 'GET', 'HEAD', 'POST' и 'PUT' HTTP методы.
+  <li>Интерактивное или через командную строку управление состоянием (есть связь, нет связи, авто-дозвон).
+      <a href="/control/">[URL]</a> 
+  <li>Гибкая конфигурация.
+      <a href="README.CONF.html">[CONF]</a>
+  <li>Мало обслуживаемая, запуск/остановка и изменение режима 'есть связь'/'нет связи' могут быть автоматизированы.
+</ul>
+
+Пока есть связь
+<ul>
+  <li>Кеширование страниц, которые просматриваются, для пересмотра в будущем.
+  <li>Загрузка по необходимости только тех страниц, которые изменились.
+      <a href="README.CONF.html#OnlineOptions">[CONF]</a>
+      <a href="/configuration/OnlineOptions">[EDIT]</a>
+      <ul>
+        <li>Основан на сроке годности, времени со дня последней загрузки или один раз за сессию.
+            <a href="README.CONF.html#OnlineOptions_request-changed">[CONF]</a>
+            <a href="/configuration/OnlineOptions/request-changed">[EDIT]</a>
+      </ul>
+  <li>Не кешируемая поддержка SSL (Secure Socket Layer, т. е. https).
+      <a href="README.CONF.html#Options_ssl-allow-port">[CONF]</a>
+      <a href="/configuration/Options/ssl-allow-port">[EDIT]</a>
+  <li>Может быть использован с одним и более прокси-сервером для разных веб страниц.
+      <a href="README.CONF.html#Proxy">[CONF]</a>
+      <a href="/configuration/Proxy">[EDIT]</a>
+  <li>Контролирует, какие страницы не могут быть доступны.
+      <a href="README.CONF.html#DontGet">[CONF]</a>
+      <a href="/configuration/DontGet">[EDIT]</a>
+      <ul>
+        <li>Позволяет подменять блокированные страницы.
+            <a href="README.CONF.html#DontGet_replacement">[CONF]</a>
+            <a href="/configuration/DontGet/replacement">[EDIT]</a>
+      </ul>
+  <li>Контролирует, какие страницы не будут записываться в кеш.
+      <a href="README.CONF.html#DontCache">[CONF]</a>
+      <a href="/configuration/DontCache">[EDIT]</a>
+  <li>Запросы сжатых страниц с веб-сервера (параметр времени компиляции).
+      <a href="README.CONF.html#OnlineOptions_request-compressed-data">[CONF]</a>
+      <a href="/configuration/OnlineOptions/request-compressed-data">[EDIT]</a>
+</ul>
+
+Пока нет связи
+<ul>
+  <li>Может быть настроен на установление связи по необходимости для страниц, которые не должны кешироваться.
+  <li>Выбор страниц для загрузки в следующий раз, когда будет связь
+      <ul>
+        <li>Используется обычный броузер для навигации по ссылкам.
+        <li>Интерфейс командной строки для выбора страниц для загрузки.
+      </ul>
+  <li>Контролирует, какие страницы могут быть запрошены, когда нет связи.
+      <a href="README.CONF.html#OfflineOptions">[CONF]</a>
+      <a href="/configuration/OfflineOptions">[EDIT]</a>
+  <li>Предоставляет не кешируемый доступ к интранет (внутренним) серверам.
+      <a href="README.CONF.html#LocalNet">[CONF]</a>
+      <a href="/configuration/LocalNet">[EDIT]</a>
+</ul>
+
+Автоматическая загрузка
+<ul>
+  <li>Загрузка указанных страниц не интерактивная.
+      <a href="README.CONF.html#FetchOptions">[CONF]</a>
+      <a href="/configuration/FetchOptions">[EDIT]</a>
+  <li>Параметры загрузки объектов в запрошенных страницах.
+      <a href="README.CONF.html#FetchOptions">[CONF]</a>
+      <a href="/configuration/FetchOptions">[EDIT]</a>
+      <ul>
+        <li>Понимает разные типы страниц
+            <ul>
+              <li>HTML 4.0, Java классы, VRML (частично), XML (частично).
+            </ul>
+        <li>Параметры загрузки разных типов объектов
+            <a href="README.CONF.html#FetchOptions">[CONF]</a>
+            <a href="/configuration/FetchOptions">[EDIT]</a>
+            <ul>
+              <li>Картинки, таблицы стилей, фреймы, скрипты, Java или другие объекты.
+            </ul>
+        <li>Параметр, не позволяющий загружать дефектные картинки (картинки 1x1 пиксел).
+            <a href="README.CONF.html#FetchOptions_webbug-images">[CONF]</a>
+            <a href="/configuration/FetchOptions/webbug-images">[EDIT]</a>
+      </ul>
+  <li>Автоматически следует по ссылкам для страниц, которые были перемещены.
+  <li>Может регулярно проверять страницы для загрузки тех, которые были изменены.
+      <a href="/monitor-options/">[URL]</a>
+  <li>Рекурсивная загрузка
+      <a href="/refresh-options/">[URL]</a>
+      <ul>
+        <li>На указанную глубину.
+        <li>На любом сервере или ограничено тем же сервером или тем же каталогом.
+        <li>Управление в командной строке или из броузера.
+        <li>Контролирует, какие ссылки могут быть загружены рекурсивно.
+      </ul>
+</ul>
+
+Возможности
+<ul>
+  <li>Необязательная информация в конце HTML страниц времени и параметрах кеширования.
+      <a href="README.CONF.html#ModifyHTML_add-cache-info">[CONF]</a>
+      <a href="/configuration/ModifyHTML/add-cache-info">[EDIT]</a>
+  <li>Можно модифицировать HTML страницы
+      <a href="README.CONF.html#ModifyHTML">[CONF]</a>
+      <a href="/configuration/ModifyHTML">[EDIT]</a>
+      <ul>
+        <li>Удалить сценарии.
+            <a href="README.CONF.html#ModifyHTML_disable-script">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-script">[EDIT]</a>
+        <li>Удалить Java апплеты.
+            <a href="README.CONF.html#ModifyHTML_disable-applet">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-applet">[EDIT]</a>
+        <li>Удалить таблицы стилей.
+            <a href="README.CONF.html#ModifyHTML_disable-style">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-style">[EDIT]</a>
+        <li>Показать кешированные и не кешированные ссылки.
+            <a href="README.CONF.html#ModifyHTML_anchor-cached-begin">[CONF]</a>
+            <a href="/configuration/ModifyHTML/anchor-cached-begin">[EDIT]</a>
+        <li>Удалить тег мерцания.
+            <a href="README.CONF.html#ModifyHTML_disable-blink">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-blink">[EDIT]</a>
+        <li>Удалить тег обновления.
+            <a href="README.CONF.html#ModifyHTML_disable-meta-refresh">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-meta-refresh">[EDIT]</a>
+        <li>Удалить ссылки на страницы, которые указаны в списке DontGet.
+            <a href="README.CONF.html#ModifyHTML_disable-dontget-links">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-dontget-links">[EDIT]</a>
+        <li>Заменить картинки, которые указаны в списке DontGet.
+            <a href="README.CONF.html#ModifyHTML_replace-dontget-images">[CONF]</a>
+            <a href="/configuration/ModifyHTML/replace-dontget-images">[EDIT]</a>
+        <li>Заменить дефектные картинки (картинки 1x1 пиксел).
+            <a href="README.CONF.html#ModifyHTML_replace-webbug-images">[CONF]</a>
+            <a href="/configuration/ModifyHTML/replace-webbug-images">[EDIT]</a>
+        <li>Нормализовать набор символов HTML.
+            <a href="README.CONF.html#ModifyHTML_demoronise-ms-chars">[CONF]</a>
+            <a href="/configuration/ModifyHTML/demoronise-ms-chars">[EDIT]</a>
+        <li>Остановить анимацию GIF.
+            <a href="README.CONF.html#ModifyHTML_disable-animated-gif">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-animated-gif">[EDIT]</a>
+  </ul>
+  <li>Автоматическая настройка на прокси для Netscape.
+      <a href="/wwwoffle.pac">[URL]</a>
+  <li>Возможность поиска в кеше дополнительной программой ht://Dig.
+      <a href="/search/htdig/">[URL]</a>
+      <a href="/search/udmsearch/">[URL]</a>
+  <li>Встроенный простой веб-сервер для локальных страниц.
+      <a href="/local/">[URL]</a>
+  <li>Таймауты, предотвращающие блокирование прокси-сервера
+      <a href="README.CONF.html#Options">[CONF]</a>
+      <a href="/configuration/Options">[EDIT]</a>
+      <ul>
+        <li>Просмотр DNS имен.
+            <a href="README.CONF.html#Options_dns-timeout">[CONF]</a>
+            <a href="/configuration/Options/dns-timeout">[EDIT]</a>
+        <li>Соединение с удаленным сервером.
+            <a href="README.CONF.html#Options_connect-timeout">[CONF]</a>
+            <a href="/configuration/Options/connect-timeout">[EDIT]</a>
+        <li>Передача даных.
+            <a href="README.CONF.html#Options_socket-timeout">[CONF]</a>
+            <a href="/configuration/Options/socket-timeout">[EDIT]</a>
+      </ul>
+  <li>Продолжение и остановка загрузки, прерванной клиентом.
+      <a href="README.CONF.html#OnlineOptions">[CONF]</a>
+      <a href="/configuration/OnlineOptions">[EDIT]</a>
+      <ul>
+        <li>Основанная на размере файла загрузка по частям.
+            <a href="README.CONF.html#OnlineOptions_intr-download-size">[CONF]</a>
+            <a href="/configuration/OnlineOptions/intr-download-size">[EDIT]</a>
+      </ul>
+  <li>Удаление страниц из кеша
+      <a href="README.CONF.html#Purge">[CONF]</a>
+      <a href="/configuration/Purge">[EDIT]</a>
+      <ul>
+        <li>На основании шаблона URL.
+            <a href="README.CONF.html#Purge_use-url">[CONF]</a>
+            <a href="/configuration/Purge/use-url">[EDIT]</a>
+        <li>Сохраняет размер кеша не более заданного максимального значения.
+            <a href="README.CONF.html#Purge_max-size">[CONF]</a>
+            <a href="/configuration/Purge/max-size">[EDIT]</a>
+        <li>Сохраняет свободное дисковое пространства не менее заданного значения.
+            <a href="README.CONF.html#Purge_min-free">[CONF]</a>
+            <a href="/configuration/Purge/min-free">[EDIT]</a>
+        <li>Интерактивное или в командной строке управление.
+        <li>Сжатие кешированых страниц, основанное на их возрасте.
+            <a href="README.CONF.html#Purge_compress-age">[CONF]</a>
+            <a href="/configuration/Purge/compress-age">[EDIT]</a>
+      </ul>
+  <li>Предоставление сжатых страниц веб-броузеру (параметр времени компиляции).
+      <a href="README.CONF.html#Options_reply-compressed-data">[CONF]</a>
+      <a href="/configuration/Options/reply-compressed-data">[EDIT]</a>
+</ul>
+
+Указатели
+<ul>
+  <li>Разные указатели страниц, сохраненных в кеше
+      <a href="#indexes">[READ]</a>
+      <ul>
+        <li>Раздельно для каждого протокола (http, ftp ...).
+        <li>Страницы по каждому серверу.
+        <li>Страницы, ожидающие загрузки.
+        <li>Страницы, загруженные в последний раз, когда была связь.
+	<li>Последние запрошенные страницы, когда не было связи.
+        <li>Регулярно проверяемые страницы.
+      </ul>
+  <li>Настраиваемые указатели
+      <ul>
+        <li>Сортировка по имени, дате, доменному имени сервера, типу файла.
+        <li>Страницы выбором наличия команд удаления обновления или наблюдения.
+        <li>Выбор полного списка страниц или сокрытие не интересных страниц.
+            <a href="README.CONF.html#IndexOptions">[CONF]</a>
+            <a href="/configuration/IndexOptions">[EDIT]</a>
+      </ul>
+</ul>
+
+Безопасность
+<ul>
+  <li>Работает со страницами, требующими базовой аутентификации имя/пароль.
+  <li>Автоматическая прокси аутентификация для внешних прокси-серверов, которые этого требуют.
+      <a href="README.CONF.html#Proxy_auth-username">[CONF]</a>
+      <a href="/configuration/Proxy/auth-username">[EDIT]</a>
+  <li>Управление доступом к прокси-серверу
+      <ul>
+        <li>По умолчанию доступ разрешен для localhost.
+            <a href="README.CONF.html#LocalHost">[CONF]</a>
+            <a href="/configuration/LocalHost">[EDIT]</a>
+        <li>Доступ разрешается на основе хост-имени или ip-адреса.
+            <a href="README.CONF.html#AllowedConnectHosts">[CONF]</a>
+            <a href="/configuration/AllowedConnectHosts">[EDIT]</a>
+        <li>Необязательная аутентификация для пользовательского доступа.
+            <a href="README.CONF.html#AllowedConnectUsers">[CONF]</a>
+            <a href="/configuration/AllowedConnectUsers">[EDIT]</a>
+      </ul>
+  <li>Необязательный пароль для управляющих сервером функций.
+      <a href="README.CONF.html#StartUp_password">[CONF]</a>
+      <a href="/configuration/StartUp/password">[EDIT]</a>
+  <li>Может подвергать цензуре исходящие и входящие заголовки для сохранения конфиденциальности пользователей.
+      <a href="README.CONF.html#CensorHeader">[CONF]</a>
+      <a href="/configuration/CensorHeader">[EDIT]</a>
+</ul>
+
+Конфигурация
+<ul>
+  <li>Все параметры задаются в конфигурационном файле.
+      <a href="README.CONF.html">[CONF]</a>
+  <li>Интерактивная веб-страница, позволяющая редактировать конфигурационный файл.
+      <a href="/configuration/">[EDIT]</a>
+  <li>Настраиваемые пользователем страницы ошибок и информации.
+</ul>
+
+<h2><a name="indexes">WWWOFFLE Кеш указатель</a></h2>
+
+Указатель страниц, записанных в кеше WWWOFFLE, доступен в разных форматах.
+<br>
+Указатели организованы по имени сервера с отдельными списками по каждому.
+Базовый URL - /index/, но он может дополнен путем как указано ниже.
+<dl>
+  <dt><a href="/index/">/index/</a>
+  <dd>Главный указатель, содержащий ссылки на все остальные указатели.
+  <dt><a href="/index/http/?sort=alpha">/index/<i>http</i>/</a>
+  <dd>Список кешированных http страниц (или любой другой протокол).
+  <dt><a href="/index/http/www.gedanken.demon.co.uk/?sort=alpha">/index/<i>http</i>/<i>www.gedanken.demon.co.uk</i>/</a>
+  <dd>Список кешированных http страниц на сервере www.gedanken.demon.co.uk (или любой другой протокол и сервер).
+  <dt><a href="/index/outgoing/?sort=none">/index/outgoing/</a>
+  <dd>Список запросов, ожидающих загрузки.
+  <dt><a href="/index/monitor/?sort=none">/index/monitor/</a>
+  <dd>Список наблюдаемых страниц, изменение которых регулярно проверяется.
+  <dt><a href="/index/lasttime/?sort=mtime">/index/lasttime/</a>
+  <dd>Список страниц, записанных в кеш в последний раз, когда была связь.
+      Он также дает доступ к истории страниц, записанных в предыдущие пять раз, когда была связь.
+  <dt><a href="/index/lastout/?sort=mtime">/index/lastout/</a>
+  <dd>Указатель страниц, которые были запрощены в последний раз, когда была связь.
+      Он также дает доступ к истории страниц, запрошенных в предыдущие пять раз, когда не было связи.
+</dl>
+
+<h2><a name="request">WWWOFFLE Страница простых и рекурсивных запросов</a></h2>
+
+Необходимые страницы могут быть запрошены путем ввода их в поле URL броузера. Или другой способ - 
+в командной строке или интерактивно в WWWOFFLE веб-форме.
+<dl>
+  <dt><a href="/refresh-options/">/refresh-options/</a>
+  <dd>Интерактивная страница для запроса рекурсивной загрузки страниц.
+</dl>
+
+<h2><a name="monitor">WWWOFFLE Страница запросов наблюдения</a></h2>
+
+Страницы, изменение которых надо регулярно проверять, можно задать в интерактивной 
+WWWOFFLE веб-форме.
+<dl>
+  <dt><a href="/monitor-options/">/monitor-options/</a>
+  <dd>Интерактивная страница для задания регулярно проверяемых страниц.
+</dl>
+
+<h2><a name="control">WWWOFFLE Интерактивное управление</a></h2>
+
+WWWOFFLE прокси можно управлять через интерфейс командной строки или
+интерактивно через форму на веб-странице.
+<dl>
+  <dt><a href="/control/">/control/</a>
+  <dd>Интерактивная страница для управления программой.
+      [Требует пароль из конфигурационного файла, если задан, но доступно для любого пользователя.]
+</dl>
+
+<h2><a name="search">WWWOFFLE Поиск в кеше</a></h2>
+
+
+При установленной программе
+<a href="http://www.htdig.org/">ht://Dig</a> или
+<a href="http://search.mnogo.ru/">UdmSearch</a>
+можно искать страницы в WWWOFFLE кеше.
+<dl>
+  <dt><a href="/search/htdig/search.html">/search/htdig/search.html</a>
+  <dd>ht://Dig поисковая форма.
+  <dt><a href="/search/udmsearch/search.html">/search/udmsearch/search.html</a>
+  <dd>UdmSearch поисковая форма.
+</dl>
+
+
+<h2><a name="links">WWWOFFLE Интернет ресурсы</a></h2>
+
+<a href="FAQ.html">WWWOFFLE FAQ</a> распространяется с программой и также доступна онлайн версия
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/FAQ.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/FAQ.html</a>
+<p>
+Домашняя страница WWWOFFLE в интернете - 
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/">http://www.gedanken.demon.co.uk/wwwoffle/</a>
+и содержит последнюю информацию о программе.
+<p>
+Свежая информация об использовании этот версии WWWOFFLE есть на Странице Пользователя WWWOFFLE Версии 2.6 
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/user.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/user.html</a>
+<p>
+Характеристика совместимости программы WWWOFFLE с разными броузерами
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/browser.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/browser.html</a>
+<p>
+Страница с полезной информацией и советами о том, как использовать WWWOFFLE
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/hints-tips.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.6/hints-tips.html</a>
+
+<h2><a name="mail">WWWOFFLE Почта</a></h2>
+
+Для отчетов об ошибках вы можете писать автору на адрес
+<a href="mailto:amb@gedanken.demon.co.uk">amb@gedanken.demon.co.uk</a>,
+<i>будет лучше, если вы напишете WWWOFFLE в строке темы</i>.
+
+<p>
+
+Есть три списка рассылки, пользователей WWWOFFLE приглашают присоединяться:
+
+<dl>
+  <dt>wwwoffle-announce
+  <dd>Список рассылки для объявления о новых версиях WWWOFFLE и исправлениях ошибок.
+  <dt>wwwoffle-users
+  <dd>Список рассылки для обсуждения пользователями программы WWWOFFLE и для людей, имеющих проблемы
+      при настройке или запуске и желающих задать вопросы. Этот список
+      не включает обсуждение вопросов, специфичных для операционной системы.
+  <dt>wwwoffle-win32
+  <dd>Список рассылки для пользователей WWWOFFLE для win32 системы для обсуждения программы и
+      для людей, имеющих проблемы при настройке или запуске и желающих задать вопросы.
+</dl>
+
+Для подписки на эти списки рассылки отправьте письмо для
+<a href="mailto:majordomo@gedanken.demon.co.uk">majordomo@gedanken.demon.co.uk</a>
+с фразой <tt>subscribe wwwoffle-announce</tt> или <tt>subscribe
+wwwoffle-users</tt> или <tt>subscribe wwwoffle-win32</tt> в теле сообщения.
+
+<hr>
+<p align=center>
+[<a href="#top">На верх</a>]
+[<a href="#description">Описание</a>]
+[<a href="#indexes">Кеш&nbsp;указатель</a>]
+[<a href="#request">Страница&nbsp;запросов</a>]
+[<a href="#monitor">Страница&nbsp;наблюдения</a>]
+[<a href="#control">Страница&nbsp;управления</a>]
+[<a href="#search">Страница&nbsp;поиска</a>]
+[<a href="#links">Интернет&nbsp;ссылки</a>]
+[<a href="#mail">Почта</a>]
+</p>
+</BODY>
+
+</HTML>

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that was asked for (='$url').
+
+$decurl=%decode[url]
+$encurl=%encode[url]
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Bestellung von $url best&auml;tigen</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">Bestellung best&auml;tigen</H1>
+
+<div class="wwwoffle-message" align="center">
+Sie haben die folgende Adresse zum Herunterladen vorgemerkt, d.h. bestellt:
+<p class="wwwoffle-url">
+<b><tt>$decurl</tt></b>
+</p>
+Die Bestellung ben&ouml;tigt eine <a href="$localurl/refresh/?$encurl">Best&auml;tigung.</a>.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Hilfe</h2>
+
+<div class="wwwoffle-inline-help">
+WWWOFFLE wurde so <a href="$localurl/README.CONF.html#OfflineOptions_confirm-requests">konfiguriert</a>, 
+da&szlig; f&uuml;r Bestellungen von URLs eine Best&auml;tigung notwendig ist. Klicken Sie
+oben auf das Wort Best&auml;tigung, dann wird die Bestellung ausgef&uuml;hrt.
+Ansonsten wird die Seite nicht bestellt.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<div class="wwwoffle-nav" align="center">
+[ \
+Aktualisieren: \
+<a href="$localurl/refresh-options/?$encurl">Optionen</a>| \
+<a href="$localurl/monitor-options/?$encurl">Abonnieren</a>| \
+Delete| \
+<a href="$localurl/index/url?$encurl">Index</a>| \
+<a href="$localurl/configuration/url?$encurl">Configure</a> \
+]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+[ \
+<a href="$localurl/Welcome.html">Willkommensseite</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

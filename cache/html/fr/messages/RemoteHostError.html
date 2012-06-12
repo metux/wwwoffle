@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+WWWOFFLE : Variables disponibles (mettre le prefixe '$').
+
+localurl  = Le URL du serveur sur lequel wwwoffled tourne (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = L'URL demande; (='$url').
+cache     = Etiquette indiquant si la page est presente en cache ou sur le 
+            navigateur (='$cache').
+backup    = Etiquette indiquant s'il y a une copie de la page en cache (='$backup').
+reason    = Etiquette indiquant la cause (='$reason').
+            TimeoutReply    - Le serveur n'a pas lu la requete dans les temps.
+            TimeoutTransfer - Le serveur s'est bloque pendant le transfert.
+            ClientClose     - La connection a ete interrompue par le client.
+            ...             - Another reason.
+
+$decurl=%decode[url]
+$encurl=%encode[url]
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Erreur du Serveur Distant</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Erreur du serveur distant</H1>
+
+<div class="wwwoffle-message" align="center">
+Votre requ&ecirc;te pour l'URL
+<p class="wwwoffle-url">
+<b><tt>$decurl</tt></b>
+</p>
+a &eacute;chou&eacute; car
+<p class="wwwoffle-error">
+$reason?=TimeoutReply
+{le serveur distant n'a pas r&eacute;pondu dans les temps.
+$done="yes"}{}
+$reason?=TimeoutTransfer
+{le serveur distant n'a pas pu envoyer une partie des donn&eacute;es dans les temps
+$done="yes"}{}
+$reason?=DataCorrupt
+{The remote host sent compressed or encoded data that could not be uncompressed or decoded.
+$done="yes"}{}
+$reason?=ClientClose
+{Le client (navigateur) a ferm&eacute; la connexion pendant le transfert
+$done="yes"}{}
+$done?{}{$reason}
+</p>
+$cache?
+{Ce message d'erreur a maintenant &eacute;t&eacute; retir&eacute; du cache.}
+{}
+<p>
+$backup?
+{Le rafra&icirc;chissement de cette page renverra la version pr&eacute;c&eacute;dente.}
+{Le rafra&icirc;chissement de cette page provoquera une nouvelle requ&ecirc;te.}
+</div>
+
+<div class="wwwoffle-nav" align="center">
+[ \
+<a href="$localurl/refresh/?$encurl">Refresh</a>: \
+<a href="$localurl/refresh-options/?$encurl">Options</a>| \
+<a href="$localurl/monitor-options/?$encurl">Monitor</a>| \
+Delete| \
+<a href="$localurl/index/url?$encurl">Index</a>| \
+<a href="$localurl/configuration/url?$encurl">Configure</a> \
+]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Page d'accueil</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

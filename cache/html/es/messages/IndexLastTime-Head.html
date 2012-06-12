@@ -1,0 +1,30 @@
+<!-- This is just the head of the index body since the contents are different for each index -->
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+number     = Which version of the page it is, lasttime='', prevtime='0'-'3' (='$number').
+total      = The total number of pages for this index (='$total').
+date       = The date when last online (='$date').
+
+-->
+
+$number?{<h2>Páginas de Conexiones Anteriores ($number)</h2>}{<h2>Páginas de Conexiones Anteriores</h2>}
+
+Index starts: $date
+<p>
+
+$total?=0{<b>No hay Páginas</b>}{<b>$total Páginas</b>}
+
+<p>
+
+$delete?{$totaldelete=$total}{$totaldelete=0}
+$totaldelete?=0{}
+{
+<form action="/control/delete-multiple/url" method=post>
+}
+
+<ul>
+
+<!-- This is just the head of the index body since the contents are different for each index -->

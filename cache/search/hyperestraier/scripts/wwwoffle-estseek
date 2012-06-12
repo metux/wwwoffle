@@ -1,0 +1,22 @@
+#!/bin/sh
+
+#### THE SPOOL DIR IS "SPOOLDIR" IN THE LINE BELOW ####
+
+wwwoffle_spool=SPOOLDIR
+
+####
+
+cd $wwwoffle_spool
+
+# Set the path to include the estseek.cgi executables
+
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:/usr/local/libexec  # A possible location
+PATH=$PATH:/usr/lib/estraier   # The Debian location
+export PATH
+
+# Do the searching
+
+cd search/hyperestraier/conf
+
+estseek.cgi

@@ -1,0 +1,27 @@
+<!-- Ceci n'est que l'en-tete de l'index, le contenu est different dens chaque index -->
+
+<!--
+
+WWWOFFLE : Variables disponibles (mettre le pr&eacute;fixe '$').
+
+proto      = Le protocole (='$proto').
+host       = Le serveur (='$host').
+total      = Le nombre total de pages sur ce serveur (='$total').
+
+-->
+
+<h2>$proto://$host</h2>
+
+$total?=0{<b>Aucune page</b>}{<b>$total pages</b>}
+
+<p>
+
+$delete?{$totaldelete=$total}{$totaldelete=0}
+$totaldelete?=0{}
+{
+<form action="/control/delete-multiple/url" method=post>
+}
+
+<ul>
+
+<!-- Ceci n'est que l'en-tete de l'index, le contenu est different dens chaque index -->

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+WWWOFFLE : Variables disponibles (mettre le prefixe '$').
+
+localurl  = Le URL du serveur sur lequel wwwoffled tourne (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+method    = La methode utilisee dans la requete HTTP (='$method')
+protocol  = Le protocole specifie dans la requete HTTP (='$protocol').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - M&eacute;thode Non Support&eacute;e</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE - M&eacute;thode Non Support&eacute;e</H1>
+
+<div class="wwwoffle-message" align="center">
+La requ&ecirc;te re&ccedil;ue par le serveur <b>WWWOFFLE</b> utilise la commande
+<p class="wwwoffle-url">
+<b><tt>$method</tt></b>
+</p>
+$protocol?=all{
+qui n'est support&eacute;e par aucun protocole.
+}
+{
+associ&eacute;e au protocole
+<p class="wwwoffle-url">
+<b><tt>$protocol</tt></b>.
+</p>
+Cette combinaison est invalide.
+}
+<p>
+Le programme WWWOFFLE peut uniquement traiter les requ&ecirc;tes utilisant
+les protocoles (HTTP,FTP,...) et les m&eacute;thodes(GET,POST,...) associ&eacute;es.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Page d'accueil</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

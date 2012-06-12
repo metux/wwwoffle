@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+WWWOFFLE : Variables disponibles (mettre le prefixe '$').
+
+localurl  = Le URL du serveur sur lequel wwwoffled tourne (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = L'URL qui etait demande (='$url').
+
+$decurl=%decode[url]
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - H&ocirc;te non stock&eacute;</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE - H&ocirc;te non stock&eacute;</H1>
+
+<div class="wwwoffle-message" align="center">
+Votre demande de l'URL
+<p class="wwwoffle-url">
+<b><tt>$decurl</tt></b>
+</p>
+a &eacute;chou&eacute; car celle-ci fait partie de la liste des h&ocirc;tes et/ou chemins qui ne doivent
+pas &ecirc;tre stock&eacute;s et ne peuvent &ecirc;tre demand&eacute;s hors-ligne.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Aide</h2>
+
+<div class="wwwoffle-inline-help">
+Le serveur mandataire WWWOFFLE a &eacute;t&eacute; configur&eacute; pour que cet URL ne soit pas
+stock&eacute;e, et est seulement accessible en ligne. Ceci est contr&ocirc;l&eacute; dans la section
+<tt>DontCache</tt> du fichier de configuration <tt>wwwoffle.conf</tt>.
+Ce dernier contient des indications pour pr&eacute;ciser les sites ou pages non stock&eacute;s.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Page d'accueil</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

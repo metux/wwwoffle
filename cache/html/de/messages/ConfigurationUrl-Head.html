@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+wildcard  = A flag to indicate if there is a wildcard set (='$wildcard').
+url       = The URL that this applies to (= '$url').
+proto     = The URL protocol (= '$proto').
+host      = The URL host (= '$host').
+port      = The URL host port (= '$port').
+path      = The URL path (= '$path').
+args      = The URL args (= '$args').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Interaktive Konfigurations-Seite - URL $url</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Interaktive Konfiguration</H1>
+
+$wildcard?{
+<H2>URL: $url</H2>
+}{
+<H2>URL: <a href="$url">$url</a></H2>
+}
+
+Diese Seite erlaubt die Konfiguration einiger Optionen f&uuml;r einzelne URLS zu setzen.
+
+Sie k&ouml;nnen die URL wie sie oben gezeigt wird, oder eine allgemeinere
+URL durch Verwendung von Wildcards wie im Formular unten gezeigt verwenden.
+
+<p>
+<form action="$localurl/configuration/editurl" method="POST">
+
+<p>
+Protokoll:
+<select name="proto">
+  <option value="*"      $proto?=*{selected}{}>Beliebiges Protokoll</option>
+$proto?=*{}{
+  <option value="$proto"              selected>$proto</option>
+}
+  <option value="OTHER"                       >anderes; hier angeben --&gt;</option>
+</select>
+[Anderes Protokoll: <input type="text" value="$proto" size="5" name="proto_other">]
+
+<p>
+Host:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<select name="host">
+  <option value="*"     $host?=*{selected}{}>Beliebiger Host</option>
+$host?=*{}{
+  <option value="$host"             selected>$host</option>
+}
+  <option value="OTHER"                     >Anderer (e.g. *.com or www.*.com); angeben --&gt;</option>
+</select>
+[Anderer Host: <input type="text" value="$host" size="24" name="host_other">]
+
+<p>
+Port:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<select name="port">
+  <option value=""       $port?{}{selected}         >Beliebiger Port</option>
+  <option value=":"      $port?=:{selected $port=}{}>Standard-Port des Protokolls</option>
+$port?{
+  <option value=":$port"          selected          >$port</option>
+}{}
+  <option value="OTHER"                             >Anderer (e.g. port 8080); angeben --&gt;</option>
+</select>
+[Anderer Port: <input type="text" value="$port" size="5" name="port_other">]
+
+<p>
+Pfad:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<select name="path">
+  <option value="/*"     $path?=*{selected}{}>Beliebiger Pfad</option>
+  <option value="/$path" $path?=*{}{selected}>/$path</option>
+  <option value="OTHER"                      >Anderer (e.g. /foo/* or /*.bar); angeben --&gt;</option>
+</select>
+[Anderer Pfad: <input type="text" value="/$path" size="16" name="path_other">]
+
+<p>
+Argumente:
+<select name="args">
+  <option value="?*"                            >Beliebige Argumente</option>
+  <option value=""   $args?{}{selected}         >Beliebige oder keine</option>
+  <option value="?"  $args?=?{selected $args=}{}>Keine Argumente</option>
+$args?{
+  <option value="?$args"      selected          >$args</option>
+}{}
+  <option value="OTHER"                         >Andere (e.g. ?foo=bar); angeben --&gt;</option>
+</select>
+[Andere Argumente: <input type="text" value="$args" size="16" name="args_other">]
+
+<p>
+<input type="submit" value="Change URL-SPECIFICATION">
+</form>

@@ -1,0 +1,67 @@
+$shownocontents=
+
+$last?=$type{$header="" $open="" $close=}{$header=$type $open=<ul> $close=</ul>}
+$last?{}{$close=}
+$last=$type
+
+$header?{$close}{}
+
+$header?=Refresh{
+<h2>Automatic Loading URL</h2>
+
+Een specifiek URL om door de browser geladen te worden nadat deze geladen is.
+}{}
+
+$header?=StyleSheet{
+<h2>StyleSheets</h2>
+
+Referenties aan externe stylesheets.
+}{}
+
+$header?=Image{
+<h2>Images</h2>
+
+Ingebedde plaatjes, deze worden nu op volledige grootte getoon,
+maar in de webpagina worden ze mogelijk geschaald zodat ze groter of kleiner getoond worden.
+}{}
+
+$header?=Frame{
+<h2>Frames</h2>
+
+Frames in deze pagina.
+}{}
+
+$header?=Script{
+<h2>Scripts</h2>
+
+Links naar externe scripts.
+}{}
+
+$header?=Object{
+<h2>Objects</h2>
+
+Links naar externe objecten, bijvoorbeeld Java.
+}{}
+
+$header?=Link{
+<h2>Links</h2>
+
+Links naar andere webpagina's of e-mail.
+}{}
+
+$header?{
+<p>
+$open
+}{}
+
+$encurl=%encode[refurl]
+$htmlurl=%html[refurl]
+<li> \
+[<a href="$localurl/info/url?$encurl">Info</a>] \
+[<a href="$localurl/configuration/url?$encurl">Config</a>] \
+[<a href="$localurl/index/url?$encurl">Index</a>] \
+[<tt>$status</tt>] \
+&nbsp; \
+$status?=X{$refurl}{<a href="$htmlurl">$refurl</a>}
+$status?=+{}{$type=}
+$type?=Image{<br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="$htmlurl"><img src="$htmlurl" alt="$htmlurl"></a>}{}

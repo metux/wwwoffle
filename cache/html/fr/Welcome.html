@@ -1,0 +1,477 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>WWWOFFLE Version 2.7 - Page d'accueil du serveur mandataire</TITLE>
+<LINK href="/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY>
+<p align=center>
+[D&eacute;but]
+[<a href="#description">Description</a>]
+[<a href="#indexes">Index</a>]
+[<a href="#request">Page&nbsp;de&nbsp;Requ&ecirc;te</a>]
+[<a href="#monitor">Page&nbsp;de&nbsp;Suivi</a>]
+[<a href="#control">Contr&ocirc;le&nbsp;du&nbsp;Programme</a>]
+[<a href="#configuration">Configuration</a>]
+[<a href="#search">Recherche</a>]
+[<a href="#links">Liens</a>]
+[<a href="#mail">E-Mail</a>]
+</p>
+<hr>
+
+<H1 align=center><a name="top">WWWOFFLE - Page d'accueil du serveur mandataire</a></H1>
+
+La suite de programmes WWWOFFLE simplifie la navigation depuis des ordinateurs
+reli&eacute;s de mani&egrave;re intermittente &agrave; l'internet.
+
+<h2><a name="description">Description</a></h2>
+
+Le programme wwwoffled est un simple serveur mandataire (proxy) ayant
+quelques options sp&eacute;cifiques en cas de connexion intermittente. Autrement
+dit, il est possible de consulter des pages web sans avoir &agrave; rester
+connect&eacute;.
+<p>
+Les liens ci-dessous r&eacute;f&egrave;rent les options du fichier de configuration
+<i>[CONF]</i>, la page permettant de les modifier <i>[EDIT]</i> (peut demander
+un mot de passe), davantage d'information dans ce document <i>[READ]</i> ou sur
+une autre page <i>[URL]</i>.
+<p>
+
+Caract&eacute;ristiques de base
+<ul>
+  <li>Cache des protocoles HTTP, FTP et finger.
+  <li>Autorise les m&eacute;thodes HTTP : GET, HEAD, POST et PUT.
+  <li>Contr&ocirc;le Interactif ou en ligne de commande de l'&eacute;tat online/offline/autodial.
+      <a href="/control/">[URL]</a>
+  <li>Hautement configurable.
+      <a href="README.CONF.html">[CONF]</a>
+  <li>Maintenance r&eacute;duite, marche/arr&ecirc;t et en-ligne/hors-ligne automatisables.
+</ul>
+
+En mode en-ligne (online)
+<ul>
+  <li>Sauvegarde des pages consult&eacute;es pour &ecirc;tre revues plus tard.
+  <li>T&eacute;l&eacute;chargement conditionnel pour ne capturer que les pages modifi&eacute;es.
+      <a href="README.CONF.html#OnlineOptions">[CONF]</a>
+      <a href="/configuration/OnlineOptions">[EDIT]</a>
+  <ul>
+    <li>Bas&eacute; sur la date d'expiration, la date de la derni&egrave;re
+        consultation ou bien une fois par session.
+        <a href="README.CONF.html#OnlineOptions_request-changed">[CONF]</a>
+        <a href="/configuration/OnlineOptions/request-changed">[EDIT]</a>
+  </ul>
+  <li>Support (sans mise en cache) du protocole s&eacute;curis&eacute; SSL (Secure
+      Socket Layer) (https).
+      <a href="README.CONF.html#Options_ssl-allow-port">[CONF]</a>
+      <a href="/configuration/Options/ssl-allow-port">[EDIT]</a>
+  <li>Utilisation possible derri&egrave;re un ou plusieurs mandataires selon la
+      page acc&eacute;d&eacute;e.
+      <a href="README.CONF.html#Proxy">[CONF]</a>
+      <a href="/configuration/Proxy">[EDIT]</a>
+  <li>Contr&ocirc;le d'acc&egrave;s.
+      <a href="README.CONF.html#DontGet">[CONF]</a>
+      <a href="/configuration/DontGet">[EDIT]</a>
+        <ul>
+	     <li>Possibilit&eacute; de remplacer les pages bloqu&eacute;es.
+	      <a href="README.CONF.html#DontGet_replacement">[CONF]</a>
+	      <a href="/configuration/DontGet/replacement">[EDIT]</a>
+	</ul>
+  <li>Filtrage des pages ne devant pas &ecirc;tre stock&eacute;es dans le cache.
+      <a href="README.CONF.html#DontCache">[CONF]</a>
+      <a href="/configuration/DontCache">[EDIT]</a>
+  <li>Demande des pages compress&eacute;es aux serveurs (option de compilation).
+      <a href="README.CONF.html#OnlineOptions_request-compressed-data">[CONF]</a>
+      <a href="/configuration/OnlineOptions/request-compressed-data">[EDIT]</a>
+</ul>
+
+En mode hors-ligne (offline)
+<ul>
+  <li>Peut &eacute;tablir automatiquement la connexion si une page ne figure pas dans le cache (mode autodial).
+  <li>S&eacute;lection des pages &agrave; t&eacute;l&eacute;charger &agrave; la prochaine connexion.
+      <ul>
+        <li>en s&eacute;lectionnant simplement l'URL avec le navigateur.
+        <li>en utilisant l'interface en ligne de commande.
+      </ul>
+  <li>Filtrage des pages ne devant pas &ecirc;tre demand&eacute;es hors-ligne.
+      <a href="README.CONF.html#OfflineOptions">[CONF]</a>
+      <a href="/configuration/OfflineOptions">[EDIT]</a>
+  <li>Acc&egrave;s direct aux serveurs du r&eacute;seau local (LAN).
+      <a href="README.CONF.html#LocalNet">[CONF]</a>
+      <a href="/configuration/LocalNet">[EDIT]</a>
+</ul>
+
+T&eacute;l&eacute;chargement Automatis&eacute;
+<ul>
+  <li>T&eacute;l&eacute;chargement automatique des pages sp&eacute;cifi&eacute;es.
+      <a href="README.CONF.html#FetchOptions">[CONF]</a>
+      <a href="/configuration/FetchOptions">[EDIT]</a>
+  <li>T&eacute;l&eacute;chargement optionnel des objets contenus dans les pages.
+      <a href="README.CONF.html#FetchOptions">[CONF]</a>
+      <a href="/configuration/FetchOptions">[EDIT]</a>
+    <ul>
+      <li>Support de nombreux types de pages :
+        <ul>
+	  <li>HTML 4.0, Java classes, VRML (partiel), XML (partiel).
+        </ul>
+      <li>T&eacute;l&eacute;chargement optionnel des diff&eacute;rents objets et classes :
+          <a href="README.CONF.html#FetchOptions">[CONF]</a>
+          <a href="/configuration/FetchOptions">[EDIT]</a>
+      <ul>
+	<li>Images, feuilles de style, cadres, scripts, Java, ...
+      </ul>
+     <li>Option pour ne pas charger les fausses images (images d'un pixel).
+         <a href="README.CONF.html#FetchOptions_webbug-images">[CONF]</a>
+         <a href="/configuration/FetchOptions/webbug-images">[EDIT]</a>
+    </ul>
+  <li>Correction automatique des liens pour les pages ayant &eacute;t&eacute; d&eacute;plac&eacute;es.
+  <li>Possibilit&eacute; de surveiller des pages &agrave; intervalles r&eacute;gulier et
+  capturer celles ayant &eacute;t&eacute; modifi&eacute;es.
+      <a href="/monitor-options/">[URL]</a>
+  <li>T&eacute;l&eacute;chargement r&eacute;cursif
+      <a href="/refresh-options/">[URL]</a>
+    <ul>
+      <li>&Agrave; une profondeur limit&eacute;e.
+      <li>Sur n'importe quel h&ocirc;te, ou bien en se limitant au serveur ou r&eacute;pertoire de d&eacute;part.
+      <li>Utilisable par ligne de commande ou depuis un navigateur.
+      <li>Filtrage des pages ne devant pas &ecirc;tre t&eacute;l&eacute;charg&eacute;es par ce processus.
+    </ul>
+</ul>
+
+Autres Caract&eacute;ristiques
+<ul>
+  <li>Ajout optionnel d'un pied-de-page indiquant la date de mise en
+      cache de la page HTML et les commandes utilisables.
+      <a href="README.CONF.html#ModifyHTML_add-cache-info">[CONF]</a>
+      <a href="/configuration/ModifyHTML/add-cache-info">[EDIT]</a>
+  <li>Possibilit&eacute; de modifier les pages html
+      <a href="README.CONF.html#ModifyHTML">[CONF]</a>
+      <a href="/configuration/ModifyHTML">[EDIT]</a>
+      <ul>
+        <li>Suppression des scripts.
+            <a href="README.CONF.html#ModifyHTML_disable-script">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-script">[EDIT]</a>
+        <li>Suppression des applets Java.
+            <a href="README.CONF.html#ModifyHTML_disable-applet">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-applet">[EDIT]</a>
+        <li>Suppression des feuilles de style.
+            <a href="README.CONF.html#ModifyHTML_disable-style">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-style">[EDIT]</a>
+        <li>Suppression des animations shockwave flash.
+            <a href="README.CONF.html#ModifyHTML_disable-flash">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-flash">[EDIT]</a>
+        <li>Indication sur chaque lien s'il se trouve en cache.
+            <a href="README.CONF.html#ModifyHTML_anchor-cached-begin">[CONF]</a>
+            <a href="/configuration/ModifyHTML/anchor-cached-begin">[EDIT]</a>
+        <li>Suppression du clignotement.
+            <a href="README.CONF.html#ModifyHTML_disable-blink">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-blink">[EDIT]</a>
+        <li>Suppression des balises de rafra&icirc;chissement.
+            <a href="README.CONF.html#ModifyHTML_disable-meta-refresh">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-meta-refresh">[EDIT]</a>
+        <li>Suppression des liens vers les pages de la liste interdite.
+            <a href="README.CONF.html#ModifyHTML_disable-dontget-links">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-dontget-links">[EDIT]</a>
+        <li>Suppression des cadres (iframes) de la liste interdite.
+            <a href="README.CONF.html#ModifyHTML_disable-dontget-iframes">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-dontget-iframes">[EDIT]</a>
+        <li>Remplacement des images de la liste interdite.
+            <a href="README.CONF.html#ModifyHTML_replace-dontget-images">[CONF]</a>
+            <a href="/configuration/ModifyHTML/replace-dontget-images">[EDIT]</a>
+        <li>Remplacement des fausses images (images d'un pixel).
+            <a href="README.CONF.html#ModifyHTML_replace-webbug-images">[CONF]</a>
+            <a href="/configuration/ModifyHTML/replace-webbug-images">[EDIT]</a>
+        <li>Suppression des directives de rafra&icirc;chissement.
+            <a href="README.CONF.html#ModifyHTML_disable-meta-refresh">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-meta-refresh">[EDIT]</a>
+	<li>Rectification des caract&egrave;res HTML.
+            <a href="README.CONF.html#ModifyHTML_demoronise-ms-chars">[CONF]</a>
+            <a href="/configuration/ModifyHTML/demoronise-ms-chars">[EDIT]</a>
+        <li>Blocage des GIFs anim&eacute;s.
+            <a href="README.CONF.html#ModifyHTML_disable-animated-gif">[CONF]</a>
+            <a href="/configuration/ModifyHTML/disable-animated-gif">[EDIT]</a>
+      </ul>
+  <li>Configuration automatique du proxy pour Netscape.
+      <a href="/wwwoffle.pac">[URL]</a>
+  <li>Recherche dans le cache en utilisant les programmes ht://Dig, mnoGoSearch (UdmSearch), Namazu ou Hyper Estraier.
+      <a href="/search/htdig/">[URL]</a>
+      <a href="/search/mnogosearch/">[URL]</a>
+      <a href="/search/namazu/">[URL]</a>
+      <a href="/search/hyperestraier/">[URL]</a>
+  <li>Int&eacute;gration d'un server web simple pour les pages locales.
+      <a href="/local/">[URL]</a>
+  <li>Limitation du d&eacute;lai de transmission pour &eacute;viter tout blocage.
+      <a href="README.CONF.html#Options">[CONF]</a>
+      <a href="/configuration/Options">[EDIT]</a>
+      <ul>
+        <li>Recherche DNS.
+            <a href="README.CONF.html#Options_dns-timeout">[CONF]</a>
+            <a href="/configuration/Options/dns-timeout">[EDIT]</a>
+        <li>Connexion au serveur distant.
+            <a href="README.CONF.html#Options_connect-timeout">[CONF]</a>
+            <a href="/configuration/Options/connect-timeout">[EDIT]</a>
+        <li>Transfert de donn&eacute;es.
+            <a href="README.CONF.html#Options_socket-timeout">[CONF]</a>
+            <a href="/configuration/Options/socket-timeout">[EDIT]</a>
+      </ul>
+  <li>Possibilit&eacute; de continuer ou d'arr&ecirc;ter le t&eacute;l&eacute;chargement s'il est
+      interrompu par le client ou le serveur.
+      <a href="README.CONF.html#OnlineOptions">[CONF]</a>
+      <a href="/configuration/OnlineOptions">[EDIT]</a>
+      <ul>
+        <li>Selon la taille du fichier, ou la fraction d&eacute;j&agrave; obtenue.
+            <a href="README.CONF.html#OnlineOptions_intr-download-size">[CONF]</a>
+            <a href="/configuration/OnlineOptions/intr-download-size">[EDIT]</a>
+      </ul>
+  <li>Purge des page du cache
+      <a href="README.CONF.html#Purge">[CONF]</a>
+      <a href="/configuration/Purge">[EDIT]</a>
+    <ul>
+      <li>bas&eacute;e sur le valeur de l'URL.
+          <a href="README.CONF.html#Purge_use-url">[CONF]</a>
+          <a href="/configuration/Purge/use-url">[EDIT]</a>
+      <li>pouvant limiter la taille du cache &agrave; une borne sp&eacute;cifi&eacute;e.
+          <a href="README.CONF.html#Purge_max-size">[CONF]</a>
+          <a href="/configuration/Purge/max-size">[EDIT]</a>
+      <li>pouvant garder un minimum d'espace disponible sur le disque.
+          <a href="README.CONF.html#Purge_min-free">[CONF]</a>
+          <a href="/configuration/Purge/min-free">[EDIT]</a>
+      <li>contr&ocirc;le interactif ou par ligne de commande.
+      <li>Compression des pages stock&eacute;es selon leur &acirc;ge.
+          <a href="README.CONF.html#Purge_compress-age">[CONF]</a>
+          <a href="/configuration/Purge/compress-age">[EDIT]</a>
+    </ul>
+  <li>Fournit des pages compress&eacute;es au navigateur (option de compilation).
+      <a href="README.CONF.html#Options_reply-compressed-data">[CONF]</a>
+      <a href="/configuration/Options/reply-compressed-data">[EDIT]</a>
+</ul>
+
+Index
+<ul>
+  <li>Index multiples pour les pages du cache
+      <a href="#indexes">[READ]</a>
+      <ul>
+        <li>Serveurs pour chaque protocole (http, ftp ...).
+        <li>Pages sur chaque serveur.
+        <li>Requ&ecirc;tes en attente.
+        <li>Pages captur&eacute;es lors de la derni&egrave;re connexion.
+        <li>Pages demand&eacute;es avant celle-ci.
+        <li>Pages contr&ocirc;l&eacute;es p&eacute;riodiquement.
+      </ul>
+  <li>Index Configurables
+      <ul>
+        <li>Tri par nom, date, nom de domaine, type de fichier.
+        <li>Options pour effacer, actualiser ou assurer un suivi des pages.
+        <li>Possibilit&eacute; d'afficher la liste compl&egrave;te ou bien de cacher
+            les pages inint&eacute;ressantes.
+            <a href="README.CONF.html#IndexOptions">[CONF]</a>
+            <a href="/configuration/IndexOptions">[EDIT]</a>
+      </ul>
+</ul>
+
+S&eacute;curit&eacute;
+<ul>
+  <li>Support des pages demandant une authentification classique
+  utilisateur/mot de passe.
+  <li>Authentification automatique pour les mandataires externes qui
+      le requi&egrave;rent.
+      <a href="README.CONF.html#Proxy_auth-username">[CONF]</a>
+      <a href="/configuration/Proxy/auth-username">[EDIT]</a>
+  <li>Contr&ocirc;le de l'acc&egrave;s au mandataire
+      <ul>
+        <li>Accessible uniquement sur l'h&ocirc;te local (localhost) par
+        d&eacute;faut.
+            <a href="README.CONF.html#LocalHost">[CONF]</a>
+            <a href="/configuration/LocalHost">[EDIT]</a>
+        <li>Acc&egrave;s reglement&eacute; selon le nom de l'h&ocirc;te ou de l'adresse
+        IP.
+            <a href="README.CONF.html#AllowedConnectHosts">[CONF]</a>
+            <a href="/configuration/AllowedConnectHosts">[EDIT]</a>
+        <li>Restriction optionnelle par mot de passe.
+            <a href="README.CONF.html#AllowedConnectUsers">[CONF]</a>
+            <a href="/configuration/AllowedConnectUsers">[EDIT]</a>
+      </ul>
+  <li>Protection par mot de passe des fonctions d'administration du proxy.
+      <a href="README.CONF.html#StartUp_password">[CONF]</a>
+      <a href="/configuration/StartUp/password">[EDIT]</a>
+  <li>Contr&ocirc;le possible des en-t&ecirc;tes HTTP entrants et sortants pour
+  maintenir l'intimit&eacute; des utilisateurs.
+      <a href="README.CONF.html#CensorHeader">[CONF]</a>
+      <a href="/configuration/CensorHeader">[EDIT]</a>
+</ul>
+
+Configuration
+<ul>
+  <li>Toutes les options sont contr&ocirc;l&eacute;es depuis un simple fichier de
+      configuration.
+      <a href="README.CONF.html">[CONF]</a>
+  <li>&Eacute;dition de ce fichier possible depuis une page web interactive.
+      <a href="/configuration/">[EDIT]</a>
+  <li>Possibilit&eacute; de personnaliser les messages d'erreur et les pages
+      d'information.
+</ul>
+
+
+<h2><a name="indexes">WWWOFFLE Index du Cache</a></h2>
+
+L'index de toutes les pages stock&eacute;es dans le cache de WWWOFFLE est
+disponible en plusieurs formats.
+<br>
+Les index r&eacute;pertorient en premier lieu les noms d'h&ocirc;te puis la liste des
+fichiers pour chacun d'entre-eux. L'URL de base est /index/, mais il peut
+&ecirc;tre modifi&eacute; pour plus de pr&eacute;cision :
+<dl>
+  <dt><a href="/index/">/index/</a>
+  <dd>Page d'index principale : elle comporte des liens vers tous les
+  autres index.
+  <dt><a href="/index/http/?sort=none">/index/<i>http</i>/</a>
+  <dd>Liste des pages http (ou un autre protocole) pr&eacute;sentes
+  en cache. 
+  <dt><a href="/index/http/www.gedanken.demon.co.uk/?sort=alpha">/index/<i>http</i>/<i>www.gedanken.demon.co.uk</i>/</a>
+  <dd>Liste des pages http sauvegard&eacute;es depuis le serveur
+  www.gedanken.co.uk (ou pour tout autre protocole ou serveur)
+  <dt><a href="/index/outgoing/?sort=none">/index/outgoing/</a> (En Attente)
+  <dd>Liste des requ&ecirc;tes en attente.
+  <dt><a href="/index/monitor/?sort=none">/index/monitor/</a> (Suivies)
+  <dd>Liste des pages surveill&eacute;es &agrave; intervalles r&eacute;guliers.
+  <dt><a href="/index/lasttime/?sort=mtime">/index/lasttime/</a> (Derni&egrave;re Connexion)
+  <dd>Liste des pages consult&eacute;es la derni&egrave;re fois que le programme &eacute;tait
+  en ligne.
+  Elle fournit &eacute;galement un historique des pages acc&eacute;d&eacute;es lors de
+  connexions pr&eacute;c&eacute;dentes.
+  <dt><a href="/index/lastout/?sort=mtime">/index/lastout/</a> (Derni&egrave;re Demande)
+  <dd>Liste de tous les fichiers demand&eacute;s avant la derni&egrave;re connexion ;
+      donne aussi acc&egrave;s &agrave; un historique.
+</dl>
+
+<h2><a name="request">WWWOFFLE Requ&ecirc;te Simple ou R&eacute;cursive d'une Page</a></h2>
+
+Les pages d&eacute;sir&eacute;es peuvent &ecirc;tre t&eacute;l&eacute;charg&eacute;es en les demandant
+directement sur votre navigateur, ou &eacute;ventuellement par ligne de commande
+ou bien depuis le formulaire interactif de WWWOFFLE.
+<dl>
+  <dt><a href="/refresh-options/">/refresh-options/</a>
+  <dd>Page interactive pour sp&eacute;cifier les URL &agrave; capturer r&eacute;cursivement.
+</dl>
+
+<h2><a name="monitor">WWWOFFLE Suivi d'une Page</a></h2>
+
+Les pages que vous voulez actualiser r&eacute;guli&egrave;rement peuvent &ecirc;tre
+captur&eacute;es en les entrant dans un formulaire de WWWOFFLE.
+<dl>
+  <dt><a href="/monitor-options/">/monitor-options/</a>
+  <dd>Page interactive pour sp&eacute;cifier les pages &agrave; capturer r&eacute;guli&egrave;rement.
+</dl>
+
+<h2><a name="control">WWWOFFLE Contr&ocirc;le Interactif</a></h2>
+
+Le mandataire WWWOFFLE peut &ecirc;tre contr&ocirc;l&eacute; en ligne de
+commande ou depuis une interface interactive sur une page web.
+<dl>
+  <dt><a href="/control/">/control/</a>
+  <dd>Page interactive pour contr&ocirc;ler le mandataire.
+      [N&eacute;cessite le mot de passe du fichier de configuration s'il est
+      d&eacute;fini, quel que soit le nom de l'utilisateur]
+</dl>
+
+<h2><a name="configuration">Modification interactive de la configuration de WWWOFFLE</a></h2>
+
+Le fichier de configuration du proxy WWWOFFLE peut &ecirc;tre &eacute;dit&eacute; comme un fichier texte,
+ou interactivement depuis une page web.
+<dl>
+  <dt><a href="/configuration/">/configuration/</a>
+  <dd>Une page interactive pour modifier le fichier de configuration.
+      [Suppose connu le mot de passe du fichier de configuration s'il existe, mais sous un nom d'utilisateur quelconque.]
+</dl>
+
+<h2><a name="search">WWWOFFLE Recherche dans le Cache</a></h2>
+
+En installant un des programmes
+<a href="http://www.htdig.org/">ht://Dig</a>,
+<a href="http://mnogosearch.org/">mnoGoSearch (UdmSearch)</a>,
+<a href="http://www.namazu.org/">Namazu</a> ou
+<a href="http://hyperestraier.sourceforge.net/">Hyper Estraier</a>
+il est possible de rechercher dans les pages du cache de WWWOFFLE.
+<dl>
+  <dt><a href="/search/htdig/search.html">/search/htdig/search.html</a>
+  <dd>Formulaire de recherche ht://Dig.
+  <dt><a href="/search/mnogosearch/search.html">/search/mnogosearch/search.html</a>
+  <dd>Formulaire de recherche UdmSearch.
+  <dt><a href="/search/namazu/search.html">/search/namazu/search.html</a>
+  <dd>Formulaire de recherche Namazu.
+  <dt><a href="/search/hyperestraier/search.html">/search/hyperestraier/search.html</a>
+  <dd>Formulaire de recherche Hyper Estraier.
+</dl>
+
+
+<h2><a name="links">Liens WWWOFFLE</a></h2>
+
+La <a href="FAQ.html">FAQ</a> de WWWOFFLE est d&eacute;sormais fournie avec
+le programme, il existe aussi une version en ligne :
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.7/FAQ.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.7/FAQ.html</a>
+<p>
+La page de r&eacute;f&eacute;rence WWWOFFLE est
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/">http://www.gedanken.demon.co.uk/wwwoffle/</a>.
+Elle contient les derni&egrave;res informations g&eacute;n&eacute;rales sur le programme.
+<p>
+Les derniers renseignements concernant l'utilisation de la version 2.7 de WWWOFFLE sont disponibles &agrave;
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.7/user.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.7/user.html</a>
+<p>
+Une description de la compatibilit&eacute; de WWWOFFLE avec divers navigateurs :
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.7/browser.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.7/browser.html</a>
+<p>
+Une page contenant des informations, trucs et astuces sur l'usage de WWWOFFLE :
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/version-2.7/hints-tips.html">http://www.gedanken.demon.co.uk/wwwoffle/version-2.7/hints-tips.html</a>
+
+
+<h2><a name="mail">WWWOFFLE E-Mail</a></h2>
+
+Pour signaler un bogue, adressez-vous directement <b>(en anglais)</b> &agrave;
+l'auteur : <a href="mailto:amb@gedanken.demon.co.uk">amb@gedanken.demon.co.uk</a> ;
+<i>pour faciliter la gestion du message, merci de placer WWWOFFLE dans le champ sujet</i>.
+<br>
+NB : si cela concerne une traduction, adressez-vous directement au traducteur.
+
+<p>
+
+Il existe trois listes de diffusion (anglaises) auxquelles les
+utilisateurs de WWWOFFLE sont invit&eacute;s :
+
+<dl>
+  <dt>wwwoffle-announce
+  <dd>Liste annon&ccedil;ant les nouvelles versions de WWWOFFLE et les
+      correction de bugs.
+  <dt>wwwoffle-users
+  <dd>Liste permettant aux utilisateurs de discuter sur le programme,
+      de poser des questions et de r&eacute;soudre leurs probl&egrave;mes de
+      configuration. Elle ne tient pas compte des sp&eacute;cificit&eacute;s
+      relatives au syst&egrave;me d'exploitation.
+  <dt>wwwoffle-win32
+  <dd>Liste destin&eacute;e aux utilisateurs de wwwoffle sur un syst&egrave;me win32
+      pour discuter sur le programme, poser des questions et r&eacute;soudre
+      leurs probl&egrave;mes de configuration.
+</dl>
+
+Pour s'inscrire &agrave; une de ces listes, envoyez un e-mail &agrave;
+<a href="mailto:majordomo@gedanken.demon.co.uk">majordomo@gedanken.demon.co.uk</a>
+avec l'expression <tt>subscribe wwwoffle-announce</tt>, <tt>subscribe
+wwwoffle-users</tt> ou <tt>subscribe wwwoffle-win32</tt> dans le corps
+du message.
+
+<hr>
+<p align=center>
+[<a href="#top">D&eacute;but</a>]
+[<a href="#description">Description</a>]
+[<a href="#indexes">Index</a>]
+[<a href="#request">Page&nbsp;de&nbsp;Requ&ecirc;te</a>]
+[<a href="#monitor">Page&nbsp;de&nbsp;Suivi</a>]
+[<a href="#control">Contr&ocirc;le&nbsp;du&nbsp;Programme</a>]
+[<a href="#configuration">Configuration</a>]
+[<a href="#search">Recherche</a>]
+[<a href="#links">Liens</a>]
+[<a href="#mail">E-Mail</a>]
+</p>
+</BODY>
+
+</HTML>

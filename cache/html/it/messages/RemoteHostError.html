@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that was asked for (='$url').
+cache     = A flag to indicate if the page is being written to the cache or browser (='$cache').
+backup    = A flag to indicate if there is a backup page in the cache (='$backup').
+reason    = A flag to indicate the reason (='$reason').
+            TimeoutReply    - The server timed out reading the reply.
+            TimeoutTransfer - The server timed out during the transfer.
+            ClientClose     - The connection was closed by the client.
+            ...             - Another reason.
+
+$decurl=%decode[url]
+$encurl=%encode[url]
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE - Errore Host Remoto</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Errore Host Remoto</H1>
+
+<div class="wwwoffle-message" align="center">
+La tua richiesta per l'URL
+<p class="wwwoffle-url">
+<b><tt>$decurl</tt></b>
+</p>
+&egrave; fallita perch&eacute;
+<p class="wwwoffle-error">
+$reason?=TimeoutReply
+{L'host remoto ha fallito nel mandare la risposta nel tempo stabilito.
+$done="yes"}{}
+$reason?=TimeoutTransfer
+{L'host remoto ha fallito nel mandare alcuni dei dati nel tempo stabilito.
+$done="yes"}{}
+$reason?=DataCorrupt
+{The remote host sent compressed or encoded data that could not be uncompressed or decoded.
+$done="yes"}{}
+$reason?=ClientClose
+{Il client (browser) ha chiuso il collegamento durante la richiesta.
+$done="yes"}{}
+$done?{}{$reason}
+</p>
+$cache?
+{Questo messaggio d'errore &egrave; stato ora eliminato dalla cache.}
+{}
+<p>
+$backup?
+{Ricaricare questa pagina porter&agrave; alla versione precedente.}
+{Ricaricare questa pagina porter&agrave; a richiederla nuovamente.}
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help Start -->
+
+<h2 class="wwwoffle-inline-help">Aiuto</h2>
+
+<div class="wwwoffle-inline-help">
+Il server WWWOFFLE non &egrave; stato in grado di completare la richiesta di questa URL a causa
+di un problema con lo scaricamento di qusta pagina.  Questo pu&ograve; succedere perch&eacute;
+il server remoto non invia alcuna risposta nel tempo stabilito oppure una richiesta &egrave;
+stata interrotta per via dell'assenza di dati nel tempo stabilito. Un'altra possibile causa per
+questo messaggio &egrave; che il browser ha chiuso la connessione prima che l'intera pagina fosse
+scaricata. L'esatta ragione in questo caso &egrave; indicata nel messaggio d'errore riportato sopra.
+<p>
+Quando esiste una versione di riserva di questa pagina nella cache, allora il ricaricamento di
+questa pagina porter&agrave; alla visualizzazzione di quella versione. Quando non c'&egrave;
+una versione di riserva nella cache, allora il ricaricamento causer&agrave; una nuova richesta.
+</div>
+
+<!-- Standard WWWOFFLE Message Page Inline Help End -->
+
+<div class="wwwoffle-nav" align="center">
+[ \
+<a href="$localurl/refresh/?$encurl">Refresh</a>: \
+<a href="$localurl/refresh-options/?$encurl">Options</a>| \
+<a href="$localurl/monitor-options/?$encurl">Monitor</a>| \
+Delete| \
+<a href="$localurl/index/url?$encurl">Index</a>| \
+<a href="$localurl/configuration/url?$encurl">Configure</a> \
+]
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer Start -->
+
+<hr class="wwwoffle-footer">
+<div class="wwwoffle-footer" align="center">
+WWWOFFLE - [ \
+<a href="$localurl/Welcome.html">Pagina di Benvenuto</a>| \
+<a href="$localurl/FAQ.html">FAQ</a> \
+] - WWWOFFLE
+</div>
+
+<!-- Standard WWWOFFLE Message Page Footer End -->
+
+</BODY>
+
+</HTML>

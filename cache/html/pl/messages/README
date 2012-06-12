@@ -1,0 +1,89 @@
+                       KOMUNIKATY WWWOFFLE - Wersja 2.6
+                       ================================
+
+Strony HTML, które generuje WWWOFFLE zawarte s± w tym katalogu.
+
+Opis Stron
+----------
+
+Strony umieszczone w tym katalogu s± komunikatami, które generuje sam WWWOFFLE.
+
+Wszystkie pliki w tym katalogu odpowiadaj± jednemu komunikatowi oprócz tych,
+które s± nazwane *-Head.html, *-Body.html lub *-Tail.html, i s± one czê¶ciami
+strony, która jest ³±czona z innymi do stworzenia ca³ej strony.
+
+
+Pisanie Stron
+-------------
+
+Je¶li modyfikujesz te strony dla samego siebie, wtedy proszê aby¶ pamiêta³ o
+nastêpuj±cych punktach:
+
+    Nazwa wwwoffle powinna pojawiaæ siê wyra¼nie, gdziekolwiek znajduje siê na
+    stronie.
+    Interfejs URL dla wwwoffle mo¿e siê zmieniaæ pomiêdzy wersjami.
+    Utrzymuj specyfikacjê HTML (odwied¼ http://www.w3.org/).
+    Pliki musz± byæ w formacie UNIX, a nie w formacie MS-DOS (LF, nie CRLF).
+
+Je¶li generujesz jakie¶ strony, które chcia³by¶ zobaczyæ za³±czone do nastêpnych
+wersji wwwoffle, powiadom mnie o tym. Faktycznie, mo¿e bêdziesz chcia³ powiedzieæ
+mi o tym zanim zaczniesz, poniewa¿ inni mog± ju¿ robiæ to co chcesz i ty. Nie
+wysy³aj mi stron dopóki o nie nie poproszê, poniewa¿ mog± one byæ do¶æ du¿e.
+
+Jestem zainteresowany za³±czeniem nastêpuj±cych typów stron w przysz³o¶ci:
+
+    Rozszerzone wersje
+        Obrazki
+        Javascript
+        Bardziej pomocne (odniesienie do stron pomocy/FAQ w przypadku b³êdu?)
+
+Udostêpnie je ze strony web wwwoffle, je¶li zostan± zatwierdzone, równie¿ w
+nastêpnych wersjach.
+
+
+Zasady Rozk³adu
+---------------
+
+Parser jest bardzo prostym mikro jêzykiem (zbyt prosty, aby byæ makro
+jêzykiem!).
+
+Zasady, które s± pos³uszne s± nastêpuj±ce:
+
+Klasa-1
+
+$foo                    - Zamieniane przez zawarto¶æ zmiennej foo.
+%foo[bar]               - Zamieniane przez warto¶æ zwracan± przez funkcjê foo z
+                          argumentem $bar.
+                          Dostêpnymi funkcjami s± encode, decode i html.
+
+Klasa-2
+
+$foo=bar                - Podstawia warto¶æ 'bar' pod zmienn± foo.
+$foo="bar 1"            - Podstawia warto¶æ 'bar 1' pod zmienn± foo.
+$foo='bar 2'            - Podstawia warto¶æ 'bar 2' pod zmienn± foo.
+
+Klasa-3
+
+$foo?{tak}{nie}         - Zamieniane przez 'tak', je¶li $foo jest ustawione lub
+                          'nie', je¶li nie jest.
+$foo?=bar{tak}{nie}     - Zamieniane przez 'tak', je¶li $foo == bar lub 'nie',
+                          je¶li nie.
+
+
+Du¿e i ma³e litery nazw zmiennych i funkcji nie s± rozró¿nialne, dla reszty s±
+rozró¿nialne.
+
+Konstrukcja Klasa-1 mo¿e zostaæ u¿yta po prawej stronie Klasa-2.
+
+Konstrukcje Klasa-1 i Klasa-2 mog± zostaæ u¿yte wewn±trz konstrukcji Klasa-3.
+
+Konstrukcja Klasa-3 nie mo¿e byæ zagnie¿d¿ana.
+
+Znaki { i } musz± byæ notowane jako \{ i \} w konstrukcjach Klasa-2 i Klasa-3.
+
+Znaki ' i " musz± byæ notowane tak jak wy¿ej, je¶li s± u¿yte wewn±trz kontrukcji
+Klasa-2.
+
+
+----------
+Andrew M. Bishop 31 marzec 2000

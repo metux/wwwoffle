@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<!--
+
+Available WWWOFFLE Variables (all with a '$' prefix).
+
+localurl  = The root URL of the server running wwwoffled (='$localurl').
+version   = The version of the WWWOFFLE server (='$version').
+url       = The URL that the request was for (='$url').
+cached    = A flag to indicate if the file is cached (='$cached').
+
+-->
+
+<HEAD>
+<TITLE>WWWOFFLE Cached Page Contents</TITLE>
+<LINK href="$localurl/wwwoffle.css" type="text/css" rel="stylesheet">
+</HEAD>
+
+<BODY class="wwwoffle-message">
+
+
+<!-- Standard WWWOFFLE Message Page Header Start -->
+
+<div class="wwwoffle-header" align="center">
+<b>WWWOFFLE</b> <b>-</b> <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer <b>-</b> <b>v$version</b>
+</div>
+<hr class="wwwoffle-header">
+
+<!-- Standard WWWOFFLE Message Page Header End -->
+
+<H1 align="center">WWWOFFLE Cached Page Contents</H1>
+
+$cached?{
+This page details the contents of the page for the URL
+<b><tt><a href="%html[url]">$url</a></tt></b> that is available in the WWWOFFLE
+cache.
+<p>
+For each of the URLs that are referenced by this web page there are options to
+go see the information for that URL, go to the configuration editing page or see
+the index of cached web pages from the same site.  Also shown is an indicator of
+the state of the URL: 'X' if the URL is in the DontGet section of the
+configuration file, '+' if the URL is in the cache, '~' if it has been requested
+and '-' if it is not cached.
+$shownocontents=1
+}{
+The page for the URL <b><tt><a href="%html[url]">$url</a></tt></b> is not
+available in the WWWOFFLE cache.
+}

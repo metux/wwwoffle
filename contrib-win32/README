@@ -1,0 +1,45 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.8f
+          =========================================================
+
+These are miscellaneous files/scripts that can be used with WWWOFFLE.
+
+Contents:
+
+        WWWOFFLE basic scripts
+        Ht://Dig basic scripts
+        Dialup scripts
+
+
+WWWOFFLE
+--------
+
+Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+start.bat       Starts WWWOFFLE.
+stop.bat        Stops WWWOFFLE.
+online.bat      Puts WWWOFFLE online and starts fetching.
+offline.bat     Puts WWWOFFLE online.
+
+
+ht://Dig
+--------
+
+Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> [WWWOFFLE Author]
+
+dig-full.bat    Does a full htdig.
+dig-incr.bat    Does an incremental htdig.
+dig-last.bat    Does an htdig of the lasttime directory.
+fuzzy.bat       Creates the fuzzy database for htdig.
+
+
+Dialup
+------
+
+Contributed: Jan Tisje <jan.tisje@gmx.de>
+
+dialup-scripts/dialup_vars.sh
+dialup-scripts/offline.sh
+dialup-scripts/online.sh
+
+These scripts can be configured to be run by WWWOFFLE when it goes online or
+offline so that Windows dial up networking is started and stopped.

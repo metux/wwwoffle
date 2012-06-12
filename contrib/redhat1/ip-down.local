@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Vikram Goyal (viki@bol.net.in contactviki@netscape.net)
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+# Put WWW offline browser to offline mode.
+service wwwoffled offline
+

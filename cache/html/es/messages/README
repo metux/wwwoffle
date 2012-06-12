@@ -1,0 +1,91 @@
+                     MENSAJES de WWWOFFLE - Versión 2.6
+                     ==================================
+
+Las página HTML que genera WWWOFFLE están ahora contenidas en este
+directorio.
+
+Descripción de la Páginas
+-------------------------
+
+Las páginas que están en este directorio son mensajes que genera el propio
+WWWOFFLE.
+
+Cada fichero en este directorio corresponden con un mensaje excepto los que
+se llaman *-Head.html, *-Body.html o *-Tail.html, Estos son partes de una
+misma página que son montadas para formarla.
+
+
+Si Escribe Páginas
+------------------
+
+Si modifica estas páginas para sí mismo por favor tenga en cuenta los
+siguientes puntos:
+
+    El nombre wwwoffle debería aparecer claramente en algún lugar de las
+    páginas.
+    La interfaz de las URLs puede cambiar entre versiones.
+    Use la especificación HTML (vea http://www.w3.org/).
+    Los fichero deben estar en formato UNI, no formato MS-DOS (LF no CRLF).
+
+Si genera algunas páginas que le gustaría que estuvieran en la siguiente
+versión de wwwoffle, por favor dígamelo.  De hecho, debería decirmelo antes
+de ponerse a ello ya que puede haber otros intentado lo mismo.  No me envie
+páginas a menos que se lo pida, ya que pueden ser muy grandes.
+
+Estoy interesado en incluir los siguientes tipos de páginas en un futuro:
+
+    Versiones mejoradas
+        Imágenes
+        Javascript
+        Más Ayudas (enlaces a las páginas de ayuda/FAQ en caso de error?)
+
+Las puedo hacer disponibles desde la página web de wwwoffle si se aprueban y
+también en la siguiente versión.
+
+
+Reglas de Analizado
+-------------------
+
+El analizador semántico es un simple micro lenguaje (demasiado simple para
+ser un macro lenguaje!).
+
+Las reglas que se siguen son las siguientes:
+
+Clase-1
+
+$foo                    - Se reemplaza por el contenido de la variable foo.
+%foo[bar]               - Se reemplaza con el valor de retorno de la función foo
+                          con el argumento $basr.
+
+Clase-2
+
+$foo=bar                - Pone el valor 'bar' en la variable foo.
+$foo="bar 1"            - Pone el valor "bar 1" en la variable foo.
+$foo='bar 2'            - Pone el valor 'bar 2' en la variable foo.
+
+Clase-3
+
+$foo?{sí}{no}          - Se reemplaza por 'sí' si $foo existe o 'no' si no.
+$foo?=bar{sí}{no}      - Se reemplaza por 'sí' si $foo == bar o 'no' si no.
+
+
+Los nombre de Variables/Funciones no son sensibles a mayúsculas o
+minúsculas, el resto sí lo es.
+
+La contrucción Clase-1 pueden ser usadas en la parte derecha de la
+contrucción Clase-2.
+
+Las contrucciones de Clase-1 y Clase-2 pueden ser usadas dentro de una
+contrucción Clase-3.
+
+Las contrucciones Clase-3 no pueden ser anidadas.
+
+Los caracteres { y } deben estar protegidos \{ y \} en las contrucciones 
+Clase-2 y Clase-3.
+
+Los caracteres ' y " deben ser protegidos si se usan dentro de una
+construcción Clase-2
+
+
+----------
+Andrew M. Bishop 31 de Marzo de 2000

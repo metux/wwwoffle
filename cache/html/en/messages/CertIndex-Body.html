@@ -1,0 +1,63 @@
+$last?=$type{$header="" $open="" $close=}{$header=$type $open=<ul> $close=</ul>}
+$last?{}{$close=}
+$last=$type
+
+$header?{$close}{}
+
+$header?=root{
+<h2>WWWOFFLE Certificate Authority</h2>
+
+The WWWOFFLE Certificate Authority certificate is used by WWWOFFLE to
+authenticate all of the other certificates that it creates.  This is the master
+certificate.  A unique certificate is created if there is not already one
+present when it is started.  The certificates for two different WWWOFFLE servers
+should be different even though they perform the same task, they are not
+interchangeable.
+
+}{}
+
+$header?=server{
+<h2>WWWOFFLE Server</h2>
+
+The WWWOFFLE server certificate is used by WWWOFFLE when access is requested to
+one of the internal WWWOFFLE pages using HTTPS.  A different certificate needs
+to be created for each of the possible names that the server can be accessed as.
+
+}{}
+
+$header?=fake{
+<h2>Fake Server</h2>
+
+The fake server certificates are created by WWWOFFLE when a request is made for
+an HTTPS web-page and WWWOFFLE is going to cache it.  The page that is sent to
+the browser from WWWOFFLE for this server will use this certificate.
+
+}{}
+
+$header?=real{
+<h2>Real Server</h2>
+
+The real server certificates are what the real web server sends back to WWWOFFLE
+when a request is made for an HTTPS page from the server.  These are the
+certicates that a browser would see if contacting the page directly.
+
+}{}
+
+$header?=trusted{
+<h2>Trusted Certificate Authorities</h2>
+
+The trusted certificates are an optional list of certificates that WWWOFFLE can
+trust so that the real certificates from servers can be authenticated.
+
+}{}
+
+$header?{
+<p>
+$open
+}{}
+
+$type?=root   {<li><a href="$localurl/certificates/root">$name</a>}{}
+$type?=server {<li><a href="$localurl/certificates/server?$name">$name</a>}{}
+$type?=fake   {<li><a href="$localurl/certificates/fake?$name">$name</a>}{}
+$type?=real   {<li><a href="$localurl/certificates/real?$name">$name</a>}{}
+$type?=trusted{<li><a href="$localurl/certificates/trusted?%encode[name]">$name</a>}{}

@@ -1,0 +1,186 @@
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.6d
+          =========================================================
+                                  oder
+                "Zehn Schritte zu ihrem eigenen Proxy Server"
+
+Wenn Sie die Win32 Binärversion benutzen, können Sie sogar die ersten
+drei Schritte überspringen. 
+
+Wenn Sie ein Linux-System mit Paketverwaltung benutzen, SOLLTEN Sie sich
+ein fertiges Paket von wwwoffle von Ihrer CD oder von der Webseite Ihres
+Linux-Distributors besorgen, dann können Sie sogar die ersten sieben
+Schritte überspringen! [Anm.d.Übers.]
+
+
+Kompilieren
+-----------
+
+Wenn Sie mit den Standard-Einstellungen zufrieden sind,  brauchen Sie
+nichts zu ändern. Ansonsten Schritt 1.
+
+1) Starte Sie ihren Lieblingseditor  und passen Sie "Makefile" an. Es
+   ist folgendes einzustellen:
+
+	Name und Port des Servers (LOCALHOST)	[localhost:8080]
+	Pfad für die Installation (INSTDIR)	[/usr/local]
+	Pfad für die Cache-Daten (SPOOLDIR)	[/var/spool/wwwoffle]
+	Pfad für die Konfiguration (CONFDIR)	[/var/spool/wwwoffle]
+	Optionen für den Compiler (CC, CFLAGS)
+	(Die Datei enthält einige Optionen für nicht-Linux-Systeme,
+         diese gilt es ggf. zu aktivieren.)
+
+2) Übersetzen Sie das Programm.
+
+	make all
+
+   --- WICHTIG ------------------------------------------------------ 
+   Um WWWOFFLE zu übersetzen, benötigen Sie einen C-Compiler (zB. gcc
+   oder cc), lex oder 'flex', und die passenden 'Entwicklungs'-Pakete
+   für Ihren Compiler.  Falls diese nicht installiert sind,  wird die
+   Übersetzung nicht erfolgreich verlaufen!
+   --- WICHTIG ------------------------------------------------------ 
+
+3) Installieren Sie das Programm.
+
+	make install
+
+   --- WICHTIG ------------------------------------------------------ 
+   Falls Sie bereits WWWOFFLE benutzt haben, stoppen Sie den WWWOFFLE
+   Prozess, bevor Sie die neue Version installieren.
+   --- WICHTIG ------------------------------------------------------ 
+
+   Falls hier irgendwann Ausgaben auftreten,  die mit "WWWOFFLE:" be-
+   ginnen, wurde ein Problem gefunden, welches u.U. nicht automatisch
+   gelöst werden kann und von Ihnen begutachtet werden muß.
+
+   --- WICHTIG ------------------------------------------------------
+   Wenn Sie die Version 2.0 oder 2.1 von WWWOFFLE benutzen, *MUESSEN*
+   Sie das Programm 'endian-cache' starten, um Ihre Daten in das neue
+   Datenformat ab Version 2.2 zu konvertierern. Die Datei 'CONVERT.de'
+   enthält hier genauere Informationen.
+   --- WICHTIG ------------------------------------------------------
+   Wenn Sie vorher die Version 1.x von WWWOFFLE benutzen, müssen Ihre
+   Daten von dem Programm 'upgrade-cache' bearbeitet werden.  Näheres
+   steht in der Datei 'UPGRADE.de'.
+   --- WICHTIG ------------------------------------------------------
+
+
+4) Passen Sie die Konfigurationsdatei 'wwwoffle.conf' an.
+
+   --- WICHTIG ------------------------------------------------------
+   Wenn Sie bereits einen Proxy benutzen (z.B. den Ihres Internet-Zu-
+   gangs) und den auch weiterhin benutzen wollen / müssen, müssen Sie
+   WWWOFFLE diesen bekannt machen - siehe die Kommentare in der Datei
+   'wwwoffle.conf'.
+   --- WICHTIG ------------------------------------------------------
+   Das Format der Konfigurationsdatei wurde geändert -- wenn Sie Ihre
+   bestehenden Einstellungen weiterhin benutzen wollen, müssen Sie in
+   der Datei 'CHANGES.CONF.de' nachlesen, wie die Einstellungen jetzt
+   aussehen. (gilt nur für Versionen 1.x)
+   --- WICHTIG ------------------------------------------------------
+   (Versionen 2.x) Das Format der Konfigurationsdatei wurde geändert,
+   benutzen Sie das Programm 'upgrade-config.pl', um Ihre Einstellun-
+   gen zu übernehmen.
+   --- WICHTIG ------------------------------------------------------
+
+
+5) Starten Sie den WWWOFFLE Server.
+
+	wwwoffled -c wwwoffle.conf
+
+   (ggf. benötigte Pfadnamen einfügen)
+
+
+6) Starten Sie Ihren Lieblingsbrowser (z.B. Netscape) und stellen Sie 
+   dort als Proxy "localhost:8080" ein. Da die Daten ja jetzt sowieso
+   vom Proxy auf Ihrem Rechner gespeichert werden,  ist es zusätzlich
+   sinnvoll, Netscapes Festplatten-Cache auf 0 kb zu stellen, und das
+   Speichern von Daten zwischen mehreren Sitzungen abzuschalten.
+
+
+Test
+----
+
+7) WWWOFFLE im Testbetrieb:
+
+   a) Stellen Sie eine Internetverbindung her.
+
+   b) Sagen Sie WWWOFFLE, daß Sie online sind:
+
+	wwwoffle -online
+
+    (dies kann, je nach Systemversion, auch z.B.  in /etc/ppp/ip-up/*
+    Skripte eingebaut werden)
+
+   c) Rufen Sie mit Ihrem Browser irgendwelche Seiten auf
+
+   d) Schalten Sie WWWOFFLE offline: (kann auch automatisiert werden)
+
+	wwwoffle -offline
+
+   e) und trennen Sie die Verbindung.
+
+
+8) Rufen Sie jetzt dieselben Seiten in Ihrem Browser noch einmal auf,
+   klicken auf ein paar andere Verweise,  es sollte eine Meldung von
+   WWWOFFLE kommen.  Außerdem sollte jede Seite (falls eingeschaltet)
+   eine Statuszeile am unteren Rand haben, die angibt, wie alt diese
+   Seite ist, und Möglichkeiten zum Aktualisieren bietet.
+
+
+9) a) Stellen Sie eine neue Internetverbindung her.
+
+   b) wwwoffle -online
+
+   c) Sagen Sie WWWOFFLE, daß er bestellte Seiten jetzt holen soll:
+
+	wwwoffle -fetch
+
+   d) wwwoffle -offline
+
+   e) Trennen Sie die Internetverbindung.
+
+
+10) a) Schauen Sie sich in "http://localhost:8080/index/" eine Liste
+      der gerade geholten Seiten an.
+
+   b) Sie können diese Seiten über den Index anschauen oder "direkt"
+      aufrufen (mit Adresse).
+
+
+--------------------------------------------------------------------
+
+
+Optionen für das Kompilieren/Übersetzen
+---------------------------------------
+
+Die Datei wwwoffle.h enthält einige Optionen, die Sie vielleicht an-
+passen möchten:
+
+DEF_HTTP_PORT 8080		  # die Portnummer des HTTP Proxies
+DEF_WWWOFFLE_PORT 8081		  # die Portnummer für die Steuerung
+DEF_SPOOL "/var/spool/wwwoffle"	  # das Spool-Verzeichnis
+DEF_CONF "/var/spool/wwwoffle"	  # Ort der Konfigurationsdateien
+
+Die nächsten vier Angaben  beschränken die Anzahl  Verbindungen, die
+WWWOFFLE höchstens auf einmal verarbeiten soll -- entsprechend viele
+Server werden gestartet. Diese Einstellungen können auch in der Kon-
+igurationsdatei gemacht werden.
+
+MAX_SERVERS 64		# Auf keinen Fall mehr als 64 Verbindungen
+DEF_MAX_SERVERS 8	# Anzahl der beim Start ge'fork'ten Server
+MAX_FETCH_SERVERS 48	# Beim Herunterladen von bestellten Seiten
+			  höchstens 48 Aufträge gleichzeitig
+DEF_MAX_FETCH_SERVERS 4	# Normalerweise werden bestellte Seiten von
+			  4 Servern parallel geholt
+
+Die letzte Option gibt an,  wie viele  "lasttime"  Verzeichnisse der
+Proxy einrichten soll.
+
+NUM_PREVTIME_DIR 3
+
+
+--------------------------------------------------------------------
+
+Das wars auch schon. :)
+

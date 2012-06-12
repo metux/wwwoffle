@@ -1,0 +1,32 @@
+
+<!-- The following section added by WWWOFFLE -->
+
+<STYLE type="text/css">
+<!-- @import "$localurl/wwwoffle.css"; -->
+</STYLE>
+
+$unit?=m{$unitstr=min}{}
+$unit?=h{$unitstr=hour}{}
+$unit?=d{$unitstr=day}{}
+$unit?=w{$unitstr=week}{}
+$unit?=M{$unitstr=month}{}
+$time?=1{}{$s=s $unitstr=$unitstr$s}
+
+$encurl=%encode[url]
+
+<hr class="wwwoffle-addinfo" />
+<div class="wwwoffle-addinfo" align="center">
+WWWOFFLE - $date ($time $unitstr ago) - [\
+<a href="$localurl/index/url?$encurl" title="Show the index of web pages from this server">Index</a>| \
+<a href="$localurl/refresh/?$encurl" title="Force WWWOFFLE to refresh this page">Refresh</a>: \
+<a href="$localurl/refresh-options/?$encurl" title="Refresh this page with special options">Options</a>| \
+<a href="$localurl/monitor-options/?$encurl" title="Monitor this page on a regular basis">Monitor</a>| \
+<a href="$localurl/control/delete/url?url=$encurl" title="Delete this page from the WWWOFFLE cache">Delete</a>| \
+<a href="$localurl/configuration/url?$encurl" title="Configure the options WWWOFFLE uses for this page">Configure</a>| \
+<a href="$localurl/info/url?$encurl" title="Show information about this web page">Info</a> \
+] - WWWOFFLE
+</div>
+<hr class="wwwoffle-addinfo" />
+
+<!-- The previous section added by WWWOFFLE -->
+

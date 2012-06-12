@@ -1,0 +1,7 @@
+GET http://www.gedanken.demon.co.uk/wwwoffle/version-2.9/hints-tips.html HTTP/1.0
+Host: www.gedanken.demon.co.uk
+User-Agent: WWWOFFLE/2.9
+Accept: */*
+Connection: close
+Proxy-Connection: close
+
