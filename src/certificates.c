@@ -39,12 +39,10 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#if USE_GNUTLS
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
 #if USE_GCRYPT
 #include <gcrypt.h>
-#endif
 #endif
 
 #include "wwwoffle.h"
@@ -58,8 +56,6 @@
 #define O_BINARY 0
 #endif
 
-
-#if USE_GNUTLS
 
 /*+ The number of bits for Diffie Hellman key exchange. +*/
 #define DH_BITS  1024
@@ -1325,5 +1321,3 @@ static gnutls_x509_privkey_t LoadPrivateKey(const char *filename)
 
  return(privkey);
 }
-
-#endif /* USE_GNUTLS */

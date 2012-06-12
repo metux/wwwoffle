@@ -22,9 +22,7 @@
 #include <zlib.h>
 #endif
 
-#if USE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif
 
 
 /*+ A type defined to maintain a buffer of data. +*/
@@ -69,8 +67,6 @@ io_zlib;
 #endif /* USE_ZLIB */
 
 
-#if USE_GNUTLS
-
 /*+ A data structure to hold the gnutls context. +*/
 
 typedef struct io_gnutls
@@ -84,8 +80,6 @@ typedef struct io_gnutls
  gnutls_session_t session;            /*+ The session information. +*/
 }
 io_gnutls;
-
-#endif /* USE_GNUTLS */
 
 
 /*+ A data structure to hold the chunked encoding context. +*/
@@ -142,13 +136,9 @@ typedef struct io_context
 
  unsigned long w_raw_bytes;     /*+ The number of raw bytes written. +*/
 
-#if USE_GNUTLS
-
  /* SSL/https parameters */
 
  io_gnutls *gnutls_context;     /*+ The gnutls encryption/decryption context. +*/
-
-#endif
 }
 io_context;
 
@@ -178,8 +168,6 @@ int io_finish_zlib_uncompress(/*@special@*/ io_zlib *context,/*@null@*/ io_buffe
 #endif /* USE_ZLIB */
 
 
-#if USE_GNUTLS
-
 /* In iognutls.c */
 
 io_gnutls /*@null@*/ /*@special@*/ *io_init_gnutls(int fd,/*@null@*/ const char *host,int type) /*@allocates result@*/;
@@ -187,8 +175,6 @@ int io_finish_gnutls(/*@special@*/ io_gnutls *context) /*@releases context@*/;
 
 ssize_t io_gnutls_read_with_timeout(io_gnutls *context,io_buffer *out,unsigned timeout);
 ssize_t io_gnutls_write_with_timeout(io_gnutls *context,io_buffer *in,unsigned timeout);
-
-#endif /* USE_GNUTLS */
 
 
 /* In io_chunk.c */

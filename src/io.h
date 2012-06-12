@@ -37,9 +37,7 @@ void configure_io_zlib(int fd,int zlib_r,int zlib_w);
 
 void configure_io_chunked(int fd,int chunked_r,int chunked_w);
 
-#if USE_GNUTLS
 int configure_io_gnutls(int fd,const char *host,int type);
-#endif
 
 ssize_t read_data(int fd,/*@out@*/ char *buffer,size_t n);
 

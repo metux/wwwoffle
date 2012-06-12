@@ -39,10 +39,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#if USE_GNUTLS
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
-#endif
 
 #include "wwwoffle.h"
 #include "errors.h"
@@ -57,8 +55,6 @@
 #define O_BINARY 0
 #endif
 
-
-#if USE_GNUTLS
 
 /*+ The trusted root certificate authority certificates. +*/
 extern gnutls_x509_crt_t *trusted_x509_crts;
@@ -667,6 +663,3 @@ static void display_certificate(int fd,gnutls_x509_crt_t crt)
 
  free(txt.data);
 }
-
-
-#endif /* USE_GNUTLS */

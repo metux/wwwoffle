@@ -145,13 +145,9 @@ void IndexPage(int fd,URL *Url);
 void InfoPage(int fd,URL *Url,Header *request_head,/*@null@*/ Body *request_body);
 
 
-#if USE_GNUTLS
-
 /* In certinfo.c */
 
 void CertificatesPage(int fd,URL *Url,Header *request_head);
-
-#endif
 
 
 /* In control.c */

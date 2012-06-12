@@ -39,7 +39,6 @@ const Protocol Protocols[]={
   HTTP_ReadBody,                /* readbody */
   HTTP_Close                    /* close */
  },
-#if USE_GNUTLS
  {
   "https",                      /* name */
   443,                          /* defport */
@@ -52,7 +51,6 @@ const Protocol Protocols[]={
   HTTPS_ReadBody,               /* readbody */
   HTTPS_Close                   /* close */
  },
-#endif
  {
   "ftp",                        /* name */
   21,                           /* defport */

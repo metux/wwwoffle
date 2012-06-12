@@ -157,8 +157,6 @@ int wwwoffles(int online,int fetching,int client)
  if(client==-1 && mode!=Fetch)
     PrintMessage(Fatal,"Cannot use client file descriptor %d.",client);
 
-#if USE_GNUTLS
-
  /* Check if we are using http or https client connection. */
 
  if(mode!=Fetch)
@@ -175,8 +173,6 @@ int wwwoffles(int online,int fetching,int client)
              PrintMessage(Fatal,"Cannot start SSL/TLS connection for https port.");
       }
    }
-
-#endif
 
  /* Open up the outgoing file for reading the stored request from. */
 
@@ -209,9 +205,7 @@ int wwwoffles(int online,int fetching,int client)
  else /* if(mode==Fetch) */
     Url=ParseRequest(outgoing,&request_head,&request_body);
 
-#if USE_GNUTLS
  checkrequest:
-#endif
 
  if(StderrLevel==ExtraDebug)
    {
@@ -338,7 +332,7 @@ int wwwoffles(int online,int fetching,int client)
        return(1); /* We don't bother to free memory because return() is exit() in child. */
        /*@=mustfreefresh@*/
       }
-    else if(mode==Spool && !IsLocalNetHost(Url->host) && !(USE_GNUTLS && ConfigBoolean(SSLEnableCaching)))
+    else if(mode==Spool && !IsLocalNetHost(Url->host) && !(ConfigBoolean(SSLEnableCaching)))
       {
        PrintMessage(Warning,"A 'CONNECT' method request for '%s' cannot be handled in Spool mode.",Url->hostport);
 
@@ -406,7 +400,6 @@ int wwwoffles(int online,int fetching,int client)
        return(0); /* We don't bother to free memory because return() is exit() in child. */
        /*@=mustfreefresh@*/
       }
-#if USE_GNUTLS
     else if(ConfigBoolean(SSLEnableCaching) && IsSSLAllowed(Url,1)) /* cache SSL connection */
       {
        URL *httpsUrl;
@@ -443,17 +436,6 @@ int wwwoffles(int online,int fetching,int client)
                    NULL);
        mode=InternalPage; goto internalpage;
       }
-#else
-    else
-      {
-       PrintMessage(Warning,"An https (SSL) non-tunneled proxy connection for %s was received but is not supported.",Url->hostport);
-
-       HTMLMessage(client,500,"WWWOFFLE Server Error",NULL,"ServerError",
-                   "error","An https (SSL) non-tunneled proxy connection is not supported.",
-                   NULL);
-       mode=InternalPage; goto internalpage;
-      }
-#endif
    }
  else if(strcmp(request_head->method,"GET") &&
          strcmp(request_head->method,"HEAD") &&
@@ -506,7 +488,6 @@ int wwwoffles(int online,int fetching,int client)
        return(1); /* We don't bother to free memory because return() is exit() in child. */
        /*@=mustfreefresh@*/
       }
-#if USE_GNUTLS
     else if(ConfigBoolean(SSLEnableCaching) && IsSSLAllowed(Url,1)) /* cache SSL connection */
        ;
     else
@@ -520,19 +501,6 @@ int wwwoffles(int online,int fetching,int client)
        return(1); /* We don't bother to free memory because return() is exit() in child. */
        /*@=mustfreefresh@*/
       }
-#else
-    else
-      {
-       PrintMessage(Warning,"An https (SSL) request for %s was received but is not supported when fetching.",Url->hostport);
-
-       if(client!=-1)
-          write_formatted(client,"Cannot fetch %s [https (SSL) not supported]\n",Url->name);
-
-       /*@-mustfreefresh@*/
-       return(1); /* We don't bother to free memory because return() is exit() in child. */
-       /*@=mustfreefresh@*/
-      }
-#endif
    }
 
 
@@ -880,8 +848,6 @@ int wwwoffles(int online,int fetching,int client)
        mode=InternalPage; goto internalpage;
       }
 
-#if USE_GNUTLS
-
     /* The https certificate pages. */
 
     else if(!strncmp("/certificates/",Url->path,(size_t)14)) /* if(... && mode!=Fetch) */
@@ -889,8 +855,6 @@ int wwwoffles(int online,int fetching,int client)
        CertificatesPage(client,Url,request_head);
        mode=InternalPage; goto internalpage;
       }
-
-#endif
 
     /* The local pages in the root or local directories. */
 

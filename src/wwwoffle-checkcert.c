@@ -23,11 +23,9 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#if USE_GNUTLS
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
 #include <gcrypt.h>
-#endif
 
 // #include "wwwoffle.h"
 #include "errors.h"

@@ -125,10 +125,8 @@ void reinit_io(int fd)
  if(context->r_chunk_context || context->w_chunk_context)
     PrintMessage(Fatal,"IO: Function reinit_io(%d) was called while chunked encoding enabled.",fd);
 
-#if USE_GNUTLS
  if(context->gnutls_context)
     PrintMessage(Fatal,"IO: Function reinit_io(%d) was called while gnutls encryption enabled.",fd);
-#endif
 
  if(context->r_file_data)
    {
@@ -343,8 +341,6 @@ void configure_io_chunked(int fd,int chunked_r,int chunked_w)
 }
 
 
-#if USE_GNUTLS
-
 /*++++++++++++++++++++++++++++++++++++++
   Configure the encryption in the IO context used for this file descriptor.
 
@@ -378,8 +374,6 @@ int configure_io_gnutls(int fd,const char *host,int type)
 
  return(0);
 }
-
-#endif
 
 
 /*++++++++++++++++++++++++++++++++++++++
@@ -442,11 +436,9 @@ ssize_t read_data(int fd,char *buffer,size_t n)
          }
        else
          {
-#if USE_GNUTLS
           if(context->gnutls_context)
              nr=io_gnutls_read_with_timeout(context->gnutls_context,&iobuffer,context->r_timeout);
           else
-#endif
              nr=io_read_with_timeout(fd,&iobuffer,context->r_timeout);
           if(nr>0) context->r_raw_bytes+=nr;
          }
@@ -455,11 +447,9 @@ ssize_t read_data(int fd,char *buffer,size_t n)
       {
        do
          {
-#if USE_GNUTLS
           if(context->gnutls_context)
              err=io_gnutls_read_with_timeout(context->gnutls_context,context->r_file_data,context->r_timeout);
           else
-#endif
              err=io_read_with_timeout(fd,context->r_file_data,context->r_timeout);
           if(err>0) context->r_raw_bytes+=err;
           if(err<0) break;
@@ -487,11 +477,9 @@ ssize_t read_data(int fd,char *buffer,size_t n)
          {
           do
             {
-#if USE_GNUTLS
              if(context->gnutls_context)
                 err=io_gnutls_read_with_timeout(context->gnutls_context,context->r_file_data,context->r_timeout);
              else
-#endif
                 err=io_read_with_timeout(fd,context->r_file_data,context->r_timeout);
              if(err>0) context->r_raw_bytes+=err;
              if(err<0) break;
@@ -516,11 +504,9 @@ ssize_t read_data(int fd,char *buffer,size_t n)
          {
           do
             {
-#if USE_GNUTLS
              if(context->gnutls_context)
                 err=io_gnutls_read_with_timeout(context->gnutls_context,context->r_file_data,context->r_timeout);
              else
-#endif
                 err=io_read_with_timeout(fd,context->r_file_data,context->r_timeout);
              if(err>0) context->r_raw_bytes+=err;
              if(err<0) break;
@@ -616,11 +602,9 @@ char *read_line(int fd,char *line)
        iobuffer.size=LINE_BUFFER_SIZE;
        iobuffer.length=0;
 
-#if USE_GNUTLS
        if(context->gnutls_context)
           nn=io_gnutls_read_with_timeout(context->gnutls_context,&iobuffer,context->r_timeout);
        else
-#endif
           nn=io_read_with_timeout(fd,&iobuffer,context->r_timeout);
        if(nn>0) context->r_raw_bytes+=nn;
 
@@ -781,11 +765,9 @@ static int io_write_data(int fd,io_context *context,io_buffer *iobuffer)
 #endif
     if(!context->w_chunk_context)
       {
-#if USE_GNUTLS
        if(context->gnutls_context)
           err=io_gnutls_write_with_timeout(context->gnutls_context,iobuffer,context->w_timeout);
        else
-#endif
           err=io_write_with_timeout(fd,iobuffer,context->w_timeout);
        if(err>0) context->w_raw_bytes+=err;
       }
@@ -797,11 +779,9 @@ static int io_write_data(int fd,io_context *context,io_buffer *iobuffer)
           if(err<0) break;
           if(context->w_file_data->length>0)
             {
-#if USE_GNUTLS
              if(context->gnutls_context)
                 err=io_gnutls_write_with_timeout(context->gnutls_context,context->w_file_data,context->w_timeout);
              else
-#endif
                 err=io_write_with_timeout(fd,context->w_file_data,context->w_timeout);
              if(err>0) context->w_raw_bytes+=err;
              if(err<0) break;
@@ -821,11 +801,9 @@ static int io_write_data(int fd,io_context *context,io_buffer *iobuffer)
           if(err<0) break;
           if(context->w_file_data->length>0)
             {
-#if USE_GNUTLS
              if(context->gnutls_context)
                 err=io_gnutls_write_with_timeout(context->gnutls_context,context->w_file_data,context->w_timeout);
              else
-#endif
                 err=io_write_with_timeout(fd,context->w_file_data,context->w_timeout);
              if(err>0) context->w_raw_bytes+=err;
              if(err<0) break;
@@ -845,11 +823,9 @@ static int io_write_data(int fd,io_context *context,io_buffer *iobuffer)
              if(err<0) break;
              if(context->w_file_data->length>0)
                {
-#if USE_GNUTLS
                 if(context->gnutls_context)
                    err=io_gnutls_write_with_timeout(context->gnutls_context,context->w_file_data,context->w_timeout);
                 else
-#endif
                    err=io_write_with_timeout(fd,context->w_file_data,context->w_timeout);
                 if(err>0) context->w_raw_bytes+=err;
                 if(err<0) break;
@@ -1068,11 +1044,9 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
           more=io_finish_chunk_encode(context->w_chunk_context,context->w_file_data);
           if(more>=0)
             {
-#if USE_GNUTLS
              if(context->gnutls_context)
                 err=io_gnutls_write_with_timeout(context->gnutls_context,context->w_file_data,context->w_timeout);
              else
-#endif
                 err=io_write_with_timeout(fd,context->w_file_data,context->w_timeout);
              if(err>0) context->w_raw_bytes+=err;
             }
@@ -1090,11 +1064,9 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
           more=io_finish_zlib_compress(context->w_zlib_context,context->w_file_data);
           if(more>=0)
             {
-#if USE_GNUTLS
              if(context->gnutls_context)
                 err=io_gnutls_write_with_timeout(context->gnutls_context,context->w_file_data,context->w_timeout);
              else
-#endif
                 err=io_write_with_timeout(fd,context->w_file_data,context->w_timeout);
              if(err>0) context->w_raw_bytes+=err;
             }
@@ -1111,11 +1083,9 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
              int more2=io_chunk_encode(context->w_zlch_data,context->w_chunk_context,context->w_file_data);
              if(more2>=0)
                {
-#if USE_GNUTLS
                 if(context->gnutls_context)
                    err=io_gnutls_write_with_timeout(context->gnutls_context,context->w_file_data,context->w_timeout);
                 else
-#endif
                    err=io_write_with_timeout(fd,context->w_file_data,context->w_timeout);
                 if(err>0) context->w_raw_bytes+=err;
                }
@@ -1127,11 +1097,9 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
           more=io_finish_chunk_encode(context->w_chunk_context,context->w_file_data);
           if(more>=0)
             {
-#if USE_GNUTLS
              if(context->gnutls_context)
                 err=io_gnutls_write_with_timeout(context->gnutls_context,context->w_file_data,context->w_timeout);
              else
-#endif
                 err=io_write_with_timeout(fd,context->w_file_data,context->w_timeout);
              if(err>0) context->w_raw_bytes+=err;
             }
@@ -1143,10 +1111,8 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
 
  /* Destroy the encryption information */
 
-#if USE_GNUTLS
  if(context->gnutls_context)
     io_finish_gnutls(context->gnutls_context);
-#endif
 
  /* Return the data */
 

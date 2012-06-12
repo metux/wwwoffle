@@ -34,17 +34,13 @@
 #include <setjmp.h>
 #include <signal.h>
 
-#if USE_GNUTLS
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
-#endif
 
 #include "io.h"
 #include "iopriv.h"
 #include "errors.h"
 
-
-#if USE_GNUTLS
 
 #include "certificates.h"
 
@@ -453,5 +449,3 @@ static void set_gnutls_error(int err,gnutls_session_t session)
 
  sprintf(io_strerror,"IO(gnutls): %s%s",type,msg);
 }
-
-#endif /* USE_GNUTLS */

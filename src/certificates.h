@@ -16,8 +16,6 @@
 #ifndef CERTIFICATES_H
 #define CERTIFICATES_H    /*+ To stop multiple inclusions. +*/
 
-#if USE_GNUTLS
-
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
 
@@ -41,7 +39,5 @@ gnutls_x509_crt_t /*@null@*/ /*@observer@*/ VerifyCertificates(const char *hostn
 gnutls_x509_crt_t /*@only@*/ /*@null@*/ LoadCertificate(const char *filename);
 gnutls_x509_crt_t /*@observer@*/ *LoadCertificates(const char *filename);
 
-
-#endif /* USE_GNUTLS */
 
 #endif /* CERTIFICATES_H */

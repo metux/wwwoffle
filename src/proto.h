@@ -65,8 +65,6 @@ int     HTTP_ReadHead(/*@out@*/ Header **reply_head);
 ssize_t HTTP_ReadBody(char *s,size_t n);
 int     HTTP_Close(void);
 
-#if USE_GNUTLS
-
 /* In https.c */
 
 char    /*@null@*/ /*@only@*/ *HTTPS_Open(URL *Url);
@@ -74,8 +72,6 @@ char    /*@null@*/ /*@only@*/ *HTTPS_Request(URL *Url,Header *request_head,Body 
 int     HTTPS_ReadHead(/*@out@*/ Header **reply_head);
 ssize_t HTTPS_ReadBody(char *s,size_t n);
 int     HTTPS_Close(void);
-
-#endif
 
 /* In ftp.c */
 

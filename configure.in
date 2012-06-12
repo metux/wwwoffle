@@ -8,6 +8,7 @@ dnl Specify the autoconf file.
 AC_CONFIG_HEADER(src/autoconfig.h)
 
 m4_include(m4/etr_socket_nsl.m4)
+m4_include(m4/gnutls.m4)
 
 dnl Checks for programs.
 
@@ -111,54 +112,7 @@ AC_DEFINE_UNQUOTED(USE_ZLIB,$USE_ZLIB,[use the zlib library])
 AC_SUBST(ZLIB_LIB)
 AC_SUBST(ZLIB_INC)
 
-
-dnl Checks for using gnutls.
-
-AC_ARG_WITH(gnutls,
-[  --with-gnutls=dir            Set the location of the gnutls header and library],
-WITH_GNUTLS=$withval,WITH_GNUTLS=no)
-
-if test "$WITH_GNUTLS" = "no"; then
-   GNUTLS_INC=
-   GNUTLS_LIB=
-   USE_GNUTLS=0
-else
-   if test "$WITH_GNUTLS" = "yes"; then
-      GNUTLS_INC=
-      GNUTLS_LIB="-lgnutls -lgcrypt"
-   else
-      GNUTLS_INC="-I$WITH_GNUTLS/include"
-      GNUTLS_LIB="-L$WITH_GNUTLS/lib -lgnutls"
-   fi
-
-   AC_CHECK_HEADERS(gnutls/gnutls.h,
-                    HAVE_GNUTLS_GNUTLS_H=yes,HAVE_GNUTLS_GNUTLS_H=no)
-
-   if test "$HAVE_GNUTLS_GNUTLS_H" = "no"; then
-      AC_MSG_WARN([Cannot find gnutls/gnutls.h header file; configuring without SSL/https support])
-      GNUTLS_LIB=
-      GNUTLS_INC=
-      USE_GNUTLS=0
-   else
-      AC_CHECK_LIB(gnutls, gnutls_check_version,
-                   WITH_GNUTLS=yes,WITH_GNUTLS=no,$GNUTLS_LIB)
-
-      if test "$WITH_GNUTLS" = "no"; then
-         AC_MSG_WARN([Cannot find working libgnutls library, configuring without SSL/https support])
-         GNUTLS_LIB=
-         GNUTLS_INC=
-         USE_GNUTLS=0
-      else
-         USE_GNUTLS=1
-      fi
-   fi
-fi
-
-AC_DEFINE_UNQUOTED(USE_GNUTLS,$USE_GNUTLS,[enable encryption via gnutls])
-
-AC_SUBST(GNUTLS_LIB)
-AC_SUBST(GNUTLS_INC)
-
+PKG_CHECK_GNUTLS
 
 dnl Checks for using gcrypt.
 

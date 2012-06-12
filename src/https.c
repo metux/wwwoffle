@@ -18,10 +18,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if USE_GNUTLS
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
-#endif
 
 #include "wwwoffle.h"
 #include "io.h"
@@ -31,8 +29,6 @@
 #include "sockets.h"
 #include "proto.h"
 
-
-#if USE_GNUTLS
 
 #include "certificates.h"
 
@@ -255,5 +251,3 @@ int HTTPS_Close(void)
 
  return(CloseSocket(server));
 }
-
-#endif /* USE_GNUTLS */

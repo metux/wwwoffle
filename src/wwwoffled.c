@@ -243,11 +243,7 @@ int main(int argc, char** argv)
 #define ZLIB_STRING "without zlib"
 #endif
 
-#if USE_GNUTLS
 #define GNUTLS_STRING "with gnutls"
-#else
-#define GNUTLS_STRING "without gnutls"
-#endif
 
  PrintMessage(Important,"WWWOFFLE Demon Version %s (%s,%s,%s) started.",WWWOFFLE_VERSION,IPV6_STRING,ZLIB_STRING,GNUTLS_STRING);
  PrintMessage(Inform,"WWWOFFLE Read Configuration File '%s'.",ConfigurationFileName());
@@ -384,8 +380,6 @@ int main(int argc, char** argv)
 
  /* Bind the HTTPS socket(s). */
 
-#if USE_GNUTLS
-
  if(LoadRootCredentials())
    {
     PrintMessage(Warning,"Failed to read (or create if needed) the WWWOFFLE root certificates.");
@@ -430,8 +424,6 @@ int main(int argc, char** argv)
     PrintMessage(Fatal,"The HTTPS socket was not bound; is it disabled in the config file?");
 #endif
    }
-
-#endif /* USE_GNUTLS */
 
  /* Bind the WWWOFFLE control socket(s). */
 
@@ -626,7 +618,6 @@ int main(int argc, char** argv)
                }
             }
 
-#if USE_GNUTLS
           if(https_fd[nfd]!=-1 && FD_ISSET(https_fd[nfd],&readfd))
             {
              char *host,*ip;
@@ -664,7 +655,6 @@ int main(int argc, char** argv)
                   }
                }
             }
-#endif /* USE_GNUTLS */
 
 #if USE_IPV6
          }
@@ -843,9 +833,7 @@ int main(int argc, char** argv)
 
  FinishConfigurationFile();
 
-#if USE_GNUTLS
  FreeLoadedCredentials();
-#endif
 
  return(0);
 }
