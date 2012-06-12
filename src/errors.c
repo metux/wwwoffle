@@ -369,6 +369,7 @@ char *GetPrintMessage(ErrorLevel errlev,const char* fmt, ...)
 
 static char *print_message(ErrorLevel errlev,const char* fmt,va_list ap)
 {
+ int save_errno = errno;
  size_t str_len=1+strlen(fmt);
  static /*@only@*/ char* string=NULL;
  int i,j;
@@ -404,29 +405,29 @@ static char *print_message(ErrorLevel errlev,const char* fmt,va_list ap)
          case '!':
           if(fmt[++i]=='s')
             {
-             if(errno==ERRNO_USE_H_ERRNO)
+             if(save_errno==ERRNO_USE_H_ERRNO)
                 strp=h_strerror(h_errno);
-             else if(errno==ERRNO_USE_IO_ERRNO)
+             else if(save_errno==ERRNO_USE_IO_ERRNO)
                 strp=io_strerror;
 #if USE_IPV6
-             else if(errno==ERRNO_USE_GAI_ERRNO)
+             else if(save_errno==ERRNO_USE_GAI_ERRNO)
                 strp=(char*)gai_strerror(gai_errno);
 #endif
              else
-                strp=strerror(errno);
+                strp=strerror(save_errno);
             }
           else
             {
-             if(errno==ERRNO_USE_H_ERRNO)
+             if(save_errno==ERRNO_USE_H_ERRNO)
                 sprintf(strp=str,"%d (h_errno)",h_errno);
-             else if(errno==ERRNO_USE_IO_ERRNO)
+             else if(save_errno==ERRNO_USE_IO_ERRNO)
                 sprintf(strp=str,"%d (io_errno)",io_errno);
 #if USE_IPV6
-             else if(errno==ERRNO_USE_GAI_ERRNO)
+             else if(save_errno==ERRNO_USE_GAI_ERRNO)
                 sprintf(strp=str,"%d (gai_errno)",gai_errno);
 #endif
              else
-                sprintf(strp=str,"%d",errno);
+                sprintf(strp=str,"%d",save_errno);
             }
           break;
 
