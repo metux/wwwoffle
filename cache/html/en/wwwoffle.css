@@ -20,7 +20,7 @@
 /*----------------------------------*/
 
 /* The WWWOFFLE internal messages are all contained within a BODY
-   element with a class of "wwwoffle-message".  Formatting of the HTML
+   element with an id of "wwwoffle-message".  Formatting of the HTML
    should therefore be only for elements contained within such a body.
    Use 'BODY.wwwoffle-message P { ... }' instead of 'P { ... }'.  */
 
