@@ -97,9 +97,7 @@ static void PurgeOutgoing(int fd);
 static void PurgeLasttime(int fd);
 
 static void what_purge_compress_age(const char *proto,const char *hostport,/*@null@*/ const char *file,/*@out@*/ int *purge_age,/*@out@*/ int *compress_age);
-#if USE_ZLIB
 static unsigned long compress_file(const char *proto,const char *hostport,const char *file);
-#endif
 
 
 /*+ Set this to 0 for debugging so that nothing is deleted. +*/
@@ -234,14 +232,12 @@ void PurgeCache(int fd)
  else
     write_string(fd,"  Default is not to purge any pages (age=-1).\n");
 
-#if USE_ZLIB
  if(compress_default_age>0)
     write_formatted(fd,"  Default compress age is %d days (compress-age=%d).\n",compress_default_age,compress_default_age);
  else if(compress_default_age==0)
     write_string(fd,"  Default is to compress all pages (compress-age=0).\n");
  else
     write_string(fd,"  Default is not to compress any pages (compress-age=-1).\n");
-#endif
 
  write_string(fd,"\n");
 
@@ -290,11 +286,7 @@ void PurgeCache(int fd)
 
  if(purge_max_size>0 || purge_min_free>0)
     write_string(fd,"Pass 1: ");
-#if USE_ZLIB
  write_string(fd,"Purging and compressing files using specified ages.\n");
-#else
- write_string(fd,"Purging files using specified ages.\n");
-#endif
 
  write_string(fd,"\n");
 
@@ -316,13 +308,8 @@ void PurgeCache(int fd)
 
  /* Print out a message about the total files */
 
-#if USE_ZLIB
  write_formatted(fd,"Total of %lu directories ; %lu MB (%lu MB deleted) (%lu MB compressed)\n",total_dirs,
                  Blocks_to_MB(total_file_blocks),Blocks_to_MB(total_del_blocks),Blocks_to_MB(total_compress_blocks));
-#else
- write_formatted(fd,"Total of %lu directories ; %lu MB (%lu MB deleted)\n",total_dirs,
-                 Blocks_to_MB(total_file_blocks),Blocks_to_MB(total_del_blocks));
-#endif
 
  write_string(fd,"\n");
 
@@ -470,13 +457,8 @@ void PurgeCache(int fd)
 
     /* Print out a message about the total files */
 
-#if USE_ZLIB
     write_formatted(fd,"Total of %lu directories ; %lu MB (%lu MB deleted) (%lu MB compressed)\n",total_dirs,
                     Blocks_to_MB(total_file_blocks),Blocks_to_MB(total_del_blocks),Blocks_to_MB(total_compress_blocks));
-#else
-    write_formatted(fd,"Total of %lu directories ; %lu MB (%lu MB deleted)\n",total_dirs,
-                    Blocks_to_MB(total_file_blocks),Blocks_to_MB(total_del_blocks));
-#endif
 
     write_string(fd,"\n\n");
 
@@ -576,13 +558,8 @@ static void PurgeProtocol(int fd,const char *proto,unsigned long *proto_file_blo
  /* Print a message for the protocol directory. */
 
  write_string(fd,"\n");
-#if USE_ZLIB
  write_formatted(fd,"  Protocol %s has %lu directories ; %lu MB (%lu MB deleted) (%lu MB compressed)\n",proto,*proto_dirs,
                  Blocks_to_MB(*proto_file_blocks),Blocks_to_MB(*proto_del_blocks),Blocks_to_MB(*proto_compress_blocks));
-#else
- write_formatted(fd,"  Protocol %s has %lu directories ; %lu MB (%lu MB deleted)\n",proto,*proto_dirs,
-                 Blocks_to_MB(*proto_file_blocks),Blocks_to_MB(*proto_del_blocks));
-#endif
  write_string(fd,"\n");
 }
 
@@ -664,7 +641,6 @@ static void PurgeHost(int fd,const char *proto,const char *hostport,unsigned lon
                        Blocks_to_kB(*host_del_blocks));
     else
       {
-#if USE_ZLIB
        if(*host_compress_blocks)
          {
           if(*host_del_blocks)
@@ -675,7 +651,6 @@ static void PurgeHost(int fd,const char *proto,const char *hostport,unsigned lon
                              Blocks_to_kB(*host_file_blocks),Blocks_to_kB(*host_compress_blocks));
          }
        else
-#endif
          {
           if(*host_del_blocks)
              write_formatted(fd,"    Purged %6s://%-40s ; %5lu kB (%4lu kB del)\n",proto,hostport,
@@ -693,12 +668,10 @@ static void PurgeHost(int fd,const char *proto,const char *hostport,unsigned lon
 
     if(purge_age<0)
       {
-#if USE_ZLIB
        if(*host_compress_blocks)
           write_formatted(fd,"    Not Purged       %6s://%-40s ; %4lu kB               (%4lu kB compr)\n",proto,hostport,
                           Blocks_to_kB(*host_file_blocks),Blocks_to_kB(*host_compress_blocks));
        else
-#endif
           write_formatted(fd,"    Not Purged       %6s://%-40s ; %4lu kB\n",proto,hostport,
                           Blocks_to_kB(*host_file_blocks));
       }
@@ -707,7 +680,6 @@ static void PurgeHost(int fd,const char *proto,const char *hostport,unsigned lon
                        Blocks_to_kB(*host_del_blocks));
     else
       {
-#if USE_ZLIB
        if(*host_compress_blocks)
          {
           if(*host_del_blocks)
@@ -718,7 +690,6 @@ static void PurgeHost(int fd,const char *proto,const char *hostport,unsigned lon
                              Blocks_to_kB(*host_file_blocks),Blocks_to_kB(*host_compress_blocks));
          }
        else
-#endif
          {
           if(*host_del_blocks)
              write_formatted(fd,"    Purged (%2d days) %6s://%-40s ; %5lu kB (%4lu kB del)\n",purge_age,proto,hostport,
@@ -840,7 +811,6 @@ static void PurgeFiles(const char *proto,const char *hostport,int def_purge_age,
          {
           unsigned long size;
 
-#if USE_ZLIB
           if(compress_age!=-1 && (now-filetime)>(compress_age*(24*3600)) && *ent->d_name=='D')
             {
 #if DO_COMPRESS
@@ -851,7 +821,6 @@ static void PurgeFiles(const char *proto,const char *hostport,int def_purge_age,
 
              stat(ent->d_name,&buf);
             }
-#endif
 
           size=Bytes_to_Blocks(buf.st_size)+Bytes_to_Blocks(buf2.st_size);
 
@@ -1147,7 +1116,6 @@ static void what_purge_compress_age(const char *proto,const char *hostport,const
 }
 
 
-#if USE_ZLIB
 /*++++++++++++++++++++++++++++++++++++++
   Compress the named file (if not already compressed).
 
@@ -1291,4 +1259,3 @@ static unsigned long compress_file(const char *proto,const char *hostport,const 
  else
     return(0);                  /* pathological file, larger when compressed. */
 }
-#endif

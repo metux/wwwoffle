@@ -18,9 +18,7 @@
 
 #include <unistd.h>
 
-#if USE_ZLIB
 #include <zlib.h>
-#endif
 
 #include <gnutls/gnutls.h>
 
@@ -35,8 +33,6 @@ typedef struct io_buffer
 }
 io_buffer;
 
-
-#if USE_ZLIB
 
 /*+ A data structure to hold the deflate and gzip context. +*/
 
@@ -63,8 +59,6 @@ typedef struct io_zlib
  unsigned short lastlen;        /*+ The length of the input data last time. +*/
 }
 io_zlib;
-
-#endif /* USE_ZLIB */
 
 
 /*+ A data structure to hold the gnutls context. +*/
@@ -106,11 +100,9 @@ typedef struct io_context
 
  unsigned r_timeout;            /*+ The timeout to use when reading. +*/
 
-#if USE_ZLIB
  io_zlib   *r_zlib_context;     /*+ The zlib compression/decompression private data (reading). +*/
 
  io_buffer *r_zlch_data;        /*+ The IO buffer between zlib and chunked encoding (reading). +*/
-#endif
 
  io_chunk  *r_chunk_context;    /*+ The chunked encoding/decoding private data (reading). +*/
 
@@ -124,11 +116,9 @@ typedef struct io_context
 
  io_buffer *w_buffer_data;      /*+ Input buffering to avoid very small writes (writing). +*/
 
-#if USE_ZLIB
  io_zlib   *w_zlib_context;     /*+ The zlib compression/decompression private data (writing). +*/
 
  io_buffer *w_zlch_data;        /*+ The IO buffer between zlib and chunked encoding (writing). +*/
-#endif
 
  io_chunk  *w_chunk_context;    /*+ The chunked encoding/decoding private data (writing). +*/
 
@@ -152,8 +142,6 @@ extern int io_errno;
 extern char *io_strerror;
 
 
-#if USE_ZLIB
-
 /* In io_zlib.c */
 
 io_zlib /*@null@*/ /*@special@*/ *io_init_zlib_compress  (int type) /*@allocates result@*/;
@@ -164,8 +152,6 @@ int io_zlib_uncompress(io_buffer *in,io_zlib *context,io_buffer *out);
 
 int io_finish_zlib_compress  (/*@special@*/ io_zlib *context,io_buffer *out) /*@releases context@*/;
 int io_finish_zlib_uncompress(/*@special@*/ io_zlib *context,/*@null@*/ io_buffer *out) /*@releases context@*/;
-
-#endif /* USE_ZLIB */
 
 
 /* In iognutls.c */

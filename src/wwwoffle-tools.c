@@ -105,9 +105,7 @@ static int wwwoffle_fsck(void);
 
 static int ls(char *file);
 
-#if USE_ZLIB
 static void gzip_file(char *proto,char *hostport,char *file,int compress);
-#endif
 
 static void wwwoffle_fsck_check_proto(char *proto);
 static void wwwoffle_fsck_check_dir(char *proto,char *host,char *special);
@@ -782,9 +780,7 @@ static int wwwoffle_read(int remove_header, URL *Url)
 {
  char *line=NULL,buffer[IO_BUFFER_SIZE];
  int n,spool=OpenWebpageSpoolFile(1,Url);
-#if USE_ZLIB
  int compression=0;
-#endif
 
  if(spool==-1)
     return(1);
@@ -794,11 +790,9 @@ static int wwwoffle_read(int remove_header, URL *Url)
 
  while((line=read_line(spool,line)))
    {
-#if USE_ZLIB
     if(!strncmp(line,"Pragma: wwwoffle-compressed",(size_t)27))
        compression=2;
     else
-#endif
        if (!remove_header)
           write_string(1,line);
 
@@ -806,10 +800,8 @@ static int wwwoffle_read(int remove_header, URL *Url)
        break;
    }
 
-#if USE_ZLIB
  if(compression)
     configure_io_zlib(spool,compression,-1);
-#endif
 
  while((n=read_data(spool,buffer,IO_BUFFER_SIZE))>0)
     write_data(1,buffer,n);
@@ -890,7 +882,6 @@ static int wwwoffle_gzip(URL *Url,int compress)
 {
  char *direction=compress?"compression":"uncompression";
 
-#if USE_ZLIB
  DIR *dir;
  struct dirent* ent;
  struct stat buf;
@@ -929,18 +920,9 @@ static int wwwoffle_gzip(URL *Url,int compress)
  ChangeBackToSpoolDir();
 
  return(0);
-
-#else
-
- fprintf(stderr,"Error: wwwoffle-tools was compiled without zlib, no %s possible.\n",direction);
-
- return(1);
-
-#endif /* USE_ZLIB */
 }
 
 
-#if USE_ZLIB
 /*++++++++++++++++++++++++++++++++++++++
   Uncompress the named file (if already compressed).
 
@@ -1073,7 +1055,6 @@ static void gzip_file(char *proto,char *hostport,char *file,int compress)
 
  free(zfile);
 }
-#endif
 
 
 /*++++++++++++++++++++++++++++++++++++++

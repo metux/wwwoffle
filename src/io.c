@@ -117,10 +117,8 @@ void reinit_io(int fd)
 
  context=io_contexts[fd];
 
-#if USE_ZLIB
  if(context->r_zlib_context || context->w_zlib_context)
     PrintMessage(Fatal,"IO: Function reinit_io(%d) was called while zlib compression enabled.",fd);
-#endif
 
  if(context->r_chunk_context || context->w_chunk_context)
     PrintMessage(Fatal,"IO: Function reinit_io(%d) was called while chunked encoding enabled.",fd);
@@ -170,8 +168,6 @@ void configure_io_timeout(int fd,int timeout_r,int timeout_w)
     context->w_timeout=timeout_w;
 }
 
-
-#if USE_ZLIB
 
 /*++++++++++++++++++++++++++++++++++++++
   Configure the compression option for the IO context used for this file descriptor.
@@ -250,8 +246,6 @@ void configure_io_zlib(int fd,int zlib_r,int zlib_w)
    }
 }
 
-#endif /* USE_ZLIB */
-
 
 /*++++++++++++++++++++++++++++++++++++++
   Configure the chunked encoding/decoding for the IO context used for this file descriptor.
@@ -285,10 +279,8 @@ void configure_io_chunked(int fd,int chunked_r,int chunked_w)
        if(!context->r_chunk_context)
           PrintMessage(Fatal,"IO: Could not initialise chunked decoding; [%!s].");
 
-#if USE_ZLIB
        if(context->r_zlib_context && !context->r_zlch_data)
           context->r_zlch_data=create_io_buffer(IO_BUFFER_SIZE);
-#endif
 
        if(!context->r_file_data)
           context->r_file_data=create_io_buffer(IO_BUFFER_SIZE);
@@ -299,11 +291,9 @@ void configure_io_chunked(int fd,int chunked_r,int chunked_w)
       {
        context->r_chunk_context=NULL;
 
-#if USE_ZLIB
        if(context->r_zlch_data)
           destroy_io_buffer(context->r_zlch_data);
        context->r_zlch_data=NULL;
-#endif
       }
    }
 
@@ -317,10 +307,8 @@ void configure_io_chunked(int fd,int chunked_r,int chunked_w)
        if(!context->w_chunk_context)
           PrintMessage(Fatal,"IO: Could not initialise chunked encoding; [%!s].");
 
-#if USE_ZLIB
        if(context->w_zlib_context && !context->w_zlch_data)
           context->w_zlch_data=create_io_buffer(IO_BUFFER_SIZE);
-#endif
 
        if(!context->w_file_data)
           context->w_file_data=create_io_buffer(IO_BUFFER_SIZE+16);
@@ -331,11 +319,9 @@ void configure_io_chunked(int fd,int chunked_r,int chunked_w)
       {
        context->w_chunk_context=NULL;
 
-#if USE_ZLIB
        if(context->w_zlch_data)
           destroy_io_buffer(context->w_zlch_data);
        context->r_zlch_data=NULL;
-#endif
       }
    }
 }
@@ -410,10 +396,8 @@ ssize_t read_data(int fd,char *buffer,size_t n)
 
  /* Read in new data */
 
-#if USE_ZLIB
  if(!context->r_zlib_context)
    {
-#endif
     if(!context->r_chunk_context)
       {
        if(context->r_file_data && context->r_file_data->length)
@@ -459,7 +443,6 @@ ssize_t read_data(int fd,char *buffer,size_t n)
        while(iobuffer.length==0);
        nr=iobuffer.length;
       }
-#if USE_ZLIB
    }
  else /* if(context->r_zlib_context) */
    {
@@ -524,7 +507,6 @@ ssize_t read_data(int fd,char *buffer,size_t n)
          }
       }
    }
-#endif /* USE_ZLIB */
 
  if(err<0)
     return(err);
@@ -759,10 +741,8 @@ static int io_write_data(int fd,io_context *context,io_buffer *iobuffer)
 
  /* Write the output data */
 
-#if USE_ZLIB
  if(!context->w_zlib_context)
    {
-#endif
     if(!context->w_chunk_context)
       {
        if(context->gnutls_context)
@@ -789,7 +769,6 @@ static int io_write_data(int fd,io_context *context,io_buffer *iobuffer)
          }
        while(iobuffer->length>0);
       }
-#if USE_ZLIB
    }
  else /* if(context->w_zlib_context) */
    {
@@ -835,7 +814,6 @@ static int io_write_data(int fd,io_context *context,io_buffer *iobuffer)
        while(iobuffer->length>0);
       }
    }
-#endif /* USE_ZLIB */
 
  if(err<0)
     return(err);
@@ -1008,13 +986,10 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
 
  /* Finish the reading side */
 
-#if USE_ZLIB
  if(!context->r_zlib_context)
    {
-#endif
     if(context->r_chunk_context)
        io_finish_chunk_decode(context->r_chunk_context,NULL);
-#if USE_ZLIB
    }
  else /* if(context->r_zlib_context) */
    {
@@ -1026,17 +1001,14 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
        io_finish_zlib_uncompress(context->r_zlib_context,NULL);
       }
    }
-#endif /* USE_ZLIB */
 
  /* Write out any remaining data */
 
  if(context->w_buffer_data && context->w_buffer_data->length)
     io_write_data(fd,context,context->w_buffer_data);
 
-#if USE_ZLIB
  if(!context->w_zlib_context)
    {
-#endif
     if(context->w_chunk_context)
       {
        do
@@ -1053,7 +1025,6 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
          }
        while(more==1);
       }
-#if USE_ZLIB
    }
  else /* if(context->w_zlib_context) */
    {
@@ -1107,7 +1078,6 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
        while(more==1);
       }
    }
-#endif /* USE_ZLIB */
 
  /* Destroy the encryption information */
 
@@ -1127,18 +1097,14 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
  if(context->w_buffer_data)
     destroy_io_buffer(context->w_buffer_data);
 
-#if USE_ZLIB
  if(context->r_zlch_data)
     destroy_io_buffer(context->r_zlch_data);
-#endif
 
  if(context->r_file_data)
     destroy_io_buffer(context->r_file_data);
 
-#if USE_ZLIB
  if(context->w_zlch_data)
     destroy_io_buffer(context->w_zlch_data);
-#endif
 
  if(context->w_file_data)
     destroy_io_buffer(context->w_file_data);

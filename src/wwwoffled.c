@@ -237,11 +237,7 @@ int main(int argc, char** argv)
 #define IPV6_STRING "without ipv6"
 #endif
 
-#if USE_ZLIB
 #define ZLIB_STRING "with zlib"
-#else
-#define ZLIB_STRING "without zlib"
-#endif
 
 #define GNUTLS_STRING "with gnutls"
 

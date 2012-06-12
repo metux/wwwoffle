@@ -68,10 +68,8 @@ int main(int argc,char **argv)
 
     init_io(write_fd);
 
-#if USE_ZLIB
     if(zlib)
        configure_io_zlib(write_fd,-1,zlib?2:0);
-#endif
     if(chunk)
        configure_io_chunked(write_fd,-1,chunk?1:0);
 
@@ -126,10 +124,8 @@ int main(int argc,char **argv)
 
     init_io(read_fd);
 
-#if USE_ZLIB
     if(zlib)
        configure_io_zlib(read_fd,zlib?2:0,-1);
-#endif
     if(chunk)
        configure_io_chunked(read_fd,chunk?1:0,-1);
 
@@ -251,10 +247,8 @@ int main(int argc,char **argv)
     if(write_fd==-1)
        PrintMessage(Fatal,"Cannot open '%s' for writing [%!s]",outfile);
 
-#if USE_ZLIB
     if(zlib)
        configure_io_zlib(read_fd,zlib?2:0,-1);
-#endif
     if(chunk)
        configure_io_chunked(read_fd,chunk?1:0,-1);
 

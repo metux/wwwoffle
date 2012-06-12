@@ -109,7 +109,6 @@ static void InfoCachedPage(int fd,URL *Url,int which)
 
  /* Check if the file is compressed in the cache and use uncompression if it is. */
 
-#if USE_ZLIB
  if(spool!=-1)
    {
     Header *spooled_head=NULL;
@@ -127,7 +126,6 @@ static void InfoCachedPage(int fd,URL *Url,int which)
        FreeHeader(spooled_head);
       }
    }
-#endif
 
  if(which==0)
     InfoCached(fd,spool,refUrl);

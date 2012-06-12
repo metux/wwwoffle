@@ -218,7 +218,6 @@ void HTMLMessageHead(int fd,int status_val,char *status_str, ...)
 
  /* Set up compression header for the client if available and required. */
 
-#if USE_ZLIB
  if(client_compression)
    {
     /* If it is not to be compressed then don't */
@@ -239,7 +238,6 @@ void HTMLMessageHead(int fd,int status_val,char *status_str, ...)
                     client_compression==1?"deflate":"gzip");
       }
    }
-#endif
 
  /* Set up chunked encoding header for the client if required. */
 
@@ -274,10 +272,8 @@ void HTMLMessageHead(int fd,int status_val,char *status_str, ...)
 
  /* Initialise the client compression. */
 
-#if USE_ZLIB
  if(client_compression)
     configure_io_zlib(fd,-1,client_compression);
-#endif
 
  /* Initialise the client chunked encoding. */
 

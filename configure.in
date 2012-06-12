@@ -10,6 +10,7 @@ AC_CONFIG_HEADER(src/autoconfig.h)
 m4_include(m4/etr_socket_nsl.m4)
 m4_include(m4/gnutls.m4)
 m4_include(m4/gcrypt.m4)
+m4_include(m4/zlib.m4)
 
 dnl Checks for programs.
 
@@ -66,53 +67,7 @@ fi
 AC_CHECK_FUNCS(setresuid setresgid getresuid getresgid setreuid setregid setgroups)
 
 
-dnl Checks for zlib libraries.
-
-AC_ARG_WITH(zlib,
-[  --with-zlib=dir              Set the location of the zlib header and library],
-WITH_ZLIB=$withval,WITH_ZLIB=yes)
-
-if test "$WITH_ZLIB" = "no"; then
-   ZLIB_INC=
-   ZLIB_LIB=
-   USE_ZLIB=0
-else
-   if test "$WITH_ZLIB" = "yes"; then
-      ZLIB_LIB=-lz
-      ZLIB_INC=
-      USE_ZLIB=1
-   else
-      ZLIB_LIB="-L$WITH_ZLIB/lib -lz"
-      ZLIB_INC="-I$WITH_ZLIB/include"
-      USE_ZLIB=1
-   fi
-
-   AC_CHECK_HEADERS(zlib.h,
-                    HAVE_ZLIB_H=yes,HAVE_ZLIB_H=no)
-
-   if test "$HAVE_ZLIB_H" = "no"; then
-      AC_MSG_WARN([Cannot find zlib.h header file; configuring without compression support])
-      ZLIB_LIB=
-      ZLIB_INC=
-      USE_ZLIB=0
-   else
-      AC_CHECK_LIB(z, zlibVersion,
-                   WITH_ZLIB=yes,WITH_ZLIB=no,$ZLIB_LIB)
-
-      if test "$WITH_ZLIB" = "no"; then
-         AC_MSG_WARN([Cannot find working libz library; configuring without compression support])
-         ZLIB_LIB=
-         ZLIB_INC=
-         USE_ZLIB=0
-      fi
-   fi
-fi
-
-AC_DEFINE_UNQUOTED(USE_ZLIB,$USE_ZLIB,[use the zlib library])
-
-AC_SUBST(ZLIB_LIB)
-AC_SUBST(ZLIB_INC)
-
+PKG_CHECK_ZLIB
 PKG_CHECK_GNUTLS
 PKG_CHECK_GCRYPT
 

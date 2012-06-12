@@ -21,16 +21,12 @@
 
 #include <errno.h>
 
-#if USE_ZLIB
 #include <zlib.h>
-#endif
 
 #include "io.h"
 #include "iopriv.h"
 #include "errors.h"
 
-
-#if USE_ZLIB
 
 /*+ The gzip header required to be output for compression +*/
 static const unsigned char gzip_head[10]={0x1f,0x8b,8,0,0,0,0,0,0,0xff};
@@ -669,5 +665,3 @@ static void set_zerror(const char *msg)
 
  sprintf(io_strerror,"IO(zlib): %s",msg);
 }
-
-#endif /* USE_ZLIB */

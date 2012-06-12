@@ -31,9 +31,7 @@ void reinit_io(int fd);
 
 void configure_io_timeout(int fd,int timeout_r,int timeout_w);
 
-#if USE_ZLIB
 void configure_io_zlib(int fd,int zlib_r,int zlib_w);
-#endif
 
 void configure_io_chunked(int fd,int chunked_r,int chunked_w);
 

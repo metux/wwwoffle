@@ -120,9 +120,7 @@ int wwwoffles(int online,int fetching,int client)
  int offline_request=1;
  int is_client_wwwoffle=0;
  int is_client_searcher=0;
-#if USE_ZLIB
  int client_compression=0,request_compression=0,server_compression=0;
-#endif
  int client_chunked=0,request_chunked=0,server_chunked=0;
 
 
@@ -245,7 +243,6 @@ int wwwoffles(int online,int fetching,int client)
 
  /* Check if the client can use compression and work out which type. */
 
-#if USE_ZLIB
  if(mode!=Fetch && ConfigBoolean(ReplyCompressedData))
    {
     char *content_encoding=GetHeader(request_head,"Accept-Encoding");
@@ -258,7 +255,6 @@ int wwwoffles(int online,int fetching,int client)
                     client_compression==1?"deflate":client_compression==2?"gzip":"identity");
       }
    }
-#endif
 
  /* Check if the client can use chunked encoding. */
 
@@ -272,11 +268,7 @@ int wwwoffles(int online,int fetching,int client)
 
  /* Store the client's compression and chunked encoding preferences for message page generation. */
 
-#if USE_ZLIB
  SetMessageOptions(client_compression,client_chunked);
-#else
- SetMessageOptions(0,client_chunked);
-#endif
 
  /* Store the client's language preferences for message page generation. */
 
@@ -1156,9 +1148,7 @@ passwordagain:
 
  /* Reset the variables used for server data format. */
 
-#if USE_ZLIB
  request_compression=0,server_compression=0;
-#endif
  request_chunked=0,server_chunked=0;
 
 
@@ -1804,13 +1794,11 @@ passwordagain:
 
     /* Add the compression request header */
 
-#if USE_ZLIB
     if(ConfigBooleanURL(RequestCompressedData,Url) && !NotCompressed(NULL,Url->path))
       {
        request_compression=1;
        AddToHeader(request_head,"Accept-Encoding","x-gzip; q=1.0, gzip; q=1.0, x-deflate; q=0.9, deflate; q=0.9, identity; q=0.1");
       }
-#endif
 
     /* Add the chunked encoding header and modify the connection header */
 
@@ -1944,9 +1932,7 @@ passwordagain:
 
  if(mode==Real || mode==RealNoCache || mode==Fetch)
    {
-#if USE_ZLIB
     char *content_encoding=NULL;
-#endif
     char *transfer_encoding=NULL;
 
     /* Get the header */
@@ -2027,7 +2013,6 @@ passwordagain:
 
     /* Check for compression header */
 
-#if USE_ZLIB
     if(request_compression && (content_encoding=GetHeader(reply_head,"Content-Encoding")))
        server_compression=WhichCompression(content_encoding);
     else
@@ -2039,7 +2024,6 @@ passwordagain:
        RemoveFromHeader(reply_head,"Content-Encoding");
        configure_io_zlib(server,server_compression,-1);
       }
-#endif
 
     /* Check for chunked encoding header */
 
@@ -2326,7 +2310,6 @@ passwordagain:
 
     /* Set up compression header for the client if available and required. */
 
-#if USE_ZLIB
     if(client_compression && !head_only)
        if(mode!=RealNoPassword)
          {
@@ -2349,7 +2332,6 @@ passwordagain:
                           client_compression==1?"deflate":"gzip");
             }
          }
-#endif
 
     /* Set up chunked encoding header for the client if required. */
 
@@ -2376,11 +2358,9 @@ passwordagain:
 
     /* Initialise the client compression. */
 
-#if USE_ZLIB
     if(client_compression && !head_only)
        if(mode!=RealNoPassword)
           configure_io_zlib(client,-1,client_compression);
-#endif
 
     /* Initialise the client chunked encoding. */
 
@@ -2696,7 +2676,6 @@ passwordagain:
 
        /* If the cached file is compressed then prepare to uncompress it. */
 
-#if USE_ZLIB
        if(GetHeader2(reply_head,"Pragma","wwwoffle-compressed"))
          {
           char *content_encoding;
@@ -2709,7 +2688,6 @@ passwordagain:
              configure_io_zlib(spool,2,-1);
             }
          }
-#endif
 
        /* Fix up the reply head from the cache before sending to the client. */
 
@@ -2742,7 +2720,6 @@ passwordagain:
 
        /* Set up compression header for the client if available and required. */
 
-#if USE_ZLIB
        if(client_compression && !head_only)
          {
           /* If it is not to be compressed then don't */
@@ -2764,7 +2741,6 @@ passwordagain:
                           client_compression==1?"deflate":"gzip");
             }
          }
-#endif
 
        /* Set up chunked encoding header for the client if required. */
 
@@ -2788,10 +2764,8 @@ passwordagain:
 
        /* Initialise the client compression. */
 
-#if USE_ZLIB
        if(client_compression && !head_only)
           configure_io_zlib(client,-1,client_compression);
-#endif
 
        /* Initialise the client chunked encoding. */
 
