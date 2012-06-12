@@ -1084,7 +1084,7 @@ static char *htmlise_dir_entry(void)
     while(*q && isspace(*q))
        q++;
     if(*q)
-       p[i]=q;
+       p[i]=q;  /* p[] contains a list of words in the line */
     else
        break;
     while(*q && !isspace(*q))
@@ -1093,6 +1093,28 @@ static char *htmlise_dir_entry(void)
 
  if((*p[0]=='-' || *p[0]=='d' || *p[0]=='l') && i>=8) /* A UNIX 'ls -l' listing. */
    {
+#ifdef SPACES_IN_FILENAMES_PS /* work in progress */
+    if (i > 9) {
+      char *l2, *p2, *p1 = l;
+      p2 = l2 = malloc(strlen(l) + (i-9) * 2 + 1);    /* spaces -> "%20", + NULL */
+      while (*p1) {
+        if (p1 < p[8] || *p1 != ' ')
+          *p2 = *p1;
+        else {
+          *p2++ = '%';
+          *p2++ = '2';
+          *p2   = '0';
+        }
+        p1++;
+        p2++;
+      }
+      *p2 = 0;
+      free(l);
+      l = l2;
+      i = 9;
+    }
+ syslog(6, "l = %s, i = %d, file = %d, link = %d", l, i, file, link); /* XXX */
+#endif
     if(i==8)
       {file=7; link=file;}
     else if(i==10 && (*p[8]=='-' && *(p[8]+1)=='>'))
