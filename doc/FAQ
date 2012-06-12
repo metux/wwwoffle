@@ -110,7 +110,8 @@ finger : Yes
 https : Yes
         Since version 2.4 there has been support for transparent proxying of
         Secure Socket Layer (SSL) connections (this does not cache the data).
-        This includes the https protocol.
+        Since version 2.9 there has been optional compile-compile time support
+        for caching of https connections.
 
 --------------------
 

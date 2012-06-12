@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iozlib.c 1.23 2006/07/21 17:35:48 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/iozlib.c 1.24 2006/10/02 18:43:17 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9b.
   Functions for file input and output with compression.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -347,9 +347,10 @@ int io_zlib_uncompress(io_buffer *in,io_zlib *context,io_buffer *out)
        in->length=0;
        return(0);
       }
-    else /* bytes remaining, junk */
+    else /* bytes remaining, junk, put them back into the input */
       {
-       in->length=0;
+       in->length-=nb;
+       memmove(in->data,in->data+nb,in->length);
        return(1);
       }
    }

@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/spool.c 2.95 2006/07/21 17:35:48 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/spool.c 2.98 2006/11/14 17:10:19 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Handle all of the spooling of files in the spool directory.
@@ -110,7 +110,7 @@ int OpenNewOutgoingSpoolFile(void)
 
  /* Open the outgoing file */
 
- fd=open(name,O_WRONLY|O_CREAT|O_EXCL|O_BINARY,(mode_t)ConfigInteger(FilePerm));
+ fd=open(name,O_WRONLY|O_CREAT|O_EXCL|O_TRUNC|O_BINARY,(mode_t)ConfigInteger(FilePerm));
  /* init_io(fd) not called since fd is returned */
 
  if(fd==-1)
@@ -452,7 +452,7 @@ int OpenWebpageSpoolFile(int rw,URL *Url)
  if(rw)
     fd=open(file,O_RDONLY|O_BINARY);
  else
-    fd=open(file,O_RDWR|O_CREAT|O_BINARY,(mode_t)ConfigInteger(FilePerm));
+    fd=open(file,O_RDWR|O_CREAT|O_TRUNC|O_BINARY,(mode_t)ConfigInteger(FilePerm));
 
  /* init_io(fd) not called since fd is returned */
 
@@ -890,7 +890,7 @@ int CreateLockWebpageSpoolFile(URL *Url)
     /* Using open() instead of link() allows a race condition over NFS.
        Using NFS for the WWWOFFLE spool is not recommended anyway. */
 
-    fd=open(lockfile,O_WRONLY|O_CREAT|O_EXCL,(mode_t)ConfigInteger(FilePerm));
+    fd=open(lockfile,O_WRONLY|O_CREAT|O_TRUNC|O_EXCL,(mode_t)ConfigInteger(FilePerm));
 
     if(fd==-1)
       {
@@ -988,7 +988,7 @@ void DeleteLockWebpageSpoolFile(URL *Url)
 int CreateLastTimeSpoolFile(URL *Url)
 {
  struct stat buf;
- char *file;
+ char *file,*name;
  int exists=0;
 
  if(!ConfigBoolean(CreateHistoryIndexes))
@@ -1003,26 +1003,26 @@ int CreateLastTimeSpoolFile(URL *Url)
 
  file=URLToFileName(Url,'D',0);
 
- if(stat(file,&buf))
+ if(!stat(file,&buf))
+    exists=1;
+
+ name=(char*)malloc(strlen(Url->proto)+strlen(URLToDirName(Url))+strlen(file)+8);
+ sprintf(name,"../%s/%s/%s",Url->proto,URLToDirName(Url),file);
+
+ unlink(file);
+ if(link(name,file))
+   {PrintMessage(Warning,"Cannot create file 'lasttime/%s' [%!s].",file);}
+ else
    {
-    char *name=(char*)malloc(strlen(Url->proto)+strlen(URLToDirName(Url))+strlen(file)+8);
+    file=URLToFileName(Url,'U',0);
     sprintf(name,"../%s/%s/%s",Url->proto,URLToDirName(Url),file);
 
+    unlink(file);
     if(link(name,file))
       {PrintMessage(Warning,"Cannot create file 'lasttime/%s' [%!s].",file);}
-    else
-      {
-       file=URLToFileName(Url,'U',0);
-       sprintf(name,"../%s/%s/%s",Url->proto,URLToDirName(Url),file);
-
-       if(link(name,file))
-         {PrintMessage(Warning,"Cannot create file 'lasttime/%s' [%!s].",file);}
-      }
-
-    free(name);
    }
- else
-    exists=1;
+
+ free(name);
 
  /* Change dir back and tidy up. */
 
@@ -1314,7 +1314,7 @@ link_outgoing:
 
              if(*ent->d_name=='U' || *ent->d_name=='O')
                {
-                char newname[12+CACHE_HASHED_NAME_LEN];
+                char newname[11+1+CACHE_HASHED_NAME_LEN+1+1]; /* 22 for hash, 1 for prefix, 1 for postfix, 1 terminator */
 
                 strcpy(newname,"../lastout/");
                 strcat(newname,ent->d_name);

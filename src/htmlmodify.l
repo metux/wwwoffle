@@ -19,7 +19,7 @@ val             ({alphanum}|{nonascii}|{safepunct})+
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/htmlmodify.l 1.92 2006/08/04 18:22:46 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/htmlmodify.l 1.94 2006/10/09 17:53:41 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Parse the HTML and modify the source.
@@ -1815,12 +1815,14 @@ static void handle_high_bit(unsigned char ch)
 
  /* Quoted strings */
 
+<DQUOTED>\\\\               { append_string(htmlmodify_yytext); }
 <DQUOTED>\\\"               { append_string(htmlmodify_yytext); }
 <DQUOTED>\\                 { append_string(htmlmodify_yytext); }
 <DQUOTED>\"                 { BEGIN(TAG); htmlmodify_yylval=string; return(LEX_ATTR_VAL_DQ); }
 <DQUOTED>[\r\n]+            { }
 <DQUOTED>[^\\\"\r\n]+       { append_string(htmlmodify_yytext); }
 
+<SQUOTED>\\\\               { append_string(htmlmodify_yytext); }
 <SQUOTED>\\\'               { append_string(htmlmodify_yytext); }
 <SQUOTED>\\                 { append_string(htmlmodify_yytext); }
 <SQUOTED>\'                 { BEGIN(TAG); htmlmodify_yylval=string; return(LEX_ATTR_VAL_SQ); }
@@ -1832,15 +1834,18 @@ static void handle_high_bit(unsigned char ch)
 <SCRIPT_START>(.|\n)        { disable_output^=DISABLE_PARSE; YY_OUTPUT("\n<!-- WWWOFFLE (disable-script) - ... -->\n"); disable_output^=DISABLE_PARSE;
                               unput(htmlmodify_yytext[0]); BEGIN(SCRIPT); }
 
+<SCRIPT>\\\"                { YY_OUTPUT(htmlmodify_yytext); }
+<SCRIPT>\\\'                { YY_OUTPUT(htmlmodify_yytext); }
 <SCRIPT>\"                  { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT_DQUOTED); }
 <SCRIPT>\'                  { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT_SQUOTED); }
+<SCRIPT>\\                  { YY_OUTPUT(htmlmodify_yytext); }
 <SCRIPT>"/*"                { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT_COMMENT_C); }
 <SCRIPT>"//"                { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT_COMMENT_CPP); }
 <SCRIPT>"*"                 { YY_OUTPUT(htmlmodify_yytext); }
 <SCRIPT>"/"                 { YY_OUTPUT(htmlmodify_yytext); }
 <SCRIPT>"<"/"/script"       { BEGIN(TAG_START); }
 <SCRIPT>"<"                 { YY_OUTPUT(htmlmodify_yytext); }
-<SCRIPT>[^\'\"</]+          { YY_OUTPUT(htmlmodify_yytext); }
+<SCRIPT>[^\'\"\\</]+        { YY_OUTPUT(htmlmodify_yytext); }
 
  /* Comments in scripts, C or C++ style */
 
@@ -1855,11 +1860,13 @@ static void handle_high_bit(unsigned char ch)
 
  /* Quoted strings in scripts - assume they follow usual rules */
 
+<SCRIPT_DQUOTED>\\\\        { YY_OUTPUT(htmlmodify_yytext); }
 <SCRIPT_DQUOTED>\\\"        { YY_OUTPUT(htmlmodify_yytext); }
 <SCRIPT_DQUOTED>\\          { YY_OUTPUT(htmlmodify_yytext); }
 <SCRIPT_DQUOTED>\"          { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT); }
 <SCRIPT_DQUOTED>[^\\\"]+    { YY_OUTPUT(htmlmodify_yytext); }
 
+<SCRIPT_SQUOTED>\\\\        { YY_OUTPUT(htmlmodify_yytext); }
 <SCRIPT_SQUOTED>\\\'        { YY_OUTPUT(htmlmodify_yytext); }
 <SCRIPT_SQUOTED>\\          { YY_OUTPUT(htmlmodify_yytext); }
 <SCRIPT_SQUOTED>\'          { YY_OUTPUT(htmlmodify_yytext); BEGIN(SCRIPT); }

@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/certificates.c 1.26 2006/07/21 17:35:48 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/certificates.c 1.28 2006/11/14 17:10:17 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9b.
   Certificate handling functions.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -112,6 +112,7 @@ int LoadRootCredentials(void)
 {
  int err;
  struct stat buf;
+ time_t activation,expiration,now;
 
  /* Check that the gnutls library hasn't already been initialised. */
 
@@ -149,6 +150,8 @@ int LoadRootCredentials(void)
       PrintMessage(Fatal,"The file '%s' is not a directory.","certificates/root");
 
  /* Read in the root private key in this directory. */
+
+ readagain:
 
  if(stat("certificates/root/root-key.pem",&buf))
    {
@@ -188,7 +191,24 @@ int LoadRootCredentials(void)
  if(!root_crt)
     PrintMessage(Fatal,"The WWWOFFLE root CA certificate file 'certificates/root/root-cert.pem' cannot be loaded.");
 
- /* FIXME : We don't handle expired certificates */
+ /* Check for expired root certificate and replace it */
+
+ now=time(NULL);
+ activation=gnutls_x509_crt_get_activation_time(root_crt);
+ expiration=gnutls_x509_crt_get_expiration_time(root_crt);
+
+ if(activation==-1 || expiration==-1 || activation>now || expiration<now)
+   {
+    PrintMessage(Warning,"The WWWOFFLE root CA certificate has expired; replacing it.");
+
+    if(unlink("certificates/root/root-cert.pem"))
+       PrintMessage(Fatal,"Cannot delete the expired WWWOFFLE root CA certificate.");
+
+    if(unlink("certificates/root/root-key.pem"))
+       PrintMessage(Fatal,"Cannot delete the expired WWWOFFLE root CA private key file.");
+
+    goto readagain;
+   }
 
  /* Initialise the Diffie Hellman and RSA parameters. */
 
@@ -609,7 +629,7 @@ gnutls_x509_crt_t VerifyCertificates(const char *hostname)
 {
  int i=0,err;
  unsigned int result;
- time_t activation,expiration,now=time(NULL);
+ time_t activation,expiration,now;
  gnutls_x509_crt_t *certlist,cert,issuer,retval=NULL;
  char *filename;
 
@@ -634,6 +654,7 @@ gnutls_x509_crt_t VerifyCertificates(const char *hostname)
  if(!err)
    {PrintMessage(Debug,"Could not verify hostname of first certificate in list [%s].",gnutls_strerror(err));goto finished;}
 
+ now=time(NULL);
  activation=gnutls_x509_crt_get_activation_time(cert);
  expiration=gnutls_x509_crt_get_expiration_time(cert);
 
@@ -707,9 +728,11 @@ static gnutls_certificate_credentials_t GetCredentials(const char *hostname,int 
 {
  struct stat buf;
  gnutls_certificate_credentials_t cred;
+ time_t activation,expiration,now;
+ unsigned int result;
  gnutls_x509_crt_t crt;
  gnutls_x509_privkey_t privkey;
- char *dirname,*filename;
+ char *dirname,*keyfilename,*crtfilename;
  int err,count=0;
 #if defined(__CYGWIN__)
  int i;
@@ -732,27 +755,39 @@ static gnutls_certificate_credentials_t GetCredentials(const char *hostname,int 
     if(!S_ISDIR(buf.st_mode))
       {PrintMessage(Warning,"The file '%s' is not a directory.",dirname);return(NULL);}
 
- /* Read in the private key in this directory. */
+ /* Calculate the filenames for the key and certificate. */
 
- filename=(char*)malloc(24+strlen(hostname)+10);
-
- sprintf(filename,"%s/%s-key.pem",dirname,hostname);
+ keyfilename=(char*)malloc(24+strlen(hostname)+10);
+ sprintf(keyfilename,"%s/%s-key.pem",dirname,hostname);
 
 #if defined(__CYGWIN__)
- for(i=0;filename[i];i++)
-    if(filename[i]==':')
-       filename[i]='!';
+ for(i=0;keyfilename[i];i++)
+    if(keyfilename[i]==':')
+       keyfilename[i]='!';
 #endif
 
- if(stat(filename,&buf))
-   {
-    PrintMessage(Warning,"The WWWOFFLE private key file '%s' does not exist; creating it.",filename);
+ crtfilename=(char*)malloc(24+strlen(hostname)+10);
+ sprintf(crtfilename,"%s/%s-cert.pem",dirname,hostname);
 
-    if(CreatePrivateKey(filename))
-      {PrintMessage(Warning,"Could not create the WWWOFFLE private key file '%s'.",filename);return(NULL);}
+#if defined(__CYGWIN__)
+ for(i=0;crtfilename[i];i++)
+    if(crtfilename[i]==':')
+       crtfilename[i]='!';
+#endif
+
+ /* Read in the private key in this directory. */
+
+ readagain:
+
+ if(stat(keyfilename,&buf))
+   {
+    PrintMessage(Warning,"The WWWOFFLE private key file '%s' does not exist; creating it.",keyfilename);
+
+    if(CreatePrivateKey(keyfilename))
+      {PrintMessage(Warning,"Could not create the WWWOFFLE private key file '%s'.",keyfilename);return(NULL);}
    }
 
- while(!stat(filename,&buf) && buf.st_size==0)
+ while(!stat(keyfilename,&buf) && buf.st_size==0)
    {
     /* File exists but is zero size.  Wait up to a minute for it to be created.  Secret key creation can be slow. */
 
@@ -761,61 +796,88 @@ static gnutls_certificate_credentials_t GetCredentials(const char *hostname,int 
        break;
    }
 
- if(stat(filename,&buf) || buf.st_size==0)
-   {PrintMessage(Warning,"The WWWOFFLE private key file '%s' still does not exist or is empty.",filename);return(NULL);}
+ if(stat(keyfilename,&buf) || buf.st_size==0)
+   {PrintMessage(Warning,"The WWWOFFLE private key file '%s' still does not exist or is empty.",keyfilename);return(NULL);}
 
  if(buf.st_mode&(S_IRWXG|S_IRWXO) || !S_ISREG(buf.st_mode))
-   {PrintMessage(Warning,"The WWWOFFLE private key file '%s' is not a regular file or is readable by others.",filename);return(NULL);}
+   {PrintMessage(Warning,"The WWWOFFLE private key file '%s' is not a regular file or is readable by others.",keyfilename);return(NULL);}
 
- privkey=LoadPrivateKey(filename);
+ privkey=LoadPrivateKey(keyfilename);
  if(!privkey)
-   {PrintMessage(Warning,"The WWWOFFLE private key file '%s' cannot be loaded.",filename);return(NULL);}
+   {PrintMessage(Warning,"The WWWOFFLE private key file '%s' cannot be loaded.",keyfilename);return(NULL);}
 
  /* Read in the certificate in this directory. */
 
- sprintf(filename,"%s/%s-cert.pem",dirname,hostname);
-
-#if defined(__CYGWIN__)
- for(i=0;filename[i];i++)
-    if(filename[i]==':')
-       filename[i]='!';
-#endif
-
- if(stat(filename,&buf))
+ if(stat(crtfilename,&buf))
    {
     int err;
 
-    PrintMessage(Warning,"The WWWOFFLE certificate file '%s' does not exist; creating it.",filename);
+    PrintMessage(Warning,"The WWWOFFLE certificate file '%s' does not exist; creating it.",crtfilename);
 
     if(server)
-       err=CreateCertificate(filename,NULL,hostname,privkey);
+       err=CreateCertificate(crtfilename,NULL,hostname,privkey);
     else
-       err=CreateCertificate(filename,hostname,NULL,privkey);
+       err=CreateCertificate(crtfilename,hostname,NULL,privkey);
 
     if(err)
-      {PrintMessage(Warning,"Could not create the WWWOFFLE certificate file '%s'.",filename);return(NULL);}
+      {PrintMessage(Warning,"Could not create the WWWOFFLE certificate file '%s'.",crtfilename);return(NULL);}
    }
 
- if(!stat(filename,&buf) && buf.st_size==0)
+ if(!stat(crtfilename,&buf) && buf.st_size==0)
    {
     /* File exists but is zero size.  Wait up to 10 seconds for it to be created.  Certificate creation is fast. */
 
     sleep(10);
    }
 
- if(stat(filename,&buf) || buf.st_size==0)
-   {PrintMessage(Warning,"The WWWOFFLE certificate file '%s' still does not exist or is empty.",filename);return(NULL);}
+ if(stat(crtfilename,&buf) || buf.st_size==0)
+   {PrintMessage(Warning,"The WWWOFFLE certificate file '%s' still does not exist or is empty.",crtfilename);return(NULL);}
 
  if(!S_ISREG(buf.st_mode))
-   {PrintMessage(Warning,"The WWWOFFLE certificate file '%s' is not a regular file.",filename);return(NULL);}
+   {PrintMessage(Warning,"The WWWOFFLE certificate file '%s' is not a regular file.",crtfilename);return(NULL);}
 
- crt=LoadCertificate(filename);
+ crt=LoadCertificate(crtfilename);
  if(!crt)
-   {PrintMessage(Warning,"The WWWOFFLE certificate file '%s' cannot be loaded.",filename);return(NULL);}
+   {PrintMessage(Warning,"The WWWOFFLE certificate file '%s' cannot be loaded.",crtfilename);return(NULL);}
 
- free(filename);
+ /* Check for expired certificate and replace it */
 
- /* FIXME : We don't handle expired certificates */
+ now=time(NULL);
+ activation=gnutls_x509_crt_get_activation_time(crt);
+ expiration=gnutls_x509_crt_get_expiration_time(crt);
+
+ if(activation==-1 || expiration==-1 || activation>now || expiration<now)
+   {
+    PrintMessage(Warning,"The WWWOFFLE %s certificate file for '%s' has expired; replacing it.",server?"server":"fake",hostname);
+
+    if(unlink(crtfilename))
+       PrintMessage(Fatal,"Cannot delete the expired WWWOFFLE %s certificate file for '%s'.",server?"server":"fake",hostname);
+
+    if(unlink(keyfilename))
+       PrintMessage(Fatal,"Cannot delete the expired WWWOFFLE %s private key file for '%s'.",server?"server":"fake",hostname);
+
+    goto readagain;
+   }
+
+ /* Check that the CA for the certificate is the current root CA or replace it */
+
+ gnutls_x509_crt_verify(crt,&root_crt,1,0,&result);
+
+ if(result&GNUTLS_CERT_INVALID)
+   {
+    PrintMessage(Warning,"The WWWOFFLE %s certificate file for '%s' has the wrong issuer; replacing it.",server?"server":"fake",hostname);
+
+    if(unlink(crtfilename))
+       PrintMessage(Fatal,"Cannot delete the expired WWWOFFLE %s certificate file for '%s'.",server?"server":"fake",hostname);
+
+    if(unlink(keyfilename))
+       PrintMessage(Fatal,"Cannot delete the expired WWWOFFLE %s private key file for '%s'.",server?"server":"fake",hostname);
+
+    goto readagain;
+   }
+
+ free(keyfilename);
+ free(crtfilename);
 
  /* Create the credentials from the certificate, private key and Diffie Hellman parameters. */
 
@@ -871,7 +933,7 @@ static int CreateCertificate(const char *filename,const char *fake_hostname,cons
 
  /* Create the file for the certificate. */
 
- fd=open(filename,O_WRONLY|O_CREAT|O_EXCL|O_BINARY,S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+ fd=open(filename,O_WRONLY|O_CREAT|O_TRUNC|O_EXCL|O_BINARY,S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
  if(fd<0)
    {PrintMessage(Warning,"Could not open certificate file '%s' for writing [%!s].",filename);return(-1);}
  close(fd);
@@ -990,7 +1052,7 @@ static int CreateCertificate(const char *filename,const char *fake_hostname,cons
 
  /* Save it to a file. */
 
- fd=open(filename,O_WRONLY|O_TRUNC|O_BINARY,S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+ fd=open(filename,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY,S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
  if(fd<0)
    {PrintMessage(Warning,"Could not open certificate file '%s' for writing [%!s].",filename);return(-2);}
  else
@@ -1020,7 +1082,7 @@ static int CreatePrivateKey(const char *filename)
 
  /* Create the file for the certificate. */
 
- fd=open(filename,O_WRONLY|O_CREAT|O_EXCL|O_BINARY,S_IRUSR|S_IWUSR);
+ fd=open(filename,O_WRONLY|O_CREAT|O_TRUNC|O_EXCL|O_BINARY,S_IRUSR|S_IWUSR);
  if(fd<0)
    {PrintMessage(Warning,"Could not open private key file '%s' for writing [%!s].",filename);return(-1);}
  close(fd);
@@ -1045,7 +1107,7 @@ static int CreatePrivateKey(const char *filename)
 
  /* Save it to a file. */
 
- fd=open(filename,O_WRONLY|O_TRUNC|O_BINARY,S_IRUSR|S_IWUSR);
+ fd=open(filename,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY,S_IRUSR|S_IWUSR);
  if(fd<0)
    {PrintMessage(Warning,"Could not open private key file '%s' for writing [%!s].",filename);return(-2);}
  else

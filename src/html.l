@@ -27,7 +27,7 @@ url             ({alphanum}|{nonascii}|{safepunct})+
 
 %{
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/html.l 2.89 2006/02/15 18:42:17 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/html.l 2.91 2006/10/09 17:53:41 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Parse the HTML and look for the images, links and other things.
@@ -863,12 +863,14 @@ static void parse_html(URL *Url)
 
  /* Quoted strings */
 
+<DQUOTED>\\\\               { append_string(html_yytext); }
 <DQUOTED>\\\"               { append_string(html_yytext); }
 <DQUOTED>\\                 { append_string(html_yytext); }
 <DQUOTED>\"                 { BEGIN(TAG); html_yylval=string; return(LEX_ATTR_VAL_DQ); }
 <DQUOTED>[\r\n]+            { }
 <DQUOTED>[^\\\"\r\n]+       { append_string(html_yytext); }
 
+<SQUOTED>\\\\               { append_string(html_yytext); }
 <SQUOTED>\\\'               { append_string(html_yytext); }
 <SQUOTED>\\                 { append_string(html_yytext); }
 <SQUOTED>\'                 { BEGIN(TAG); html_yylval=string; return(LEX_ATTR_VAL_SQ); }
@@ -879,15 +881,18 @@ static void parse_html(URL *Url)
 
 <SCRIPT_START>(.|\n)        { unput(html_yytext[0]); BEGIN(SCRIPT); }
 
+<SCRIPT>\\\"                { }
+<SCRIPT>\\\'                { }
 <SCRIPT>\"                  { BEGIN(SCRIPT_DQUOTED); }
 <SCRIPT>\'                  { BEGIN(SCRIPT_SQUOTED); }
+<SCRIPT>\\                  { }
 <SCRIPT>"/*"                { BEGIN(SCRIPT_COMMENT_C); }
 <SCRIPT>"//"                { BEGIN(SCRIPT_COMMENT_CPP); }
 <SCRIPT>"*"                 { }
 <SCRIPT>"/"                 { }
 <SCRIPT>"<"/"/script"       { BEGIN(TAG_START); }
 <SCRIPT>"<"                 { }
-<SCRIPT>[^\'\"</]+          { }
+<SCRIPT>[^\'\"\\</]+        { }
 
  /* Comments in scripts, C or C++ style */
 
@@ -902,11 +907,13 @@ static void parse_html(URL *Url)
 
  /* Quoted strings in scripts - assume they follow usual rules */
 
+<SCRIPT_DQUOTED>\\\\        { }
 <SCRIPT_DQUOTED>\\\"        { }
 <SCRIPT_DQUOTED>\\          { }
 <SCRIPT_DQUOTED>\"          { BEGIN(SCRIPT); }
 <SCRIPT_DQUOTED>[^\\\"]+    { }
 
+<SCRIPT_SQUOTED>\\\\        { }
 <SCRIPT_SQUOTED>\\\'        { }
 <SCRIPT_SQUOTED>\\          { }
 <SCRIPT_SQUOTED>\'          { BEGIN(SCRIPT); }

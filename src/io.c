@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/io.c 2.57 2006/07/21 17:37:34 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/io.c 2.59 2006/10/30 11:13:43 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Functions for file input and output.
@@ -68,7 +68,6 @@ int io_errno=0;
 char /*@null@*/ *io_strerror=NULL;
 
 
-static void change_buffers(io_context *context,int change_buffers_r,int change_buffers_w);
 static int io_write_data(int fd,io_context *context,io_buffer *iobuffer);
 
 
@@ -120,18 +119,23 @@ void reinit_io(int fd)
 
  context=io_contexts[fd];
 
- /* FIXME
-    Re-initialise when already using compression/chunked encoding
-    currently not used anywhere, only re-initialise when seeking.
-    Difficult to handle because cannot start compression part-way
-    through a data stream.
-    Getting here should be a fatal error?
-    FIXME */
+#if USE_ZLIB
+ if(context->r_zlib_context || context->w_zlib_context)
+    PrintMessage(Fatal,"IO: Function reinit_io(%d) was called while zlib compression enabled.",fd);
+#endif
 
- if(context->r_line_data)
+ if(context->r_chunk_context || context->w_chunk_context)
+    PrintMessage(Fatal,"IO: Function reinit_io(%d) was called while chunked encoding enabled.",fd);
+
+#if USE_GNUTLS
+ if(context->gnutls_context)
+    PrintMessage(Fatal,"IO: Function reinit_io(%d) was called while gnutls encryption enabled.",fd);
+#endif
+
+ if(context->r_file_data)
    {
-    destroy_io_buffer(context->r_line_data);
-    context->r_line_data=NULL;
+    destroy_io_buffer(context->r_file_data);
+    context->r_file_data=NULL;
    }
 
  context->r_raw_bytes=0;
@@ -186,7 +190,6 @@ void configure_io_timeout(int fd,int timeout_r,int timeout_w)
 void configure_io_zlib(int fd,int zlib_r,int zlib_w)
 {
  io_context *context;
- int change_buffers_r=0,change_buffers_w=0;
 
  if(fd==-1)
     PrintMessage(Fatal,"IO: Function configure_io_zlib(%d) was called with an invalid argument.",fd);
@@ -205,18 +208,22 @@ void configure_io_zlib(int fd,int zlib_r,int zlib_w)
        context->r_zlib_context=io_init_zlib_uncompress(zlib_r);
        if(!context->r_zlib_context)
           PrintMessage(Fatal,"IO: Could not initialise zlib uncompression; [%!s].");
-       change_buffers_r=1;
+
+       if(context->r_chunk_context && !context->r_zlch_data)
+          context->r_zlch_data=create_io_buffer(IO_BUFFER_SIZE);
+
+       if(!context->r_file_data)
+          context->r_file_data=create_io_buffer(IO_BUFFER_SIZE);
+       else
+          resize_io_buffer(context->r_file_data,IO_BUFFER_SIZE);
       }
     else if(!zlib_r && context->r_zlib_context)
       {
-       /* FIXME
-          Stop decoding ready to read more non-compressed data
-          Difficult because two possible encoding types, zlib and chunked,
-          cannot finish one without finishing the other, what about wrong order?
-          Should call finish_io() and then init_io() in this case?
-          Getting here should be a fatal error?
-          Currently does nothing to allow finish_io() to work.
-          FIXME */
+       context->r_zlib_context=NULL;
+
+       if(context->r_zlch_data)
+          destroy_io_buffer(context->r_zlch_data);
+       context->r_zlch_data=NULL;
       }
    }
 
@@ -229,22 +236,22 @@ void configure_io_zlib(int fd,int zlib_r,int zlib_w)
        context->w_zlib_context=io_init_zlib_compress(zlib_w);
        if(!context->w_zlib_context)
           PrintMessage(Fatal,"IO: Could not initialise zlib compression; [%!s].");
-       change_buffers_w=1;
+
+       if(context->w_chunk_context && !context->w_zlch_data)
+          context->w_zlch_data=create_io_buffer(IO_BUFFER_SIZE);
+
+       if(!context->w_file_data)
+          context->w_file_data=create_io_buffer(IO_BUFFER_SIZE);
       }
     else if(!zlib_w && context->w_zlib_context)
       {
-       /* FIXME
-          Stop compressing ready to write more non-compressed data
-          Difficult because two possible encoding types, zlib and chunked,
-          cannot finish one without finishing the other, what about wrong order?
-          Should call finish_io() and then init_io() in this case?
-          Getting here should be a fatal error?
-          Currently does nothing to allow finish_io() to work.
-          FIXME */
+       context->w_zlib_context=NULL;
+
+       if(context->w_zlch_data)
+          destroy_io_buffer(context->w_zlch_data);
+       context->r_zlch_data=NULL;
       }
    }
-
- change_buffers(context,change_buffers_r,change_buffers_w);
 }
 
 #endif /* USE_ZLIB */
@@ -263,7 +270,6 @@ void configure_io_zlib(int fd,int zlib_r,int zlib_w)
 void configure_io_chunked(int fd,int chunked_r,int chunked_w)
 {
  io_context *context;
- int change_buffers_r=0,change_buffers_w=0;
 
  if(fd==-1)
     PrintMessage(Fatal,"IO: Function configure_io_chunked(%d) was called with an invalid argument.",fd);
@@ -282,18 +288,26 @@ void configure_io_chunked(int fd,int chunked_r,int chunked_w)
        context->r_chunk_context=io_init_chunk_decode();
        if(!context->r_chunk_context)
           PrintMessage(Fatal,"IO: Could not initialise chunked decoding; [%!s].");
-       change_buffers_r=1;
+
+#if USE_ZLIB
+       if(context->r_zlib_context && !context->r_zlch_data)
+          context->r_zlch_data=create_io_buffer(IO_BUFFER_SIZE);
+#endif
+
+       if(!context->r_file_data)
+          context->r_file_data=create_io_buffer(IO_BUFFER_SIZE);
+       else
+          resize_io_buffer(context->r_file_data,IO_BUFFER_SIZE);
       }
     else if(!chunked_r && context->r_chunk_context)
       {
-       /* FIXME
-          Stop decoding ready to read more non-chunked data
-          Difficult because two possible encoding types, zlib and chunked,
-          cannot finish one without finishing the other, what about wrong order?
-          Should call finish_io() and then init_io() in this case?
-          Getting here should be a fatal error?
-          Currently does nothing to allow finish_io() to work.
-          FIXME */
+       context->r_chunk_context=NULL;
+
+#if USE_ZLIB
+       if(context->r_zlch_data)
+          destroy_io_buffer(context->r_zlch_data);
+       context->r_zlch_data=NULL;
+#endif
       }
    }
 
@@ -306,22 +320,28 @@ void configure_io_chunked(int fd,int chunked_r,int chunked_w)
        context->w_chunk_context=io_init_chunk_encode();
        if(!context->w_chunk_context)
           PrintMessage(Fatal,"IO: Could not initialise chunked encoding; [%!s].");
-       change_buffers_w=1;
+
+#if USE_ZLIB
+       if(context->w_zlib_context && !context->w_zlch_data)
+          context->w_zlch_data=create_io_buffer(IO_BUFFER_SIZE);
+#endif
+
+       if(!context->w_file_data)
+          context->w_file_data=create_io_buffer(IO_BUFFER_SIZE+16);
+       else
+          resize_io_buffer(context->w_file_data,IO_BUFFER_SIZE+16);
       }
     else if(!chunked_w && context->w_chunk_context)
       {
-       /* FIXME
-          Stop encoding ready to write more non-chunked data
-          Difficult because two possible encoding types, zlib and chunked,
-          cannot finish one without finishing the other, what about wrong order?
-          Should call finish_io() and then init_io() in this case?
-          Getting here should be a fatal error?
-          Currently does nothing to allow finish_io() to work.
-          FIXME */
+       context->w_chunk_context=NULL;
+
+#if USE_ZLIB
+       if(context->w_zlch_data)
+          destroy_io_buffer(context->w_zlch_data);
+       context->r_zlch_data=NULL;
+#endif
       }
    }
-
- change_buffers(context,change_buffers_r,change_buffers_w);
 }
 
 
@@ -365,90 +385,6 @@ int configure_io_gnutls(int fd,const char *host,int type)
 
 
 /*++++++++++++++++++++++++++++++++++++++
-  Change the buffers when the zlib or chunked encoding state changes.
-
-  io_context *context The IO context to modify.
-
-  int change_buffers_r A flag to indicate that the read buffers need changing.
-
-  int change_buffers_w A flag to indicate that the write buffers need changing.
-  ++++++++++++++++++++++++++++++++++++++*/
-
-static void change_buffers(io_context *context,int change_buffers_r,int change_buffers_w)
-{
- /* Change the read buffers */
-
- if(change_buffers_r)
-   {
-#if USE_ZLIB
-    if(context->r_zlch_data)
-       destroy_io_buffer(context->r_zlch_data);
-#endif /* USE_ZLIB */
-
-    if(context->r_file_data)
-       destroy_io_buffer(context->r_file_data);
-
-#if USE_ZLIB
-    if(!context->r_zlib_context)
-      {
-       context->r_zlch_data=NULL;
-#endif
-       if(!context->r_chunk_context)
-          context->r_file_data=NULL;
-       else /* if(context->r_chunk_context) */
-          context->r_file_data=create_io_buffer(IO_BUFFER_SIZE);
-#if USE_ZLIB
-      }
-    else /* if(context->r_zlib_context) */
-      {
-       if(!context->r_chunk_context)
-          context->r_zlch_data=NULL;
-       else /* if(context->r_chunk_context) */
-          context->r_zlch_data=create_io_buffer(IO_BUFFER_SIZE);
-
-       context->r_file_data=create_io_buffer(IO_BUFFER_SIZE);
-      }
-#endif /* USE_ZLIB */
-   }
-
- /* Change the write buffers */
-
- if(change_buffers_w)
-   {
-#if USE_ZLIB
-    if(context->w_zlch_data)
-       destroy_io_buffer(context->w_zlch_data);
-#endif /* USE_ZLIB */
-
-    if(context->w_file_data)
-       destroy_io_buffer(context->w_file_data);
-
-#if USE_ZLIB
-    if(!context->w_zlib_context)
-      {
-       context->w_zlch_data=NULL;
-#endif
-       if(!context->w_chunk_context)
-          context->w_file_data=NULL;
-       else /* if(context->w_chunk_context) */
-          context->w_file_data=create_io_buffer(IO_BUFFER_SIZE+16);
-#if USE_ZLIB
-      }
-    else /* if(context->w_zlib_context) */
-      {
-       if(!context->w_chunk_context)
-          context->w_zlch_data=NULL;
-       else /* if(context->w_chunk_context) */
-          context->w_zlch_data=create_io_buffer(IO_BUFFER_SIZE);
-
-       context->w_file_data=create_io_buffer(IO_BUFFER_SIZE+16);
-      }
-#endif /* USE_ZLIB */
-   }
-}
-
-
-/*++++++++++++++++++++++++++++++++++++++
   Read data from a file descriptor instead of read().
 
   ssize_t read_data Returns the number of bytes read or 0 for end of file.
@@ -480,37 +416,6 @@ ssize_t read_data(int fd,char *buffer,size_t n)
  iobuffer.size=n;
  iobuffer.length=0;
 
- /* Finish the line data if there is any */
-
- if(context->r_line_data && context->r_line_data->length)
-   {
-#if USE_ZLIB
-    if(!context->r_zlib_context)
-#endif
-       if(!context->r_chunk_context)
-         {
-          if(iobuffer.size>context->r_line_data->length)
-            {
-             memcpy(iobuffer.data,context->r_line_data->data,context->r_line_data->length);
-             iobuffer.length+=context->r_line_data->length;
-             context->r_line_data->length=0;
-            }
-          else
-            {
-             memcpy(iobuffer.data,context->r_line_data->data,iobuffer.size);
-             iobuffer.length+=iobuffer.size;
-             memmove(context->r_line_data->data,context->r_line_data->data+iobuffer.size,context->r_line_data->length-iobuffer.size);
-             context->r_line_data->length-=iobuffer.size;
-            }
-
-          return(iobuffer.length);
-         }
-
-    memcpy(context->r_file_data->data,context->r_line_data->data,context->r_line_data->length);
-    context->r_file_data->length+=context->r_line_data->length;
-    context->r_line_data->length=0;
-   }
-
  /* Read in new data */
 
 #if USE_ZLIB
@@ -519,13 +424,34 @@ ssize_t read_data(int fd,char *buffer,size_t n)
 #endif
     if(!context->r_chunk_context)
       {
-#if USE_GNUTLS
-       if(context->gnutls_context)
-          nr=io_gnutls_read_with_timeout(context->gnutls_context,&iobuffer,context->r_timeout);
+       if(context->r_file_data && context->r_file_data->length)
+         {
+          if(iobuffer.size>context->r_file_data->length)
+            {
+             memcpy(iobuffer.data,context->r_file_data->data,context->r_file_data->length);
+             iobuffer.length=context->r_file_data->length;
+             context->r_file_data->length=0;
+            }
+          else
+            {
+             memcpy(iobuffer.data,context->r_file_data->data,iobuffer.size);
+             iobuffer.length+=iobuffer.size;
+             memmove(context->r_file_data->data,context->r_file_data->data+iobuffer.size,context->r_file_data->length-iobuffer.size);
+             context->r_file_data->length-=iobuffer.size;
+            }
+
+          nr=iobuffer.length;
+         }
        else
+         {
+#if USE_GNUTLS
+          if(context->gnutls_context)
+             nr=io_gnutls_read_with_timeout(context->gnutls_context,&iobuffer,context->r_timeout);
+          else
 #endif
-          nr=io_read_with_timeout(fd,&iobuffer,context->r_timeout);
-       if(nr>0) context->r_raw_bytes+=nr;
+             nr=io_read_with_timeout(fd,&iobuffer,context->r_timeout);
+          if(nr>0) context->r_raw_bytes+=nr;
+         }
       }
     else /* if(context->r_chunk_context) */
       {
@@ -627,8 +553,8 @@ char *read_line(int fd,char *line)
 
  /* Create the temporary line buffer if there is not one */
 
- if(!context->r_line_data)
-    context->r_line_data=create_io_buffer(LINE_BUFFER_SIZE+1);
+ if(!context->r_file_data)
+    context->r_file_data=create_io_buffer(LINE_BUFFER_SIZE+1);
 
  /* Use the existing data or read in some more */
 
@@ -636,24 +562,24 @@ char *read_line(int fd,char *line)
    {
     line=(char*)realloc((void*)line,n+(LINE_BUFFER_SIZE+1));
 
-    if(context->r_line_data->length>0)
+    if(context->r_file_data->length>0)
       {
-       for(n=0;n<context->r_line_data->length;n++)
-          if(context->r_line_data->data[n]=='\n')
+       for(n=0;n<context->r_file_data->length && n<LINE_BUFFER_SIZE;n++)
+          if(context->r_file_data->data[n]=='\n')
             {
              found=1;
              n++;
              break;
             }
 
-       memcpy(line,context->r_line_data->data,n);
+       memcpy(line,context->r_file_data->data,n);
 
-       if(n==context->r_line_data->length)
-          context->r_line_data->length=0;
+       if(n==context->r_file_data->length)
+          context->r_file_data->length=0;
        else
          {
-          context->r_line_data->length-=n;
-          memmove(context->r_line_data->data,context->r_line_data->data+n,context->r_line_data->length);
+          context->r_file_data->length-=n;
+          memmove(context->r_file_data->data,context->r_file_data->data+n,context->r_file_data->length);
          }
       }
     else
@@ -693,8 +619,8 @@ char *read_line(int fd,char *line)
 
        if(found)
          {
-          context->r_line_data->length=nn-n;
-          memcpy(context->r_line_data->data,line+n,context->r_line_data->length);
+          context->r_file_data->length=nn-n;
+          memcpy(context->r_file_data->data,line+n,context->r_file_data->length);
          }
       }
    }
@@ -1052,8 +978,8 @@ void tell_io(int fd,unsigned long* r,unsigned long *w)
 
  if(r)
     *r=context->r_raw_bytes;
- if(r && context->r_line_data)
-    *r-=context->r_line_data->length; /* Pretend we have not read the contents of the line data buffer */
+ if(r && context->r_file_data)
+    *r-=context->r_file_data->length; /* Pretend we have not read the contents of the line data buffer */
 
  if(w)
     *w=context->w_raw_bytes;
@@ -1211,9 +1137,6 @@ void finish_tell_io(int fd,unsigned long* r,unsigned long *w)
     *w=context->w_raw_bytes;
 
  /* Free all data structures */
-
- if(context->r_line_data)
-    destroy_io_buffer(context->r_line_data);
 
 #if USE_ZLIB
  if(context->r_zlch_data)

@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/purge.c 2.81 2006/07/21 17:37:34 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/purge.c 2.82 2006/11/14 17:10:18 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
   Purge old files from the cache.
@@ -1218,7 +1218,7 @@ static unsigned long compress_file(const char *proto,const char *hostport,const 
  strcpy(zfile,file);
  strcat(zfile,".z");
 
- ofd=open(zfile,O_WRONLY|O_BINARY|O_CREAT|O_TRUNC,buf.st_mode&07777);
+ ofd=open(zfile,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY,buf.st_mode&07777);
 
  if(ofd==-1)
    {

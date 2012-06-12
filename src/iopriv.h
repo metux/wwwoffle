@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iopriv.h 1.16 2006/07/21 17:46:52 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/iopriv.h 1.17 2006/10/02 18:43:17 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9b.
   Functions for file input and output (private data structures).
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -112,8 +112,6 @@ typedef struct io_context
 
  unsigned r_timeout;            /*+ The timeout to use when reading. +*/
 
- io_buffer *r_line_data;        /*+ The spare data when reading lines (reading). +*/
-
 #if USE_ZLIB
  io_zlib   *r_zlib_context;     /*+ The zlib compression/decompression private data (reading). +*/
 
@@ -208,6 +206,7 @@ int io_finish_chunk_decode(io_chunk *context,/*@null@*/ io_buffer *out);
 /* In iopriv.c */
 
 io_buffer /*@special@*/ *create_io_buffer(size_t size) /*@allocates result@*/;
+void resize_io_buffer(io_buffer *buffer,size_t size);
 void destroy_io_buffer(/*@special@*/ io_buffer *buffer) /*@releases buffer@*/;
 
 ssize_t io_read_with_timeout(int fd,io_buffer *out,unsigned timeout);

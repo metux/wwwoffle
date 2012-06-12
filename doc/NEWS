@@ -1,3 +1,26 @@
+Version 2.9b of WWWOFFLE released : Fri Feb 16 09:30:00 2007
+------------------------------------------------------------
+
+Bug Fixes:
+ Fix some string allocations.  Don't delete the lasttime cached spool file if
+ page was fetched in this session.  Fix HTML parsing of '\' inside or outside
+ quoted strings.  Make sure that files are truncated when opened.  Display
+ non-empty value in monitor page hour-of-day setting for default value.  Some
+ documentation updates.
+
+New Features:
+ Expired SSL certificates are deleted and replaced.
+
+
+*NOTE* *This only applies if WWWOFFLE is compiled with SSL/https support*
+       WWWOFFLE creates SSL certificates with a 1 year expiry period.  When they
+       expire web browsers will start to give errors.  If the WWWOFFLE root
+       Certificate Authority certificate expires then all sites will give SSL
+       errors.  Deleting the existing WWWOFFLE CA certificate from the browser
+       and installing the new one will fix this problem (the WWWOFFLE CA
+       certificate can be loaded from https://localhost:8443/certificates/root).
+
+
 Version 2.9a of WWWOFFLE released : Sun Aug 13 10:00:00 2006
 ------------------------------------------------------------
 

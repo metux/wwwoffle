@@ -1,7 +1,7 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iopriv.c 1.7 2006/01/20 18:43:21 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/iopriv.c 1.8 2006/10/02 18:43:17 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9b.
   Private functions for file input and output.
   ******************/ /******************
   Written by Andrew M. Bishop
@@ -69,6 +69,24 @@ io_buffer *create_io_buffer(size_t size)
  new->size=size;
 
  return(new);
+}
+
+
+/*++++++++++++++++++++++++++++++++++++++
+  Resize an io_buffer structure.
+
+  io_buffer *resize_io_buffer The io_buffer to resize.
+
+  size_t size The new size to allocate.
+  ++++++++++++++++++++++++++++++++++++++*/
+
+void resize_io_buffer(io_buffer *buffer,size_t size)
+{
+ if(buffer->size>size)
+    return;
+
+ buffer->data=(char*)realloc((void*)buffer->data,size);
+ buffer->size=size;
 }
 
 

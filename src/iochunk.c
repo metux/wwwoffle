@@ -1,12 +1,12 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/iochunk.c 1.17 2005/11/10 19:50:30 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/iochunk.c 1.18 2006/10/02 18:43:17 amb Exp $
 
-  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
+  WWWOFFLE - World Wide Web Offline Explorer - Version 2.9b.
   Functions for file input and output with compression.
   ******************/ /******************
   Written by Andrew M. Bishop
 
-  This file Copyright 1996,97,98,99,2000,01,02,03,04,05 Andrew M. Bishop
+  This file Copyright 1996,97,98,99,2000,01,02,03,04,05,06 Andrew M. Bishop
   It may be distributed under the GNU Public License, version 2, or
   any higher version.  See section COPYING of the GNU Public license
   for conditions under which this file may be redistributed.
@@ -176,14 +176,14 @@ int io_chunk_decode(io_buffer *in,io_chunk *context,io_buffer *out)
       {
        int nb=parse_chunk_head(context,in->data+nused,in->length-nused);
 
-       if(nb<0)
+       if(nb<0) /* error */
           return(-1);
-       else if(nb==(in->length-nused))
+       else if(nb==(in->length-nused)) /* read all bytes, need more */
          {
           in->length=0;
           return(0);
          }
-       else
+       else /* bytes remaining, unchunk them */
           nused+=nb;
       }
 
@@ -193,14 +193,14 @@ int io_chunk_decode(io_buffer *in,io_chunk *context,io_buffer *out)
       {
        int nb=parse_chunk_trailer(context,in->data+nused,in->length-nused);
 
-       if(nb<0)
+       if(nb<0) /* error */
           return(-1);
-       else if(nb==(in->length-nused))
+       else if(nb==(in->length-nused)) /* read all bytes, need more */
          {
           in->length=0;
           return(0);
          }
-       else
+       else /* bytes remaining */
           nused+=nb;
       }
 
@@ -234,9 +234,13 @@ int io_chunk_decode(io_buffer *in,io_chunk *context,io_buffer *out)
       }
 
     /* else must be finished */
-
+    
     else
+      {
+       in->length-=nused;
+       memmove(in->data,in->data+nused,in->length);
        return(1);
+      }
    }
  while(nused<in->length && out->length<out->size);
 

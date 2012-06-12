@@ -1,4 +1,4 @@
-          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9a
+          WWWOFFLE - World Wide Web Offline Explorer - Version 2.9b
           =========================================================
 
 
@@ -136,36 +136,34 @@ Configuration
 Changes
 -------
 
-Since version 2.9:
+Since version 2.9a:
 
 Bug Fixes:
- Fix crash with serving CA certificate.  On the info page show info for the alias
- if there is one.  Forced refresh headers take precedence over other options
- again.  Makefile config file installation error messages clarified.  Fix
- formatting in wwwoffle.conf manual page.  Handle compressed, chunked body of
- zero length.  Remove 'Keep-Alive' header.  Remove trailing spaces when parsing
- headers (fixes header censoring).  More fixes for 64-bit compilation.  Fix some
- allocated string lengths.  Keep '()' characters in attribute values when
- modifying HTML.
+ Fix some string allocations.  Don't delete the lasttime cached spool file if
+ page was fetched in this session.  Fix HTML parsing of '\' inside or outside
+ quoted strings.  Make sure that files are truncated when opened.  Display
+ non-empty value in monitor page hour-of-day setting for default value.  Some
+ documentation updates.
 
 New Features:
- Added option 'disable-iframe' to ModifyHTML section to disable inline frames.
-
-Programs:
- The wwwoffle-ls program lists only single URL unless a directory name is used.
+ Expired SSL certificates are deleted and replaced.
 
 
-*NOTE* The change to the wwwoffle-ls program means that the hyperestraier
-       indexing script estwolefind may no longer work.  Edit estwolefind and
-       in the lines that contain 'wwwoffle-ls' replace '://' with '/'.
+*NOTE* *This only applies if WWWOFFLE is compiled with SSL/https support*
+       WWWOFFLE creates SSL certificates with a 1 year expiry period.  When they
+       expire web browsers will start to give errors.  If the WWWOFFLE root
+       Certificate Authority certificate expires then all sites will give SSL
+       errors.  Deleting the existing WWWOFFLE CA certificate from the browser
+       and installing the new one will fix this problem (the WWWOFFLE CA
+       certificate can be loaded from https://localhost:8443/certificates/root).
 
 
 Availability
 ------------
 
-Version 2.9a uploaded
+Version 2.9b uploaded
 
-HTTP server: http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.9a.tgz
+HTTP server: http://www.gedanken.demon.co.uk/download-wwwoffle/wwwoffle-2.9b.tgz
 
 Web page: http://www.gedanken.demon.co.uk/wwwoffle/
 
@@ -173,8 +171,8 @@ Web page: http://www.gedanken.demon.co.uk/wwwoffle/
 Author & Copyright
 ------------------
 
-This program is copyright Andrew M. Bishop 1996,97,98,99,2000,01,02,03,04,05,06
-(amb@gedanken.demon.co.uk) and distributed under GPL.
+This program is copyright Andrew M. Bishop 1996-2007 (amb@gedanken.demon.co.uk)
+and distributed under GPL.
 
 email: amb@gedanken.demon.co.uk
 [Please put wwwoffle in the subject line]

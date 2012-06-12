@@ -1,5 +1,5 @@
 /***************************************
-  $Header: /home/amb/wwwoffle/src/RCS/errors.c 2.50 2005/10/11 18:35:52 amb Exp $
+  $Header: /home/amb/wwwoffle/src/RCS/errors.c 2.51 2006/11/14 17:10:18 amb Exp $
 
   WWWOFFLE - World Wide Web Offline Explorer - Version 2.9.
   Generate error messages in a standard format optionally to syslog and stderr.
@@ -250,7 +250,7 @@ void OpenErrorLog(char *name)
 
  close(STDERR_FILENO);
 
- log=open(name,O_WRONLY|O_CREAT|O_BINARY,0600);
+ log=open(name,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY,0600);
 
  use_stderr=1;
 
