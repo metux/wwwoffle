@@ -75,7 +75,7 @@ ConfigItem MaxServers,          /*+ in total. +*/
 /*+ The item definitions in the StartUp section. +*/
 static ConfigItemDef startup_itemdefs[]={
  {"bind-ipv4"        ,&Bind_IPv4      ,0,0,Fixed,HostOrNone        ,"0.0.0.0"   },
- {"bind-ipv6"        ,&Bind_IPv6      ,0,0,Fixed,HostOrNone        ,"::"        },
+ {"bind-ipv6"        ,&Bind_IPv6      ,0,0,Fixed,HostOrNone        ,NULL        },  /* PS 2003-01-13 not "::" by default */
  {"http-port"        ,&HTTP_Port      ,0,0,Fixed,PortNumber        ,NULL        },  /* 2 see InitConfigurationFile() */
  {"https-port"       ,&HTTPS_Port     ,0,0,Fixed,PortNumber        ,NULL        },  /* 3 see InitConfigurationFile() */
  {"wwwoffle-port"    ,&WWWOFFLE_Port  ,0,0,Fixed,PortNumber        ,NULL        },  /* 4 see InitConfigurationFile() */

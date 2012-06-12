@@ -361,7 +361,8 @@ int main(int argc, char** argv)
     if(http_fd[0]==-1)
       {
 #if USE_IPV6
-       if(http_fd[1]!=-1 && ConfigString(Bind_IPv4) && !strcmp(ConfigString(Bind_IPv4),"0.0.0.0") &&
+       if(http_fd[1]!=-1 && /* PS 2003-01-13 redundant? If IPv6 is listening to 0 then it doesn't matter what address IPv4 is listening to... (at least on linux?) */
+                            /* ConfigString(Bind_IPv4) && !strcmp(ConfigString(Bind_IPv4),"0.0.0.0") && */
                             ConfigString(Bind_IPv6) && !strcmp(ConfigString(Bind_IPv6),"[0:0:0:0:0:0:0:0]"))
           PrintMessage(Warning,"Cannot create HTTP IPv4 server socket (but the IPv6 one might accept IPv4 connections).");
        else
@@ -450,8 +451,10 @@ int main(int argc, char** argv)
       {
 #if USE_IPV6
        if(wwwoffle_fd[1]!=-1 && ConfigString(Bind_IPv4) && !strcmp(ConfigString(Bind_IPv4),"0.0.0.0") &&
-                                ConfigString(Bind_IPv6) && !strcmp(ConfigString(Bind_IPv6),"[0:0:0:0:0:0:0:0]"))
+                                ConfigString(Bind_IPv6) && !strcmp(ConfigString(Bind_IPv6),"[0:0:0:0:0:0:0:0]")) {
           PrintMessage(Warning,"Cannot create WWWOFFLE IPv4 server socket (but the IPv6 one might accept IPv4 connections).");
+          PrintMessage(Warning,"Consider adding \"bind-ipv4 = none\" to wwwoffle.conf if using IPv6.");
+       }
        else
           PrintMessage(Fatal,"Cannot create WWWOFFLE IPv4 server socket.");
 #else

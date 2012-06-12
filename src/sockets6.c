@@ -171,7 +171,12 @@ int OpenServerSocket(char *host,int port)
 
  sprintf(portstr,"%d",port&0xffff);
 
- server=getaddrinfo_or_timeout(hoststr,portstr,AI_PASSIVE);
+ // debian bug #527235: ->
+ if(!strcmp(hoststr,"0.0.0.0") || !strcmp(hoststr,"::"))
+   server=getaddrinfo_or_timeout(NULL,portstr,AI_PASSIVE);
+ else
+   server=getaddrinfo_or_timeout(hoststr,portstr,AI_PASSIVE);
+ // <- #527235
 
  if(!server)
    {

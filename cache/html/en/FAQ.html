@@ -700,6 +700,8 @@ message by setting 'bind-ipv4 = none' in the configuration file.  Some operating
 systems consider that allowing IPv6 sockets to accept IPv4 connections is a
 security risk and require that separate sockets are opened.  These systems will
 not show the error message.
+Note: In the Debian version, the IPv6 socket is not used by default,
+you need a line "bind-ipv6 = ::" in the config file to enable this.
 </pre>
 <h3><a name="Q-3.11">Q 3.11  Why don't I see the progress of page downloads through WWWOFFLE?</a></h3>
 <pre>
