@@ -180,6 +180,7 @@ static int purge_max_size,      /*+ maximum cache size. +*/
 
 void PurgeCache(int fd)
 {
+ static int wrongblocksizemsgshown = 0;
  int i,p;
  struct STATFS sbuf;
  struct stat buf;
@@ -267,8 +268,11 @@ void PurgeCache(int fd)
 
     if(blocksize!=512 && blocksize!=1024 && blocksize!=2048)
       {
-       PrintMessage(Warning,"The blocksize (%d) looks wrong; using 1024 for block size.",blocksize);
-       write_formatted(fd,"  The blocksize (%ld) looks wrong; using 1024 for block size.\n",blocksize);
+       if(wrongblocksizemsgshown == 0) {
+         PrintMessage(Warning,"The blocksize (%d) looks wrong; using 1024 for block size.",blocksize);
+         write_formatted(fd,"  The blocksize (%ld) looks wrong; using 1024 for block size.\n",blocksize);
+         wrongblocksizemsgshown = 1;
+       }
        blocksize=1024;
       }
     else
