@@ -1,0 +1,67 @@
+<html><head><title>No match for '$(LOGICAL_WORDS)'</title></head>
+
+<body bgcolor="#ffffff" text="#000080" link="#dd0000" vlink="#0000ff">
+
+<table cols=4>
+  <tr>
+    <td align=left> <img src="/search/htdig/htdig.gif" align=top alt="[ht://Dig]">
+    <td align=left colspan=2> <table>
+			<tr>
+	  		<td> <font color="#000080"> <h1>WWWOFFLE Cache-Search</h1></font>
+		  </tr>
+		  <tr>
+		    <td> <font color="#dd0000"> <h1>Search results</h1></font>
+		  </tr>
+		</table>
+  	<td align=right> <img src="/search/debian-logo-50.png" alt="[Debian Logo]" align=top></tr>
+ </table>
+
+
+<hr noshade size=4>
+<h2>No matches were found for '$(LOGICAL_WORDS)'</h2>
+<p>
+Check the spelling of the search word(s) you used.
+If the spelling is correct and you only used one word,
+try using one or more similar search words with "<b>Any</b>."
+</p><p>
+If the spelling is correct and you used more than one
+word with "<b>Any</b>," try using one or more similar search
+words with "<b>Any</b>."</p><p>
+If the spelling is correct and you used more than one
+word with "<b>All</b>," try using one or more of the same words
+with "<b>Any</b>."</p>
+<hr noshade size=4>
+<form method="get" action="$(CGI)">
+<font size=-1>
+<input type=hidden name=config value=$(CONFIG)>
+<input type=hidden name=restrict value="$(RESTRICT)">
+<input type=hidden name=exclude value="$(EXCLUDE)">
+Match: $(METHOD)
+Format: $(FORMAT)
+Sort by: $(SORT)
+<br>
+Refine search:
+<input type="text" size="30" name="words" value="$(WORDS)">
+<input type="submit" value="Search">
+</select>
+</font>
+</form>
+<hr noshade size=4>
+
+<table cols=4>
+  <tr>
+   <td align=left>
+      <a href="http://www.htdig.org/"> 
+      <img src="/search/htdig/htdig.gif" alt="[ht://Dig]" border=0>
+      ht://Dig $(VERSION) </a>
+    <td align=center colspan=2>
+      <a href="http://www.gedanken.demon.co.uk/wwwoffle/index.html">
+      WWWOFFLE </a> <br> The WWW OFFLine Explorer.
+    <td align=right>  
+      <a href="http://www.debian.org/">
+      <img src="/search/debian-logo-50.png" alt="[Debian Logo]" border=0>
+      The Debian Project </a>
+  </tr>
+</table>
+
+</body></html>

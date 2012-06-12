@@ -1,0 +1,331 @@
+# Copyright (C) 2009 Paul Slootman <paul@debian.org>
+# This file is distributed under the same license as wwwoffle package.
+# Hideki Yamane (Debian-JP) <henrich@debian.or.jp>, 2009.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: wwwoffle 2.9d\n"
+"Report-Msgid-Bugs-To: wwwoffle@packages.debian.org\n"
+"POT-Creation-Date: 2008-02-08 06:44+0100\n"
+"PO-Revision-Date: 2009-11-16 16:26+0900\n"
+"Last-Translator: Hideki Yamane (Debian-JP) <henrich@debian.or.jp>\n"
+"Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:1001
+msgid "The location of some files and directories has been changed"
+msgstr "ファイルとディレクトリの位置が若干変わりました"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:1001
+msgid ""
+"The config files moved to /etc/wwwoffle/ and the cache dir moved to /var/"
+"cache/wwwoffle. Further the format of the cache has changed between version "
+"1.x and version 2.x and there are some new configuration options. Your "
+"directories and the config files will be adjusted automatically now."
+msgstr ""
+"設定ファイルは /etc/wwwoffle/ へ、そしてキャッシュディレクトリは /var/cache/"
+"wwwoffle へ移動しました。バージョン 1.x と 2.x の間でキャッシュ形式が変わった"
+"のに加え、新しい設定オプションがあります。ディレクトリと設定ファイルは、すぐ"
+"自動的に調整されます。"
+
+#. Type: password
+#. Description
+#: ../wwwoffle.templates:2001
+msgid "Configuration now requires a password:"
+msgstr "設定にはパスワードが必要になりました:"
+
+#. Type: password
+#. Description
+#: ../wwwoffle.templates:2001
+msgid ""
+"To prevent any random user on the system from changing the state of the "
+"wwwoffle daemon (e.g. put it offline), a password will be added to the /etc/"
+"wwwoffle/wwwoffle.conf file. If non-root users have to be able to control "
+"the daemon, they must be in the \"proxy\" group (see \"man group\") and they "
+"must pass the parameters \"-c /etc/wwwoffle/wwwoffle.conf\" in addition to "
+"other options."
+msgstr ""
+"システム上の気まぐれなユーザによる wwwoffle デーモンの状態変更 (例えばオフラ"
+"インにする) などを防ぐため、/etc/wwwoffle/wwwoffle.conf ファイルにパスワード"
+"が追加されました。root 以外のユーザがデーモンを管理できるようにする必要がある"
+"場合、このユーザは「proxy」グループに所属し (「man group」を参照)、他のオプ"
+"ションに加えて「-c /etc/wwwoffle/wwwoffle.conf」を指定する必要があります。"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "en (English)"
+msgstr "en (英語)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "de (German)"
+msgstr "de (ドイツ語)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "es (Spanish)"
+msgstr "es (スペイン語)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "fr (French)"
+msgstr "fr (フランス語)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "it (Italian)"
+msgstr "it (イタリア語)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "nl (Dutch)"
+msgstr "nl (オランダ語)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "pl (Polish)"
+msgstr "pl (ポーランド語)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "ru (Russian)"
+msgstr "ru (ロシア語)"
+
+#. Type: select
+#. DefaultChoice
+#: ../wwwoffle.templates:3002
+msgid ""
+"en (English)[ default : do not put what's inside brackets into translations. "
+"Put your own language here but UNTRANSLATED]"
+msgstr "en (English)"
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid "your default language:"
+msgstr "デフォルトの言語:"
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid ""
+"wwwoffle offers you translations of most of the internal HTML pages. Those "
+"pages which are not yet translated will automatically be replaced with the "
+"English ones."
+msgstr ""
+"wwwoffle は、ほとんどの内部 HTML ページに対して翻訳を提供しています。翻訳され"
+"ていないページは自動的に英語のものに置き換えられます。"
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid ""
+"Note that the languages configuration in your browser will override this "
+"default."
+msgstr ""
+"ブラウザの言語設定が、このデフォルト設定を上書きするのにご注意ください。"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:4001
+msgid "ATTENTION: There was an error while converting the config"
+msgstr "警告: 設定の変換中にエラーが起こりました"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:4001
+msgid ""
+"Your config file has been preserved as /etc/wwwoffle/wwwoffle.conf.old . "
+"Please correct manually. Take a look at /var/log/wwwoffle-upgrade.log for "
+"reasons. Please delete this logfile manually."
+msgstr ""
+"設定ファイルが /etc/wwwoffle/wwwoffle.conf.old に保存されています。手動で修正"
+"してください。理由については /var/log/wwwoffle-upgrade.log を参照してくださ"
+"い。このログファイルは手動で消してください。"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid "the port number wwwoffle runs on:"
+msgstr "wwwoffle が動作するポート番号:"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid ""
+"The default port number for HTTP proxy caches is 8080. To use wwwoffle as "
+"proxy for your favourite web browser you have to use \"localhost:8080\" (or "
+"whatever port number you've chosen)."
+msgstr ""
+"HTTP プロキシキャッシュのデフォルトのポート番号は 8080 です。あなたが望むウェ"
+"ブブラウザで wwwoffle をプロキシとして使いたい場合は、「localhost:8080」(ある"
+"いはあなたが指定したポート番号) を使う必要があります。"
+
+# NOTE: http://browser.netscape.com/releases, but didn't usable...
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid ""
+"P.S.: Netscape users can simply write http://localhost:8080/wwwoffle.pac in\n"
+"      Edit->Preferences->Advanced->Proxies->Automatic_proxy_configuration"
+msgstr ""
+"P.S.: Netscape ユーザは 編集->設定->詳細設定->プロキシ->自動プロキシ設定 \n"
+"     にて http://localhost:8080/wwwoffle.pac と簡単に記述できます。"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid "Use which parent proxy (current is ${PARENT_PROXY}):"
+msgstr "どの上位プロキシを利用するか (現在は ${PARENT_PROXY} です):"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid ""
+"Using a parent proxy normally results in a remarkable speed gain. If you "
+"don't want to use one enter \"none\" in this field; else enter the proxy in "
+"the form \"proxy.example.com:8080\"."
+msgstr ""
+"上位プロキシを使うと、通常は大幅なスピードの上昇となります。使いたくない場合"
+"は、この欄に「none」と入力ください。そうでなければ、プロキシを「proxy."
+"example.com:8080」という形式で入力してください。"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid ""
+"Use \"manual\" if you don't want the proxy lines in the config file touched "
+"by the automatic configuration."
+msgstr ""
+"自動設定で記述された proxy 行を使いたくない場合は、「manual」を使ってくださ"
+"い。"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:7001
+msgid "Does wwwoffle rely on a dialup (PPP) interface for its connection?"
+msgstr ""
+"wwwoffle の動作はダイヤルアップ (PPP) インターフェイスの接続に依存しますか?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:7001
+msgid ""
+"Most people will need to accept here. Refuse, only if you have a parent "
+"proxy that is reachable without a PPP (analog or ISDN) interface."
+msgstr ""
+"ほとんどの人は、ここで「はい」と答える必要があります。PPP (アナログあるいは "
+"ISDN) インターフェイス無しで接続可能な上位プロキシがある場合のみ、「いいえ」"
+"と答えてください。"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:8001
+msgid "Should wwwoffle fetch pages when the PPP interface comes up?"
+msgstr ""
+"PPP インターフェイスが有効になった時に wwwoffle にページを取得させますか?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:8001
+msgid ""
+"Most people will accept here. However, if you regularly bring up the "
+"connection just to check for mail and you only want to fetch web pages once "
+"a day or so (manually), you should refuse."
+msgstr ""
+"ほとんどの人は、ここで「はい」と答える必要があります。しかし、定期的な接続が"
+"メールチェックのためだけにウェブページの取得を (手動で) 一日一回したいだけな"
+"ら、「いいえ」と答えなければなりません。"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid "Should htdig be used to index the cached pages?"
+msgstr "キャッシュしたページのインデックス作成に htdig を使いますか?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid ""
+"With this, it is possible to direct htdig to index the cached pages so that "
+"those pages can be searched with htdig."
+msgstr ""
+"これにより、直接 htdig がキャッシュしたページのインデックスを作成できるように"
+"なります。そして、htdig でこのようなページを検索できます。"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid "Note: this _can_ take a lot of time to do!"
+msgstr "注意: これには大量の時間がかかる**かもしれません** !"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:10001
+msgid "wwwoffle.conf is now only readable by root and group proxy"
+msgstr ""
+"現在 wwwoffle.conf は、root ユーザと proxy グループのユーザのみが読みとれま"
+"す。"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:10001
+msgid ""
+"To prevent just anyone from changing the state of the daemon, the file "
+"wwwoffle.conf has been made unreadable by others not root and not in the "
+"group \"proxy\". To add users to that group, use \"adduser nameofuser proxy"
+"\"."
+msgstr ""
+"誰かがデーモンの状態を変更しないように、wwwoffle.conf ファイルは root 以外、"
+"あるいは「proxy」グループに所属しないユーザが読み取れないようにされています。"
+"ユーザをグループに追加するには「adduser nameofuser proxy」としてください。"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid "Fetch interval for monitored pages while online:"
+msgstr "オンライン中、モニタリングしているページを取得する時間の間隔:"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid ""
+"Monitored pages can be fetched when the PPP link goes up. However, when "
+"online, there is no standard mechanism to regularly fetch monitored pages. "
+"The Debian package has a cronjob that does this."
+msgstr ""
+"モニタリングしているページは、PPP 接続が行われた際に取得できます。しかし、オ"
+"ンラインになった際、定期的にモニタリングしているページを取得する標準的な手法"
+"はありません。Debian パッケージはこのために cronjob を使います。"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid ""
+"As monitored pages are usually not scheduled that often, the recommended "
+"value of 30 minutes should be adequate. Note that this is also the maximum "
+"allowed."
+msgstr ""
+"モニタリングしているページは大抵頻繁には変更をされておらず、推奨値の 30 分で"
+"充分です。これは最大許容値でもあることに注意ください。"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid "Enter \"off\" to disable the fetching while online."
+msgstr "オンライン中にページ取得を無効にするには「off」と入力してください。"

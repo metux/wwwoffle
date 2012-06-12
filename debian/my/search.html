@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>ht://Dig WWWOFFLE Search</title>
+</head>
+
+
+<!-- This html page comes from the wwwoffle source and was modified for
+     the Debian GNU/Linux's wwwoffle package by Christian Hammers and
+     Paul Slootman. -->
+
+<body bgcolor="#eef7ff">
+<table cols=4>
+   <tr>
+     <td align=left> <img src="/search/htdig/htdig.gif" align=top alt="[ht://Dig]">
+     <td align=left colspan=2>
+              <font color="#000080"> <h1>WWWOFFLE Cache-Search</h1></font>
+    <td align=right> <img src="/search/debian-logo-50.png" alt="[Debian Logo]" al
+  </tr>
+</table>
+
+
+<hr noshade size=4>
+This search form allows you to search the contents of
+all the cached documents on this WWWOFFLE server.
+<br>
+<p>
+<form method="get" action="/search/htdig/htsearch">
+<font size=-1>
+Match: <select name=method>
+<option value=and>All
+<option value=or>Any
+</select>
+Format: <select name=format>
+<option value=builtin-long>Long
+<option value=builtin-short>Short
+</select>
+</font>
+<input type=hidden name=config value=htdig>
+<input type=hidden name=restrict value="">
+<input type=hidden name=exclude value="">
+<br>
+Search:
+<input type="text" size="30" name="words" value="">
+<input type="submit" value="Search">
+</form>
+<hr noshade size=4>
+
+
+
+<table cols=4>
+	<tr>
+		<td align=left>
+			<a href="http://www.htdig.org/">
+			<img src="/search/htdig/htdig.gif" alt="[ht://Dig]" border=0>
+			ht://Dig </a>
+		<td align=center colspan=2>
+			<a href="http://www.gedanken.demon.co.uk/wwwoffle/index.html">
+			WWWOFFLE </a> <br> The WWW OFFLine Explorer.
+		<td align=right>
+			<a href="http://www.debian.org/">
+			<img src="/search/debian-logo-50.png" alt="[Debian Logo]" border=0>
+			The Debian Project </a>
+	</tr>
+</table>
+
+
+</body></html>

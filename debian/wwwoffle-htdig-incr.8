@@ -1,0 +1,27 @@
+.TH WWWOFFLE 8
+
+.SH NAME
+wwwoffle\-htdig-incr \- generates an incremental web-cache index for htdig
+
+.SH SYNOPSIS
+wwwoffle-htdig-incr
+
+.SH "DESCRIPTION"
+Run this one to generate an incremental index over all your cached web pages. The
+index can then be searched over the cache-search page accessable via the
+wwwoffle web manager: http://localhost:8080/#search
+Take a look at the /usr/share/doc/wwwoffle directory for more information.
+
+.SH FILES
+.br
+.nf
+.\" set tabstop to longest possible filename, plus a wee bit
+.ta \w'/usr/lib/perl/getopts.pl   'u
+\fI/var/cache/wwwoffle\fR  default wwwoffle spool directory
+\fI/var/cache/wwwoffle/htdig/db\fR default cache directory of htdig
+\fI/etc/wwwoffle\fR the configuration files
+
+.SH AUTHOR
+Manpage written by Christian Hammers \fB<ch@debian.org>\fP
+.br
+Now maintained by Paul Slootman \fB<paul@debian.org>\fP

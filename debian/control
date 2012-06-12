@@ -1,0 +1,31 @@
+Source: wwwoffle
+Section: web
+Priority: optional
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Paul Slootman <paul@debian.org>
+Build-depends: debhelper(>=7), po-debconf, flex(>=2.5.34-2.1)|flex-old, zlib1g-dev, libgnutls-dev(>=2.0.0), libgcrypt11-dev(>=1.2.2)
+Standards-Version: 3.8.3
+
+Package: wwwoffle
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, debconf | debconf-2.0, coreutils(>=5.0), debianutils(>=1.13.1), net-tools
+Suggests: htdig(>=3.1.0b4) | namazu | mnogosearch-pgsql | mnogosearch-mysql, logrotate, pdnsd, cron
+Homepage: http://www.gedanken.demon.co.uk/wwwoffle/
+Description: World Wide Web OFFline Explorer
+ The wwwoffled program is a simple proxy server with special features
+ for use with dial-up internet links.  This means that it is possible
+ to browse web pages and read them without having to remain connected.
+ .
+ While Online
+    - Caching of pages that are viewed for review later.
+    - Conditional fetching to only get pages that have changed.
+    - Modification of pages e.g. to remove the BLINK tag or popup windows.
+ .
+ While Offline
+    - The ability to follow links and mark other pages for download.
+    - Browser or command line interface to select pages for downloading.
+    - Optional info on bottom of pages showing cached date and allowing refresh.
+    - Works with password protected pages and pages containing forms.
+    - Cached pages can be searched with the ht://dig search engine, or with
+      namazu or mnogosearch which are similar search engines; however,
+      support for other than ht://dig is limited.

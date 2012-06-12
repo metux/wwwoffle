@@ -1,0 +1,19 @@
+#!/bin/sh -e
+
+if [ \( "$1" = "upgrade" -o "$1" = "remove" \) -a -L /usr/doc/wwwoffle ]; then
+    rm -f /usr/doc/wwwoffle
+fi
+
+set +e # ignore errors while stopping
+#DEBHELPER#
+set -e
+
+if [ "$1" = remove -o "$1" = purge ]; then
+    if [ -d /var/cache/wwwoffle/. ]; then
+        cd /var/cache/wwwoffle
+        rm -rf last* prev* 2>/dev/null || true
+        rm -f /usr/share/wwwoffle/html/default
+    fi
+fi
+
+exit 0

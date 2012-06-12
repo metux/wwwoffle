@@ -1,0 +1,39 @@
+This package was first debianized by:
+
+	Federico Di Gregorio <fog@debian.org> on
+	Thu, 25 1997 18:36:00
+
+	It was then taken over by Christian Hammers <ch@debian.org>.
+
+        The current maintainer is Paul Slootman <paul@debian.org>,
+        since 11 Aug 2000.
+
+The original, pristine sources was obtained on 2006-04-04 from:
+
+	http://www.gedanken.freeserve.co.uk/download-wwwoffle/wwwoffle-2.9.tgz
+
+Copyright:
+
+    The two programs wwwoffle and wwwoffled were written by Andrew M. Bishop in
+    1996-2006 and are copyright Andrew M. Bishop 1996-2006.
+
+    The program convert-cache was written by Andrew M. Bishop in 1998-2003 and
+    is copyright Andrew M. Bishop 1998-2003.
+
+    The programs known as wwwoffle-tools were written by Andrew M. Bishop in
+    1997-2003 and are copyright Andrew M. Bishop 1997-2003.
+
+    The Perl script update-config.pl was written by Andrew M. Bishop in 1998-2003
+    and is copyright Andrew M. Bishop 2000-2003
+
+    The Perl script audit-usage.pl was written by Andrew M. Bishop in 1998-2003
+    and is copyright Andrew M. Bishop 1998-2003.
+
+    They can be freely distributed according to the terms of the GNU General Public
+    License.  For more information, see the file `/usr/share/common-licenses/GPL'
+    on Debian GNU/Linux systems.
+
+    If you wish to submit bug reports or other comments about the programs then
+    email the author amb@gedanken.demon.co.uk and put WWWOFFLE in the subject line.
+    Of course, if using the Debian package, the bug report should go to Debian;
+    see http://bugs.debian.org/

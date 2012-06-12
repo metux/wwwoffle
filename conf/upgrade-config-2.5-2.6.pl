@@ -22,6 +22,7 @@ $#ARGV==0 || die "Usage: $0 wwwoffle.conf\n";
 
 $conf=$ARGV[0];
 
+$myname = "wwwoffle-upgrade-config-2.5-2.6";
 $version="2.6d";
 
 # The new options that have been added (since version 2.5).
@@ -125,8 +126,8 @@ $url="[^ \t\r\n:<!]*:?/?/?[^ \t\r\n/=]*/?[^ \t\r\n=>]*";
 %changed_DontGet=(
                   "^#? *!($urlspec) *= *($url)", " !\$1\n",
                   "^#? *($urlspec) *= *($url)" , " \$1\n <\$1> replacement = \$2\n",
-                  "^#? *<($urlspec)> *replacement *= */local/images/trans-1x1.gif" , " <\$1> replacement = /local/dontget/replacement.gif\n",
-                  "^#? *replacement *= */local/images/trans-1x1.gif"               , " replacement = /local/dontget/replacement.gif\n"
+                  "^#? *<($urlspec)> *replacement *= */local/images/trans-1x1.gif" , " <\$1> replacement = /local/dontget/replacement.png\n",
+                  "^#? *replacement *= */local/images/trans-1x1.gif"               , " replacement = /local/dontget/replacement.png\n"
                   );
 
 #%changed_FTPOptions=(
@@ -338,6 +339,7 @@ if(open(CURR,"<$conf"))
                  {
                   $lineno++;
                   last if(/^[ \t]*\}/);
+		  s,User-Agent\s*=\s*WWWOFFLE/2.[0-5].*,User-Agent = WWWOFFLE/2.6,;
 
                   push(@{$options{$section}},$_);
                  }
@@ -469,7 +471,7 @@ foreach $section (keys(%new_options))
              if($first==1)
                  {
                   push(@{$options{$section}},"\n");
-                  push(@{$options{$section}},"# Added for WWWOFFLE version $version by upgrade-config.pl\n");
+                  push(@{$options{$section}},"# Added for WWWOFFLE version $version by $myname\n");
                   push(@{$options{$section}},"\n");
                   $first=0;
                  }
@@ -503,6 +505,7 @@ sub sortbyurllength
 foreach $section ("Proxy","Purge")
   {
    @sort_options=();
+   $age_line = '';
 
    foreach $line (@{$options{$section}})
        {
@@ -513,12 +516,17 @@ foreach $section ("Proxy","Purge")
              $line="";
              print "$section\t- Resorted the option '$old_line'\n";
             }
+        elsif ($line =~ m/^[^#]*\s+age\s*=/)
+            {
+             $age_line = $line;
+             $line='';
+            }
        }
 
    if($#sort_options>=0)
        {
         push(@{$options{$section}},"\n");
-        push(@{$options{$section}},"# Options re-sorted for WWWOFFLE version $version by upgrade-config.pl\n");
+        push(@{$options{$section}},"# Options re-sorted for WWWOFFLE version $version by $myname\n");
         push(@{$options{$section}},"# Now the \"first match\" is used, previously it was \"longest match\".\n");
         push(@{$options{$section}},"\n");
 
@@ -526,6 +534,10 @@ foreach $section ("Proxy","Purge")
             {
              push(@{$options{$section}},$line);
             }
+       }
+   if ($age_line)
+       {
+        push(@{$options{$section}},$age_line);
        }
   }
 
@@ -605,7 +617,7 @@ foreach $section (keys(%moved_options))
                   if(!defined $first{$new_section})
                       {
                        push(@{$options{$new_section}},"\n");
-                       push(@{$options{$new_section}},"# Options moved from $section section for WWWOFFLE version $version by upgrade-config.pl\n");
+                       push(@{$options{$new_section}},"# Options moved from $section section for WWWOFFLE version $version by $myname\n");
                        push(@{$options{$new_section}},"\n");
                        $first{$new_section}=0;
                       }
@@ -635,7 +647,7 @@ foreach $section (keys(%deleted_options))
                   if(!defined $first{$section})
                       {
                        push(@{$options{$section}},"\n");
-                       push(@{$options{$section}},"# Options deleted for WWWOFFLE version $version by upgrade-config.pl\n");
+                       push(@{$options{$section}},"# Options deleted for WWWOFFLE version $version by $myname\n");
                        push(@{$options{$section}},"\n");
                        $first{$new_section}=0;
                       }

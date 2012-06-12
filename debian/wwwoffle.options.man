@@ -1,0 +1,80 @@
+.\" This manpage is written by Paul Slootman <paul@debian.org>.
+.\" It is public domain.
+.TH wwwoffle.options 5 "8 Oct 2003" "Debian GNU/Linux"
+.SH NAME
+wwwoffle.options \- configuration options for wwwoffle
+.SH DESCRIPTION
+.I /etc/wwwoffle/wwwoffle.options
+contains a set of flags that determine some of the behavior of the
+.I wwwoffle
+daemon, which is run every time an internet connection comes up.
+It is preferable to configure these settings using
+.I debconf
+via
+.B dpkg-reconfigure wwwoffle
+.PP
+Available options are:
+.IP ppp
+This will enable
+.I wwwoffle
+to go online and offline (or autodial in case of a dial-on-demand connection)
+automatically when the connection goes up and down.
+Comment this option out if you don't use
+.I wwwoffle
+over a dialup connection or you don't want the scripts to manipulate the
+mode; this forces the online mode always (in which case the
+.I fetch
+option has no effect, see the
+.I fetch
+option below).
+.IP fetch
+This will cause the
+.I wwwoffle
+daemon to get all the pages that were marked for
+download immediately when the internet connection comes up. Some people do not
+like this behaviour since they often go online just for a quick check
+for new mail and want to fetch big web pages manually once a day.
+
+.IP htdig
+This will cause
+.I htdig
+to maintain a searchable index of the pages cached by
+.I wwwoffle.
+This used to be the default, but if a system has
+.I htdig
+installed for its own web pages, it would automatically also be used
+for
+.I wwwoffle,
+which might not have been the intention.
+
+.IP nocheckconf
+(Not settable via debconf)
+.br
+This prevents the startup script
+.I /etc/init.d/wwwoffle
+from checking wwwoffle.conf for URL
+specifications that end in '/'.  If such an URL is detected, a verbose
+warning is given that such a specification will only match the '/' URL
+on the host, and not the entire host as you might expect (add '*' to
+the end for that).  However, perhaps you really want such a
+specification; in that case, add a line with
+.B nocheckconf
+to
+.I /etc/wwwoffle/wwwoffle.options
+to prevent the warning.
+
+.IP no-purge
+(Not settable via debconf)
+.br
+This prevents the daily cron job
+.I /etc/cron.daily/wwwoffle
+from purging old content from the cache. Note that this means there's
+no automatic cleanup, and hence the system will fill up over time!
+
+.SH SEE ALSO
+.BR wwwoffle (1),
+.BR wwwoffle.conf (5),
+.BR wwwoffled (8),
+.BR htdig (8)
+.SH AUTHOR
+This manpage was written by Paul Slootman for Debian GNU/Linux.

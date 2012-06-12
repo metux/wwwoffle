@@ -1,0 +1,7 @@
+?package(wwwoffle): command="/usr/share/doc/wwwoffle/index.html" \
+                section="Apps/Net" title="WWWOFFLE" needs="dwww" \
+		longtitle="WWWOFFLE - World Wide Web OFFline Explorer" \
+		description="\
+The WWWOFFLE program is a simple proxy server with special features \
+for use with dial-up internet links.  This means that it is possible \
+to browse web pages and read them without having to remain connected." 

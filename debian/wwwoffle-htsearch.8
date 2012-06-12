@@ -1,0 +1,26 @@
+.TH WWWOFFLE 8
+
+.SH NAME
+wwwoffle\-htsearch \- the wwwoffle CGI program that calls htsearch
+
+.SH SYNOPSIS
+call it via http://localhost:8080/#search
+
+.SH "DESCRIPTION"
+This CGI program is a shell script that calls the htsearch program for the
+wwwoffle cache search.
+Take a look at the /usr/share/doc/wwwoffle directory for more information.
+
+.SH FILES
+.br
+.nf
+.\" set tabstop to longest possible filename, plus a wee bit
+.ta \w'/usr/lib/perl/getopts.pl   'u
+\fI/var/cache/wwwoffle\fR  default wwwoffle spool directory
+\fI/var/cache/wwwoffle/htdig/db\fR default htdig cache directory
+\fI/etc/wwwoffle\fR config file directory
+
+.SH AUTHOR
+Manpage written by Christian Hammers \fB<ch@debian.org>\fP
+.br
+Now maintained by Paul Slootman \fB<paul@debian.org>\fP

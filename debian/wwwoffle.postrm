@@ -1,0 +1,54 @@
+#!/bin/sh -e
+
+if [ "$1" = purge ] && [ -e /usr/share/debconf/confmodule ]; then
+    . /usr/share/debconf/confmodule # so that it doesn't get pulled in only at the end
+fi
+
+$DEBIAN_SCRIPT_DEBUG || set -v -x
+
+CONFIG=/etc/wwwoffle/wwwoffle.conf
+
+if [ "$1" = "remove" -o "$1" = "purge" ]; then
+	rm -rf /usr/share/wwwoffle/html/
+	if [ -d /usr/share/wwwoffle ]; then
+	    if [ "`find /usr/share/wwwoffle`" = "/usr/share/wwwoffle" ]; then
+		rmdir /usr/share/wwwoffle;
+	    fi
+	fi
+        if [ -d /etc/wwwoffle/html/. ]; then
+            find /etc/wwwoffle/html -type l -print0 | xargs -0 rm -f
+        fi
+fi
+
+if [ "$1" = "purge" ] ; then
+	rm -f /etc/wwwoffle/wwwoffle.conf.??? /etc/wwwoffle/wwwoffle.options*
+        SPOOLDIR=$(perl -ne 'if(/^\s*spool-dir\s*=\s*(\S+)/) {print $1;exit}' $CONFIG 2>/dev/null)
+        if [ -z "$SPOOLDIR" ]; then
+            SPOOLDIR=/var/cache/wwwoffle
+        fi
+        cd /; nohup rm -rf /var/cache/wwwoffle/ >/dev/null 2>&1 &
+        if [ "$SPOOLDIR" != /var/cache/wwwoffle ]; then
+            echo "Not removing non-standard wwwoffle spool '$SPOOLDIR'"
+        fi
+        rmdir /etc/wwwoffle/htdig /etc/wwwoffle/mnogosearch /etc/wwwoffle/namazu 2>/dev/null || true
+        rm -rf /var/lib/wwwoffle/monitor     || true
+        rm -f  /var/log/wwwoffle-upgrade.log || true
+        if [ -d /etc/wwwoffle ]; then
+            set +e
+            find /etc/wwwoffle -name 'debian-replacement*' -type l | xargs rm -f /etc/wwwoffle/wwwoffle.conf.bak
+            set -e
+            if [ "`find /etc/wwwoffle`" = "/etc/wwwoffle" ]; then
+		rmdir /etc/wwwoffle
+            else
+                rm -rf /etc/wwwoffle
+                echo "/etc/wwwoffle directory removed, including contents"
+            fi
+        fi
+        rm -f /etc/cron.d/wwwoffle /etc/cron.d/wwwoffle.bak
+fi
+
+set +e  # ignore errors from here on
+
+#DEBHELPER#
+
+exit 0

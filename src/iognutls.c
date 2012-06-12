@@ -146,7 +146,7 @@ io_gnutls *io_init_gnutls(int fd,const char *host,int type)
 
  context->fd=fd;
 
- gnutls_transport_set_ptr(context->session,(gnutls_transport_ptr_t)fd);
+ gnutls_transport_set_ptr(context->session,(gnutls_transport_ptr_t)(unsigned long)fd);
 
  /* Handshake the session on the socket */
 

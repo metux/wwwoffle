@@ -66,6 +66,7 @@ and the proxy hostname and port set correctly.
 
 Also they should be checked to ensure that the Namazu programs are on the path
 (you can edit the PATH variable here if they are not in /usr/local/bin).
+(This should be OK in Debian.)
 
 
 Indexing

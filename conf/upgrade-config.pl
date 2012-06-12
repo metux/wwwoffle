@@ -22,6 +22,7 @@ $#ARGV==0 || die "Usage: $0 wwwoffle.conf\n";
 
 $conf=$ARGV[0];
 
+$myname = "wwwoffle-upgrade-config";
 $version="2.9g";
 
 $urlspec="[^ \t:<!]+://[^ \t/=]+/?[^ \t=>]*";
@@ -34,8 +35,8 @@ $urlspec1="([^ \t:<!]+)://([^ \t/=]+)(/?[^ \t=>]*)";
               );
 
 %new_SSLOptions=(
-                 "quick-key-gen *="   , "quick-key-gen = no",
-                 "expiration-time *=" , "expiration-time = 1y",
+                 "quick-key-gen *="   , "quick-key-gen = yes",
+                 "expiration-time *=" , "expiration-time = 10y",
                  "enable-caching *="  , "enable-caching = no",
                  "allow-tunnel *="    , "#allow-tunnel = *:443"
                  );
@@ -332,7 +333,7 @@ foreach $section (keys(%new_options))
              if($first==1)
                  {
                   push(@{$options{$section}},"\n");
-                  push(@{$options{$section}},"# Added for WWWOFFLE version $version by upgrade-config.pl\n");
+                  push(@{$options{$section}},"# Added for WWWOFFLE version $version by $myname\n");
                   push(@{$options{$section}},"\n");
                   $first=0;
                  }
@@ -363,7 +364,7 @@ foreach $section (keys(%moved_options))
                   if(!defined $first{$new_section})
                       {
                        push(@{$options{$new_section}},"\n");
-                       push(@{$options{$new_section}},"# Options moved from $section section for WWWOFFLE version $version by upgrade-config.pl\n");
+                       push(@{$options{$new_section}},"# Options moved from $section section for WWWOFFLE version $version by $myname\n");
                        push(@{$options{$new_section}},"\n");
                        $first{$new_section}=0;
                       }
@@ -421,7 +422,7 @@ foreach $section (keys(%deleted_options))
                   if(!defined $first{$section})
                       {
                        push(@{$options{$section}},"\n");
-                       push(@{$options{$section}},"# Options deleted for WWWOFFLE version $version by upgrade-config.pl\n");
+                       push(@{$options{$section}},"# Options deleted for WWWOFFLE version $version by $myname\n");
                        push(@{$options{$section}},"\n");
                        $first{$new_section}=0;
                       }

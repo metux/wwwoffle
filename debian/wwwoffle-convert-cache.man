@@ -1,0 +1,57 @@
+.TH wwwoffle-convert-cache 8 "November 2000" WWWOFFLE
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+
+.SH NAME
+wwwoffle-convert-cache \- convert the cache to the latest version
+
+.SH SYNOPSIS
+wwwoffle-convert-cache
+.I <spool-dir>
+|
+.I -c configuration file
+
+.SH "DESCRIPTION"
+
+.B This program is run automatically during installation.
+Hence, you don't really need to know what it does... For your interest,
+read on. The log of the run is in /var/log/wwwoffle-upgrade.log .
+
+The format of the cache that WWWOFFLE uses to store the web pages has changed
+very slightly in version 2.6 compared to the previous versions.  This is the
+result of a total clean-up of the URL parsing and decoding/encoding functions.
+
+The wwwoffled program uses the URL to calculate the filename that should be used
+to store the file in the cache.  It is possible for different string
+representations of the same URL to exist.  This will mean that two different
+filenames can be calculated for the same web-page.
+
+For example the following two URLs refer to the same object:
+
+.nf
+http://www.localhost/~user
+http://www.localhost/%7Euser
+.fi
+
+The '~' character can be represented by '%7E' in a URL and it means exactly the
+same thing.
+
+The wwwoffled program tried in previous versions to map all equivalent URLs to
+the same result.  There were some cases where this was not applied and it was
+possible for the same object to be stored in the cache under two different
+names.  The new version of the program takes a lot more care to ensure that all
+possible versions of the same URL map to the same file.
+
+If you do not run the conversion program as detailed below WWWOFFLE will still
+work.  The only problem is that some cached files will become inaccessible.  I
+estimate that about 1% of files or fewer will change.
+
+Take a look at the /usr/share/doc/wwwoffle directory for more information.
+
+.SH FILES
+\fI/var/cache/wwwoffle\fR  default location of the cache.
+
+.SH AUTHOR
+manpage by Paul Slootman \fB<paul@debian.org>\fP, based on the CONVERT
+text file included in the wwwoffle distribution and available in a debian
+installation as /usr/share/doc/wwwoffle/CONVERT .

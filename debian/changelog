@@ -1,0 +1,1008 @@
+wwwoffle (2.9.9-1) precise; urgency=low
+
+  * upstream release from new maintainer
+
+ -- Enrico Weigelt, metux IT service <weigelt@metux.de>  Tue, 12 Jun 2012 17:05:00 +0100
+
+wwwoffle (2.9f-2.2ubuntu1) natty; urgency=low
+
+  * Explicitly linked -lgcrypt for binutils-gold, fixes the 
+    FTBFS (LP: #662986)
+
+ -- Roy Jamison <xteejx@googlemail.com>  Tue, 19 Oct 2010 10:39:32 +0100
+
+wwwoffle (2.9f-2.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fix pending l10n issues. Debconf translations:
+    - Vietnamese (Clytie Siddall).  Closes: #569655
+    - Danish (Joe Hansen).  Closes: #590086
+
+ -- Christian Perrier <bubulle@debian.org>  Sat, 31 Jul 2010 14:56:24 -0400
+
+wwwoffle (2.9f-2.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Add dependency on net-tools, as init.d script uses netstat.
+    (Closes: #574083)
+
+ -- Stefano Zacchiroli <zack@debian.org>  Tue, 23 Mar 2010 14:15:32 +0100
+
+wwwoffle (2.9f-2) unstable; urgency=low
+
+  * Added CONFIG filename definition to ip-down.d and postrm scripts.
+    The missing filename caused the script to grep stdin instead of the config.
+    Ouch.
+    closes:#568373
+  * Check for existence of /etc/wwwoffle/html before trying to remove it in
+    postrm.
+  * Include /usr/share/debconf/confmodule at the beginning of postrm.
+  * Set priority of "using ppp" question to high, so that it's always asked.
+    Otherwise the default is "yes", and wwwoffle doesn't go online after
+    installation.
+
+ -- Paul Slootman <paul@debian.org>  Fri, 05 Feb 2010 16:32:25 +0100
+
+wwwoffle (2.9f-1) unstable; urgency=low
+
+  * New upstream release.
+  * Acknowledge NMU
+  * Fix building with gnutls (fix is in new upstream)
+    closes:#564475,#529916
+  * New upstream contains updated config.{guess,sub}
+    closes:#535741
+  * init.d script shouldn't fail doing "stop" if daemon wasn't running.
+    That may be the right thing philosophically, but lots of things break.
+    closes:#506381,#566553,#560181
+  * Updated Standards-Version to 3.8.3.
+  * Check during start and restart whether the certificate is to expire within
+    a week, and say so. Also use faster certificate generation.
+    Also check in cron.daily script whether the certificate is about to expire.
+    If it has expired, force a restart to regenerate it.
+    Added utility 'wwwoffle-checkcert' for this.
+    closes:#519855
+  * Fix postrm not to search /etc/wwwoffle/ if that dir doesn't exist.
+    closes:#530495
+  * Fix from upstream for "address family is not supported" during startup.
+    closes:#527235
+  * Add cron to suggested packages, and don't try to create a file in
+    /etc/cron.d if that directory doesn't exist.
+    closes:#504679
+  * Don't chown the whole tree in postinst.
+    closes:#242778
+  * Removed duplicate dot on German confirmation page.
+    closes:#510508
+  * Added Japanese debconf translation, thanks to Hideki Yamane.
+    closes:#559386
+  * Use configured spool-dir value from config file in init.d
+    and ip-down.d scripts.
+    closes:#384868
+  * Removed unmatched '(' embedded in perl command in wwwoffle.config,
+    which had been there for a long time. Perl has become more picky?
+
+ -- Paul Slootman <paul@debian.org>  Mon, 25 Jan 2010 19:06:31 +0100
+
+wwwoffle (2.9d-3.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Add ${misc:Depends} to packages dependencies to properly
+    deal with dependencies triggerred by debhelper utilities
+  * Use normal order for dh_makeshlibs, dh_shlibsdep, dh_gencontrol
+    and dh_installdeb
+  * Bump debhelper compatibility to 7
+  * Use "dh_prep" in place of "dh_clean -k"
+  * Fix pending l10n issues. Debconf translations:
+    - Swedish (Martin Bagge).  Closes: #513653
+    - Czech (Jan Outrata).  Closes: #536707
+    - Spanish (Francisco Javier Cuadrado).  Closes: #539636
+    - Russian (Yuri Kozlov).  Closes: #550554
+    - Italian (Vincenzo Campanella).  Closes: #557112
+
+ -- Christian Perrier <bubulle@debian.org>  Mon, 23 Nov 2009 08:17:37 +0100
+
+wwwoffle (2.9d-3) unstable; urgency=low
+
+  * Removed bashism in init.d script.
+    closes:#480619
+  * Updated German debconf translation, thanks to Erik Schanze.
+    closes:#479250
+  * Updated Galician debconf translation, thanks to Jacobo Tarrio.
+    closes:#480986
+
+ -- Paul Slootman <paul@debian.org>  Mon, 02 Jun 2008 12:31:37 +0200
+
+wwwoffle (2.9d-2) unstable; urgency=low
+
+  * build-depend on flex >=2.5.34-2.1 as the previous buildd runs almost all
+    failed on a buggy flex, and prodding the buildd maintainers doesn't seem
+    to work.
+  * updated French and Dutch debconf translations.
+    closes:#464835,#467472
+
+ -- Paul Slootman <paul@debian.org>  Sat, 08 Mar 2008 12:33:28 +0100
+
+wwwoffle (2.9d-1) unstable; urgency=low
+
+  * New upstream release.
+  * Upstream removed the displaying of the XML format certificate.
+    closes:#464258,#450852
+  * Bumped Standards-Version to 3.7.3.
+  * this version fixes wwwoffle-write to not simply overwrite parts of the
+    output file, but to truncate the existing file first.
+    closes:#398282
+  * Check for root CA files when starting, and warn that the generation may
+    take very long if they don't exist. Also output the wwwoffle startup
+    messages directly instead of redirecting to a temp file in that case,
+    so that the user can follow the progress.
+    closes:#402464,#423646
+  * Wrap the check for htdig in wwwoffle.config in quotes, in case there's no
+    output that would confuse 'test' ('unary operator expected").
+    closes:#458913
+
+ -- Paul Slootman <paul@debian.org>  Fri, 08 Feb 2008 05:27:40 +0100
+
+wwwoffle (2.9a-2) unstable; urgency=low
+
+  * acknowledge NMU
+  * Don't try to use debconf in postrm script, debhelper is now smart enough
+  * to include it itself if possible.
+    closes:#416613
+  * updated Catalan debconf translation.
+    closes:#413631
+
+ -- Paul Slootman <paul@debian.org>  Thu, 29 Mar 2007 16:56:43 +0200
+
+wwwoffle (2.9a-1.1) unstable; urgency=low
+
+  * Non-maintainer upload to fix pending l10n issues.
+  * Debconf translations:
+    - Dutch. Closes: #407445
+    - Czech. Closes: #408728
+    - Spanish. Closes: #412174
+    - Galician. Closes: #412912
+    - Portuguese. Closes: #412938
+    - Catalan. Closes: #412955
+    - All PO files converted to UTF-8 (no Japanese)
+  * Add a very simple LSB header to the init script
+
+ -- Christian Perrier <bubulle@debian.org>  Sat,  3 Mar 2007 09:39:03 +0100
+
+wwwoffle (2.9a-1) unstable; urgency=low
+
+  * New upstream release.
+  * Enabled https support.
+    closes:#380558
+  * Let the https certificates be created under /etc/wwwoffle/ instead of
+    /var/cache/wwwoffle/
+  * Preserve wwwoffle port number, when changed in wwwoffle.conf by the user.
+    closes:#381217
+  * Also check for pppoa in addition to pptpd and pppoe.
+    closes:#381656
+  * wwwoffle-audit-usage manpage: removed htdig reference;
+    don't include contrib/wwwoffle-jidanni as the website contains newer
+    stuff;
+    wwwoffle-tools manpage: fixed wording of wwwoffle-rm entry;
+    wwwoffle-tools manpage: mention needing to be proxy for write.
+    closes:#380013
+  * updated German debconf translation, thanks to Erik Schanze.
+    closes:#399279
+
+ -- Paul Slootman <paul@debian.org>  Wed,  6 Dec 2006 10:37:23 +0100
+
+wwwoffle (2.9-3) unstable; urgency=low
+
+  * (version not uploaded due to unforeseen circumstances)
+  * Enabled https support.
+    closes:#380558
+  * Let the https certificates be created under /etc/wwwoffle/ instead of
+    /var/cache/wwwoffle/
+  * Preserve wwwoffle port number, when changed in wwwoffle.conf by the user.
+    closes:#381217
+  * Also check for pppoa in addition to pptpd and pppoe.
+    closes:#381656
+  * wwwoffle-audit-usage manpage: removed htdig reference;
+    don't include contrib/wwwoffle-jidanni as the website contains newer
+    stuff;
+    wwwoffle-tools manpage: fixed wording of wwwoffle-rm entry;
+    wwwoffle-tools manpage: mention needing to be proxy for write.
+    closes:#380013
+
+ -- Paul Slootman <paul@debian.org>  Tue, 08 Aug 2006 14:30:53 +0200
+
+wwwoffle (2.9-2) unstable; urgency=low
+
+  * fix forced reloading of pages when "pragma-no-cache" and/or
+    "cache-control-no-cache" are enabled.
+  * update French debconf translation, thanks to Thomas Huriaux.
+    closes:#376287
+
+ -- Paul Slootman <paul@debian.org>  Thu, 20 Jul 2006 14:15:50 +0200
+
+wwwoffle (2.9-1) unstable; urgency=low
+
+  * New upstream release.
+  * Updated standards version; relevant change was use of invoke-rc.d.
+  * Removed old cruft from maintainer scripts, now we only support upgrading
+    cleanly from sarge (i.e. wwwoffle 2.8e-2). This makes it much easier to
+    conform to policy...
+  * crontab file will not be created if not necessary when it's missing.
+    closes:#327049
+  * Now only "/etc/init.d/wwwoffle magic-restart" will restore the previous
+    online/offline/autodial mode, as the previous "restart" magic was scaring
+    people :-)
+    closes:#353910,#224937
+  * Added debconf-2.0 alternate to dependencies.
+    closes:#332152
+  * cron.daily script ignores possible failure from switching online/offline
+    modes.
+    closes:#169707
+  * Fixed typos in wwwoffle.options manpage.
+    closes:#326122
+  * Fixed typo in wwwoffle-audit-usage manpage.
+    closes:#326123
+  * Added a number of contrib files from the source dist to
+    /usr/share/doc/wwwoffle/contrib/.
+    closes:#324745
+  * Added Vietnamese debconf translation, thanks to Clytie Siddall.
+    closes:#324145
+  * Added new Dutch debconf translation, thanks to cobaco.
+    closes:#356209
+
+ -- Paul Slootman <paul@debian.org>  Wed,  5 Apr 2006 15:08:56 +0200
+
+wwwoffle (2.8e-3) unstable; urgency=low
+
+  * Updated config.guess and config.sub to facilitate building on
+    GNU/kFreeBSD.
+    closes:#317343
+
+ -- Paul Slootman <paul@debian.org>  Tue, 26 Jul 2005 16:08:06 +0200
+
+wwwoffle (2.8e-2) unstable; urgency=high
+
+  * Seed debconf with "true" and "false" instead of "yes" and "no" so that
+    user changes are preserved (fixing an RC bug). Also repaired some typos in
+    the postinst that could confuse things.
+    closes:#295060
+  * The default value for reply-chunked-data in the wwwoffle.conf file is now
+    "no", as e.g. apt-get has problems with this when downloading from some
+    systems. This has effect on new installations and when upgrading from an
+    earlier version than 2.8.
+    closes:#254700
+  * The commandline tool wwwoffle was not using the host from the
+    wwwoffle.conf file (only the port). This meant that it was not possible to
+    connect to a daemon running on a non-loopback IP address unless giving the
+    -p parameter. However, then the password would not be read from the
+    config...
+    Also fixed the init.d script to use a signal to stop the daemon if
+    contacting via the control socket failed (e.g. in case the config had just
+    been changed).
+    Also give an error message if the daemon refuses the connection from the
+    commandline wwwoffle tool (e.g. because it's not connecting from an
+    allowed host).
+    closes:#298116
+
+ -- Paul Slootman <paul@debian.org>  Thu,  7 Apr 2005 11:31:37 +0200
+
+wwwoffle (2.8e-1) unstable; urgency=low
+
+  * New upstream version.
+  * Put a CACHEDIR.TAG file in the cache directory, see
+    http://www.brynosaurus.com/cachedir/ 
+  * move the distributed NMZ* files from /var/cache to /etc; create symlinks to
+    those if the /var/cache version doesn't already exist. Preserve any
+    changes the user may have made to the /var/cache version (even though they
+    don't deserve this...)
+    closes:#256583
+  * Add "Content-Type: text/html" header when using wwwoffle-write
+    --addheader.
+    closes:#267633
+  * Put correct version number in wwwoffle.conf.
+    closes:#275144
+  * Added Danish debconf translation, thanks to Morten Bo Johansen.
+    closes:#286098
+
+ -- Paul Slootman <paul@debian.org>  Sun, 30 Jan 2005 14:39:21 +0100
+
+wwwoffle (2.8d-1) unstable; urgency=low
+
+  * New upstream version.
+  * Use pgrep to find processes in the init.d script instead of ps | grep,
+    and don;t search for full pathnames in the command.
+    closes:#267605
+  * Replaced echo -e ... \c with echo -n.
+    closes:#270229
+  * Fixed manpage groff warning about 'broken'.
+    closes:#276671
+  * New German debconf template, thanks to Jens Nachtigall and Erik Schanze.
+    closes:#276494,#280999
+  * New French debconf template, thanks to Philippe Batailler.
+    closes:#269640
+  * Removed menu file, isn't very useful...
+
+ -- Paul Slootman <paul@debian.org>  Sun, 05 Dec 2004 14:18:00 +0100
+
+wwwoffle (2.8c-2) unstable; urgency=low
+
+  * Updated Dutch debconf translation, thanks to cobaco.
+    closes:#260289
+  * Show name when starting (in init.d).
+    closes:#260690
+  * Applied patch from upstream to fix htdig searching.
+    closes:#259398
+  * Added Catalan debconf translation, thanks to Aleix Badia i Bosch.
+    closes:#254871
+  * Added Czech debconf translation, thanks to Jan Outrata.
+    closes:#259184
+
+ -- Paul Slootman <paul@debian.org>  Mon, 23 Aug 2004 10:08:51 +0200
+
+wwwoffle (2.8c-1) unstable; urgency=low
+
+  * New upstream version.
+  * Improved English in template.
+    closes:#251484
+  * Made date command work in wwwoffle-htdig scripts (for logging).
+    closes:#246294
+
+ -- Paul Slootman <paul@debian.org>  Sun, 13 Jun 2004 11:41:31 +0200
+
+wwwoffle (2.8b-1) unstable; urgency=low
+
+  * New upstream version.
+  * Updated french debconf translation.
+    closes:#237749
+  * Check debconf value for wwwoffle/select_html_lang a bit more carefully.
+    closes:#236537
+  * Added a label to /var/log/wwwoffle-htdig.log with date/time and script
+    name.
+  * Added po-debconf to the build-depends.
+
+ -- Paul Slootman <paul@debian.org>  Fri, 19 Mar 2004 15:45:38 +0100
+
+wwwoffle (2.8a-2) unstable; urgency=low
+
+  * Modified upgrade-config.pl to handle the fact that wwwoffle 2.7* was
+    supplied with a partly defective wwwoffle.conf. Only affected those that
+    installed wwwoffle from scratch with a 2.7 version. Thanks to Frank Küster
+    for the patch.
+    closes:#224900
+  * Fixed German translation of a couple of html pages. Thanks to Erik Schanze
+    for the patch.
+    closes:#226151
+  * Updated Dutch html message files.
+  * Move $CONFIG.bak back to $CONFIG if both files are identical, i.e. nothing
+    was changed.
+    closes:#224955
+  * Added <URL> to the synopsis of wwwoffle-read, wwwoffle-write,
+    wwwoffle-hash in the wwwoffle-tools manpage. Also removed a stray .br from
+    the example given for wwwoffle-write. Also added --addheader option for
+    wwwoffle-write and --removeheader option for wwwoffle-read. See the
+    manpage for details.
+    closes:#224980
+
+ -- Paul Slootman <paul@debian.org>  Fri, 23 Jan 2004 09:49:25 +0100
+
+wwwoffle (2.8a-1) unstable; urgency=low
+
+  * New upstream version.
+    Includes (amongst others) the wwwoffle.css fix of 2.8-4.
+  * Made detection of parent proxy a little smarter.
+  * Updated nl.po debconf translation.
+    closes:#221589
+
+ -- Paul Slootman <paul@debian.org>  Wed,  3 Dec 2003 10:22:08 +0100
+
+wwwoffle (2.8-4) unstable; urgency=low
+
+  * unreleased version... 2.8a was there before I got around to it
+    (complicated by the Debian server breach).
+  * Added semicolons to the end of the values for BODY.wwwoffle-message in
+    wwwoffle.css
+  * Updated nl.po debconf translation.
+    closes:#221589
+
+ -- Paul Slootman <paul@debian.org>  Wed, 19 Nov 2003 09:12:02 +0100
+
+wwwoffle (2.8-3) unstable; urgency=low
+
+  * Changed the way arguments are shifted in wwwoffle.config, as ash exits
+    unconditionally (no way to prevent this!) if shift is done without any
+    parameters left.
+    closes:#218212
+  * One final patch from upstream to iozlib.c that should solve problems with
+    sites that send strange compressed data.
+    closes:#140617
+  * Fixed url in README.Debian for jidanni.org.
+    closes:#201181
+  * Improved handling of the default config file location so that non-root
+    users don't always get an error.
+  * Updated wwwoffle-tools manpage to make it a bit more useful (lifted the
+    text from wwwoffle's README).
+    closes:#202141,#197457
+
+ -- Paul Slootman <paul@debian.org>  Wed, 29 Oct 2003 20:46:32 +0100
+
+wwwoffle (2.8-2) unstable; urgency=low
+
+  * Updated the default wwwoffle.conf file to remove enable-modify-online
+    which is no longer a valid option.
+    closes:#215422
+  * Added upgrade-config-2.6-2.7.pl script, which was missing and is needed
+    when upgrading from a 2.6 config version (e.g. what's in woody).
+  * Fixed typo (probably from a diff...) in wwwoffle-htdig-full.
+    closes:#215433
+  * Some sites that used a curious deflate method should now no longer give an
+    empty page when request-compressed-data = yes. Patch from upstream for
+    this. However, sometimes there are still problems, so leaving #140617 open
+    for the time being.
+  * Read the config file by default, so that specifying
+    "-c /etc/wwwoffle/wwwoffle.conf" every time isn't necessary.
+  * The HTML messages used by wwwoffle are now linked to from
+    /etc/wwwoffle/html, so can be customized locally.
+    Under /etc/wwwoffle/html are symlinks to the original pages,
+    these symlinks can be changed.
+    closes:#108573
+  * When checking access timestamps during the purge, allow for runs up to
+    3600s (was 600s, which could lead to "has a future timestamp; changing
+    timestamp" messages" if the files were being accessed e.g. by a backup
+    simultaneously.
+  * Updated French debconf templates.
+    closes:#217428
+
+ -- Paul Slootman <paul@debian.org>  Fri, 24 Oct 2003 17:17:46 +0200
+
+wwwoffle (2.8-1) unstable; urgency=low
+
+  * New upstream release.
+  * Show name when starting via init.d script.
+    closes:#181172
+  * Restarting via init.d script should work always now, use wwwoffle -kill
+    and after stopping, wait until the daemon actually has gone.
+    closes:#178533
+  * Filter out the messages of not being able to bind to the IPv4 socket in
+    cases where it has already bound to the IPv6 socket (which on Linux also
+    causes the IPv4 socket to be in use). In such cases, give a hint instead
+    that "bind-ipv4 = none" should be used.
+    closes:#173139
+  * Added namazu and mnogosearch-* to the suggests, and also mention them in
+    the long description.
+    closes:#147226
+  * Ignore return code from wwwoffle -$mode in ip-down.d script to avoid early
+    termination of the script when mode is offline and wwwoffle is already
+    offline.
+    closes:#181047
+  * Create a cron.d file to fetch monitored pages when online.
+    Description of this can be found in the README.Debian file.
+    closes:#75214
+  * Converted to po-debconf thanks to Christian Perrier.
+    closes:#203333
+  * Add a "sleep 1" to the ip-up.d script, as apparently the "route add" done
+    previously isn't immediately effective.
+    closes:#191936
+  * Background the htdig job in the ip-down.d script.
+    closes:#204799
+  * Don't background anything of the ip-up.d script if /var/run/ppp-quick
+    exists (new feature in ppp).
+    closes:#182104
+  * Move one-timers from /usr/sbin to /usr/lib/wwwoffle/ (scripts used when
+    upgrading from older version).
+  * Added support for "no-purge" in wwwoffle.options to prevent the daily
+    cronjob from cleaning up.
+    closes:#172289
+  * Drop obsolete /usr/doc/ symlink.
+
+ -- Paul Slootman <paul@debian.org>  Wed,  8 Oct 2003 12:17:45 +0200
+
+wwwoffle (2.7h-3) unstable; urgency=low
+
+  * Removed second 'p' in '-pp' when invoking flex, as the new flex version
+    has incompatibly removed support for the second 'p' (which also gave minor
+    performance issues in the performance output).  closes:#191202
+  * When doing a restart via the init.d script, there was a problem when the
+    daemon wasn't actually running, which led to "wwwoffle -" being run
+    instead of e.g. "wwwoffle -online", so wwwoffle tried to read from stdin.
+  * In the init.d script, check whether ISDN line is online before looking at
+    dialmode.
+
+ -- Paul Slootman <paul@debian.org>  Tue, 29 Apr 2003 10:06:59 +0200
+
+wwwoffle (2.7h-2) unstable; urgency=low
+
+  * Updating the http and https proxy settings with debconf messed up big
+    time, it replaced the words "http" and "https" with "configure"...
+    closes:#176846
+
+ -- Paul Slootman <paul@debian.org>  Wed, 15 Jan 2003 14:30:13 +0100
+
+wwwoffle (2.7h-1) unstable; urgency=low
+
+  * New upstream release.
+  * Split off the de es nl template translations into separate files.
+  * Changed type of input field for passwd to password. closes:#174062
+  * Don't listen to IPv6 by default, if not enabled in the config.
+    Show the user a debconf note if 2.7g-1 was installed, as that behaviour has
+    changed from then.  Also removed stuff from postinst to try to fix the
+    conf file for all possible scenarios during upgrade (see item 3 from
+    2.7g-1 changelog).   closes:#173140
+  * Change both the http and https proxy settings with debconf instead of just
+    the http one.  Also offer a way of bypassing this setting (by entering
+    "manual" as the value for the proxy).  closes:#173172
+
+ -- Paul Slootman <paul@debian.org>  Mon, 13 Jan 2003 12:19:35 +0100
+
+wwwoffle (2.7g-1) unstable; urgency=low
+
+  * New upstream release.
+  * Depend on coreutils instead of fileutils. closes:#166650
+  * Enable IPv6 code. Edit wwwoffle.conf during install to enable or disable
+    IPv6 as wwwoffle fails if binding to IPv6 address failes. closes:#138773
+  * Check for unexpected wwwoffle status in cron.daily script. closes:#163379
+  * Updated location of htdig db files from /var/lib to /usr/lib.
+    closes:#159991
+  * Only show "blocksize looks wrong" message once, as this happens on
+    Reiserfs, and then there's no need to keep displaying it. closes:#156760
+  * Preserve empty (i.e. no) password upon upgrading.
+  * Only remove /var/cache/wwwoffle/prevtime* etc. in the prerm if actually
+    removing, not during upgrade. closes:#172102
+
+ -- Paul Slootman <paul@debian.org>  Sun,  8 Dec 2002 13:45:56 +0100
+
+wwwoffle (2.7f-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Paul Slootman <paul@debian.org>  Tue,  1 Oct 2002 12:42:40 +0200
+
+wwwoffle (2.7e-1) unstable; urgency=low
+
+  * Unreleased version.
+  * New upstream release.
+  * Quote the result of "wwwoffle -status". closes:#157825
+  * Fix updating of the User-Agent field in update-config.pl. closes:#157856
+  * Fix norobots.html link in robots.txt. closes:#159540
+  * In the cron.daily script, only be offline for a short moment. This should
+    be enough for the rotation of the "lasttime" link directory, and htdig
+    shouldn't fetch anything anyway. closes:#158202
+  * Upgrading the debian package will no longer cause a compress-age line with
+    the <http://*> parameter in the wwwoffle.conf file to be replaced by a
+    proxy line... closes:#155152
+
+ -- Paul Slootman <paul@debian.org>  Wed,  4 Sep 2002 15:30:03 +0200
+
+wwwoffle (2.7d-1) unstable; urgency=low
+
+  * New upstream release.
+  * Delete /var/lib/wwwoffle/monitor directory on purging. closes:#153710
+  * Also remove wwwoffle.conf and the entire /etc/wwwoffle directory when
+    purging dus to popular demand. closes:#140777
+  * wwwoffle.log doesn't need to be rotated, wwwoffle logs into syslog.
+    closes:#145763
+  * Ignore error status caused by putting wwwoffle online when already online
+    in the postinst. closes:#154570
+  * Updated README.Debian to mention namazu and mnogosearch in addition to
+    htdig. Those two aren't fully supported by me, though :-)  I haven't
+    updated the Suggests: line to include those yet, as I'm not quite clear on
+    which packages would be needed... See #147226
+  * This version should also solve #153268 and #154676 .
+
+ -- Paul Slootman <paul@debian.org>  Mon,  5 Aug 2002 14:23:25 +0200
+
+wwwoffle (2.7c-1) unstable; urgency=low
+
+  * New upstream release. 
+  * Fixed segmentation violation when negative Content-Length value is given.
+    closes:#152756
+  * Fix dangling symlink /etc/wwwoffle/robots.txt that may happen when
+    upgrading from older version. closes:#146656
+  * Remove old htdig database files, from the pre-2.7 location
+    /var/cache/wwwoffle/htdig/db (the new location is
+    /var/cache/wwwoffle/search/htdig). closes:#144473
+  * Set defaults for debconf according to the config file that may exist,
+    i.e. allowing manual editing of the file to overrule debconf.
+  * Make sure /var/cache/wwwoffle/temp exists before using it in the postinst.
+  * Test for interface ippp0 and isdnctrl output separately in ip-down.d
+    script, otherwise isdnctrl will run anyway due to command substitution
+    being done first. closes:#151001
+
+ -- Paul Slootman <paul@debian.org>  Sun, 14 Jul 2002 13:12:06 +0200
+
+wwwoffle (2.7b-1) unstable; urgency=low
+  
+  * New upstream release.
+  * Add /usr/doc symlink in postinst. closes:#141458
+ 
+ -- Paul Slootman <paul@debian.org>  Mon, 22 Apr 2002 09:38:38 +0200
+
+wwwoffle (2.7a-1) unstable; urgency=low
+
+  * New upstream release. This includes the two patches from Paul A. Rombouts
+    mentioned in the entry for 2.7-1.
+  * If the initial connection is not a compressed fetch, the length is passed
+    on to the client now (upstream fix). closes:#138272
+  * Updated copyright info.
+  * Discard wwwoffle "Now Offline" and "Now Online" messages from cron.daily
+    messages. closes:#135646
+  * Escape the password obtained via debconf to prevent problems.
+    closes:#136942
+  * Don't mark /etc/wwwoffle/wwwoffle.options as a conffile, because it
+    may get manipulated by debconf. I.e. don't include it in the package.
+    It gets copied from /usr/share/wwwoffle/default/wwwoffle.options by the
+    postinst if it doesn't already exist.
+  * Remove wwwoffle.conf.??? and wwwoffle.options* when purging.
+  * cron.daily script had $rc and that should have been $? (copy/paste
+    problem)
+  * Add a check to init.d when starting for URL specifications that end in
+    just '/', as these don't match the whole host. closes:#135945
+  * init.d script now sets default mode to online if pppoe or pptp is running
+    (these are for ADSL connections). Previously it would be in offline mode
+    after starting, which is not what you usually want. Also throw away the
+    output of the "ps | grep".
+  * Added french debconf translation, thanks to Philippe Batailler.
+
+ -- Paul Slootman <paul@debian.org>  Thu, 14 Mar 2002 21:01:10 +0100
+
+wwwoffle (2.7-1) unstable; urgency=low
+
+  * New upstream release.
+  * Includes two patches from the mailing list for "not modified since" and
+    "accept-encoding", by Paul A. Rombouts.
+  * Lots of stuff moved around in upstream, lots of new stuff as well.
+    Hopefully everything that's needed is included in the package :-)
+  * Moved the wwwoffle-htdig* scripts to /usr/share/wwwoffle/search/htdig/ as
+    these aren't for general use, no reason to clutter up /usr/bin with these.
+  * Everything in /etc is now marked as a conffile. closes:#132097
+    I'd make this a high urgency upload because of this "serious" bug if it
+    wasn't a completely new version.
+  * Updated German debconf template, thanks to Sebastian Rittau
+    <srittau@debian.org>. closes:#129064
+  * Added Dutch debconf template translation.
+  * Forget about the fix for #119106 in the previous version, hopefully
+    closes:#133938
+    Basically the htdig stuff is the upstream version, removing any weirdness
+    that past hacks to that stuff may have introduced. Biggest change is that
+    the htdig stuff isn't invoked with the verbose option. Only possible
+    problem remaining may be htdig configuration, but that's weird in the
+    debian package anyway (see bug #135259, and the otherwise large bug list
+    for htdig).
+  * wwwoffle now has a -status option, use that to restore the mode when
+    restarting in the init.d script.
+  * the cron.daily script now checks if the daemon is running, no use in
+    continuing if it's not. Also put wwwoffle offline for the duration, and
+    restore it to its previous state at the end. This is useful if wwwoffle is
+    always online, so that the lasttime directory gets rotated. If it's not,
+    it will still contain links to stuff that's been expired and hence may
+    lead to the filesystem filling up (BTDT).
+
+ -- Paul Slootman <paul@debian.org>  Thu, 14 Feb 2002 21:00:20 +0100
+
+wwwoffle (2.6d-4) unstable; urgency=low
+
+  * Changed bgcolor in search.html to white to match debian logo's background.
+  * Changed /search/index -> /index in the html files. closes:#119106
+  * Fixed typo in html-es/search/start4.html. closes:#119107
+  * Work around "fix" for htdig bug #113682, in wwwoffle-htsearch.
+    closes:#119108,#117638,#117636
+  * Work around the situation where /var/cache/wwwoffle is a symlink to some
+    place that doesn't exist. Used readlink, hence now depends on debianutils.
+    closes:#114694
+  * Applied upstream patch that may work for bug #117414 ("sometimes produces
+    rubbish data") related to the compression features of the latest version,
+    although it sounds more like a browser bug. I haven't experienced any
+    problems myself.
+  * Added quotes around $PPP_IFACE in ip-down.d/99wwwoffle as it apparently
+    could be empty sometimes... closes:#112695
+  * Check for existence of /usr/bin/wwwoffle in cron.daily script.
+    closes:#111236,#114291
+  * Tweaked the init.d script a bit for cosmetics.
+  * Updated debconf template with (new) Spanish text, courtesy of
+    Carlos Valdivia Yagüe <valyag at teleline.es>. closes:#110816
+
+ -- Paul Slootman <paul@debian.org>  Sun, 11 Nov 2001 13:27:48 +0100
+
+wwwoffle (2.6d-3) unstable; urgency=high
+
+  * Urgency high because the previous version could lead to loss of data.
+    Having a fixed version in testing ASAP would be good.
+  * wwwoffle-upgrade-config silently removed all " age = " lines from
+    wwwoffle.conf :-(   Bug fixed and upstream notified. This would lead
+    to loss of (large) parts of the cache if the age line specified more than
+    the default 28 days.
+  * When upgrading from 2.6d-2, check for an age line. If not there, try to
+    find it in the backup copies. If found, restore the line, and notify
+    the user. If not found, notify the user also of this fact. Hopefully
+    this will prevent too much fallout from the previous bug going on
+    unnoticed...
+  * Upon upgrading, any changes to proxy and password in the wwwoffle.conf
+    were undone by the way the debconf stuff did its thing. It now extracts
+    the current value from the file and puts that into the debconf database
+    before doing anything else. This and the previous change closes:#108651
+  * Fixed typo in wwwoffle.man
+  * Oops, wwwoffle.man, wwwoffled.man and wwwoffle.conf.man weren't being
+    used from the upstream source...
+  * Updated the copyright file.
+  * Apparently the wwwoffle startup got more verbose. So "fgrep -v" more of
+    the output.
+  * Added spanish debconf translation, kindly provided by Gorka Olaizola
+    <gorka@escomposlinux.org> (a long time ago, sorry for the delay).
+
+ -- Paul Slootman <paul@debian.org>  Wed, 15 Aug 2001 16:17:14 +0200
+
+wwwoffle (2.6d-2) unstable; urgency=low
+
+  * Changed priority to optional (from extra), complying with overrides.
+  * Background the cache conversion process, which could otherwise give the
+    impression that configuring wwwoffle was hanging if a large cache was
+    involved. closes:#105787
+    Also added message about checking for htdig, dpkg -l can take a *long*
+    time...
+  * Adding the htdig option to /etc/wwwoffle/wwwoffle.options failed due to a
+    misunderstanding on my part on how perl -i works. Now fixed.
+  * Fixed init.d script (again?) to prevent verbose wwwoffle startup message.
+  * When moving the config from /etc/ to /etc/wwwoffle/, also move the other
+    .dpkg-old etc. files.
+  * Ignore errors if there isn't any previous wwwoffle.conf file (e.g. fresh
+    installation).
+  * Move the default wwwoffle.conf file from /usr/share/doc/wwwoffle/default/
+    to /usr/share/wwwoffle/default/ which is much more sensible.
+  * When creating the initial wwwoffle.conf file, check whether the default
+    conf is compressed or not, and handle each case appropriately.
+    closes:#106086
+  * Changed wwwoffle-upgrade-config to move the "age =" line to below the other
+    (more specific) age lines. closes:#102722
+  * Explicitly dot in the debconf magic in the postrm, as debhelper does it
+    wrong.
+  * Also remove "lost" symlinks from /etc/wwwoffle/ when purging.
+  * Changed 'text' type to 'note' in the debconf templates. Apparently this got
+    changed at some point? I don't recall 'note' existing when I first
+    debconfused this package. closes:#106347
+
+ -- Paul Slootman <paul@debian.org>  Tue, 24 Jul 2001 10:31:00 +0200
+
+wwwoffle (2.6d-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Paul Slootman <paul@debian.org>  Sun, 15 Jul 2001 15:32:27 +0200
+
+wwwoffle (2.6c-1) unstable; urgency=low
+
+  * New upstream release (2.6b was packaged but not uploaded due to 2.6c coming
+    out relatively soon after that; most items below were done in 2.6b)
+  * This release includes compression support (from server / to client / in
+    cache). Hence zlib1g-dev added to Build-Depends.
+  * Make the config file mode 0640.                              closes:#86515
+  * Replaced some unnecessary greps in the init.d script.        closes:#86516
+  * Throw away unnecessary message from wwwoffle while starting. closes:#92425
+  * Hopefully work around bogus error message when removing spool
+    files whose name ends with `~'.                              closes:#92213
+  * Fixed typo in htdig/search.html                              closes:#94388
+  * Added Dutch translation of html pages (has been added in 2.6c by upstream)
+
+ -- Paul Slootman <paul@debian.org>  Mon, 23 Apr 2001 16:19:21 +0200
+
+wwwoffle (2.6a-2) unstable; urgency=low
+
+  * added german templates file for debconf, closes:#84019
+  * fixed postinst handling of monitor directory permissions, closes:#85937
+  * Reinstate /etc/logrotate.d/wwwoffle conffile (had somehow disappeared
+    in some version along the way...)
+
+ -- Paul Slootman <paul@debian.org>  Wed, 14 Feb 2001 13:56:01 +0100
+
+wwwoffle (2.6a-1) unstable; urgency=low
+
+  * New upstream release
+  * Ignore /usr/share/wwwoffle in postrm if it doesn't exist during cleanup;
+    closes:#81543
+
+ -- Paul Slootman <paul@debian.org>  Sun, 28 Jan 2001 12:42:46 +0100
+
+wwwoffle (2.6-3) unstable; urgency=low
+
+  * /usr/share/wwwoffle/html/search/htdig/nomatch.html contained a wrong link
+    to debian-logo-50.png. Why do I only see this just after the previous
+    version got installed?
+  * Remove /usr/share/wwwoffle/html/htdig if it exists. Apparently created by
+    an old version.
+  * This changelog was junked at the end. Restored that from an old version.
+  * Don't include /var/cache/wwwoffle/* in the package, some people replace
+    /var/cache/wwwoffle with a symlink pointing elsewhere. Create any dirs
+    necessary in the postinst.
+  * Move /var/cache/wwwoffle/monitor to /var/lib/wwwoffle/monitor, as
+    /var/cache is volatile and the monitor directory contains manually
+    entered data. closes:#51344
+  * Somehow at some stage a /var/lib/wwwoffle/monitor/monitor symlink got
+    created that doesn't point at an existing node. Remove it.
+  * Do everything necessary to recreate the /var/cache/wwwoffle hierarchy
+    during init script, as policy demands that packages can work when
+    /var/cache has been nuked.
+  * Clarified README.debian a bit. closes:#53641 
+  * default config file gets compressed, hence attempt to copy it when no
+    config file exists yet, fails. Now use zcat. closes:#80602
+  * Pass extra '?' chars in URL through unscathed, effectively violating
+    RFC1738. Unfortunately there are just too many servers out there that
+    don't understand the hex quoting of reserved chars. Same goes for '@'.
+    closes:#80639
+  * The spooldir setting in the config file is always /var/cache/wwwoffle,
+    but that in turn may be a symlink elsewhere for local reasons. When
+    upgrading, any different spooldir setting in the existing config file
+    is taken into account. closes:#75213
+  * The following bug should be considered closed, was basically a
+    documentation problem ("replacement image can't be read directly").
+    closes:#53641
+
+ -- Paul Slootman <paul@debian.org>  Tue,  2 Jan 2001 13:26:28 +0100
+
+wwwoffle (2.6-2) unstable; urgency=low
+
+  * Don't mark wwwoffle.conf as a conffile anymore. As it usually gets edited
+    extensively locally, there's not much point. Also, on upgrades, there's a
+    script to make it compatible to the current version. Apparently policy
+    doesn't like this fixing of conffiles. closes:#78481
+  * Fixed extracting the parent proxy currently in the config for debconf.
+  * Fixed replacing the parent proxy in the .conf file... closes:#76398
+  * postinst didn't set the htdig usage info asked for by debconf.
+  * Fixed htdig calls and html code. As it is now also possible to use another
+    search engine besides htdig (udmsearch), the local URL for htdig stuff
+    moved from /htdig/ to /search/htdig/ , I hadn't realized the full
+    implication of this. closes:#78592
+
+ -- Paul Slootman <paul@debian.org>  Sun, 10 Dec 2000 19:09:17 +0100
+
+wwwoffle (2.6-1) unstable; urgency=low
+
+  * New upstream release
+  * Tried to sanitize the spool-dir location, so that the config file always
+    lists /var/cache/wwwoffle, and that is a symlink to wherever the user had
+    configured the config file to have it.
+  * The config file gets converted again. Try to determine what the previous
+    version was, and run one or both of the conversion scripts. Fix up the
+    header (with the version number) while we're at it. This hopefully closes
+    75213
+  * Add a message to the preinst not to let dpkg replace wwwoffle.conf with the
+    new one, as the conversion mentioned above should handle any updates. When
+    letting dpkg replace it, any personal changes are lost. This always
+    confused me when I wasn't maintainer yet :-)
+  * Fix config file ownership to "proxy". closes:#76117
+
+ -- Paul Slootman <paul@debian.org>  Wed, 22 Nov 2000 11:50:06 +0100
+
+wwwoffle (2.5e-8) unstable; urgency=low
+
+  * Added Build-Depends for flex. closes:#70924
+
+ -- Paul Slootman <paul@debian.org>  Tue,  5 Sep 2000 19:04:28 +0200
+
+wwwoffle (2.5e-7) unstable; urgency=low
+
+  * When a pppd interface goes down, the interface is removed before the ip-down
+    scripts are run. Hence no more default route, and the wwwoffle ip-down
+    script failed. Now also put wwwoffle offline if there is no more default
+    route. closes:#70047,#70753,#70753
+  * Additionally, there is now a config option ("ppp") to specify whether
+    wwwoffle should go online and offline with a PPP interface, for those that
+    have a network or host route to a parent proxy and thus don't rely on the
+    default route. Or for those that simply want to force an "online" mode.
+  * Ask for the wwwoffle.options settings in debconf (see the wwwoffle.options
+    manpage).
+  * The ip-down script should now be reasonably stable, besides the first point
+    mentioned in this changelog entry. As I also didn't receive any explanation
+    about bug 69054 a couple of weeks after my request, I am closing that bug
+    also. closes:#69054
+
+ -- Paul Slootman <paul@debian.org>  Sun,  3 Sep 2000 13:08:56 +0200
+
+wwwoffle (2.5e-6) unstable; urgency=low
+
+  * Oops, typo in ip-up and ip-down scripts.
+  * Changed init.d script to be somewhat more intelligent about modes.
+
+ -- Paul Slootman <paul@debian.org>  Sun, 13 Aug 2000 15:28:27 +0200
+
+wwwoffle (2.5e-5) unstable; urgency=low
+
+  * New maintainer
+  * Implemented 'htdig' option for wwwoffle.options; makes usage of htdig
+    optional. closes:#68593
+  * Check for default route over the given PPP interface when running
+    ip-up and up-down scripts; if not the default route interface, don't
+    change wwwoffle's status. closes:#66496
+  * Fixed speling of error message. closes:#60422
+  * Closing old bugs that were already fixed IMHO. closes:#58631
+
+ -- Paul Slootman <paul@debian.org>  Fri, 11 Aug 2000 11:17:21 +0200
+
+wwwoffle (2.5e-4) unstable; urgency=low
+
+  * Cleaned up logfile processing. Closes: #65570
+
+ -- Christian Hammers <ch@debian.org>  Sun, 23 Jul 2000 20:13:22 +0200
+
+wwwoffle (2.5e-3) unstable; urgency=low
+
+  * Clarified wwwoffle.1 regarding purging of lasttime dirs. Closes: #61131
+
+ -- Christian Hammers <ch@debian.org>  Mon,  5 Jun 2000 17:53:26 +0200
+
+wwwoffle (2.5e-2) unstable; urgency=low
+
+  * README.Debian has a workaround for using APT through wwwoffle!
+  * Fixed missing '\' in postinst. Closes: #60548
+  * New upstream reminder bug obsolete. Closes: #64100
+
+ -- Christian Hammers <ch@debian.org>  Sat, 27 May 2000 15:01:56 +0200
+
+wwwoffle (2.5e-1) frozen unstable; urgency=low
+
+  * New upstream release
+
+ -- Christian Hammers <ch@debian.org>  Fri, 14 Apr 2000 18:01:36 +0200
+
+wwwoffle (2.5c-9) frozen unstable; urgency=low
+
+  * Unused symlink removed. Closes: #51344
+  * ad-image replacement picture moved to /etc/wwwoffle so that
+    user can modify it. (Also part of #51344)
+  * Some more minor beautifications. Closes: #59752
+
+ -- Christian Hammers <ch@debian.org>  Sun, 12 Mar 2000 22:14:12 +0100
+
+wwwoffle (2.5c-8) frozen unstable; urgency=low
+
+  * Last .deb contained future timestamps. Sorry. Closes: #59787
+
+ -- Christian Hammers <ch@debian.org>  Tue,  7 Mar 2000 12:14:47 +0100
+
+wwwoffle (2.5c-7) frozen unstable; urgency=low
+
+  * wwwoffle is no longer unconditionally put into autodial mode when
+    using ISDN. Closes: #59581
+  * When updating during an online session, postinst  looks for a default
+    route and eventually puts wwwoffle back online again. Closes: #59603
+
+ -- Christian Hammers <ch@debian.org>  Sat, 22 Apr 2000 14:26:56 +0200
+
+wwwoffle (2.5c-6) frozen unstable; urgency=low
+
+  * Reverted wwwoffles behaviour not to restart when going online.
+    People who switches their /etc/resolv.conf should use a proxy
+    dns to get the right resolving since wwwoffle gets a lot of locking
+    and fetching problems when restarted after going online *due* to
+    a HTTP request by wwwoffle. Closes: #59287
+
+ -- Christian Hammers <ch@debian.org>  Tue, 29 Feb 2000 22:49:42 +0100
+
+wwwoffle (2.5c-5) frozen unstable; urgency=low
+
+  * Made debconf menu more user-friendly and fixed spelling. Closes: #58010
+
+ -- Christian Hammers <ch@debian.org>  Sun, 13 Feb 2000 23:14:33 +0100
+
+wwwoffle (2.5c-4) frozen unstable; urgency=low
+
+  * Check for diskspace before moving the obsolete /var/spool/wwwoffle
+    to the FHS conform /var/cache/wwwoffle. Closes: 56680, 54718
+
+ -- Christian Hammers <ch@debian.org>  Sun,  6 Feb 2000 14:55:35 +0100
+
+wwwoffle (2.5c-3) frozen unstable; urgency=low
+
+  * logratate script needed to be more silent.
+
+ -- Christian Hammers <ch@debian.org>  Mon, 31 Jan 2000 21:32:06 +0100
+
+wwwoffle (2.5c-2) frozen unstable; urgency=low
+
+  * search option's working again. Closes: #56398
+  * wwwoffle stays online during logrotate. Closes #52264
+  * Added more Policy#3.5 compliance. Closes: #51319
+
+ -- Christian Hammers <ch@debian.org>  Fri, 28 Jan 2000 21:14:32 +0100
+
+wwwoffle (2.5c-1) unstable; urgency=low
+
+  * Added debconf option to enter parent proxy and port number.
+  * New upstream version. Minor bug fixes.
+
+ -- Christian Hammers <ch@debian.org>  Fri, 28 Jan 2000 21:13:51 +0100

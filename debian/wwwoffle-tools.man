@@ -1,0 +1,108 @@
+.TH WWWOFFLE 8
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+
+.SH NAME
+wwwoffle\-tools \- tools to manage wwwoffle cache
+
+.SH SYNOPSIS
+wwwoffle-ls (<dir>/<subdir> | <protocol>://<host> | <URL>)
+.br
+wwwoffle-mv (<dir1>/<subdir1> | <protocol1>://<host1>)
+.br
+            (<dir2>/<subdir2> | <protocol2>://<host2>)
+.br
+wwwoffle-rm <URL>
+.br
+wwwoffle-read [--removeheader] <URL>
+.br
+wwwoffle-write [--addheader] <URL>
+.br
+wwwoffle-hash <URL>
+.br
+wwwoffle-fsck
+.br
+wwwoffle-gunzip ( <dir>/<subdir> | <protocol>://<host> ) ...
+.br
+wwwoffle-gzip ( <dir>/<subdir> | <protocol>://<host> ) ...
+.br
+
+.SH DESCRIPTION
+These eight commands can be used from the command line to inspect
+the wwwoffle cache, to move the cached pages around and to remove
+the cached pages from the cache. Using the wwwoffle HTML interface
+is much better and can be done even by normal users.
+
+.TP
+.B wwwoffle-ls
+list the files in the directory in the style of 'ls -l'.
+For example use 'wwwoffle-ls http/foo' to list the URLs cached
+in the directory http/foo.
+
+.TP
+.B wwwoffle-mv
+To rename a host directory in the spool to another name.  Because the URL is
+encoded in the filename just renaming the directory will not work.
+Instead of 'mv http/foo http/bar' use 'wwwoffle-mv http/foo http/bar'.
+
+.TP
+.B wwwoffle-rm
+Delete the URL that is specified on the command line.
+To delete all URLs from a host it is easier to
+use 'rm -r http/foo' than using this.
+
+.TP
+.B wwwoffle-read
+Read data directly from the cache for the URL named on the
+command line and output it on stdout.
+
+If --removeheader is used, the HTTP header will be removed for you.
+
+.TP
+.B wwwoffle-write
+Write data directly to the cache for the URL named on the
+command line from stdin.  Note this requires a HTTP header to
+be included first or browsers may get confused.
+
+.nf
+     (echo "HTTP/1.0 200 OK";
+      echo "Content-Type: text/html";
+      echo "" ; cat bar.html ) |
+     wwwoffle-write http://www.foo/bar.html
+.fi
+
+If --addheader is used, the above header will be generated for you,
+so that the data can be redirected without the need for the echoes above.
+
+If a different header is required, it will have to be generated externally as in the example above.
+
+This should only be done as the user "proxy", else the file can't be written
+(in case of a normal user), or the file can't be removed later (in case of
+doing this as root).
+
+.TP
+.B wwwoffle-hash
+Print WWWOFFLE's encoding of the submitted URL. This is
+useful for scripts working on the WWWOFFLE cache.
+
+.TP
+.B wwwoffle-fsck
+Check the cache for inconsistent filenames and fix them.
+
+.TP
+.B wwwoffle-gzip, wwwoffle-gunzip
+Compress or uncompress the cached copy of the specified URLs.
+
+.SH FILES
+.br
+.nf
+.\" set tabstop to longest possible filename, plus a wee bit
+.ta \w'/usr/lib/perl/getopts.pl   'u
+\fI/var/cache/wwwoffle\fR  default wwwoffle cache
+
+.SH AUTHOR
+Written by Federico Di Gregorio \fB<fog@debian.org>\fP
+.br
+Updated by Paul Slootman \fB<paul@debian.org>\fP
+
+

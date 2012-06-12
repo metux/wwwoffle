@@ -1,0 +1,45 @@
+.TH WWWOFFLE 8
+
+.SH NAME
+wwwoffle\-audit\-usage \- displays information about wwwoffle's state
+
+.SH SYNOPSIS
+wwwoffle\-audit\-usage
+
+.SH "DESCRIPTION"
+from the README file:
+.br
+The audit-usage.pl script can be used to get audit information from the
+output of the wwwoffled program.
+.br
+If wwwoffled is started as
+.br
+
+.br
+wwwoffled -c /var/cache/wwwoffle/wwwoffle.conf -d 4
+.br
+
+.br
+Then on the standard error output will be generated information about the
+program as it is run.  The debug level needs to be 4 so that the URL
+information is output.
+.br
+.br
+If this is captured into a log file then it can be analysed by the
+audit-usage.pl program.  When run this will tell the host that the
+connection is made from and the URL that is requested.  It also includes the
+timestamp information and connections to the WWWOFFLE control connection.
+
+.SH FILES
+.br
+.nf
+.\" set tabstop to longest possible filename, plus a wee bit
+.ta \w'/usr/lib/perl/getopts.pl   'u
+\fI/var/cache/wwwoffle\fR  default wwwoffle spool directory
+\fI/etc/wwwoffle\fR the configuration files
+
+.SH AUTHOR
+Manpage written by Christian Hammers \fB<ch@debian.org>\fP
+.br
+Now maintained by Paul Slootman \fB<paul@debian.org>\fP
+

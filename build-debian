@@ -1,0 +1,13 @@
+#
+# example script for running it through git-buildpackage
+#
+
+rm -f \
+    configure		\
+    config.guess	\
+    config.sub
+
+git-buildpackage					\
+	--git-upstream-branch=master			\
+	--git-debian-branch=ubuntu			\
+	'--git-upstream-tag=wwwoffle-%(version)s'

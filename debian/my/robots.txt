@@ -1,0 +1,19 @@
+#
+# WWWOFFLE Version 2.4 - robots exclusion file.
+#
+# See: http://info.webcrawler.com/mak/projects/robots/norobots.html
+#
+
+User-Agent: *
+
+# The control pages
+Disallow: /control
+
+# The refresh forms
+Disallow: /refresh
+
+# The monitor forms
+Disallow: /monitor
+
+# The indexes
+#Disallow: /index

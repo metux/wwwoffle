@@ -48,7 +48,7 @@ set correctly.
 
 Also they should be checked to ensure that the Hyper Estraier and wwwoffle-ls
 programs are on the path (you can edit the PATH variable here if they are not in
-/usr/local/bin).
+/usr/local/bin). (The Debian installation should be OK.)
 
 
 Indexing

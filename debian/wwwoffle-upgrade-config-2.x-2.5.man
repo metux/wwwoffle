@@ -1,0 +1,37 @@
+.TH wwwoffle-upgrade-config-2.x-2.5 8 "November 2000" WWWOFFLE
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+
+.SH NAME
+wwwoffle-upgrade-config-2.x-2.5 \- upgrades the config file (older versions)
+
+.SH SYNOPSIS
+wwwoffle-upgrade-config-2.x-2.5
+.I <config-file>
+
+.SH "DESCRIPTION"
+This tool upgrades the config file (normally being /etc/wwwoffle.conf)
+from an older version to 2.5. After this has been done,
+.B wwwoffle-upgrade-config-2.x-2.5
+can be used to upgrade to the current 2.6 format.
+Take a look at the /usr/share/doc/wwwoffle directory for more information.
+
+This and the companion
+.B wwwoffle-upgrade-config
+is usually not to be used manually; they are run during installation of
+the wwwoffle package if necessary. However, there may be circumstances
+where they need to be run again.
+
+.SH FILES
+.br
+.\" set tabstop to longest possible filename, plus a wee bit
+.ta \w'/etc/wwwoffle/wwwoffle.conf 'u
+\fI/etc/wwwoffle/wwwoffle.conf\fR  the location of the wwwoffle configuration file
+
+.SH SEE ALSO
+.B wwwoffle-upgrade-config(8)
+
+.SH AUTHOR
+Manpage written by Christian Hammers \fB<ch@debian.org>\fP
+.br
+Now maintained by Paul Slootman \fB<paul@debian.org>\fP

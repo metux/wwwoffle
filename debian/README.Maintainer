@@ -1,0 +1,13 @@
+#########################################################################
+### /var/cache/wwwoffle/monitor to /var/lib/wwwoffle/monitor move
+
+* This is currently impossible since wwwoffle 
+  a) checks the symlink with lstat instead of stat for IS_DIR and 
+  b) frequently uses chdir("..") so that it won't find back after 
+     traversing the symlink to /var/lib
+  Upstream maintainer was contacted.
+* Things I will have to do: 
+	- create dir (wwwoffle.dirs)
+	- move existing content and delete old dir (wwwoffle.postinst)
+	- create symlink (wwwoffle.postinst)
+	- rebuild symlink if lost (wwwoffle.init.d)

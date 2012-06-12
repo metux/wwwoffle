@@ -1,0 +1,8 @@
+# /etc/wwwoffle/wwwoffle.options
+#
+# configuration options for /etc/ppp/ip-up.d/1wwwoffle, /etc/init.d/wwwoffle
+# and /etc/cron.daily/wwwoffle
+# See wwwoffle.options(5) for an explanation of the available options.
+-ppp
+fetch
+htdig

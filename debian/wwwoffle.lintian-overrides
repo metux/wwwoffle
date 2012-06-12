@@ -1,0 +1,15 @@
+wwwoffle: description-synopsis-starts-with-a-capital-letter
+wwwoffle: postinst-uses-db-input
+wwwoffle: file-in-unusual-dir
+wwwoffle: shell-script-fails-syntax-check ./usr/lib/wwwoffle/upgrade-config-2.x-2.5.pl
+wwwoffle: shell-script-fails-syntax-check ./usr/lib/wwwoffle/upgrade-config-2.5-2.6.pl
+wwwoffle: shell-script-fails-syntax-check ./usr/lib/wwwoffle/upgrade-config-2.6-2.7.pl
+wwwoffle: shell-script-fails-syntax-check ./usr/lib/wwwoffle/upgrade-config-2.7-2.8.pl
+wwwoffle: shell-script-fails-syntax-check ./usr/lib/wwwoffle/upgrade-config.pl
+wwwoffle: shell-script-fails-syntax-check ./usr/sbin/wwwoffle-audit-usage
+wwwoffle: select-with-translated-default-field wwwoffle/select_html_lang de.iso-8859-15
+wwwoffle: select-with-translated-default-field wwwoffle/select_html_lang fr.iso-8859-15
+wwwoffle: select-with-translated-default-field wwwoffle/select_html_lang nl.iso-8859-15
+wwwoffle: select-with-translated-default-field wwwoffle/select_html_lang es.iso-8859-15
+wwwoffle: select-with-translated-default-field wwwoffle/select_html_lang ca.iso-8859-15
+wwwoffle: select-with-translated-default-field wwwoffle/select_html_lang cs.iso-8859-2

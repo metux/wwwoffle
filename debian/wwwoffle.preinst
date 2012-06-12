@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+$DEBIAN_SCRIPT_DEBUG || set -v -x 
+
+if dpkg --compare-versions "$POSTINST_ARG2" le-nl 2.9; then
+    echo
+    echo "Sorry, upgrading from such an old version ($POSTINST_ARG2) of wwwoffle"
+    echo "is not supported."
+    echo "Please first purge the old version, then retry installation of the new one."
+    echo
+    exit 1
+fi
+
+#DEBHELPER#
+# vim: ts=2

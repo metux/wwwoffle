@@ -1,0 +1,343 @@
+# Translation of wwwoffle debconf templates to French
+# Copyright (C) 2008 Thomas Huriaux <thomas.huriaux@gmail.com>
+# This file is distributed under the same license as the wwwoffle package.
+#
+# Initial translator: Philippe Batailler <philippe.batailler@free.fr>
+msgid ""
+msgstr ""
+"Project-Id-Version: wwwoffle 2.8a-2\n"
+"Report-Msgid-Bugs-To: wwwoffle@packages.debian.org\n"
+"POT-Creation-Date: 2008-02-08 06:44+0100\n"
+"PO-Revision-Date: 2006-06-29 15:42+0200\n"
+"Last-Translator: Thomas Huriaux <thomas.huriaux@gmail.com>\n"
+"Language-Team: French <debian-l10n-french@lists.debian.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:1001
+msgid "The location of some files and directories has been changed"
+msgstr "Changement de l'emplacement de certains fichiers et répertoires"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:1001
+msgid ""
+"The config files moved to /etc/wwwoffle/ and the cache dir moved to /var/"
+"cache/wwwoffle. Further the format of the cache has changed between version "
+"1.x and version 2.x and there are some new configuration options. Your "
+"directories and the config files will be adjusted automatically now."
+msgstr ""
+"Les fichiers de configuration de wwwoffle sont maintenant placés dans /etc/"
+"wwwoffle/ et le répertoire de cache est /var/cache/wwwoffle. De plus le "
+"format du cache a changé entre les versions 1.x et 2.x et de nouvelles "
+"options de configuration sont apparues. Ces changements vont être mis en "
+"oeuvre automatiquement."
+
+#. Type: password
+#. Description
+#: ../wwwoffle.templates:2001
+msgid "Configuration now requires a password:"
+msgstr "Mot de passe :"
+
+#. Type: password
+#. Description
+#: ../wwwoffle.templates:2001
+msgid ""
+"To prevent any random user on the system from changing the state of the "
+"wwwoffle daemon (e.g. put it offline), a password will be added to the /etc/"
+"wwwoffle/wwwoffle.conf file. If non-root users have to be able to control "
+"the daemon, they must be in the \"proxy\" group (see \"man group\") and they "
+"must pass the parameters \"-c /etc/wwwoffle/wwwoffle.conf\" in addition to "
+"other options."
+msgstr ""
+"Pour qu'aucun utilisateur non autorisé ne puisse modifier l'état du démon "
+"wwwoffle (p. ex. le déconnecter), un mot de passe va être ajouté au fichier /"
+"etc/wwwoffle/wwwoffle.conf. Si des utilisateurs autres que le "
+"superutilisateur doivent pouvoir gérer le démon, ils devront appartenir au "
+"groupe « proxy » (voir « man group ») et passer les paramètres « -c /etc/"
+"wwwoffle/wwwoffle.conf » en plus des autres options."
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "en (English)"
+msgstr "en (anglais)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "de (German)"
+msgstr "de (allemand)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "es (Spanish)"
+msgstr "es (espagnol)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "fr (French)"
+msgstr "fr (français)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "it (Italian)"
+msgstr "it (italien)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "nl (Dutch)"
+msgstr "nl (néerlandais)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "pl (Polish)"
+msgstr "pl (polonais)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "ru (Russian)"
+msgstr "ru (russe)"
+
+#. Type: select
+#. DefaultChoice
+#: ../wwwoffle.templates:3002
+msgid ""
+"en (English)[ default : do not put what's inside brackets into translations. "
+"Put your own language here but UNTRANSLATED]"
+msgstr "fr (French)"
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid "your default language:"
+msgstr "Langue par défaut :"
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid ""
+"wwwoffle offers you translations of most of the internal HTML pages. Those "
+"pages which are not yet translated will automatically be replaced with the "
+"English ones."
+msgstr ""
+"La plupart des pages HTML de wwwoffle sont traduites. Celles qui ne sont pas "
+"encore traduites sont automatiquement remplacées par leur version anglaise."
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid ""
+"Note that the languages configuration in your browser will override this "
+"default."
+msgstr ""
+"Veuillez noter que le système de configuration des langues des navigateurs "
+"remplacera cette configuration par défaut."
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:4001
+msgid "ATTENTION: There was an error while converting the config"
+msgstr "Erreur lors de la conversion de la configuration"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:4001
+msgid ""
+"Your config file has been preserved as /etc/wwwoffle/wwwoffle.conf.old . "
+"Please correct manually. Take a look at /var/log/wwwoffle-upgrade.log for "
+"reasons. Please delete this logfile manually."
+msgstr ""
+"Votre fichier de configuration a été sauvegardé dans /etc/wwwoffle/wwwoffle."
+"conf.old. Veuillez faire vous-même les modifications. Pour connaître les "
+"raisons de cette erreur, examinez le fichier /var/log/wwwoffle-upgrade.log. "
+"Veuillez ensuite supprimer ce fichier."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid "the port number wwwoffle runs on:"
+msgstr "Numéro de port pour wwwoffle :"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid ""
+"The default port number for HTTP proxy caches is 8080. To use wwwoffle as "
+"proxy for your favourite web browser you have to use \"localhost:8080\" (or "
+"whatever port number you've chosen)."
+msgstr ""
+"Le numéro de port par défaut des caches mandataires HTTP est 8080. Vous "
+"devez indiquer « localhost:8080 » (ou tout autre numéro) pour que votre "
+"navigateur préféré utilise wwwoffle comme mandataire."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid ""
+"P.S.: Netscape users can simply write http://localhost:8080/wwwoffle.pac in\n"
+"      Edit->Preferences->Advanced->Proxies->Automatic_proxy_configuration"
+msgstr ""
+"Les utilisateurs de Netscape peuvent simplement écrire http://localhost:8080/"
+"wwwoffle.pac dans Edit->Preferences->Advanced->Proxies-"
+">Automatic_proxy_configuration (pour les versions françaises : Édition-"
+">Préférences->Avancées->Proxy->Configuration automatique du proxy)."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid "Use which parent proxy (current is ${PARENT_PROXY}):"
+msgstr "Mandataire parent à utiliser (actuellement : ${PARENT_PROXY}) :"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid ""
+"Using a parent proxy normally results in a remarkable speed gain. If you "
+"don't want to use one enter \"none\" in this field; else enter the proxy in "
+"the form \"proxy.example.com:8080\"."
+msgstr ""
+"Habituellement, l'utilisation d'un mandataire parent permet des gains de "
+"vitesse remarquables. Entrez « none » si vous ne voulez pas en utiliser. "
+"Sinon, indiquez le nom du mandataire sous la forme : « proxy.exemple."
+"com:8080 »."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid ""
+"Use \"manual\" if you don't want the proxy lines in the config file touched "
+"by the automatic configuration."
+msgstr ""
+"Entrez « manual » si vous ne souhaitez pas que les lignes relatives au pare-"
+"feu dans le fichier de configuration soient modifiées automatiquement."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:7001
+msgid "Does wwwoffle rely on a dialup (PPP) interface for its connection?"
+msgstr ""
+"Faut-il connecter wwwoffle via une interface PPP (avec composition de "
+"numéro) ?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:7001
+msgid ""
+"Most people will need to accept here. Refuse, only if you have a parent "
+"proxy that is reachable without a PPP (analog or ISDN) interface."
+msgstr ""
+"La plupart des utilisateurs devraient choisir cette option. Ne refusez que "
+"si vous accédez à un mandataire parent sans interface PPP (analogique ou "
+"numérique RNIS)."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:8001
+msgid "Should wwwoffle fetch pages when the PPP interface comes up?"
+msgstr ""
+"Faut-il récupérer des pages dès que l'interface PPP est mise en route ?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:8001
+msgid ""
+"Most people will accept here. However, if you regularly bring up the "
+"connection just to check for mail and you only want to fetch web pages once "
+"a day or so (manually), you should refuse."
+msgstr ""
+"La plupart des utilisateurs devraient choisir cette option. Cependant, si "
+"vous lancez la connexion uniquement pour vérifier votre boîte aux lettres ou "
+"si vous récupérez des pages web une fois par jour et manuellement, refusez."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid "Should htdig be used to index the cached pages?"
+msgstr "Faut-il utiliser htdig pour indexer les pages mises en cache ?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid ""
+"With this, it is possible to direct htdig to index the cached pages so that "
+"those pages can be searched with htdig."
+msgstr ""
+"Avec cette option, il est possible d'indexer et d'effectuer des recherches "
+"avec htdig sur les pages mises en cache."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid "Note: this _can_ take a lot of time to do!"
+msgstr "Note : cela peut prendre beaucoup de temps."
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:10001
+msgid "wwwoffle.conf is now only readable by root and group proxy"
+msgstr ""
+"Fichier wwwoffle.conf accessible seulement à « root » et au groupe « proxy »"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:10001
+msgid ""
+"To prevent just anyone from changing the state of the daemon, the file "
+"wwwoffle.conf has been made unreadable by others not root and not in the "
+"group \"proxy\". To add users to that group, use \"adduser nameofuser proxy"
+"\"."
+msgstr ""
+"Pour éviter que n'importe qui puisse modifier l'état du démon wwwoffle, "
+"seuls le superutilisateur et les membres du groupe « proxy » peuvent lire le "
+"fichier wwwoffle.conf. Utilisez « adduser nom-de-l-utilisateur proxy » pour "
+"ajouter un utilisateur à ce groupe."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid "Fetch interval for monitored pages while online:"
+msgstr "Fréquence de récupération des pages surveillées :"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid ""
+"Monitored pages can be fetched when the PPP link goes up. However, when "
+"online, there is no standard mechanism to regularly fetch monitored pages. "
+"The Debian package has a cronjob that does this."
+msgstr ""
+"Les pages surveillées peuvent être récupérées lorsque le lien PPP devient "
+"actif. Cependant, une fois connecté, il n'existe pas de mécanisme permettant "
+"de récupérer régulièrement les pages surveillées. Le paquet Debian utilise "
+"une tâche cron pour cela."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid ""
+"As monitored pages are usually not scheduled that often, the recommended "
+"value of 30 minutes should be adequate. Note that this is also the maximum "
+"allowed."
+msgstr ""
+"La modification des pages surveillées n'étant en général pas planifiée, la "
+"valeur conseillée de 30 minutes devrait être correcte. Veuillez noter que "
+"cette valeur est le maximum autorisé."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid "Enter \"off\" to disable the fetching while online."
+msgstr ""
+"Indiquez « off » pour désactiver ce mécanisme de récupération lorsque la "
+"connexion est active."

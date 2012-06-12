@@ -1,0 +1,24 @@
+# check for default route over this interface; if the default route
+# has nothing to do with this interface, don't modify wwwoffle's
+# status.
+
+# apparently it sometimes takes the kernel a moment to create
+# the route after a 'route add'...
+sleep 1
+DEFROUTEIF=`route -n | grep '^0\.0\.0\.0 ' | awk '{print $8}'`
+# maybe we should use /proc/net/route directly
+if [ "x$DEFROUTEIF" != "x$PPP_IFACE" ]; then
+	exit 0
+fi
+
+# See /usr/share/doc/wwwoffle/README.Debian for reasons not to 
+# restart wwwoffle here.
+
+# put wwwoffle in online mode
+/usr/bin/wwwoffle -c /etc/wwwoffle/wwwoffle.conf -online
+
+# optionally fetch marked pages
+if grep -qsx fetch /etc/wwwoffle/wwwoffle.options; then
+  /usr/bin/wwwoffle -c /etc/wwwoffle/wwwoffle.conf -fetch
+fi
+

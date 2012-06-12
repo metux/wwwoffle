@@ -102,7 +102,7 @@ install-html : install-mkdir
 	  echo "WWWOFFLE: " ;\
 	  exit 0 )
 	cd html ; rm -f default ; ln -sf $(DEFLANG) default
-	$(TAR) cf $(SPOOLDIR)/html.tar html && cd $(SPOOLDIR) && $(TAR) xpf html.tar && rm html.tar
+	$(TAR) cf - html | (cd $(SPOOLDIR) && $(TAR) xpf - )
 	cd $(SPOOLDIR)/html && ./fixup-install.sh $(LOCALHOST):$(HTTP_PORT) && rm fixup-install.sh
 # Now fix the ownerships that tar preserved, we needed to use 'tar xpf' to get round root's umask.
 # These two will fail unless you are root, that is OK because the owner is already you.
@@ -127,7 +127,7 @@ install-search : install-mkdir
 	  echo "WWWOFFLE: it will not be used by WWWOFFLE and can be deleted." ;\
 	  echo "WWWOFFLE: " ;\
 	  exit 0 )
-	$(TAR) cf $(SPOOLDIR)/search.tar search && cd $(SPOOLDIR) && $(TAR) xpf search.tar && rm search.tar
+	$(TAR) cf - search | ( cd $(SPOOLDIR) && $(TAR) xpf - )
 	cd $(SPOOLDIR)/search && ./fixup-install.sh $(REAL_SPOOLDIR) $(LOCALHOST):$(HTTP_PORT) && rm fixup-install.sh
 # Now fix the permissions that tar preserved, we needed to use 'tar xpf' to get round root's umask.
 # These two will fail unless you are root, that is OK because the owner is already you.

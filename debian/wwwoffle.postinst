@@ -1,0 +1,407 @@
+#!/bin/sh -e
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+. /usr/share/debconf/confmodule
+
+POSTINST_DO_WHAT="$1"
+POSTINST_ARG2="$2"
+
+current_version_file=2.9f  # version where conf file changed last
+current_version=2.9f       # current package
+MSGPATH=/etc/wwwoffle/html
+CONFIG=/etc/wwwoffle/wwwoffle.conf
+OPTIONS=/etc/wwwoffle/wwwoffle.options
+LOG=/var/log/wwwoffle-upgrade.log
+
+
+SPOOLDIR=$(perl -ne 'if(/^\s*spool-dir\s*=\s*(\S+)/) {print $1;exit}' $CONFIG 2>/dev/null)
+if [ -z "$SPOOLDIR" ]; then
+    SPOOLDIR=/var/cache/wwwoffle
+fi
+if [ ! -d "$SPOOLDIR" ]; then
+    install -d -D -o proxy -g proxy "$SPOOLDIR"
+fi
+
+# These aren't in the package anymore, due to the stuff above;
+# I don't want to know what dpkg will do to a symlink if it thinks
+# it should be a dir...
+for i in "$SPOOLDIR/outgoing" "$SPOOLDIR/lasttime" "$SPOOLDIR/temp"; do
+    # some people have symlinks to places that don't exist.
+    # Fool them by creating those places :-)
+    if [ -L "$i" ]; then
+        mkdir -p $(readlink -f "$i") >/dev/null 2>&1
+        mkdir -p $(readlink    "$i") >/dev/null 2>&1
+    else
+        mkdir -p "$i" || true
+    fi
+done
+if [ ! -L "$SPOOLDIR/monitor" ]; then
+    if [ -d "$SPOOLDIR/monitor" ]; then
+        (
+          echo "  moving $SPOOLDIR/monitor to /var/lib/wwwoffle/monitor"
+          cd "$SPOOLDIR/monitor"
+          mv * "$SPOOLDIR/monitor" 2>/dev/null || true
+        )
+    fi
+    rm -rf "$SPOOLDIR/monitor"
+    echo "  creating $SPOOLDIR/monitor symlink"
+    ln -sf /var/lib/wwwoffle/monitor "$SPOOLDIR/monitor"
+fi
+
+# remove symlink that somehow ended up in the wrong place
+rm -f /var/lib/wwwoffle/monitor/monitor 2>/dev/null || true
+
+cd /
+
+$DEBIAN_SCRIPT_DEBUG || set -v -x
+
+# starting with 2.7 there's a -status option. Praise the Lord!
+# We've checked in the preinst that we're upgrading from at least 2.7a.
+
+mode=none    # no version installed or not running, so no mode
+if [ x"$POSTINST_ARG2" != x ]; then
+    if ps acx | grep 'w[w]woffled' >/dev/null; then
+        if wwwoffle -status -c $CONFIG | grep -qs online; then
+            mode=online
+        elif wwwoffle -status -c $CONFIG | grep -qs offline; then
+            mode=offline
+        else
+            mode=none
+        fi
+    fi
+fi
+
+# if mode == none at this stage, let the init.d script figure it out
+
+# in the case we reconfigure, stop wwwoffle (remember the current mode!)
+
+if [ -s $CONFIG ]; then
+    if which invoke-rc.d >/dev/null 2>&1; then
+        invoke-rc.d wwwoffle stop || true
+    else
+        /etc/init.d/wwwoffle stop || true
+    fi >/dev/null 2>&1
+    NEW_CONFIG_MADE=false
+else
+    if [ -s /usr/share/wwwoffle/default/wwwoffle.conf.gz ]; then
+        zcat /usr/share/wwwoffle/default/wwwoffle.conf.gz > $CONFIG
+    elif [ -s /usr/share/wwwoffle/default/wwwoffle.conf ]; then
+        cp /usr/share/wwwoffle/default/wwwoffle.conf $CONFIG
+    else
+        echo "/usr/share/wwwoffle/default/wwwoffle.conf* doesn't exist!"
+        echo "This should be impossible.  This is the content of /usr/share/wwwoffle/default:"
+        find /usr/share/wwwoffle/default -ls
+        df /usr/share/wwwoffle
+        exit 1
+    fi
+    NEW_CONFIG_MADE=true
+fi
+chown proxy:proxy $CONFIG
+
+# Old wwwoffle versions (2.3) had a directory here. We have to remove it
+# before we place our symlink to this location.
+if [ -e "$SPOOLDIR/html" -a ! -L "$SPOOLDIR/html" ]; then
+	rm -rf "$SPOOLDIR/html"
+fi
+# Old junk, remove it if it's there
+if [ -e /usr/share/wwwoffle/html/htdig -a ! -L /usr/share/wwwoffle/html/htdig ];
+then rm -rf /usr/share/wwwoffle/html/htdig
+fi
+
+# WWWOffle looks at
+#    (A) /usr/share/wwwoffle/html/en/local/dontget/replacement.png
+# which points at
+#    (B) /etc/wwwoffle/debian-replacement.png
+# which (by default) points at
+#    (C) /usr/share/wwwoffle/html/en/local/dontget/standard.replacement.png
+# but (B) can be modified by the user.
+#
+# (A) and (C) are in the package.
+# Here the (B) link is made if it either doesn't exist or it points to a
+# non-existent file.
+# As wwwoffle will basically be broken if this file isn't there, it's not
+# handled as a conffile, we simply ensure it's there.
+
+for i in gif png js; do
+	if [ ! -f /etc/wwwoffle/debian-replacement.$i ]; then
+		rm -f /etc/wwwoffle/debian-replacement.$i
+		ln -s /usr/share/wwwoffle/html/en/local/dontget/standard.replacement.$i /etc/wwwoffle/debian-replacement.$i
+	fi
+done
+
+# converts the config file if necessary
+date >> $LOG
+if $NEW_CONFIG_MADE; then
+    config_version="$current_version"
+else
+    config_version=2.7
+	if grep -qsw 'reply-chunked-data' $CONFIG; then
+		config_version=2.8
+    fi
+	if grep -qsw 'keep-cache-if-not-found' $CONFIG; then
+		config_version=2.8b
+    fi
+	if grep -qsw 'fix-mixed-cyrillic' $CONFIG; then
+		config_version=2.8d
+    fi
+	if grep -qsw 'cache-control-max-age-0' $CONFIG; then
+		config_version=2.8e
+    fi
+	if grep -qsw 'SSLOptions' $CONFIG; then
+		config_version=2.9
+    fi
+    perl -i.bak -pe 's/^(\# WWWOFFLE - World Wide Web Offline Explorer - Version).*/$1'" $config_version/" $CONFIG
+    if cmp -s $CONFIG $CONFIG.bak; then mv -f $CONFIG.bak $CONFIG; fi
+fi
+
+echo "config_vers=$config_version; installed_deb_vers=$POSTINST_ARG2; current_vers_file=$current_version_file; current_vers=$current_version" >>$LOG
+
+set +e # ignore errors from upgrade scripts, those are checked explicitly
+
+case "$config_version" in
+  2.7*)
+    echo wwwoffle-upgrade-config-2.7-2.8 $CONFIG >>$LOG
+    /usr/lib/wwwoffle/upgrade-config-2.7-2.8.pl $CONFIG >>$LOG 2>&1
+    rc=$?
+    if [ $rc -ne 0 ]; then
+        db_get critical wwwoffle/note_upgrade_config_failed || true
+        db_go || true
+        exit 255
+    fi
+    config_version=2.8
+    ;;
+esac
+if dpkg --compare-versions "$POSTINST_ARG2" lt-nl $current_version_file; then
+	echo wwwoffle-upgrade-config $CONFIG >>$LOG
+	/usr/lib/wwwoffle/upgrade-config.pl $CONFIG >>$LOG 2>&1
+	rc=$?
+    if [ $rc -ne 0 ]; then
+        db_get critical wwwoffle/note_upgrade_config_failed || true
+        db_go || true
+        exit 255
+    fi
+else
+	echo "No upgrade necessary" >> $LOG
+fi
+
+set +e # ignore errors for debconf stuff
+# change port, parent,  UID/GID to proxy:proxy
+db_get wwwoffle/string_parent_proxy
+if [ $? -eq 0 -o $? -ge 30 ] && [ "$RET" != manual ]; then
+    PROXY_MATCH='^\s*<(https?)://\*/*>\s*proxy\s*=.*'
+    PROXY=$RET
+else
+    PROXY_MATCH='^NO PROXY CONFIGURED IN DEBCONF$'
+    PROXY=none
+fi
+db_get wwwoffle/string_port_number
+if [ $? -eq 0 -o $? -ge 30 ]; then
+    PORTNUMBER_MATCH='^\s*http-port\s*=.*'
+    PORTNUMBER=$RET
+else
+    PORTNUMBER_MATCH='^NO PORT NUMBER CONFIGURED IN DEBCONF$'
+    PORTNUMBER=8080
+fi
+db_get wwwoffle/passwd
+if [ $? -eq 0 -o $? -ge 30 ]; then
+    PASSWD_MATCH='^\s*password\s*=.*'
+    PASSWD=$(echo "$RET" | sed 's,[^a-z0-9A-Z ,./;:-],\\&,g')
+else
+    PASSWD_MATCH='^NO PASSWD CONFIGURED IN DEBCONF$'
+    PASSWD=secret
+fi
+set -e
+perl -pi -e "s,$PORTNUMBER_MATCH, http-port	= $PORTNUMBER,;			    \
+			 s,^\s*spool-dir\s*= SPOOLDIR, spool-dir   = /var/cache/wwwoffle,; \
+  			 s,^(#|\s*)run-uid\s*=.*, run-uid	= proxy,;   		\
+			 s,^(#|\s*)run-gid\s*=.*, run-gid	= proxy,; 		\
+			 s,$PROXY_MATCH, <\$1://*> proxy = $PROXY,;  			\
+			 s,$PASSWD_MATCH, password = $PASSWD,;"       			\
+			 $CONFIG
+
+set +e
+if [ ! -f $OPTIONS ]; then
+	cp -p /usr/share/wwwoffle/default/wwwoffle.options $OPTIONS
+fi
+cp -p $OPTIONS $OPTIONS.bak
+
+db_get wwwoffle/use-htdig           ###########################################
+if [ $? -eq 0 -o $? -ge 30 ]; then
+    USE_HTDIG=$RET
+else
+    USE_HTDIG=unknown
+fi
+if [ "$USE_HTDIG" = "true" ]; then
+    if grep '^htdig' $OPTIONS >/dev/null 2>&1 ; then
+        : # already there
+    else
+        perl -i -e 'while (<>) { next if /htdig/; print; }' $OPTIONS
+        echo htdig >> $OPTIONS
+    fi
+elif [ "$USE_HTDIG" = "false" ]; then
+    perl -i -e 'while (<>) { next if /htdig/; print; }' $OPTIONS
+else
+    : # don't touch the existing settings
+fi
+db_get wwwoffle/use-ppp-interface   ###########################################
+if [ $? -eq 0 -o $? -ge 30 ]; then
+    USE_PPP=$RET
+else
+    USE_PPP=unknown
+fi
+if [ "$USE_PPP" = "true" ]; then
+    if grep -qsx ppp $OPTIONS >/dev/null 2>&1 ; then
+        : # already there
+    else
+        perl -i -e 'while (<>) { next if /ppp/; print; }' $OPTIONS
+        echo ppp >> $OPTIONS
+    fi
+elif [ "$USE_PPP" = "false" ]; then
+    perl -i -e 'while (<>) { next if /ppp/; print; }' $OPTIONS
+else
+    : # don't touch the existing settings
+fi
+
+if cmp -s $OPTIONS $OPTIONS.bak; then mv -f $OPTIONS.bak $OPTIONS; fi
+
+CRONTAB=/etc/cron.d/wwwoffle
+db_get wwwoffle/fetchfrequency   ###########################################
+rc=$?
+if [ $rc -eq 0 -o $rc -ge 30 ]; then
+    FREQ="$RET"
+    if [ "$FREQ" != off ]; then
+        # convert to digits only
+        FREQ=$( expr "$FREQ" : '\([0-9]*\)' )
+        if [ -z "$FREQ" ]
+            then FREQ=off
+        elif [ "$FREQ" = 0 ]
+            then FREQ=off
+        fi
+    fi
+    if [ "$FREQ" = off ]; then
+        if [ -s $CRONTAB ]; then
+            # replace only first occurrence of wwwoffle.cron-fetch line
+            perl -i.bak -pe 'unless($done==1){if(s,^(\s*#\s*)*([^#]*wwwoffle.cron-fetch),# $2,){$done=1;}}' $CRONTAB
+        fi
+    else
+        if [ -s $CRONTAB ]; then
+            # get current value
+            FREQx=$(perl -ne 'if (m,^[^ \t#]+/(\d+).*wwwoffle.cron-fetch$,){print $1;exit 1;} if (m,^\s*#\s*.*wwwoffle.cron-fetch$,) {print 0;exit 1;}' $CRONTAB)
+            if [ $? = 1 ]; then # was the line recognizable
+                FREQx=$( expr "$FREQx" : '\([0-9]*\)' ); if [ -z "$FREQx" ]; then FREQx=unknown; fi
+                # only replace it if value changed
+                if [ "$FREQx" -ne "$FREQ" ]; then
+                    mv -f $CRONTAB $CRONTAB.bak
+                    # replace only first occurrence of wwwoffle.cron-fetch line
+                    perl -e '$doit=1; while(<>){ if ($doit && /wwwoffle.cron-fetch/){$doit=0;print "*/'$FREQ' * * * * proxy [ -x /etc/wwwoffle/wwwoffle.cron-fetch ] && /etc/wwwoffle/wwwoffle.cron-fetch\n";} else {print;}}' $CRONTAB.bak > $CRONTAB
+                fi
+            fi
+        else
+            if [ -d /etc/cron.d ]; then
+                ( echo "# min hr dom mon dow"
+                  echo "# If you want to disable this, comment out the line"
+                  echo "# below (don't simply remove this file)."
+                  echo "*/$FREQ * * * * proxy [ -x /etc/wwwoffle/wwwoffle.cron-fetch ] && /etc/wwwoffle/wwwoffle.cron-fetch"
+                ) > /etc/cron.d/wwwoffle
+            fi
+        fi
+    fi
+fi
+
+# gepruts to make the message files overwriteable
+# apt barfs on more than x conffiles, see bug #174945
+######################################
+# now duplicate directory structure of /usr/share/wwwoffle/html to /etc/wwwoffle/html
+cd /etc/wwwoffle
+(cd /usr/share/wwwoffle; find html -type d) |
+    while read x; do
+	if [ ! -e $x ]; then
+	    if [ -h $x ]; then	# dangling symlink
+		rm -f $x
+	    fi
+	    mkdir -p $x
+	elif [ ! -d $x ]; then
+	    if [ -h $x ]; then	# symlink pointing to a non-dir
+		rm -f $x
+	    else
+		# not a directory, not a symlink
+		rm -f $x.old
+		mv -f $x $x.old
+	    fi
+	    mkdir -p $x
+	fi
+    done
+# now symlink the files
+(cd /usr/share/wwwoffle/html; find ?? ! -type d) |
+    while read x; do
+	ln -s /usr/share/wwwoffle/html/$x /etc/wwwoffle/html/$x 2>/dev/null;
+    done
+
+# Makes a symlink to the new html file location
+set +e # ignore errors for debconf stuff
+db_get wwwoffle/select_html_lang
+set -e
+RET="$(echo $RET | sed 's/ .*//')"
+rm -f ${MSGPATH}/default
+rm -f /usr/share/wwwoffle/html/default # old (pre-2.8-2) location
+if [ "$RET" != '' -a -d "${MSGPATH}/$RET" ]; then
+	ln -s "$RET" "${MSGPATH}/default"
+else
+	echo "${MSGPATH}/$RET isn't a directory! Defaulting to English default."
+	ln -s en ${MSGPATH}/default
+fi
+
+# fix namazu NMZ files; they're in /etc, but symlinked to /var/cache
+(
+  if [ ! -d "$SPOOLDIR/search/namazu/db/." ]; then
+  	mkdir -p "$SPOOLDIR/search/namazu/db"
+	chown proxy:proxy "$SPOOLDIR/search/namazu/db"
+  fi
+  cd /etc/wwwoffle/namazu
+  for i in NMZ.body NMZ.foot NMZ.head NMZ.result.normal NMZ.result.short NMZ.tips; do
+  	if [ ! -s "$SPOOLDIR/search/namazu/db/$i" ]; then
+		ln -s /etc/wwwoffle/namazu/$i "$SPOOLDIR/search/namazu/db/$i"
+	fi
+  done
+)
+######################################
+
+# Apparently someone may leave some filehandles open. Without the stop command
+# postinst may hang.
+db_stop
+
+
+# ensures the right permissions in the cache dir
+# the '.' is needed by symbolic link dir caches !
+if [ "$(stat --format='%U %G' "$SPOOLDIR/.")" = 'proxy proxy' ]; then
+	: # the chown -R takes too long to "simply" do
+else
+    echo "Fixing ownership of spooldirs in the background."
+    mkdir -p "$SPOOLDIR/temp" >/dev/null 2>&1
+    cd "$SPOOLDIR/temp"
+    rm -f nohup.out
+    nohup chown -R proxy:proxy "$SPOOLDIR/." /var/lib/wwwoffle/. >/dev/null 2>&1 &
+    sleep 1
+    rm -f nohup.out
+fi
+
+# hide password in all cases
+chmod 0640 ${CONFIG}*; chown proxy:proxy ${CONFIG}*
+
+# directory needs to be writable by owner proxy
+chown proxy /etc/wwwoffle/.
+chmod u+w   /etc/wwwoffle/.
+
+
+if [ -L /usr/doc/wwwoffle ]; then
+    rm -f /usr/doc/wwwoffle
+fi
+
+#DEBHELPER#
+
+if [ $mode = online ]; then
+    wwwoffle -c $CONFIG -online 2>&1 | grep -v 'WWWOFFLE Already Online' || true
+fi
+
+# vim:ts=4

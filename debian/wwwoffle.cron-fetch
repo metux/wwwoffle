@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# Script for fetching while online (i.e. force -fetch now and then)
+
+# Only bother if fetch option is selected via debconf
+# (or directly in the options file)
+if ! grep -qsx fetch /etc/wwwoffle/wwwoffle.options; then
+    exit 0
+fi
+
+# Is wwwoffle still installed?
+CMD=/usr/bin/wwwoffle
+if ! [ -x $CMD ]; then
+    exit 0
+fi
+
+# Is it configured?
+CONF=/etc/wwwoffle/wwwoffle.conf
+if ! [ -s $CONF ]; then
+    exit 0
+fi
+
+if ! STATUS=$($CMD -status -c $CONF 2>&1); then
+    exit 1
+fi
+
+if echo "$STATUS" | grep -qs online; then
+    TEMPFILE=`tempfile -p WWWOFFLE`
+    $CMD -c $CONF -fetch >$TEMPFILE 2>&1
+    if [ `wc -l < $TEMPFILE` -le 2 ]; then
+        rm -f $TEMPFILE
+        exit 0
+    fi
+    # If there's more than the "Now Fetching" and "No more to fetch" text,
+    # then the user will probably want to see it (until I'm otherwise
+    # informed).
+    cat $TEMPFILE
+    rm -f $TEMPFILE
+fi
+
+exit 0

@@ -3,7 +3,8 @@
 //
 // See: http://www.netscape.com/eng/mozilla/2.0/relnotes/demo/proxy-live.html
 //
-// You should replace 'LOCALHOST' with the proxy hostname if required.
+// You should replace 'LOCALHOST' with the proxy hostname and port number
+// if required.
 //
 
 function FindProxyForURL(url, host)

@@ -3,6 +3,12 @@
 
 These are miscellaneous files/scripts that can be used with WWWOFFLE.
 
+[
+  Debian note: not all are included in the Debian package, as they
+  don't all make sense there. If you want all anyway, please download
+  the source package for wwwoffle.
+]
+
 Contents:
 
         Debian Startup (I)

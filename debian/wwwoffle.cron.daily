@@ -1,0 +1,59 @@
+#!/bin/sh -e
+
+[ -x /usr/bin/wwwoffle ] || exit 0 # exit if wwwoffle not installed anymore
+
+CONF=/etc/wwwoffle/wwwoffle.conf
+[ -s $CONF ] || exit 0             # exit if it doesn't exist
+
+set +e
+STATUS=$(wwwoffle -status -c $CONF 2>&1)
+rc=$?
+set -e
+if [ $rc -eq 0 ]; then
+    if echo "$STATUS" | grep -qs online; then
+        STATUS=online
+    elif echo "$STATUS" | grep -qs offline; then
+        STATUS=offline
+    else
+        STATUS=autodial
+    fi
+else
+    if [ $rc -eq 2 ]; then      # daemon not running?
+        exit 0                  # no use in continuing
+        STATUS=notrunning       # not reached
+    else
+        echo "Status of wwwoffle daemon undetermined: $STATUS"
+        exit 1
+    fi
+fi
+
+if /usr/sbin/wwwoffle-checkcert; then
+    # put it offline for a short period so that the lasttime directory is rotated.
+    if [ "$STATUS" != offline ]; then
+        wwwoffle -offline -c $CONF >/dev/null 2>&1 || true
+        sleep 3
+    fi
+else
+    # certificate has expired, stop and start to regenerate
+    echo "Restarting wwwoffle to regenerate certificate and start using it"
+    invoke-rc.d wwwoffle force-restart
+fi
+# restore wwwoffle to its previous mode
+wwwoffle -$STATUS -c $CONF >/dev/null 2>&1 || true
+
+# If asked not to purge, don't...
+if ! grep -qsx no-purge /etc/wwwoffle/wwwoffle.options; then
+    # run 'wwwoffle -purge' to purge the cache
+    wwwoffle -purge -c $CONF >/dev/null 2>&1
+fi
+
+# wwwoffle can only suggest the user to install htdig,
+# so we now have to check if it is installed at all !
+# Even then, maybe the user doesn't want htdig to run for wwwoffle.
+
+# This script creates /var/log/wwwoffle-htdig.log. Only one copy, no rotation.
+if [ -x /usr/bin/htdig ]; then
+	if grep -qsx htdig /etc/wwwoffle/wwwoffle.options; then
+		su proxy -s /bin/sh -c /usr/share/wwwoffle/search/htdig/wwwoffle-htdig-incr 
+	fi
+fi	

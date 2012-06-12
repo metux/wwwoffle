@@ -1,0 +1,337 @@
+# Vietnamese translation for WWWoffle.
+# Copyright © 2010 Free Software Foundation, Inc.
+# Clytie Siddall <clytie@riverland.net.au>, 2005-2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: wwwoffle 2.9d-3\n"
+"Report-Msgid-Bugs-To: wwwoffle@packages.debian.org\n"
+"POT-Creation-Date: 2008-02-08 06:44+0100\n"
+"PO-Revision-Date: 2010-02-13 18:47+0930\n"
+"Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
+"Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: LocFactoryEditor 1.8\n"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:1001
+msgid "The location of some files and directories has been changed"
+msgstr "Vị trí của một số tập tin và thư mục đã bị thay đổi"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:1001
+msgid ""
+"The config files moved to /etc/wwwoffle/ and the cache dir moved to /var/"
+"cache/wwwoffle. Further the format of the cache has changed between version "
+"1.x and version 2.x and there are some new configuration options. Your "
+"directories and the config files will be adjusted automatically now."
+msgstr ""
+"Những tập tin cấu hình đã di chuyển sang </etc/wwwoffle/>, và thư mục bộ nhớ "
+"tạm đã di chuyển sang </var/cache/wwwoffle>. Hơn nữa, dạng thức của bộ nhớ "
+"tạm đã thay đổi giữa phiên bản 1.x và 2.x, và có một số tùy chọn cấu hình "
+"mới. Những thư mục và tập tin cấu hình bạn sẽ tự động được điều chỉnh ngay "
+"bây giờ."
+
+#. Type: password
+#. Description
+#: ../wwwoffle.templates:2001
+msgid "Configuration now requires a password:"
+msgstr "Để cấu hình thì phải gõ mật khẩu :"
+
+#. Type: password
+#. Description
+#: ../wwwoffle.templates:2001
+msgid ""
+"To prevent any random user on the system from changing the state of the "
+"wwwoffle daemon (e.g. put it offline), a password will be added to the /etc/"
+"wwwoffle/wwwoffle.conf file. If non-root users have to be able to control "
+"the daemon, they must be in the \"proxy\" group (see \"man group\") and they "
+"must pass the parameters \"-c /etc/wwwoffle/wwwoffle.conf\" in addition to "
+"other options."
+msgstr ""
+"Để ngan cản người dùng ngẫu nhiên nào trong hệ thống thay đổi tính trạng của "
+"trình nền wwwoffle (v.d. đặt nó ngoại tuyến) thì sẽ thêm một mật khẩu vào "
+"tập tin cấu hình </etc/wwwoffle/wwwoffle.conf>. Nếu người dùng không phải "
+"người chủ cần điều khiển trình nền này, họ phải có trong nhóm « proxy » [ủy "
+"nhiệm] (hãy dùng lệnh « man group » để xem thông tin) và họ phải gởi những "
+"tham số « -c /etc/wwwoffle/wwwoffle.conf » qua thêm vào các tùy chọn khác."
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "en (English)"
+msgstr "en (Anh)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "de (German)"
+msgstr "de (Đức)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "es (Spanish)"
+msgstr "es (Tây-ban-nha)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "fr (French)"
+msgstr "fr (Pháp)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "it (Italian)"
+msgstr "It (Ý)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "nl (Dutch)"
+msgstr "nl (Hoà-lan)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "pl (Polish)"
+msgstr "pl (Phần-lan)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "ru (Russian)"
+msgstr "ru (Nga)"
+
+#. Type: select
+#. DefaultChoice
+#: ../wwwoffle.templates:3002
+msgid ""
+"en (English)[ default : do not put what's inside brackets into translations. "
+"Put your own language here but UNTRANSLATED]"
+msgstr "vi (Vietnamese)"
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid "your default language:"
+msgstr "ngôn ngữ mặc định:"
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid ""
+"wwwoffle offers you translations of most of the internal HTML pages. Those "
+"pages which are not yet translated will automatically be replaced with the "
+"English ones."
+msgstr ""
+"Trình wwwoffle cung cấp bản dịch của phần lớn trang HTML nội bộ. Những trang "
+"chưa dịch sẽ tự động được thay thế bằng những trang tiếng Anh."
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid ""
+"Note that the languages configuration in your browser will override this "
+"default."
+msgstr ""
+"Hãy ghi chú rằng cấu hình ngôn ngữ trong trình duyệt bạn sẽ đè lên giá trị "
+"mặc định này."
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:4001
+msgid "ATTENTION: There was an error while converting the config"
+msgstr "CHU Ý: gặp lỗi trong khi chuyển đổi cấu hình"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:4001
+msgid ""
+"Your config file has been preserved as /etc/wwwoffle/wwwoffle.conf.old . "
+"Please correct manually. Take a look at /var/log/wwwoffle-upgrade.log for "
+"reasons. Please delete this logfile manually."
+msgstr ""
+"Tập tin cấu hình bạn đã được bảo quản là </etc/wwwoffle/wwwoffle.conf.old>. "
+"Hãy tự sửa. Hãy xem lại bản ghi </var/log/wwwoffle-upgrade.log> để tìm lý do "
+"của lỗi. Hãy tự xóa bỏ tập tin bản ghi này."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid "the port number wwwoffle runs on:"
+msgstr "số thứ tự cổng trên đó wwwoffle chạy:"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid ""
+"The default port number for HTTP proxy caches is 8080. To use wwwoffle as "
+"proxy for your favourite web browser you have to use \"localhost:8080\" (or "
+"whatever port number you've chosen)."
+msgstr ""
+"Số hiệu cổng mặc định cho bộ nhớ tạm ủy nhiệm HTTP là 8080. Để sử dụng "
+"wwwoffle là ủy nhiệm cho trình duyệt ưa thích của bạn, bạn cần phải sử dụng "
+"giá trị « localhost:8080 » (máy địa phương:8080), hoặc số hiệu cổng nào bạn "
+"đã chọn."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid ""
+"P.S.: Netscape users can simply write http://localhost:8080/wwwoffle.pac in\n"
+"      Edit->Preferences->Advanced->Proxies->Automatic_proxy_configuration"
+msgstr ""
+"Người dùng trình duyệt Netscape có thể đơn giản gõ:\n"
+"http://localhost:8080/wwwoffle.pac in\n"
+"      Edit→Preferences→Advanced→Proxies→Automatic_proxy_configuration\n"
+"(Hiệu chỉnh→Sở thích→Nâng cấp→Ủy nhiệm→Cấu hình ủy nhiệm tự động)."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid "Use which parent proxy (current is ${PARENT_PROXY}):"
+msgstr "Dùng ủy nhiệm mẹ nào (hiện có « ${PARENT_PROXY} »):"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid ""
+"Using a parent proxy normally results in a remarkable speed gain. If you "
+"don't want to use one enter \"none\" in this field; else enter the proxy in "
+"the form \"proxy.example.com:8080\"."
+msgstr ""
+"Dùng một ủy nhiệm mẹ thường có kết quả là tốc độ rất tốt hơn. Nếu bạn không "
+"muốn sử dụng nó, hãy nhập « none » (không có) vào trường này; nếu có thì hãy "
+"nhập ủy nhiệm có dạng « proxy.thídụ.com:8080 »."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid ""
+"Use \"manual\" if you don't want the proxy lines in the config file touched "
+"by the automatic configuration."
+msgstr ""
+"Hãy sử dụng « manual » (thủ công) nếu bạn không muốn cấu hình tự động có sửa "
+"đổi những dòng ủy nhiệm trong tập tin cấu hình."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:7001
+msgid "Does wwwoffle rely on a dialup (PPP) interface for its connection?"
+msgstr "Trình wwwoffle nhờ một giao diện quay số (PPP) để kết nối không?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:7001
+msgid ""
+"Most people will need to accept here. Refuse, only if you have a parent "
+"proxy that is reachable without a PPP (analog or ISDN) interface."
+msgstr ""
+"Phần lớn người sẽ cần chấp nhận tại đây. Bạn hãy từ chối _chỉ_ nếu bạn có ủy "
+"nhiệm mẹ có thể tới không có giao diện PPP (tỷ biến hay ISDN)."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:8001
+msgid "Should wwwoffle fetch pages when the PPP interface comes up?"
+msgstr "Trình wwwoffle nên gọi trang khi giao diện PPP mới lên không?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:8001
+msgid ""
+"Most people will accept here. However, if you regularly bring up the "
+"connection just to check for mail and you only want to fetch web pages once "
+"a day or so (manually), you should refuse."
+msgstr ""
+"Phần lớn người sẽ chấp nhận tại đây. Tuy nhiện, nếu bạn kết nối nhiều lần "
+"chỉ để goi thư, và muốn gọi trang Mạng chỉ một lần trong mỗi ngày, thì hãy "
+"từ chối tại đây."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid "Should htdig be used to index the cached pages?"
+msgstr "Bạn có muốn sử dụng htdig để chỉ mục những trang đã lưu tạm không?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid ""
+"With this, it is possible to direct htdig to index the cached pages so that "
+"those pages can be searched with htdig."
+msgstr ""
+"Với tùy chọn này, có thể báo htdig chỉ mục các trang đã lưu tạm, để mà có "
+"thể tìm kiếm trong những trang đó, dùng htdig."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid "Note: this _can_ take a lot of time to do!"
+msgstr "• Ghi chú: việc này có thể mất nhiều thời gian. •"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:10001
+msgid "wwwoffle.conf is now only readable by root and group proxy"
+msgstr ""
+"Tập tin cấu hình « wwwoffle.conf » bây giờ chỉ cấp quyền đọc cho người chủ "
+"và ủy nhiệm nhóm"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:10001
+msgid ""
+"To prevent just anyone from changing the state of the daemon, the file "
+"wwwoffle.conf has been made unreadable by others not root and not in the "
+"group \"proxy\". To add users to that group, use \"adduser nameofuser proxy"
+"\"."
+msgstr ""
+"Để ngăn cản người nào thay đổi tính tráng của trình nền, tập tin <wwwoffle."
+"conf> đã được đặt không thể đọc cho người không phải là người chủ và không "
+"phải có trong nhóm « proxy ». Để thêm người dùng vào nhóm này, hãy sử dụng "
+"lệnh « adduser tên_người_dùng proxy »."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid "Fetch interval for monitored pages while online:"
+msgstr "Khoảng thời gian giữa hai lần lấy trang khi theo dõi trực tuyến:"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid ""
+"Monitored pages can be fetched when the PPP link goes up. However, when "
+"online, there is no standard mechanism to regularly fetch monitored pages. "
+"The Debian package has a cronjob that does this."
+msgstr ""
+"Có thể gọi trang đã theo dõi khi liên kết PPP mới lên. Tuy nhiên, trong khi "
+"trực tuyến, không có cơ chế chuẩn sẽ gọi trang đã theo dõi một cách định kỳ. "
+"Gói Debian có một công việc định kỳ (cronjob) có làm như thế."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid ""
+"As monitored pages are usually not scheduled that often, the recommended "
+"value of 30 minutes should be adequate. Note that this is also the maximum "
+"allowed."
+msgstr ""
+"Vì trang đã theo dõi thường không được định nhiều lần, giá trị được đệ nghị, "
+"30 phút, nên là đủ. Hãy ghi chú rằng giá trị này cũng là giá trị tối đa được "
+"cho phép."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid "Enter \"off\" to disable the fetching while online."
+msgstr "Hãy nhập « off » (tắt) để vô hiệu hóa gọi trang trong khi trực tuyến."

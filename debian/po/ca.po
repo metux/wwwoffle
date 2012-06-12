@@ -1,0 +1,440 @@
+#
+# Catalan translations for wwwoffle package.
+# Copyright (C) 2006 Paul Slootman.
+# This file is distributed under the same license as the wwwoffle package.
+#
+# Aleix Badia i Bosch <a.badia@callusdigital.org>, 2004.
+# Jordà Polo <jorda@ettin.org>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 2.9a-1\n"
+"Report-Msgid-Bugs-To: wwwoffle@packages.debian.org\n"
+"POT-Creation-Date: 2008-02-08 06:44+0100\n"
+"PO-Revision-Date: 2007-03-06 09:48+0100\n"
+"Last-Translator: Aleix Badia i Bosch <a.badia@callusdigital.org>\n"
+"Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:1001
+msgid "The location of some files and directories has been changed"
+msgstr "S'ha modificat la ubicació d'alguns fitxers i directoris"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:1001
+msgid ""
+"The config files moved to /etc/wwwoffle/ and the cache dir moved to /var/"
+"cache/wwwoffle. Further the format of the cache has changed between version "
+"1.x and version 2.x and there are some new configuration options. Your "
+"directories and the config files will be adjusted automatically now."
+msgstr ""
+"Els fitxers de configuració s'han mogut al directori /etc/wwwoffle/ i el "
+"directori de memòria cau a /var/cache/wwwoffle. De la versió 1.x a la 2.x "
+"s'ha modificat el format de la memòria cau i s'han afegit noves opcions de "
+"configuració. Els directoris i fitxers de configuració s'actualitzaran "
+"automàticament."
+
+#. Type: password
+#. Description
+#: ../wwwoffle.templates:2001
+msgid "Configuration now requires a password:"
+msgstr "La configuració necessita una contrasenya, introduïu-la a continuació:"
+
+#. Type: password
+#. Description
+#: ../wwwoffle.templates:2001
+msgid ""
+"To prevent any random user on the system from changing the state of the "
+"wwwoffle daemon (e.g. put it offline), a password will be added to the /etc/"
+"wwwoffle/wwwoffle.conf file. If non-root users have to be able to control "
+"the daemon, they must be in the \"proxy\" group (see \"man group\") and they "
+"must pass the parameters \"-c /etc/wwwoffle/wwwoffle.conf\" in addition to "
+"other options."
+msgstr ""
+"Per evitar que qualsevol usuari del sistema canviï l'estat del dimoni del "
+"wwwoffle (p.ex. deixar-lo fora de línia), s'afegirà una contrasenya al "
+"fitxer /etc/wwwoffle/wwwoffle.conf. Per a que usuaris que no són "
+"superusuaris puguin controlar el dimoni, han de formar part del grup "
+"«proxy» (feu una ullada a «man group»), i han de passar els paràmetres «-c /"
+"etc/wwwoffle/wwwoffle.conf» a més de qualsevol altra opció."
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "en (English)"
+msgstr "en (Anglès)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "de (German)"
+msgstr "de (Alemany)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "es (Spanish)"
+msgstr "es (Castellà)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "fr (French)"
+msgstr "fr (Francès)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "it (Italian)"
+msgstr "it (Italià)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "nl (Dutch)"
+msgstr "nl (Holandès)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "pl (Polish)"
+msgstr "pl (Polonès)"
+
+#. Type: select
+#. Choices
+#: ../wwwoffle.templates:3001
+msgid "ru (Russian)"
+msgstr "ru (Rus)"
+
+#. Type: select
+#. DefaultChoice
+#: ../wwwoffle.templates:3002
+msgid ""
+"en (English)[ default : do not put what's inside brackets into translations. "
+"Put your own language here but UNTRANSLATED]"
+msgstr "ca (Catalan)"
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid "your default language:"
+msgstr "Escolliu l'idioma predeterminat:"
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid ""
+"wwwoffle offers you translations of most of the internal HTML pages. Those "
+"pages which are not yet translated will automatically be replaced with the "
+"English ones."
+msgstr ""
+"El wwwoffle proporciona les traduccions de la majoria de pàgines HTML "
+"internes. Les pàgines que no estan traduïdes es reemplaçaran per les seves "
+"respectives versions en anglès."
+
+#. Type: select
+#. Description
+#: ../wwwoffle.templates:3003
+msgid ""
+"Note that the languages configuration in your browser will override this "
+"default."
+msgstr ""
+"Recordeu que la configuració d'idioma del navegador substituirà el "
+"predeterminat."
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:4001
+msgid "ATTENTION: There was an error while converting the config"
+msgstr "ATENCIÓ: S'ha produït un error en la conversió de la configuració"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:4001
+msgid ""
+"Your config file has been preserved as /etc/wwwoffle/wwwoffle.conf.old . "
+"Please correct manually. Take a look at /var/log/wwwoffle-upgrade.log for "
+"reasons. Please delete this logfile manually."
+msgstr ""
+"El vostre fitxer de configuració es manté amb el nom /etc/wwwoffle/wwwoffle."
+"conf.old. Si us plau, corregiu-lo manualment. Per a més informació feu un "
+"cop d'ull al fitxer /var/log/wwwoffle-upgrade.log. Recordeu també suprimir "
+"aquest fitxer de registre manualment."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid "the port number wwwoffle runs on:"
+msgstr "Escolliu el número de port en el que s'executa el wwwoffle:"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid ""
+"The default port number for HTTP proxy caches is 8080. To use wwwoffle as "
+"proxy for your favourite web browser you have to use \"localhost:8080\" (or "
+"whatever port number you've chosen)."
+msgstr ""
+"El valor predeterminat del número de port del servidor intermedi d'HTTP és "
+"el 8080. Perquè el navegador utilitzi el wwwoffle com a servidor "
+"intermediari heu d'utilitzar «localhost:8080» (o el número de port que "
+"hagueu escollit)."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:5001
+msgid ""
+"P.S.: Netscape users can simply write http://localhost:8080/wwwoffle.pac in\n"
+"      Edit->Preferences->Advanced->Proxies->Automatic_proxy_configuration"
+msgstr ""
+"P.S.: Els usuaris del Netscape poden escriure http://localhost:8080/wwwoffle."
+"pac a\n"
+"      Edita->Preferències->Avançades->Servidors_Intermediaris-"
+">Configuració_automàtica_proxy"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid "Use which parent proxy (current is ${PARENT_PROXY}):"
+msgstr ""
+"Quin servidor intermediari pare voleu utilitzar? (l'actual és "
+"${PARENT_PROXY})"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid ""
+"Using a parent proxy normally results in a remarkable speed gain. If you "
+"don't want to use one enter \"none\" in this field; else enter the proxy in "
+"the form \"proxy.example.com:8080\"."
+msgstr ""
+"Utilitzar un servidor intermediari pare normalment acostuma a accelerar la "
+"velocitat de forma notable. Si no en voleu utilitzar cap introduïu «none» en "
+"aquest camp; en cas contrari introduïu el servidor intermediari amb el "
+"format «proxy.example.com:8080»."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:6001
+msgid ""
+"Use \"manual\" if you don't want the proxy lines in the config file touched "
+"by the automatic configuration."
+msgstr ""
+"Utilitzeu «manual» si no voleu que la configuració automàtica toqui les "
+"línies del servidor intermediari del fitxer de configuració."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:7001
+msgid "Does wwwoffle rely on a dialup (PPP) interface for its connection?"
+msgstr ""
+"El wwwoffle utilitza una interfície de marcatge directe (PPP) per connectar-"
+"se?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:7001
+msgid ""
+"Most people will need to accept here. Refuse, only if you have a parent "
+"proxy that is reachable without a PPP (analog or ISDN) interface."
+msgstr ""
+"La majoria d'usuaris han d'acceptar-ho. No ho accepteu únicament si teniu un "
+"servidor intermediari pare que és accessible sense utilitzar una interfície "
+"PPP (analògica o ISDN)."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:8001
+msgid "Should wwwoffle fetch pages when the PPP interface comes up?"
+msgstr ""
+"Voleu que el wwwoffle reculli pàgines quan la interfície PPP entri en "
+"funcionament?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:8001
+msgid ""
+"Most people will accept here. However, if you regularly bring up the "
+"connection just to check for mail and you only want to fetch web pages once "
+"a day or so (manually), you should refuse."
+msgstr ""
+"La majoria d'usuaris han d'acceptar-ho. No ho accepteu únicament si poseu en "
+"funcionament la connexió només per comprovar el correu i si només voleu "
+"recollir pàgines web una vegada al dia (manualment)."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid "Should htdig be used to index the cached pages?"
+msgstr "Voleu utilitzar el htdig per indexar les pàgines de la memòria cau?"
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid ""
+"With this, it is possible to direct htdig to index the cached pages so that "
+"those pages can be searched with htdig."
+msgstr ""
+"Utilitzant aquesta opció es pot fer que l'htdif indexi les pàgines de la "
+"memòria cau per què es puguin cercar utilitzant l'htdig."
+
+#. Type: boolean
+#. Description
+#: ../wwwoffle.templates:9001
+msgid "Note: this _can_ take a lot of time to do!"
+msgstr "Nota: això _pot_ trigar una bona estona a realitzar-se!"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:10001
+msgid "wwwoffle.conf is now only readable by root and group proxy"
+msgstr ""
+"El fitxer wwwoffle.conf només el pot llegir el superusuari i el grup proxy"
+
+#. Type: note
+#. Description
+#: ../wwwoffle.templates:10001
+msgid ""
+"To prevent just anyone from changing the state of the daemon, the file "
+"wwwoffle.conf has been made unreadable by others not root and not in the "
+"group \"proxy\". To add users to that group, use \"adduser nameofuser proxy"
+"\"."
+msgstr ""
+"Per evitar que qualsevol usuari pugui canviar l'estat del dimoni, s'han "
+"modificat els permisos de lectura del fitxer wwwoffle.conf perquè només el "
+"pugui llegir el superusuar i els usuaris del grup «proxy». Per afegir "
+"usuaris a aquest grup utilitzeu l'ordre «adduser nomusuari proxy»."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+#, fuzzy
+#| msgid "How often should monitored pages be fetched while online:"
+msgid "Fetch interval for monitored pages while online:"
+msgstr ""
+"Període de descàrrega de les pàgines monitoritzades mentre s'està en línia:"
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid ""
+"Monitored pages can be fetched when the PPP link goes up. However, when "
+"online, there is no standard mechanism to regularly fetch monitored pages. "
+"The Debian package has a cronjob that does this."
+msgstr ""
+"Les pàgines monitoritzades es poden descarregar al penjar-se la connexió "
+"PPP. Tot i això, quan està en línia no hi ha cap mecanisme estàndard per "
+"descarregar les pàgines monitoritzades. El paquet de Debian té una tasca "
+"periòdica que ho fa."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid ""
+"As monitored pages are usually not scheduled that often, the recommended "
+"value of 30 minutes should be adequate. Note that this is also the maximum "
+"allowed."
+msgstr ""
+"Com que les pàgines monitoritzades no acostumen a planificar-se tan sovint, "
+"el valor recomanat de 30 minuts hauria de ser correcte. Recordeu que també "
+"és el màxim permès."
+
+#. Type: string
+#. Description
+#: ../wwwoffle.templates:11001
+msgid "Enter \"off\" to disable the fetching while online."
+msgstr ""
+"Introduïu «off» per inhabilitar la descàrrega mentre s'estigui en línia."
+
+#~ msgid "There is no \"age = \" line in your configuration"
+#~ msgstr "El fitxer de configuració no té cap línia \"age = \""
+
+#~ msgid ""
+#~ "You do not have a line \"age = \" in your /etc/wwwoffle/wwwoffle.conf "
+#~ "file.  This may be because you removed it yourself, but it's also "
+#~ "possible that this was removed accidentally when you upgraded to version "
+#~ "2.6d-2 from 2.6d-1 (sorry for this problem). As this may go by otherwise "
+#~ "unnoticed, I am informing you of this now."
+#~ msgstr ""
+#~ "El fitxer de configuració /etc/wwwoffle/wwwoffle.conf no té cap línia "
+#~ "\"age = \". Probablement l'heu suprimit manualment, però també es podria "
+#~ "haver suprimit accidentalment en l'actualització de la versió 2.6d-1 a la "
+#~ "2.6d-2. Com que probablement us hauria passat per alt, se us comunica."
+
+#~ msgid ""
+#~ "The default value for the age is 28 days. You may add a line \" age = "
+#~ "28\" to the bottom of the \"Purge\" section to prevent any future "
+#~ "confusion about this. Of course, any other age value may be used."
+#~ msgstr ""
+#~ "El valor predeterminat del temps de vida és 28 dies. Per evitar futures "
+#~ "confusions hauríeu d'afegir una línia \" age = 28 \" al capdavall de la "
+#~ "secció \"Purge\". Es pot utilitzar qualsevol altre valor de temps de vida."
+
+#~ msgid "There was no \"age = \" line in your configuration"
+#~ msgstr "No hi ha cap línia \"age = \" a la configuració"
+
+#~ msgid ""
+#~ "You did not have a line \"age = \" in your /etc/wwwoffle/wwwoffle.conf "
+#~ "file.  This may be because you removed it yourself, but it's probable "
+#~ "that this was removed accidentally when you upgraded to version 2.6d-2 "
+#~ "from 2.6d-1 (sorry for this problem)."
+#~ msgstr ""
+#~ "No hi ha cap línia \"age = \" al fitxer /etc/wwwoffle/wwwoffle.conf. "
+#~ "Potser el vau borrar manualment o es va suprimir accidentalment en "
+#~ "l'actualització de la versió 2.6d-1 a la 2.6d-1 (perdoneu per l'error)."
+
+#~ msgid ""
+#~ "I was able to find such a line in a backup version of your configuration; "
+#~ "the value there is \"${AGELINE}\". This line has been put back into your "
+#~ "configuration. If this was _not_ your intention, please feel free to "
+#~ "remove it again. However, it would be better if you changed the line to "
+#~ "show the default value (28) to prevent future confusion about this."
+#~ msgstr ""
+#~ "S'ha trobat la línia en una versió de còpia de seguretat de la vostra "
+#~ "configuració: el seu valor és \"${AGELINE\". La línia s'ha restaurat a la "
+#~ "configuració. Si no era la vostra intenció, suprimiu-la de nou. Per "
+#~ "evitar futures confusions, seria millor si canviaveu la línia per mostrar "
+#~ "el valor predeterminat (28)."
+
+#~ msgid "Wwwoffle doesn't listen to IPv6 by default"
+#~ msgstr "El wwwoffle no gestiona l'IPv6 de manera predeterminada."
+
+#~ msgid ""
+#~ "In version 2.7g-1 (and the upstream version), wwwoffle listens to IPv6 "
+#~ "\"::\" (\"any\") if no \"bind-ipv6\" option is given in the StartUp "
+#~ "section (in /etc/wwwoffle/wwwoffle.conf).  This led to confusion during "
+#~ "upgrades, as the IPv4 socket won't bind and gives an error."
+#~ msgstr ""
+#~ "En la versió 2.7g-1 (i en les versions posteriors), el wwwoffle gestiona "
+#~ "IPv6 \"::\" (\"any\") si no es defineix cap opció \"bind-ipv6\" a la "
+#~ "secció StartUp (al fitxer /etc/wwwoffle/wwwoffle.conf). Aquest fet pot "
+#~ "provocar confusió en les actualitzacions, ja que el sòcol IPv4 no es "
+#~ "vincularà correctament i donarà un error."
+
+#~ msgid ""
+#~ "If required, you have to explicitly enable the IPv6 socket with a line "
+#~ "such as the following in the StartUp section:"
+#~ msgstr ""
+#~ "Si és necessari, heu d'habilitar explícitament el sòcol d'IPv6 afegint "
+#~ "una línia similar a la següent a la secció StartUp:"
+
+#~ msgid "   bind-ipv6 = ::"
+#~ msgstr "   bind-ipv6 = ::"
+
+#~ msgid ""
+#~ "At the same time you may need to disable the IPv4 socket with the line "
+#~ "below to prevent warning messages; the IPv6 socket will still accept IPv4 "
+#~ "connections."
+#~ msgstr ""
+#~ "Al mateix temps, i per evitar els missatges d'avís, hauríeu d'inhabilitar "
+#~ "el sòcol IPv4 amb la lína següent; el sòcol d'IPv6 acceptarà connexions "
+#~ "IPv5."
+
+#~ msgid "   bind-ipv4 = none"
+#~ msgstr "   bind-ipv4 = none"

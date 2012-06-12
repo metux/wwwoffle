@@ -1,0 +1,103 @@
+Template: wwwoffle/text_new_location
+Type: note
+_Description: The location of some files and directories has been changed
+ The config files moved to /etc/wwwoffle/ and the cache dir moved to
+ /var/cache/wwwoffle. Further the format of the cache has changed between
+ version 1.x and version 2.x and there are some new configuration options.
+ Your directories and the config files will be adjusted automatically now.
+
+Template: wwwoffle/passwd
+Type: password
+_Description: Configuration now requires a password:
+ To prevent any random user on the system from changing the state of the
+ wwwoffle daemon (e.g. put it offline), a password will be added to the
+ /etc/wwwoffle/wwwoffle.conf file. If non-root users have to be able to
+ control the daemon, they must be in the "proxy" group (see "man group")
+ and they must pass the parameters "-c /etc/wwwoffle/wwwoffle.conf" in
+ addition to other options.
+
+Template: wwwoffle/select_html_lang
+Type: select
+__Choices: en (English), de (German), es (Spanish), fr (French), it (Italian), nl (Dutch), pl (Polish), ru (Russian)
+_DefaultChoice: en (English)[ default : do not put what's inside brackets into translations. Put your own language here but UNTRANSLATED]
+_Description: your default language:
+ wwwoffle offers you translations of most of the internal HTML pages. Those
+ pages which are not yet translated will automatically be replaced with the
+ English ones.
+ .
+ Note that the languages configuration in your browser will override this
+ default.
+
+Template: wwwoffle/note_upgrade_config_failed
+Type: note
+_Description: ATTENTION: There was an error while converting the config
+ Your config file has been preserved as /etc/wwwoffle/wwwoffle.conf.old .
+ Please correct manually. Take a look at /var/log/wwwoffle-upgrade.log for
+ reasons. Please delete this logfile manually.
+
+Template: wwwoffle/string_port_number
+Type: string
+Default: 8080
+_Description: the port number wwwoffle runs on:
+ The default port number for HTTP proxy caches is 8080. To use wwwoffle as
+ proxy for your favourite web browser you have to use "localhost:8080" (or
+ whatever port number you've chosen).
+ .
+ P.S.: Netscape users can simply write http://localhost:8080/wwwoffle.pac
+ in
+       Edit->Preferences->Advanced->Proxies->Automatic_proxy_configuration
+
+Template: wwwoffle/string_parent_proxy
+Type: string
+Default: none
+_Description: Use which parent proxy (current is ${PARENT_PROXY}):
+ Using a parent proxy normally results in a remarkable speed gain. If you
+ don't want to use one enter "none" in this field; else enter the proxy in
+ the form "proxy.example.com:8080".
+ .
+ Use "manual" if you don't want the proxy lines in the config file touched
+ by the automatic configuration.
+
+Template: wwwoffle/use-ppp-interface
+Type: boolean
+Default: true
+_Description: Does wwwoffle rely on a dialup (PPP) interface for its connection?
+ Most people will need to accept here. Refuse, only if you have a parent proxy
+ that is reachable without a PPP (analog or ISDN) interface.
+
+Template: wwwoffle/ppp-fetch
+Type: boolean
+Default: true
+_Description: Should wwwoffle fetch pages when the PPP interface comes up?
+ Most people will accept here. However, if you regularly
+ bring up the connection just to check for mail and you only want to fetch
+ web pages once a day or so (manually), you should refuse.
+
+Template: wwwoffle/use-htdig
+Type: boolean
+Default: false
+_Description: Should htdig be used to index the cached pages?
+ With this, it is possible to direct htdig to index the cached pages so
+ that those pages can be searched with htdig.
+ .
+ Note: this _can_ take a lot of time to do!
+
+Template: wwwoffle/conf-perm
+Type: note
+_Description: wwwoffle.conf is now only readable by root and group proxy
+ To prevent just anyone from changing the state of the daemon, the file
+ wwwoffle.conf has been made unreadable by others not root and not in the
+ group "proxy". To add users to that group, use "adduser nameofuser proxy".
+
+Template: wwwoffle/fetchfrequency
+Type: string
+Default: 30
+_Description: Fetch interval for monitored pages while online:
+ Monitored pages can be fetched when the PPP link goes up. However, when online,
+ there is no standard mechanism to regularly fetch monitored pages. The Debian
+ package has a cronjob that does this.
+ .
+ As monitored pages are usually not scheduled that often, the recommended value
+ of 30 minutes should be adequate. Note that this is also the maximum allowed.
+ .
+ Enter "off" to disable the fetching while online.

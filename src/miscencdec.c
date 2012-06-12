@@ -145,7 +145,7 @@ char *URLRecodeFormArgs(const char *str)
    I disallow "'" because it may lead to confusion.
    The unencoded characters "&=;" on the input are left unencoded on the output
    The encoded character "+" on the input is left encoded on the output
-   The unencoded character "?" on the input is left unencoded on the output to handle broken servers.
+   The unencoded characters "?" and "@" on the input are left unencoded on the output to handle broken servers.
  */
 
  static const char allowed[257]=
@@ -159,7 +159,7 @@ char *URLRecodeFormArgs(const char *str)
  "                                "; /* 0xe0-0xff "                                " */
 
  for(i=0,j=0;str[i];i++)
-    if(allowed[(unsigned char)str[i]]!=' ' || str[i]=='&' || str[i]=='=' || str[i]==';' || str[i]=='+' || str[i]=='?')
+    if(allowed[(unsigned char)str[i]]!=' ' || strchr("&=;+@?", str[i]))
        copy[j++]=str[i];
     else if(str[i]=='%' && str[i+1]!='\0' && str[i+2]!='\0')
       {

@@ -1,4 +1,6 @@
 /autom4te.cache
+/build
+/cache/html/default
 /cache/html/de/messages/README.CONF.txt
 /cache/html/de/README.CONF.html
 /cache/html/en/messages/README.CONF.txt
@@ -14,9 +16,19 @@
 /config.sub
 /configure
 /conf/Makefile
+/conf/wwwoffle.conf.install
+/debian/files
+/debian/wwwoffle
+/debian/wwwoffle.debhelper.log
+/debian/wwwoffle.postinst.debhelper
+/debian/wwwoffle.postrm.debhelper
+/debian/wwwoffle.prerm.debhelper
+/debian/wwwoffle.substvars
 /doc/fr/wwwoffle.conf.man
+/doc/fr/wwwoffle.conf.man.install
 /doc/Makefile
 /doc/wwwoffle.conf.man
+/doc/wwwoffle.conf.man.install
 /Makefile
 *.o
 /src/autoconfig.h

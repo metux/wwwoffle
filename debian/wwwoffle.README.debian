@@ -1,0 +1,171 @@
+wwwoffle for Debian GNU/Linux
+-----------------------------
+
+(Items changed / added since the last version are
+ marked with | in the second column)
+
+
+* BASIC CONFIGURATION:
+======================
+	Configure your web-browser to use wwwoffle as proxy on port 8080:
+		http://localhost:8080/
+	Configure your wwwoffle to use your ISP's proxy on port 8080:
+	 	Insert at /etc/wwwoffle/wwwoffle.conf at line ~592:
+		http://*/ = proxy.my.isp.com:8080
+
+* DOCUMENTATION:
+================
+	- at  http://localhost:8080/  (preferred)
+	- as manpages
+	- in the /usr/share/doc/wwwoffle directory
+	- or with the Debian dhelp and dwww documentation systems.
+
+* USAGE:
+========
+	If you (dis-)connect to the Net, tell it wwwoffle by typing
+	"wwwoffle -online" or "wwwoffle -offline" for that it knows whether to
+	fetch the pages out of the cache only or to mark the pages for download
+	if it does not find them; they will then be retrieved next time wwoffle
+        is online.
+        There is also "wwwoffle -autodial", where pages are basically fetched
+        from the cache, and pages that are not in the cache will be retrieved
+        immediately (i.e. not wait until "online").
+	You can control wwwoffle also at http://localhost:8080/control/
+	The current status of wwwoffle can be requested with "wwwoffle -status".
+
+* SSL CERTIFICATES:
+===================
+ |      wwwoffle will generate a certificate for itself if one doesn't exist
+ |      or the existing one has expired. Prior to version 2.8f, the generation
+ |      used a very secure source of entropy, however this usually resulted
+ |      in the generation taking very long. Some people even believed that the
+ |      startup script was hung.
+ |      Starting with version 2.8f-1, there is an option to use a less secure
+ |      source of entropy.
+ |      Having the following line in the SSLOptions section will use the faster
+ |      but less secure source:
+ |          quick-key-gen = yes
+ |      You can also configure how long the certificate is valid, the line
+ |      below will generate certificates that remain valid for ten years:
+ |          expiration-time = 10y
+ |      By popular demand, both these options are set in the Debian package.
+ |      You may of course override these.
+
+
+* PROXY FOR OTHERS:
+===================
+	If you have to use another proxy name than localhost (e.g. if you take
+	wwwoffle as a proxy for other computers in you net) you have to modify
+	/etc/wwwoffle/wwwoffle.pac and the localhost entry in
+	/etc/wwwoffle/wwwoffle.conf !
+
+* PROXY FOR APT:
+================
+	Apt has problems mixing up HTTP/1.0 and HTTP/1.1. If you want to
+	fetch Debian packages with apt and configured apt to use wwwoffle
+	as a proxy you have to add the following line to /etc/apt/apt.conf:
+		Acquire::http::Pipeline-Depth "0";
+	Thanks to Andrew M. Bishop <amb@gedanken.demon.co.uk> for this hint.
+
+* HTML TRANSLATIONS:
+====================
+	With version 2.7, wwwoffle pays attention to the language requested
+	by the browser. If none is configured, it uses the default configured
+	during installation.  Use "dpkg-reconfigure wwwoffle" to choose
+	another default language.
+
+* REPLACEMENT IMAGES FOR BLOCKED SITES:
+=======================================
+ 	In /etc/wwwoffle/wwwoffle.conf there is a "replacement = <URL>"
+	tag. This URL can only be of the http protocol; the base for
+	wwwoffle URLs is the directory /usr/share/wwwoffle/html .
+	Debian's default configuration allows you to use safely overwrite
+	/etc/wwwoffle/debian-replacement.gif with an own image.
+
+	Basically, WWWOffle looks at e.g.
+	   (A) /usr/share/wwwoffle/html/en/local/dontget/replacement.png
+	which points at
+	   (B) /etc/wwwoffle/debian-replacement.png
+	which (by default) points at
+	   (C) /usr/share/wwwoffle/html/en/local/dontget/standard.replacement.png
+	but (B) can be modified by the user.
+
+	Before version 2.7, it was called debian-replacement-image.xxx,
+	but the "-image" has been dropped because javascript can now also
+	be replaced.
+
+* AUTOMATIC FETCH:
+==================
+	If you browse a URL the first time and are on offline mode, wwwoffle
+	will remember it and fetch it next time you type "wwwoffle -fetch".
+	Some people prefer to have this done at every ppp connection and
+	uncomment the line in /etc/ppp/ip-up/1wwwoffle.
+	Others hate it - so I was asked to disable it again.
+	Nowadays this can be configured via debconf - run
+	"dpkg-reconfigure wwwoffle" to modify this.
+
+        There is now support for regularly fetching pages if you're online for
+        a long time. This is also configured via debconf, and implemented using
+        a /etc/cron.d/wwwoffle crontab. Hence the interval you can specify is
+        up to 30 minutes. If you prefer something else, comment out the first
+        line, and add another line below it. The debconf stuff will only touch
+        the first line. Note that the debconf stuff is not smart enough to
+        handle the case where you add a second line, then use debconf to set
+        an interval again (which will re-enable the first line). That's your
+        problem...
+
+* HTDIG:
+========
+	If you have the htdig program installed you can easily search your
+	whole web cache. Take a look at http://localhost:8080/#search !
+	To keep the search database up to date the programs
+	wwwoffle-htdig-full or wwwoffle-htdig-incr have to be run. This is
+	normally done via the /etc/cron.daily facility. But remember, if you
+	want to search directly after you browsed the pages, you have to run
+	wwwoffle-htdig-incr manually.
+
+* OTHER SEARCH SYSTEMS:
+=======================
+        Wwwoffle now also supports namazu and mnogosearch in addition to htdig,
+        so you now can use one of those instead of htdig if you prefer.
+        However, support for htdig is better than for namazu and mnogosearch,
+        so use those at your own risk, I probably won't be able to help with
+        any problems.
+
+* DNS PROBLEMS:
+===============
+	Some people have configured their system to switch between two
+	versions of /etc/resolv.conf whenever they go on- and offline.
+	To make a program (like wwwoffle) recognise this it would have to
+	be restarted. Sadly this leads to some page locking problems so
+	I decided not to do it.
+	People who use this strange resolv.conf mixing should better use
+	a (caching) proxy dns like pdnsd or BIND and restart that. I also
+	understand that using and restarting nscd works as well (instead of
+	using a local proxy dns).
+	Alternatively, often you can use the DNS servers from ISP "abc"
+	while dialled into another ISP "xyz"... so no need to change your
+	DNS config then (although there might be a little performance
+	penalty, although I doubt it).
+
+* CONTRIBUTED SCRIPTS etc:
+==========================
+   These are in /usr/share/doc/wwwoffle/contrib/ and should be copied
+   elsewhere if you want to use them. No support / gurantees on these!
+   There are also a couple of useful scripts at
+   http://jidanni.org/comp/wwwoffle/
+
+ - post WWWOFFLE script:
+   ---------------------
+	auto/post-wwwoffle.sh
+	Contributed: Andrew M. Bishop <amb@gedanken.demon.co.uk> WWWOFFLE Author
+	If this script is run after WWWOFFLE is taken offline it will
+	examine the files that were downloaded while online and can be used
+	to display them.
+
+ - multiple ISPs:
+   --------------
+	wwwoffle-config.pl
+	Contributed: Christian Zagrodnick <zagy@vodoo.boerde.de>
+	Can be used to manipulate wwwoffle.conf for different ISPs.  How to
+	use it is described in the script.

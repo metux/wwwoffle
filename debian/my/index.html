@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<TITLE>WWWOFFLE for Debian GNU/Linux</TITLE>
+</HEAD>
+
+<BODY BGCOLOR=white>
+<CENTER><H1>WWWOFFLE for Debian GNU/Linux</H1></CENTER>
+
+<P>This package contains the Debianized version of WWWOFFLE,
+the World Wide Web OFFline Explorer. 
+
+<P>The WWWOFFLE program is a simple proxy server with special features 
+for use with dial-up internet links.  This means that it is possible 
+to browse web pages and read them without having to remain connected.
+
+<P>If you have wwwoffle installed you can get more information by
+directly reading the <A HREF="http://localhost:8080">WWWOFFLE Proxy Welcome Page</A> 
+on localhost. If you are connected to the internet you can go directly to the
+<A HREF="http://www.gedanken.demon.co.uk/wwwoffle/index.html">WWWOFFLE Homepage</A>.
+
+<H2>Notes about configuring WWWOFFLE</H2>
+
+<P>The only configuration file for WWWOFFLE is <TT>/etc/wwwoffle.conf</TT>.
+If your ISP requires the use of an HTTP proxy, you have to modify that file.
+If not you are ready to go with the standard one.
+
+<P> Now WWWOFFLE goes online/offline automagically when you
+connect/disconnect to/from (I <B>love</B> /) the internet.
+It uses two little scripts named <TT>/etc/ppp/ip-up.d/wwwoffle</TT>
+and <TT>/etc/ppp/ip-down.d/wwwoffle</TT>. They are conffiles and can
+be safely modified by the sysadmin.
+
+<P>Note that the configuration file <TT>wwwoffle.conf</TT> was moved from
+<TT>/var/cache/wwwoffle</TT> to <TT>/etc</TT> to conform to Debian Policy.
+
+<P>Now WWWOFFLE comes with a daily cron job to purge the cache down to the
+size specified in <TT>wwwoffle.conf</TT>. To customize it look at
+<tt>/etc/cron.daily/wwwoffle</tt>.
+
+<H2>More documentation</H2>
+<P>Some more documentation avaiable with this package:
+<TABLE>
+<TR><TD><STRONG>Filename</STRONG></TD> <TD><STRONG>Description</STRONG></TD></TR>
+<TR><TD><A HREF="http://localhost:80/cgi-bin/dwww?type=runman&location=wwwoffled/8">
+wwwoffled.8</A></TD> <TD>Manual page for the <STRONG>wwwoffled</STRONG> daemon</TD></TR>
+<TR><TD><A HREF="http://localhost:80/cgi-bin/dwww?type=runman&location=wwwoffle/1">
+wwwoffle.1</A></TD> <TD>Manual page for the <STRONG>wwwoffle</STRONG> control program</TD></TR>
+<TR><TD><A HREF="http://localhost:80/cgi-bin/dwww?type=runman&location=wwwoffle.conf/5">
+wwwoffle.conf.5</A></TD> <TD>Manual page for the WWWOFFLE configuration file</TD></TR>
+<TR><TD><A HREF="README.gz">README</A></TD> <TD>Upstream README</TD></TR>
+<TR><TD><A HREF="NEWS.gz">NEWS</A></TD> <TD>Upstream NEWS</TD></TR>
+<TR><TD><A HREF="README.CONF.gz">README.CONF</A></TD>
+<TD>README about WWWOFFLE configuration file</TD></TR>
+<TR><TD><A HREF="CHANGES.CONF.gz">CHANGES.CONF</a></td>
+<td>CHANGES about WWWOFFLE configuration file; if you are upgrading from pre 2.0, please read carefully this file</TD></tr>
+<TR><TD><A HREF="UPDATE.gz">UPDATE</a></td>
+<td>About the new cache format</TD></tr>
+<TR><TD><A HREF="changelog.gz">changelog</A></TD>
+<TD>Upstream changelog</TD></TR>
+<TR><TD><A HREF="changelog.Debian">changelog.Debian</A></TD>
+<TD>Debian package changelog</TD></TR>
+</TABLE>
+
+</BODY>
+</HTML>
