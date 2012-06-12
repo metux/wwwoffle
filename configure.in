@@ -105,7 +105,7 @@ else
    fi
 fi
 
-AC_DEFINE_UNQUOTED(USE_ZLIB,$USE_ZLIB)
+AC_DEFINE_UNQUOTED(USE_ZLIB,$USE_ZLIB,[use the zlib library])
 
 AC_SUBST(ZLIB_LIB)
 AC_SUBST(ZLIB_INC)
@@ -153,7 +153,7 @@ else
    fi
 fi
 
-AC_DEFINE_UNQUOTED(USE_GNUTLS,$USE_GNUTLS)
+AC_DEFINE_UNQUOTED(USE_GNUTLS,$USE_GNUTLS,[enable encryption via gnutls])
 
 AC_SUBST(GNUTLS_LIB)
 AC_SUBST(GNUTLS_INC)
@@ -201,7 +201,7 @@ else
    fi
 fi
 
-AC_DEFINE_UNQUOTED(USE_GCRYPT,$USE_GCRYPT)
+AC_DEFINE_UNQUOTED(USE_GCRYPT,$USE_GCRYPT,[use the gcrypt library])
 
 AC_SUBST(GCRYPT_LIB)
 AC_SUBST(GCRYPT_INC)
@@ -231,7 +231,7 @@ else
    fi
 fi
 
-AC_DEFINE_UNQUOTED(USE_IPV6,$USE_IPV6)
+AC_DEFINE_UNQUOTED(USE_IPV6,$USE_IPV6,[enable ipv6])
 
 
 dnl Check for Cygwin.
@@ -257,7 +257,7 @@ if test "x$SPOOLDIR" = "x"; then
     SPOOLDIR=/var/cache/wwwoffle
 fi
 
-AC_DEFINE_UNQUOTED(DEF_SPOOLDIR,"$SPOOLDIR")
+AC_DEFINE_UNQUOTED(DEF_SPOOLDIR,"$SPOOLDIR",[default spool directory])
 AC_SUBST(SPOOLDIR)
 
 
@@ -269,7 +269,7 @@ if test "x$CONFDIR" = "x"; then
     CONFDIR=/etc/wwwoffle
 fi
 
-AC_DEFINE_UNQUOTED(DEF_CONFDIR,"$CONFDIR")
+AC_DEFINE_UNQUOTED(DEF_CONFDIR,"$CONFDIR", [default config directory])
 AC_SUBST(CONFDIR)
 
 
