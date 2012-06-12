@@ -1,9 +1,3 @@
-dnl
-dnl Autoconf macros from the GNU autoconf macro archive
-dnl
-dnl http://www.gnu.org/software/ac-archive/
-dnl
-
 
 dnl @synopsis ETR_SOCKET_NSL
 dnl
